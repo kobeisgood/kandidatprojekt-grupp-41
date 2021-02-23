@@ -4,12 +4,15 @@
     "description": "",
     "main": "main.js",
     "scripts": {
-        "start": "node main.js"
+        "start": "tsc src/Main.tsx --outDir build && node build/Main.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "express": "^4.17.1",
         "socket.io": "^3.1.1"
+    },
+    "devDependencies": {
+        "typescript": "^4.1.5"
     }
 }
