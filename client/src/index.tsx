@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { OpenConnection } from './Connection';
+
+let socket = OpenConnection();
 
 ReactDOM.render(
     <React.StrictMode>
