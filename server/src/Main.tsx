@@ -1,9 +1,10 @@
+import { Server, Socket } from 'socket.io';
+
 const express = require('express');
 const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const server = app.listen(4000);
+const io = new Server(server, { cors: { origin: '*' } });
 
-server.listen(3000);
 console.log("Server up and running...");
 
 
@@ -30,3 +31,36 @@ const removeUser = (id: string) => {
         }
     });
 };
+
+const userConnected = (id: string) => {
+    return users.some((p) => {
+        return p.id === id;
+    });
+};
+
+const logUsers = () => {
+    console.log("Connected ids are:");
+    users.forEach((p) => { console.log(p.id); });
+};
+
+io.on('connection', (socket: Socket) => {
+    let userId = socket.id;
+
+    if (!userConnected(userId)) {
+        addUser(userId, "User " + users.length);
+        
+        console.log("\nUser with ID " + userId + " connected.");
+        logUsers();
+
+        socket.emit('joinResponse', users);
+    }
+
+    // Any
+    socket.on('disconnect', () => {
+        let userId = socket.id;
+        removeUser(userId);
+
+        console.log("User with ID " + userId + " disconnected.");
+        logUsers();
+    });
+});
