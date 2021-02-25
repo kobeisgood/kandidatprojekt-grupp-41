@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
 import { OpenConnection, RequestUserList } from './Connection';
 import { User } from './Types';
->>>>>>> server-main
 import './App.css';
 
 var socket: SocketIOClient.Socket;
@@ -18,11 +14,7 @@ function connectToServer() {
 function App() {
     return (
         <div className="App">
-<<<<<<< HEAD
-            <button>Anslut</button>
-=======
             <button onClick={connectToServer}>Anslut</button>
->>>>>>> server-main
         </div>
     );
 }
