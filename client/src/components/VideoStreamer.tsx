@@ -30,7 +30,7 @@ export class VideoStreamer extends React.Component {
         return (
           <div>
             <div id="container">
-              <video autoPlay={true} id="videoElement" controls></video>
+              <video autoPlay={true} id="videoElement" ></video>
             </div>
             <br/>
             <button onClick={this.streamCamVideo}>Start streaming</button>
