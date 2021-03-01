@@ -58,34 +58,47 @@ const logUsers = () => {
 };
 
 io.on('connection', (socket: Socket) => {
-    let userId = socket.id;
+    socket.on('first-connection', userName => {
+        let userId = socket.id;
 
-    if (!userConnected(userId)) { // If not already connected
-        addUser(userId, "User " + (users.length + 1));
+        if (!userConnected(userId)) { // If not already connected
+            addUser(userId, userName);
+    
+            console.log("\nUser with ID " + userId + " connected.");
+    
+            socket.emit('connect-response', users);
+        } else {
+            socket.emit('connect-response', undefined);
+        }
+    });
 
-        console.log("\nUser with ID " + userId + " connected.");
-        logUsers();
-
-        socket.emit('connect-response', users);
-    } else {
-        socket.emit('connect-response', undefined);
-    }
+    socket.on('request-userList', () => {
+        socket.emit('receive-userList', users);
+    });
 
     socket.on('join-room', (roomId: string) => {
         let userId = socket.id;
         let userName = getUserName(userId);
         socket.join(roomId);
-        socket.emit('join-response', true);
-        socket.to(roomId).broadcast.emit('user-connected', userName);
-
+        socket.emit('join-response', users);
+        socket.to(roomId).broadcast.emit('user-connected', userName, users);
         console.log(userName + " joined room " + roomId);
+    });
+
+    socket.on('disconnecting', () => {
+        let userId = socket.id;
+        let userName = getUserName(userId);
+        removeUser(userId); // Remove user from record
+
+        // Announce that user left the room
+        socket.rooms.forEach(room => {
+            socket.to(room).broadcast.emit('user-disconnected', userName, users);
+        });
     });
 
     socket.on('disconnect', () => {
         let userId = socket.id;
-        removeUser(userId);
 
         console.log("User with ID " + userId + " disconnected.");
-        logUsers();
     });
 });
