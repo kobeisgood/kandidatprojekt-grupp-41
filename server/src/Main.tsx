@@ -7,8 +7,11 @@ const io = new Server(server, { cors: { origin: '*' } });
 
 console.log("Server up and running...");
 
+app.get('/', (req, res) => {
+    res.redirect('localhost:3000');
+});
 
-interface User {
+export interface User {
     id: string,
     name: string
 }
@@ -38,6 +41,17 @@ const userConnected = (id: string) => {
     });
 };
 
+const getUserName = (id: string) => {
+    let user = users.find((user: User) => {
+        return user.id === id
+    });
+
+    if (user !== undefined)
+        return user.name;
+    else
+        return null;
+};
+
 const logUsers = () => {
     console.log("Connected ids are:");
     users.forEach((p) => { console.log(p.id); });
@@ -46,16 +60,27 @@ const logUsers = () => {
 io.on('connection', (socket: Socket) => {
     let userId = socket.id;
 
-    if (!userConnected(userId)) {
-        addUser(userId, "User " + users.length);
-        
+    if (!userConnected(userId)) { // If not already connected
+        addUser(userId, "User " + (users.length + 1));
+
         console.log("\nUser with ID " + userId + " connected.");
         logUsers();
 
-        socket.emit('joinResponse', users);
+        socket.emit('connect-response', users);
+    } else {
+        socket.emit('connect-response', undefined);
     }
 
-    // Any
+    socket.on('join-room', (roomId: string) => {
+        let userId = socket.id;
+        let userName = getUserName(userId);
+        socket.join(roomId);
+        socket.emit('join-response', true);
+        socket.to(roomId).broadcast.emit('user-connected', userName);
+
+        console.log(userName + " joined room " + roomId);
+    });
+
     socket.on('disconnect', () => {
         let userId = socket.id;
         removeUser(userId);
