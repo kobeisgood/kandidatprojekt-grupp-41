@@ -1,0 +1,80 @@
+.call-container {
+    position: relative;
+}
+
+#call-container {
+    min-height: 100vh;
+}
+
+.remote-video-container {
+    /* background-color: red; */
+    height: 80vh;
+    width: 50%;
+    margin:auto;
+    position: relative;
+}
+
+.function-bar-container {
+    position: relative;
+    /*background-color: yellow;  temp */
+    height: 20vh;
+    margin:auto;
+    text-align: center;
+    padding-top: 1vh;
+}
+
+.function-button-container {
+    width: 45vh;
+    height: 17vh;
+    margin:auto;
+    /*border-style: solid;
+    border-color: black;*/
+    text-align:center;
+    word-wrap: break-word;
+    display: table;
+}
+
+.function-button-container h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+
+.function-button {
+  height: 12vh;
+  width: 12vh;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+}
+
+ul > li {
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
+    zoom: 1;
+    *display:inline;
+    /* this fix is needed for IE7- */
+}
+
+.local-video-container {
+    background-color: black;
+    height: 30vh;
+    width: 23vh;
+    float:right;
+    margin-top: 3em;
+    margin-right: 7em;
+    border-radius: 20%;
+}
+
+.function-off-container{
+    height: 5vh;
+    width: 10vh;
+    float: right;
+    margin-top: 10em;
+    background-color: red;
+}
+
+
+
+
