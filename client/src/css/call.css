@@ -49,6 +49,16 @@
   color: white;
 }
 
+.end-call-button {
+  height: 12vh;
+  width: 12vh;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+}
+
+
 ul > li {
     display: inline-block;
     /* You can also add some margins here to make it look prettier */
@@ -71,8 +81,10 @@ ul > li {
     height: 5vh;
     width: 10vh;
     float: right;
-    margin-top: 10em;
+    margin-top: 1em;
+    margin-right: 13vh;
     background-color: red;
+    clear: right;
 }
 
 

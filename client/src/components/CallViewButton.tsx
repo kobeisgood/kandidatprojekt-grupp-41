@@ -1,5 +1,5 @@
 /***
- * Component for buttons on the bottom of the page when in a call
+ * Component for camera and microphone buttons on the bottom of the page when in a call
  * 
  * Author: Theo
  */

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../css/call.css';
 import { CallViewButton } from '../components/CallViewButton'
+import { EndCallButton } from '../components/EndCallButton'
 
 export const CallView = () => {
    
@@ -15,6 +16,10 @@ export const CallView = () => {
         setMicState(false)
     }
 
+    const camClicked = () => {
+        setCamState(false)
+    }
+
     return(
         <div className="call-container">
             <div className="local-video-container">
@@ -25,6 +30,10 @@ export const CallView = () => {
                 Mikrofon avstängd!
             </div> : <></> }
 
+            {camState === false ? <div className="function-off-container">
+                Kamera avstängd!
+            </div> : <></> }
+
             <div className="remote-video-container">
                 <img src="https://deadline.com/wp-content/uploads/2020/11/Stephen-Lang-Headshot-Matt-Sayles-e1605093774374.jpg?w=681&h=383&crop=1" width="100%" height="100%"/> 
             </div>
@@ -32,8 +41,8 @@ export const CallView = () => {
             <div className="function-bar-container">
                 <ul>
                     <li> <CallViewButton functionDesc={"Stäng av mikrofon"} icon={"fa-microphone"} buttonFunction={micClicked}/> </li>
-                    <li> <CallViewButton functionDesc={"Stäng av kamera"} icon={"fa-camera"} buttonFunction={test}/></li>
-                    <li> <CallViewButton functionDesc={"Avsluta samtal"} icon={"fa-phone-slash"} buttonFunction={test}/></li>
+                    <li> <CallViewButton functionDesc={"Stäng av kamera"} icon={"fa-camera"} buttonFunction={camClicked}/></li>
+                    <li> <EndCallButton endCallFunction={test}/></li>
                 </ul>
                
                 
