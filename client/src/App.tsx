@@ -11,11 +11,11 @@ import './App.css';
 
 let socket: SocketIOClient.Socket;
 
-function App() {
+export const App = () => {
     const [nameInput, setNameInput] = useState("");
     const [roomIdInput, setIdInput] = useState("");
     const [allUsers, setUsers] = useState([]);
-    const [stream, setStream] = useState(null);
+    const [remoteStream, setRemoteStream] = useState(null);
     const [outgoingCall, setOutgoingCall] = useState(false);
     const [calleeName, setCalleeName] = useState("");
     const [callAccepted, setCallAccepted] = useState(false);
@@ -86,9 +86,7 @@ function App() {
                 <h3>Svarade på samtalet!</h3>
             }
 
-            <VideoStreamer />
+            <VideoStreamer remoteStream={new MediaStream()} />
         </div>
     );
-}
-
-export default App;
+};
