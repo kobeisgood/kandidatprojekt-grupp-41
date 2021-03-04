@@ -1,11 +1,20 @@
 .call-container {
-    position: relative;
+    display:flex;
+    flex-flow: row wrap;
+    
 }
 
 #call-container {
     min-height: 100vh;
 }
 
+.video-container {
+    display:flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* container that displays the remote stream */
 .remote-video-container {
     /* background-color: red; */
     height: 80vh;
@@ -70,13 +79,18 @@ ul > li {
     /* this fix is needed for IE7- */
 }
 
+.right-side-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .local-video-container {
     background-color: black; 
     height: 30vh;
     width: 14vw;
     float:right;
     margin-top: 3em;
-    margin-right: 4.7em;
+    /* margin-right: 4.7em; */
     border-radius: 20%;
 }
 
@@ -86,7 +100,7 @@ ul > li {
     width: 14vw;
     float: right;
     margin-top: 1em;
-    margin-right: 3em;
+    /* margin-right: 3em; */
     background-color: red;
     clear: right;
     font-size: 1vw;
