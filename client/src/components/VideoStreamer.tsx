@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useRef } from 'react';
 import { CallButton } from './CallButton';
 import { StartVideoButton } from './StartVideoButton';
 import { HangUpButton } from './HangUpButton';
@@ -8,28 +8,20 @@ interface Props {
     remoteStream: MediaStream
 }
 
-export class VideoStreamer extends React.Component<Props> {
-    localVideoStreamRef: React.RefObject<HTMLVideoElement>;
-    remoteVideoStreamRef: React.RefObject<HTMLVideoElement>;
+export const VideoStreamer = (props: Props) => {
+    const localVideoStreamRef = useRef<HTMLVideoElement>(null);
+    const remoteVideoStreamRef = useRef<HTMLVideoElement>(null);
 
-    constructor(props: Props) {
-        super(props);
-        this.localVideoStreamRef = React.createRef();
-        this.remoteVideoStreamRef = React.createRef();
-    }
-
-    render() {
-        return (
+    return (
+        <div>
             <div>
-                <div>
-                    <video autoPlay={true} ref={this.localVideoStreamRef} />
-                    <video autoPlay={true} ref={this.remoteVideoStreamRef} />
-                </div>
-
-                <StartVideoButton localVideoElement={this.localVideoStreamRef} />
-                <CallButton localVideoElement={this.localVideoStreamRef} remoteVideoElement={this.remoteVideoStreamRef} />
-                <HangUpButton />
+                <video autoPlay={true} ref={localVideoStreamRef} />
+                <video autoPlay={true} ref={remoteVideoStreamRef} />
             </div>
-        );
-    }
+
+            <StartVideoButton localVideoElement={localVideoStreamRef} />
+            <CallButton localVideoElement={localVideoStreamRef} remoteVideoElement={remoteVideoStreamRef} />
+            <HangUpButton />
+        </div>
+    );
 }

@@ -1,16 +1,9 @@
-import React from 'react';
-
 interface Props {
     localVideoElement: any
 }
 
-export class StartVideoButton extends React.Component<Props> {
-
-    constructor(props: Props) {
-        super(props);
-    }
-
-    streamCamVideo = (localVideoElement: any) => {
+export const StartVideoButton = (props: Props) => {
+    const streamCamVideo = (localVideoElement: any) => {
         let constraints = { audio: true, video: { width: 1280, height: 720 } };
 
         navigator.mediaDevices
@@ -32,9 +25,7 @@ export class StartVideoButton extends React.Component<Props> {
             }); // always check for errors at the end.
     }
 
-    render() {
-        return (<button onClick={() => this.streamCamVideo(this.props.localVideoElement)}>
-            Starta video
-        </button>)
-    }
+    return (<button onClick={() => streamCamVideo(props.localVideoElement)}>
+        Starta video
+    </button>)
 }

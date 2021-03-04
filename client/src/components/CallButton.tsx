@@ -1,21 +1,14 @@
-import React from 'react';
-
 interface Props {
     localVideoElement: any;
     remoteVideoElement: any;
 }
 
-export class CallButton extends React.Component<Props> {
-    constructor(props: any) {
-        super(props);
-    }
-
-    render() {
-        return (<button >
-            Ring
-        </button>)
-    }
+export const CallButton = (props: Props) => {
+    return (<button >
+        Ring
+    </button>)
 }
+
 
 let pc1: any;
 let pc2: any;
