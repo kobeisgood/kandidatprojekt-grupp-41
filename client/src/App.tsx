@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { OpenConnection, JoinRoom, CallRespond, CallUser } from './Connection';
+import { useEffect, useState } from 'react';
 import { User } from './Types';
+import { OpenConnection, JoinRoom, CallRespond, CallUser } from './Connection';
+import { OpenLocalStream } from './StreamCamVideo';
 import { VideoStreamer } from './components/VideoStreamer';
 
 import './App.css';
@@ -9,10 +10,15 @@ import './App.css';
 let socket: SocketIOClient.Socket;
 
 export const App = () => {
+    useEffect(() => {
+        OpenLocalStream(setLocalStream); // Access browser web cam
+    }, []);
+
     const [nameInput, setNameInput] = useState("");
     const [roomIdInput, setIdInput] = useState("");
     const [allUsers, setUsers] = useState([]);
-    const [remoteStream, setRemoteStream] = useState(null);
+    const [localStream, setLocalStream] = useState(new MediaStream());
+    const [remoteStream, setRemoteStream] = useState(new MediaStream());
     const [outgoingCall, setOutgoingCall] = useState(false);
     const [calleeName, setCalleeName] = useState("");
     const [callAccepted, setCallAccepted] = useState(false);
@@ -32,7 +38,6 @@ export const App = () => {
         if (socket === undefined) {
             socket = OpenConnection(nameInput);
             JoinRoom(socket, "lobby", setUsers, setIncomingCall, setCallerSignal, setCaller);
-            console.log(allUsers);
         } else {
             console.log("Already connected to server!");
         }
@@ -59,7 +64,7 @@ export const App = () => {
                         {user.name}
                         {user.id !== socket.id &&
                             <button onClick={() => {
-                                CallUser(socket, user.id, setOutgoingCall);
+                                CallUser(socket, user.id, setOutgoingCall, setCallAccepted, localStream, setRemoteStream);
                                 setCalleeName(user.name);
                             }}>Ring</button>
                         }
@@ -74,16 +79,14 @@ export const App = () => {
             {incomingCall && !callAccepted &&
                 <div>
                     <h3>{caller.name + " ringer dig!"}</h3>
-                    <button onClick={() => CallRespond(socket, true, caller, callerSignal, setCallAccepted, setIncomingCall)}>Svara</button>
-                    <button onClick={() => CallRespond(socket, false, caller, callerSignal, setCallAccepted, setIncomingCall)}>Avböj</button>
+                    <button onClick={() => CallRespond(socket, true, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream)}>Svara</button>
+                    <button onClick={() => CallRespond(socket, false, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream)}>Avböj</button>
                 </div>
             }
 
             {callAccepted &&
-                <h3>Svarade på samtalet!</h3>
+                <VideoStreamer localStream={localStream} remoteStream={remoteStream} />
             }
-
-            <VideoStreamer remoteStream={new MediaStream()} />
         </div>
     );
 };

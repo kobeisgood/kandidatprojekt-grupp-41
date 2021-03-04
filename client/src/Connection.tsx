@@ -4,7 +4,7 @@ import { UserID, UserName, User } from './Types';
 
 
 export const OpenConnection = (userName: string) => {
-    let socket = io.connect('http://localhost:4000');
+    let socket = io.connect('http://192.168.1.125:4000');
 
     socket.emit('first-connection', userName);
     socket.on('connect-response', (response: boolean) => {
@@ -89,67 +89,73 @@ export const CallRespond = (
     caller: User,
     callerSignal: Peer.SignalData,
     setCallAccepted: Function,
-    setIncomingCall: Function
+    setIncomingCall: Function,
+    localStream: MediaStream,
+    setRemoteVideoStream: Function
 ) => {
     setCallAccepted(answer);
     setIncomingCall(false);
 
     const peer = new Peer({
-        initiator: false,
+        initiator: false, // User is receiver of call
         trickle: false,
-        stream: undefined,
+        stream: localStream,
     });
 
-    peer.on('signal', signal => {
+    peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         if (answer) {
             socket.emit('accept-call', { signalData: signal, caller: caller.id });
-
-            peer.on('stream', stream => {
-                // Set caller video stream
-            });
         } else {
             socket.emit('decline-call', { caller: caller.id });
         }
     });
 
-    peer.signal(callerSignal);
+    peer.on('stream', stream => {
+        console.log("Received stream!");
+        setRemoteVideoStream(stream);
+    });
+
+    peer.signal(callerSignal); // Accept caller's signal
 };
 
 export const CallUser = (
     socket: SocketIOClient.Socket,
     callee: UserID,
-    setOutgoingCall: Function
+    setOutgoingCall: Function,
+    setCallAccepted: Function,
+    localStream: MediaStream,
+    setRemoteStream: Function
 ) => {
     const peer = new Peer({
         initiator: true, // User is initiator of the call
         trickle: false,
-        stream: undefined
+        stream: localStream
     });
 
     // Beginning of handshake roundtrip
-    peer.on('signal', signal => {
+    peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         setOutgoingCall(true);
         socket.emit('call-user', { callee: callee, signalData: signal, caller: socket.id });
     });
 
-    peer.on('signal', stream => {
-        // Set callee video stream
+    peer.on('stream', stream => {
+        console.log("Received stream!");
+        setRemoteStream(stream);
     });
 
     socket.on('call-accepted', (signalData: Peer.SignalData) => {
-        console.log("Användare svarade");
-
         setOutgoingCall(false);
-        peer.signal(signalData);
+        setCallAccepted(true);
+        peer.signal(signalData); // Accept returnning callee signal
 
-        socket.off('call-accepted');
-        socket.off('call-declined');
+        //socket.off('call-accepted');
+        //socket.off('call-declined');
     });
 
     socket.on('call-declined', () => {
         setOutgoingCall(false);
         console.log("User declined your call!");
-        socket.off('call-accepted');
-        socket.off('call-declined');
+        //socket.off('call-accepted');
+        //socket.off('call-declined');
     });
 };
