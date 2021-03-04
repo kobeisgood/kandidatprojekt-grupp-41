@@ -2,9 +2,6 @@ import { useState } from 'react';
 import { OpenConnection, JoinRoom, CallRespond, CallUser } from './Connection';
 import { User } from './Types';
 import { VideoStreamer } from './components/VideoStreamer';
-import { CallButton } from './components/CallButton';
-import { StartVideoButton } from './components/StartVideoButton';
-import { HangUpButton } from './components/HangUpButton';
 
 import './App.css';
 
