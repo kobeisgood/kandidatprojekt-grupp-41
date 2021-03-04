@@ -1,39 +1,33 @@
 import React from 'react';
+import { CallButton } from './CallButton';
+import { StartVideoButton } from './StartVideoButton';
+import { HangUpButton } from './HangUpButton';
 
-export class VideoStreamer extends React.Component {
+
+
+ export class VideoStreamer extends React.Component {
+   localVideoStreamRef: any;
+   remoteVideoStreamRef:any;
+
     constructor(props:any) {
         super(props);
-        this.streamCamVideo = this.streamCamVideo.bind(this)
+        this.localVideoStreamRef = React.createRef();
+        this.remoteVideoStreamRef = React.createRef();
     }
 
-    streamCamVideo() {
-        var constraints = { audio: true, video: { width: 1280, height: 720 } };
-        navigator.mediaDevices
-          .getUserMedia(constraints)
-          .then(function(mediaStream) {
-            var video = document.querySelector("video");
-
-            if (video != null) {
-                video.srcObject = mediaStream;
-                video.onloadedmetadata = function(e) {
-                if (video != null) {
-                    video.play();
-                }
-                };
-            }
-          })
-          .catch(function(err) {
-            console.log(err.name + ": " + err.message);
-          }); // always check for errors at the end.
-      }
       render() {
         return (
           <div>
             <div id="container">
-              <video autoPlay={true} id="videoElement" ></video>
+              <video autoPlay={true} id="localVideo" ref={this.localVideoStreamRef}></video>
+              <video autoPlay={true} id="remoteVideo" ref={this.remoteVideoStreamRef}></video>
             </div>
+
+                <StartVideoButton localVideoElement={this.localVideoStreamRef} />
+                <CallButton localVideoElement={this.localVideoStreamRef} remoteVideoElement={this.remoteVideoStreamRef}/>
+                <HangUpButton />
+
             <br/>
-            <button onClick={this.streamCamVideo}>Start streaming</button>
           </div>
         );
       }
