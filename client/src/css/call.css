@@ -16,7 +16,7 @@
 .remote-video-container {
     /* background-color: red; */
     height: 80vh;
-    width: 50%;
+    width: 50vw;
     margin:auto;
     position: relative;
 }
@@ -43,29 +43,29 @@
 }
 
 .function-button-container h2 {
-    font-size: 1vw;
+    font-size: 1.5vw;
     font-weight: bold;
 }
 
 
 .function-button {
-  height: 12vh;
-  width: 6vw;
+  height: 7vw;
+  width: 7vw;
   background-color: black;
   border-radius: 50%;
   display: inline-block;
   color: white;
-  font-size: 1.2vmin;
+  font-size: 0.8vw;
 }
 
 .end-call-button {
-  height: 12vh;
-  width: 6vw;
+  height: 7vw;
+  width: 7vw;
   background-color: red;
   border-radius: 50%;
   display: inline-block;
   color: white;
-  font-size: 1.2vmin;
+  font-size: 0.7vw;
 }
 
 
@@ -83,6 +83,7 @@ ul > li {
     position: absolute;
     top: 0;
     right: 0;
+    margin-right: 5em;
 }
 
 .local-video-container {
