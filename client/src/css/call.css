@@ -9,8 +9,6 @@
 }
 
 .video-container {
-    display:flex;
-    justify-content: center;
     width: 100%;
 }
 
@@ -26,7 +24,7 @@
 .function-bar-container {
     position: relative;
     /*background-color: yellow;  temp */
-    height: 20vh;
+    height: 19vh;
     width: 100vw;
     margin:auto;
     text-align: center;
@@ -82,6 +80,9 @@ ul > li {
 .right-side-container {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .local-video-container {
