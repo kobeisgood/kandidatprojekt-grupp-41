@@ -3,6 +3,9 @@ import '../css/call.css';
 import { CallViewButton } from '../components/CallViewButton'
 import { EndCallButton } from '../components/EndCallButton'
 
+// <img src="https://www.irishtimes.com/polopoly_fs/1.4456323.1610462111!/image/image.jpg_gen/derivatives/box_620_330/image.jpg" width="100%" height="100%"/> 
+
+
 export const CallView = () => {
    
     const [micState, setMicState] = useState(true);
@@ -23,7 +26,6 @@ export const CallView = () => {
     return(
         <div className="call-container">
             <div className="local-video-container">
-                <img src="https://www.irishtimes.com/polopoly_fs/1.4456323.1610462111!/image/image.jpg_gen/derivatives/box_620_330/image.jpg" width="100%" height="100%"/>
             </div>
 
             {micState === false ? <div className="function-off-container">

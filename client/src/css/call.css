@@ -18,13 +18,14 @@
     position: relative;
     /*background-color: yellow;  temp */
     height: 20vh;
+    width: 100vw;
     margin:auto;
     text-align: center;
     padding-top: 1vh;
 }
 
 .function-button-container {
-    width: 45vh;
+    width: 30vw;
     height: 17vh;
     margin:auto;
     /*border-style: solid;
@@ -35,27 +36,29 @@
 }
 
 .function-button-container h2 {
-    font-size: 2rem;
+    font-size: 1vw;
     font-weight: bold;
 }
 
 
 .function-button {
   height: 12vh;
-  width: 12vh;
+  width: 6vw;
   background-color: black;
   border-radius: 50%;
   display: inline-block;
   color: white;
+  font-size: 1.2vmin;
 }
 
 .end-call-button {
   height: 12vh;
-  width: 12vh;
+  width: 6vw;
   background-color: red;
   border-radius: 50%;
   display: inline-block;
   color: white;
+  font-size: 1.2vmin;
 }
 
 
@@ -68,23 +71,26 @@ ul > li {
 }
 
 .local-video-container {
-    background-color: black;
+    background-color: black; 
     height: 30vh;
-    width: 23vh;
+    width: 14vw;
     float:right;
     margin-top: 3em;
-    margin-right: 7em;
+    margin-right: 4.7em;
     border-radius: 20%;
 }
 
+/* Pop up on the right side that displays if mic or cam is off */
 .function-off-container{
     height: 5vh;
-    width: 10vh;
+    width: 14vw;
     float: right;
     margin-top: 1em;
-    margin-right: 13vh;
+    margin-right: 3em;
     background-color: red;
     clear: right;
+    font-size: 1vw;
+    text-align: center;
 }
 
 
