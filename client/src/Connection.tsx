@@ -100,11 +100,16 @@ export const CallRespond = (
         stream: undefined,
     });
 
-    peer.on("signal", signal => {
-        if (answer)
-            socket.emit("accept-call", { signalData: signal, caller: caller.id })
-        else
-            socket.emit("decline-call", { caller: caller.id })
+    peer.on('signal', signal => {
+        if (answer) {
+            socket.emit('accept-call', { signalData: signal, caller: caller.id });
+
+            peer.on('stream', stream => {
+                // Set caller video stream
+            });
+        } else {
+            socket.emit('decline-call', { caller: caller.id });
+        }
     });
 
     peer.signal(callerSignal);
@@ -125,6 +130,10 @@ export const CallUser = (
     peer.on('signal', signal => {
         setOutgoingCall(true);
         socket.emit('call-user', { callee: callee, signalData: signal, caller: socket.id });
+    });
+
+    peer.on('signal', stream => {
+        // Set callee video stream
     });
 
     socket.on('call-accepted', (signalData: Peer.SignalData) => {

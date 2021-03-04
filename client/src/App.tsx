@@ -10,6 +10,7 @@ function App() {
     const [nameInput, setNameInput] = useState("");
     const [roomIdInput, setIdInput] = useState("");
     const [allUsers, setUsers] = useState([]);
+    const [stream, setStream] = useState(null);
     const [outgoingCall, setOutgoingCall] = useState(false);
     const [calleeName, setCalleeName] = useState("");
     const [callAccepted, setCallAccepted] = useState(false);
