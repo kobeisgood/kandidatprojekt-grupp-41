@@ -2,9 +2,15 @@ import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import { UserID, UserName, User } from './Types';
 
+const useHTTPS = false; // Only enable this if you know what it means
 
 export const OpenConnection = (userName: string) => {
-    let socket = io.connect('http://192.168.1.125:4000');
+    let socket: SocketIOClient.Socket;
+
+    if (useHTTPS)
+        socket = io.connect('https://192.168.1.125:4000');
+    else
+        socket = io.connect('http://192.168.1.125:4000');
 
     socket.emit('first-connection', userName);
     socket.on('connect-response', (response: boolean) => {

@@ -1,17 +1,31 @@
 import { Server, Socket } from 'socket.io';
 import Peer from 'simple-peer'; // WebRTC wrapper library
 
-const express = require('express');
+const useHTTPS = false; // Only enable this if you know what it means
+
+const
+    express = require('express'),
+    https = require('https'),
+    http = require('http'),
+    fs = require('fs'),
+    cors = require('cors');
+
 const app = express();
-const server = app.listen(4000);
+app.use(cors());
+
+let server: any;
+if (useHTTPS)
+    server = https.createServer({
+        key: fs.readFileSync('src/certs/key.key'),
+        cert: fs.readFileSync('src/certs/cert.crt')
+    }, app).listen(4000);
+else
+    server = http.createServer(app).listen(4000);
+
 const io = new Server(server, { cors: { origin: '*' } });
 
 
 console.log("Server up and running...");
-
-app.get('/', (req, res) => {
-    res.redirect('localhost:3000');
-});
 
 type UserID = string;
 
@@ -73,9 +87,9 @@ io.on('connection', (socket: Socket) => {
 
         if (!userIsConnected(userId)) { // If not already connected
             addUser(userId, userName);
-    
+
             console.log("\nUser with ID " + userId + " connected.");
-    
+
             socket.emit('connect-response', users);
         } else {
             socket.emit('connect-response', undefined);
