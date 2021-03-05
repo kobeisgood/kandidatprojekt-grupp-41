@@ -15,7 +15,6 @@ export const CallingPopup = () => {
                         <img className="loading-dots-gif" src="https://www.braheskolan.se/core/dependencies/loader.gif" alt="Tre punkter visar laddningsanimation"/>
                     </div>
                     
-
                     <div className="calling-horisontal-flexbox-container">
                         <div className="calling-person-container">
                             <img className="caller-profile-picture" src="https://i.redd.it/avif889dhh751.jpg" alt="Profilbild av personen som ringer"/>
