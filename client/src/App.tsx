@@ -79,18 +79,12 @@ export const App = () => {
             }
 
             {incomingCall && !callAccepted &&
-                <div>
-                    <h3>{caller.name + " ringer dig!"}</h3>
-                    <button onClick={() => CallRespond(socket, true, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream)}>Svara</button>
-                    <button onClick={() => CallRespond(socket, false, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream)}>Avböj</button>
-                </div>
+                <CallPopup />
             }
 
             {callAccepted &&
                 <VideoStreamer localStream={localStream} remoteStream={remoteStream} />
             }
-            
-            <CallPopup />
         </div>
 
     );

@@ -7,7 +7,6 @@
 }
 
 .remote-video-container {
-    /* background-color: red; */
     height: 80vh;
     width: 50%;
     margin:auto;
@@ -16,7 +15,6 @@
 
 .function-bar-container {
     position: relative;
-    /*background-color: yellow;  temp */
     height: 20vh;
     width: 100vw;
     margin:auto;
@@ -101,6 +99,8 @@ ul > li {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
