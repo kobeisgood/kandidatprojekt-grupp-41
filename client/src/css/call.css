@@ -147,16 +147,17 @@ ul > li {
 }
 
 .incoming-call-buttons-container {
+    width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
 }
 
 .incoming-call-button-container {
     text-align: center;
-}
-
-.incoming-call-buttons-container div, .caller-name-text {
-    margin: 0 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .incoming-call-button {
@@ -192,4 +193,27 @@ ul > li {
 
 .decline-call-button:hover {
     background-color: rgb(231, 50, 35, 0.8);
+}
+
+/* --------------- CALLING POPUP VIEW STUFF ----------------- */
+
+.calling-popup-flexbox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: blueviolet;
+}
+
+.calling-person-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calling-horisontal-flexbox-container {
+    width: 100%;
+    background-color: brown;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
