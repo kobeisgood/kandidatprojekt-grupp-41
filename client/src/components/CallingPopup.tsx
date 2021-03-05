@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/call.css';
+import '../css/button.css';
 
 export const CallingPopup = () => {
     const endCall = () => {
@@ -22,7 +23,7 @@ export const CallingPopup = () => {
                         </div>
 
                         <div className="decline-button-container incoming-call-button-container">
-                            <button onClick={endCall} className="decline-call-button incoming-call-button"></button>
+                            <button onClick={endCall} className="decline-call-button incoming-call-button button"></button>
                             <h3>Avsluta</h3>
                         </div>
                     </div>
