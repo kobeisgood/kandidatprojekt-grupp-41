@@ -8,7 +8,7 @@ import { CallingPopup } from './components/CallingPopup';
 function App() {
     return (
         <div>
-            <CallPopup />
+            <CallingPopup />
         </div>
 
     );
