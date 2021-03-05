@@ -156,7 +156,7 @@ ul > li {
 }
 
 .incoming-call-buttons-container div, .caller-name-text {
-    margin: 0 80px;
+    margin: 0 5vw;
 }
 
 .incoming-call-button {
