@@ -3,6 +3,12 @@ import '../css/call.css';
 import { CallViewButton } from '../components/CallViewButton'
 import { EndCallButton } from '../components/EndCallButton'
 
+import micOn from "../icons/microphone-solid-on.svg"
+import micOff from "../icons/microphone-solid-off.svg"
+import camOn from "../icons/camera-solid-on.svg"
+import camOff from "../icons/camera-solid-off.svg"
+
+
 //<img src="https://www.irishtimes.com/polopoly_fs/1.4456323.1610462111!/image/image.jpg_gen/derivatives/box_620_330/image.jpg" width="100%" height="100%"/> 
 
 
@@ -16,11 +22,11 @@ export const CallView = () => {
     }
 
     const micClicked = () => {
-        setMicState(false)
+        setMicState(!micState)
     }
 
     const camClicked = () => {
-        setCamState(false)
+        setCamState(!camState)
     }
 
     return(
@@ -38,11 +44,11 @@ export const CallView = () => {
                     </div>
 
                     {micState === false ? <div className="function-off-container">
-                        Mikrofon avstängd!
+                        DIN MIKROFON ÄR AVSTÄNGD
                     </div> : <></> }
 
                     {camState === false ? <div className="function-off-container">
-                        Kamera avstängd!
+                        DIN KAMERA ÄR AVSTÄNGD
                     </div> : <></> }
 
                 </div>
@@ -53,8 +59,12 @@ export const CallView = () => {
 
             <div className="function-bar-container">
                 <ul>
-                    <li> <CallViewButton functionDesc={"Stäng av mikrofon"} icon={"fa-microphone"} buttonFunction={micClicked}/> </li>
-                    <li> <CallViewButton functionDesc={"Stäng av kamera"} icon={"fa-camera"} buttonFunction={camClicked}/></li>
+                    {micState === true ? <li> <CallViewButton functionDesc={"Stäng av mikrofon"} icon={micOn} buttonFunction={micClicked}/> </li> : 
+                    <li> <CallViewButton functionDesc={"Stäng av mikrofon"} icon={micOff} buttonFunction={micClicked}/> </li> }
+
+                    {camState === true ? <li> <CallViewButton functionDesc={"Stäng av kamera"} icon={camOn} buttonFunction={camClicked}/></li> : 
+                    <li> <CallViewButton functionDesc={"Stäng av kamera"} icon={camOff} buttonFunction={camClicked}/></li>}
+                    
                     <li> <EndCallButton endCallFunction={test}/></li>
                 </ul>
                
