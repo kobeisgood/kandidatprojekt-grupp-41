@@ -1,21 +1,29 @@
 .call-container {
-    position: relative;
+    display:flex;
+    flex-flow: row wrap;
+    
 }
 
 #call-container {
     min-height: 100vh;
 }
 
+.video-container {
+    width: 100%;
+}
+
+/* container that displays the remote stream */
 .remote-video-container {
     height: 80vh;
-    width: 50%;
+    width: 50vw;
     margin:auto;
     position: relative;
 }
 
 .function-bar-container {
     position: relative;
-    height: 20vh;
+    /*background-color: yellow;  temp */
+    height: 19vh;
     width: 100vw;
     margin:auto;
     text-align: center;
@@ -34,29 +42,30 @@
 }
 
 .function-button-container h2 {
-    font-size: 1vw;
+    font-size: 1.5vw;
     font-weight: bold;
 }
 
 
 .function-button {
-  height: 12vh;
-  width: 6vw;
+  height: 7vw;
+  width: 7vw;
   background-color: black;
   border-radius: 50%;
   display: inline-block;
   color: white;
-  font-size: 1.2vmin;
+  font-size: 0.8vw;
 }
 
+
 .end-call-button {
-  height: 12vh;
-  width: 6vw;
+  height: 7vw;
+  width: 7vw;
   background-color: red;
   border-radius: 50%;
   display: inline-block;
   color: white;
-  font-size: 1.2vmin;
+  font-size: 0.7vw;
 }
 
 
@@ -68,27 +77,38 @@ ul > li {
     /* this fix is needed for IE7- */
 }
 
+.right-side-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5em;
+}
+
 .local-video-container {
     background-color: black; 
-    height: 30vh;
-    width: 14vw;
+    height: 15vw;
+    width: 15vw;
     float:right;
     margin-top: 3em;
-    margin-right: 4.7em;
     border-radius: 20%;
 }
 
 /* Pop up on the right side that displays if mic or cam is off */
 .function-off-container{
-    height: 5vh;
-    width: 14vw;
-    float: right;
+    height: 2vw;
+    width: 15vw;
     margin-top: 1em;
-    margin-right: 3em;
-    background-color: red;
+    background-color:#484848;
     clear: right;
     font-size: 1vw;
     text-align: center;
+    color:white;
+    border-radius: 1vw;
+    padding-top: 0.5vw;
+    font-weight: bold;
+
 }
 
 
