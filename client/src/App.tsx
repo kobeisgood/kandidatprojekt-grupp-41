@@ -5,7 +5,8 @@ import { OpenLocalStream } from './StreamCamVideo';
 
 import './App.css';
 import { CallView } from './pages/CallView';
-import { CallPopup } from './components/CallPopup'
+import { CallPopup } from './components/CallPopup';
+import { CallingPopup } from './components/CallingPopup';
 
 
 let socket: SocketIOClient.Socket;
