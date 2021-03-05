@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { User } from './Types';
 import { OpenConnection, JoinRoom, CallRespond, CallUser } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
-import { VideoStreamer } from './components/VideoStreamer';
 
 import './App.css';
 import { CallView } from './pages/CallView';
@@ -51,41 +50,51 @@ export const App = () => {
 
     return (
         <div className="App">
-            <input type="text" onChange={handleNameInput} placeholder="Ditt namn..." />
-            <button onClick={joinLobby}>Logga in</button>
+            {socket === undefined &&
+                <>
+                    <input type="text" onChange={handleNameInput} placeholder="Ditt namn..." />
+                    <button onClick={joinLobby}>Logga in</button>
+                </>
+            }
 
             {/*
             <input type="text" onChange={handleIdInput} placeholder="Rum-ID..." />
             <button onClick={joinRoom}>Gå med i rum</button>*/
             }
 
-            <h3>Inloggade användare:</h3>
-            <ul>
-                {allUsers.map((user: User) =>
-                    <li key={user.id}>
-                        {user.name}
-                        {user.id !== socket.id &&
-                            <button onClick={() => {
-                                CallUser(socket, user.id, setOutgoingCall, setCallAccepted, localStream, setRemoteStream);
-                                setCalleeName(user.name);
-                            }}>Ring</button>
-                        }
-                    </li>
-                )}
-            </ul>
+            {!callAccepted &&
+                <>
+                    <h3>Inloggade användare:</h3>
+                    <ul>
+                        {allUsers.map((user: User) =>
+                            <li key={user.id}>
+                                {user.name}
+                                {user.id !== socket.id &&
+                                    <button onClick={() => {
+                                        CallUser(socket, user.id, setOutgoingCall, setCallAccepted, localStream, setRemoteStream);
+                                        setCalleeName(user.name);
+                                    }}>Ring</button>
+                                }
+                            </li>
+                        )}
+                    </ul>
+                </>
+            }
 
             {outgoingCall &&
                 <h3>{"Ringer " + calleeName + "..."}</h3>
             }
 
             {incomingCall && !callAccepted &&
-                <CallPopup />
+                <CallPopup
+                    callerName={caller.name}
+                    callRespond={(answer: boolean) => CallRespond(socket, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream, answer)}
+                />
             }
 
             {callAccepted &&
-                <VideoStreamer localStream={localStream} remoteStream={remoteStream} />
+                <CallView localStream={localStream} remoteStream={remoteStream} />
             }
         </div>
-
     );
 };

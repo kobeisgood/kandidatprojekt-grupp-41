@@ -91,13 +91,13 @@ const ListenForCalls = (
 
 export const CallRespond = (
     socket: SocketIOClient.Socket,
-    answer: boolean,
     caller: User,
     callerSignal: Peer.SignalData,
     setCallAccepted: Function,
     setIncomingCall: Function,
     localStream: MediaStream,
-    setRemoteVideoStream: Function
+    setRemoteVideoStream: Function,
+    answer: boolean
 ) => {
     setCallAccepted(answer);
     setIncomingCall(false);
