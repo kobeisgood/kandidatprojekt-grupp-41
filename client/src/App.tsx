@@ -5,6 +5,8 @@ import { OpenLocalStream } from './StreamCamVideo';
 import { VideoStreamer } from './components/VideoStreamer';
 
 import './App.css';
+import { CallView } from './pages/CallView';
+import { CallPopup } from './components/CallPopup'
 
 
 let socket: SocketIOClient.Socket;
@@ -87,6 +89,9 @@ export const App = () => {
             {callAccepted &&
                 <VideoStreamer localStream={localStream} remoteStream={remoteStream} />
             }
+            
+            <CallPopup />
         </div>
+
     );
 };

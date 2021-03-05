@@ -1,0 +1,195 @@
+.call-container {
+    position: relative;
+}
+
+#call-container {
+    min-height: 100vh;
+}
+
+.remote-video-container {
+    /* background-color: red; */
+    height: 80vh;
+    width: 50%;
+    margin:auto;
+    position: relative;
+}
+
+.function-bar-container {
+    position: relative;
+    /*background-color: yellow;  temp */
+    height: 20vh;
+    width: 100vw;
+    margin:auto;
+    text-align: center;
+    padding-top: 1vh;
+}
+
+.function-button-container {
+    width: 30vw;
+    height: 17vh;
+    margin:auto;
+    /*border-style: solid;
+    border-color: black;*/
+    text-align:center;
+    word-wrap: break-word;
+    display: table;
+}
+
+.function-button-container h2 {
+    font-size: 1vw;
+    font-weight: bold;
+}
+
+
+.function-button {
+  height: 12vh;
+  width: 6vw;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+  font-size: 1.2vmin;
+}
+
+.end-call-button {
+  height: 12vh;
+  width: 6vw;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  color: white;
+  font-size: 1.2vmin;
+}
+
+
+ul > li {
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
+    zoom: 1;
+    *display:inline;
+    /* this fix is needed for IE7- */
+}
+
+.local-video-container {
+    background-color: black; 
+    height: 30vh;
+    width: 14vw;
+    float:right;
+    margin-top: 3em;
+    margin-right: 4.7em;
+    border-radius: 20%;
+}
+
+/* Pop up on the right side that displays if mic or cam is off */
+.function-off-container{
+    height: 5vh;
+    width: 14vw;
+    float: right;
+    margin-top: 1em;
+    margin-right: 3em;
+    background-color: red;
+    clear: right;
+    font-size: 1vw;
+    text-align: center;
+}
+
+
+/* --------------- CALL POPUP VIEW STUFF ----------------- */
+
+.full-page-container {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.call-popup-container {
+    background-color: white;
+    width: 70%;
+    height: fit-content;
+    border-radius: 25px;
+    padding: 35px;
+}
+
+.call-popup-container h3 {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.call-popup-flexbox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.call-popup-flexbox-container h3 {
+    margin-top: 0;
+}
+
+.caller-profile-picture {
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.caller-name-text {
+    text-align: center;
+    font-weight: 500;
+}
+
+.caller-name-text span {
+    font-weight: normal;
+}
+
+.incoming-call-buttons-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.incoming-call-button-container {
+    text-align: center;
+}
+
+.incoming-call-buttons-container div, .caller-name-text {
+    margin: 0 80px;
+}
+
+.incoming-call-button {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-top: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.answer-call-button {
+    background-image: url(https://cdn0.iconfinder.com/data/icons/social-and-ui-3/50/63-512.png);
+    background-size: 70px 70px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(132, 216, 114);
+}
+
+.answer-call-button:hover {
+    background-color: rgba(132, 216, 114, 0.8);
+}
+
+.decline-call-button {
+    background-image: url(https://icon-library.com/images/hang-up-icon/hang-up-icon-23.jpg);
+    background-size: 70px 70px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgb(231, 50, 35);
+}
+
+.decline-call-button:hover {
+    background-color: rgb(231, 50, 35, 0.8);
+}
