@@ -8,9 +8,9 @@ export const OpenConnection = (userName: string) => {
     let socket: SocketIOClient.Socket;
 
     if (useHTTPS)
-        socket = io.connect('https://192.168.1.125:4000');
+        socket = io.connect('https://localhost:4000');
     else
-        socket = io.connect('http://192.168.1.125:4000');
+        socket = io.connect('http://localhost:4000');
 
     socket.emit('first-connection', userName);
     socket.on('connect-response', (response: boolean) => {
