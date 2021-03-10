@@ -1,17 +1,22 @@
 import { Server, Socket } from 'socket.io';
 import Peer from 'simple-peer'; // WebRTC wrapper library
 
-const useHTTPS = false; // Only enable this if you know what it means
 
+/* SERVER INITIATION */
 const
+    dotenv = require('dotenv'),
     express = require('express'),
     https = require('https'),
     http = require('http'),
     fs = require('fs'),
-    cors = require('cors');
+    cors = require('cors'),
+    useHTTPS = false; // Only enable this if you know what it means
 
 const app = express();
-app.use(cors());
+app.use(cors()); // For avoiding CORS errors
+
+dotenv.config(); // For reading .env file
+
 
 let server: any;
 if (useHTTPS)
@@ -25,6 +30,21 @@ else
 const io = new Server(server, { cors: { origin: '*' } });
 
 
+// Database connection
+const
+    mongoose = require('mongoose'),
+    dbUri = process.env.DB_URI;
+
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => {
+        console.log("Connected to database!");
+    })
+    .catch((err) => {
+        console.log("Could not connect to database!");
+    });
+
+
+// Beginning of server
 console.log("Server up and running...");
 
 type UserID = string;
