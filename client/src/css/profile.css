@@ -1,5 +1,5 @@
 .change-name {
-    background-image: url('/src/icons/change-name.svg');
+    background-image: url('/src/icons/profile/change-name.svg');
     height: 187px;
     width: 270px;
     border-radius: 20px;
@@ -7,7 +7,7 @@
 }
 
 .change-number {
-    background-image: url('/src/icons/change-number.svg');
+    background-image: url('/src/icons/profile/change-number.svg');
     height: 187px;
     width: 270px;
     border-radius: 20px;
@@ -15,7 +15,7 @@
 }
 
 .change-picture {
-    background-image: url('/src/icons/change-picture.svg');
+    background-image: url('/src/icons/profile/change-picture.svg');
     height: 187px;
     width: 270px;
     border-radius: 20px;
@@ -23,7 +23,7 @@
 }
 
 .change-password {
-    background-image: url('/src/icons/change-password.svg');
+    background-image: url('/src/icons/profile/change-password.svg');
     height: 187px;
     width: 270px;
     border-radius: 20px;
