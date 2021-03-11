@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../css/profile.css';
+import hjordis from "../images/hjordis.png"
 
 export const ProfilePage = () => {
     const test = () => {
@@ -16,7 +17,7 @@ export const ProfilePage = () => {
             </header>
             {/* Container for profil pic, name and number */}
             <div className="profile-big-info-container">
-                <div className="profile-info-picture-container"><img src="/images/hjordis.jpg" alt="profilbild"/></div>
+                <div className="profile-info-picture-container"><img src={hjordis} alt="profilbild"/></div>
                 <div className="profile-info-contact-container">
                     <button>Då</button>
                     <button>Då</button>
