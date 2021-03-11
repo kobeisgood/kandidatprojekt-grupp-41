@@ -5,6 +5,7 @@ import { OpenLocalStream } from './StreamCamVideo';
 
 import './App.css';
 import { CallView } from './pages/CallView';
+import { ProfilePage } from './pages/ProfilePage';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 
@@ -27,6 +28,7 @@ export const App = () => {
     const [incomingCall, setIncomingCall] = useState(false);
     const [caller, setCaller]: [User, Function] = useState({ id: "", name: "" });
     const [callerSignal, setCallerSignal] = useState({});
+    const [goToProfile, setGoToProfile] = useState(false);
 
     const handleNameInput = (event: any) => {
         setNameInput(event.target.value);
@@ -76,6 +78,11 @@ export const App = () => {
                                         setCalleeName(user.name);
                                     }}>Ring</button>
                                 }
+                                {user.id == socket.id &&
+                                <button onClick={() => {
+                                    setGoToProfile(true);
+                                }}>Profil</button>
+                            }
                             </li>
                         )}
                     </ul>
@@ -96,6 +103,9 @@ export const App = () => {
             {callAccepted &&
                 <CallView localStream={localStream} remoteStream={remoteStream} />
             }
+
+            {goToProfile &&
+                <ProfilePage localStream={localStream} remoteStream={remoteStream} />}
         </div>
     );
 };
