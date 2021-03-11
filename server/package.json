@@ -4,7 +4,7 @@
     "description": "",
     "main": "main.js",
     "scripts": {
-        "start": "tsc src/Main.tsx --outDir build && node build/Main.js"
+        "start": "tsc --jsx react src/Main.tsx --outDir build  && node build/Main.js"
     },
     "author": "",
     "license": "ISC",

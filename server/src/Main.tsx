@@ -1,5 +1,6 @@
 import { Server, Socket } from 'socket.io';
-import Peer from 'simple-peer'; // WebRTC wrapper library
+import { User, UserID, CallData } from './Types';
+import { initDbConnection, getUsers, createUser } from './Database';
 
 
 /* SERVER INITIATION BEGIN */
@@ -31,71 +32,40 @@ const io = new Server(server, { cors: { origin: '*' } });
 /* SERVER INITIATION END */
 
 
-/* DATABASE CONNECTION BEGIN */
-const
-    mongoose = require('mongoose'),
-    dbUri = process.env.DB_URI;
+/* DATABASE INIT BEGIN */
+initDbConnection(); // Connect to database
 
-mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const dbConnection = mongoose.connection;
-
-dbConnection.on('error', console.error.bind(console, 'Could not connect to database:'));
-dbConnection.once('open', () => {
-    console.log("Connected to database!");
-});
-
-const userSchema = new mongoose.Schema({
-    first_name: String,
-    password: String,
-    phone_nbr: String,
-    profile_pic: String,
-    surname: String
-});
-
-const User = mongoose.model("User", userSchema, "User");
-
-/*
-const testUser = new User({ first_name: 'Bob' });
-testUser.save((err, user) => {
-    if (err)
-        return console.error(err);
-    
-    console.log("Added user");
-});
-*/
-
-User.find((err, users) => {
-    if (err)
-        return console.error(err);
-
+getUsers().then((users) => {
     console.log(users);
 });
-/* DATABASE CONNECTION END */
+
+/*
+createUser(
+    {
+        id: "test",
+        firstName: "Bob",
+        lastName: "Andersson"
+    },
+    "123",
+    "",
+    123
+).then(() => {
+    console.log("User was added!");
+});
+*/
+/* DATABASE INIT END */
 
 
 /* RUN SERVER */
 console.log("Server up and running...");
-
-type UserID = string;
-
-interface User {
-    id: UserID,
-    name: string
-}
-
-interface CallData {
-    callee: UserID,
-    signalData: Peer.SignalData,
-    caller: UserID
-}
 
 let users: User[] = []; // Local copy of all connected users
 
 const addUser = (id: UserID, name: string) => {
     users.push({
         id: id,
-        name: name
+        firstName: name,
+        lastName: ""
     });
 };
 
@@ -121,7 +91,7 @@ const getUserName = (id: UserID) => {
     });
 
     if (user !== undefined)
-        return user.name;
+        return user.firstName;
     else
         return null;
 };
