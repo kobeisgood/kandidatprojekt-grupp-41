@@ -105,7 +105,7 @@ export const App = () => {
             }
 
             {goToProfile &&
-                <ProfilePage localStream={localStream} remoteStream={remoteStream} />}
+                <ProfilePage/>}
         </div>
     );
 };
