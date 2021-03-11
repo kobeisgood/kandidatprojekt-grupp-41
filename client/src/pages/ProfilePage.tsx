@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
-import { CallViewButton } from '../components/CallViewButton';
-import { EndCallButton } from '../components/EndCallButton';
-import { VideoStreamer } from '../components/VideoStreamer';
-
 import '../css/profile.css';
 
-import micOn from "../icons/microphone-solid-on.svg"
-import micOff from "../icons/microphone-solid-off.svg"
-import camOn from "../icons/camera-solid-on.svg"
-import camOff from "../icons/camera-solid-off.svg"
-
-
 export const ProfilePage = () => {
-
-
     const test = () => {
         console.log("ahaa");
     }
@@ -28,12 +16,11 @@ export const ProfilePage = () => {
             </header>
             {/* Container for profil pic, name and number */}
             <div className="profile-big-info-container">
-                <div className="profile-info-picture-container"><img src="/src/images/hjordis.png" alt="Profilbild"></img></div>
+                <div className="profile-info-picture-container"><img src="/images/hjordis.jpg" alt="profilbild"/></div>
                 <div className="profile-info-contact-container">
                     <button>Då</button>
                     <button>Då</button>
                 </div>
-                {/* <div className="profile-info-contact-container"><button>!</button></div> */}
             </div>
 
             <ul>
