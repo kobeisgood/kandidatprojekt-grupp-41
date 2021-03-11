@@ -7,6 +7,7 @@ import './App.css';
 import { CallView } from './pages/CallView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
+import { ContactCard } from './components/ContactCard';
 
 
 let socket: SocketIOClient.Socket;
@@ -51,6 +52,7 @@ export const App = () => {
 
     return (
         <div className="App">
+            <ContactCard />
             {socket === undefined &&
                 <>
                     <input type="text" onChange={handleNameInput} placeholder="Ditt namn..." />
