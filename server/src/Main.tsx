@@ -2,7 +2,7 @@ import { Server, Socket } from 'socket.io';
 import Peer from 'simple-peer'; // WebRTC wrapper library
 
 
-/* SERVER INITIATION */
+/* SERVER INITIATION BEGIN */
 const
     dotenv = require('dotenv'),
     express = require('express'),
@@ -28,23 +28,53 @@ else
     server = http.createServer(app).listen(4000);
 
 const io = new Server(server, { cors: { origin: '*' } });
+/* SERVER INITIATION END */
 
 
-// Database connection
+/* DATABASE CONNECTION BEGIN */
 const
     mongoose = require('mongoose'),
     dbUri = process.env.DB_URI;
 
-mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => {
-        console.log("Connected to database!");
-    })
-    .catch((err) => {
-        console.log("Could not connect to database!");
-    });
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const dbConnection = mongoose.connection;
+
+dbConnection.on('error', console.error.bind(console, 'Could not connect to database:'));
+dbConnection.once('open', () => {
+    console.log("Connected to database!");
+});
+
+const userSchema = new mongoose.Schema({
+    first_name: String,
+    password: String,
+    phone_nbr: String,
+    profile_pic: String,
+    surname: String
+});
+
+const User = mongoose.model("User", userSchema, "User");
+
+/*
+const testUser = new User({ first_name: 'Bob' });
+testUser.save((err, user) => {
+    if (err)
+        return console.error(err);
+    
+    console.log("Added user");
+});
+*/
+
+User.find((err, users) => {
+    if (err)
+        return console.error(err);
+
+    console.log(users);
+});
+/* DATABASE CONNECTION END */
 
 
-// Beginning of server
+/* RUN SERVER */
 console.log("Server up and running...");
 
 type UserID = string;
@@ -60,7 +90,7 @@ interface CallData {
     caller: UserID
 }
 
-let users: User[] = []; // Stores all connected users
+let users: User[] = []; // Local copy of all connected users
 
 const addUser = (id: UserID, name: string) => {
     users.push({
