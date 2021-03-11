@@ -20,7 +20,22 @@ export const ProfilePage = () => {
 
     return (
         <div>
-            <h1>Min profil</h1>
+            {/* Header for 'tillbaka', 'Min profil' and 'Ta bort konto' */}
+            <header className="profile-header-container profile-header">
+                <button>Tillbaka</button>
+                <h1>Min profil</h1>
+                <button>Ta bort konto</button>
+            </header>
+            {/* Container for profil pic, name and number */}
+            <div className="profile-big-info-container">
+                <div className="profile-info-picture-container"><img src="/src/images/hjordis.png" alt="Profilbild"></img></div>
+                <div className="profile-info-contact-container">
+                    <button>Då</button>
+                    <button>Då</button>
+                </div>
+                {/* <div className="profile-info-contact-container"><button>!</button></div> */}
+            </div>
+
             <ul>
                 <li><button className="change-name"></button></li>
                 <li><button className="change-number"></button></li>
