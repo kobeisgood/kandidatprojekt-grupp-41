@@ -22,10 +22,10 @@ export const ProfilePage = () => {
         <div>
             <h1>Min profil</h1>
             <ul>
-                <li><button className="change-name">Ändra namn</button></li>
-                <li><button className="change-number">Ändra nummer</button></li>
-                <li><button className="change-picture">Byt bild</button></li>
-                <li><button className="change-password">Byt lösenord</button></li>
+                <li><button className="change-name"></button></li>
+                <li><button className="change-number"></button></li>
+                <li><button className="change-picture"></button></li>
+                <li><button className="change-password"></button></li>
             </ul>
         </div>
     );

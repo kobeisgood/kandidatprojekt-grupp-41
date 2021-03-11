@@ -1,33 +1,31 @@
 .change-name {
-    background-image: url('/client/src/icons/change-name.svg');
-    height: 7vw;
-    width: 7vw;
+    background-image: url('/src/icons/change-name.svg');
+    height: 187px;
+    width: 270px;
+    border-radius: 20px;
+    border-color: rgba(111,111,111,0.2);
 }
 
 .change-number {
-    height: 7vw;
-    width: 7vw;
-    background-color: black;
-    border-radius: 50%;
-    display: inline-block;
-    color: white;
-    font-size: 0.8vw;
+    background-image: url('/src/icons/change-number.svg');
+    height: 187px;
+    width: 270px;
+    border-radius: 20px;
+    border-color: rgba(111,111,111,0.2);
 }
+
 .change-picture {
-    height: 7vw;
-    width: 7vw;
-    background-color: black;
-    border-radius: 50%;
-    display: inline-block;
-    color: white;
-    font-size: 0.8vw;
+    background-image: url('/src/icons/change-picture.svg');
+    height: 187px;
+    width: 270px;
+    border-radius: 20px;
+    border-color: rgba(111,111,111,0.2);
 }
+
 .change-password {
-    height: 7vw;
-    width: 7vw;
-    background-color: black;
-    border-radius: 50%;
-    display: inline-block;
-    color: white;
-    font-size: 0.8vw;
+    background-image: url('/src/icons/change-password.svg');
+    height: 187px;
+    width: 270px;
+    border-radius: 20px;
+    border-color: rgba(111,111,111,0.2);
 }
