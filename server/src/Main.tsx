@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { User, UserID, CallData } from './Types';
-import { initDbConnection, getUsers, createUser } from './Database';
+import { initDbConnection, getUsers, createUser, numberExists } from './Database';
 
 
 /* SERVER INITIATION BEGIN */
@@ -35,9 +35,17 @@ const io = new Server(server, { cors: { origin: '*' } });
 /* DATABASE INIT BEGIN */
 initDbConnection(); // Connect to database
 
+/*
 getUsers().then((users) => {
     console.log(users);
 });
+*/
+
+/*
+numberExists("1234567890").then((exists) => {
+    console.log(exists);
+});
+*/
 
 /*
 createUser(

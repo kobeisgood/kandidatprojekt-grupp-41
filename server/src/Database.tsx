@@ -44,6 +44,15 @@ export const createUser = async (user: User, psw: string, picSrc: string, phone:
 
 export const deleteUser = () => { };
 
+export const numberExists = async (nbr: string) => {
+    try {
+        const numberExists = await UserModel.exists({ phoneNbr: nbr });
+        return numberExists;
+    } catch (err) {
+        return console.log(err);
+    }
+};
+
 export const getUsers = async () => {
     try {
         const users = await UserModel.find();
