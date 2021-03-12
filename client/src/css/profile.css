@@ -61,3 +61,8 @@
     display: flex;
     flex-direction: column;
 }
+
+.profile-name {
+    font-size: 480px;
+    color: black;
+}

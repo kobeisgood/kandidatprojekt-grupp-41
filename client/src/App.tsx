@@ -105,7 +105,10 @@ export const App = () => {
             }
 
             {goToProfile &&
-                <ProfilePage/>}
+                <ProfilePage 
+                    userName={calleeName}
+                />
+            }
         </div>
     );
 };

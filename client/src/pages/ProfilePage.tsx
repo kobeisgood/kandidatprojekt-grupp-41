@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import '../css/profile.css';
 import hjordis from "../images/hjordis.png"
+import { UserName } from '../Types';
 
-export const ProfilePage = () => {
+interface Props {
+    userName: UserName
+}
+
+export const ProfilePage = (props: Props) => {
     const test = () => {
         console.log("ahaa");
     }
@@ -19,8 +24,7 @@ export const ProfilePage = () => {
             <div className="profile-big-info-container">
                 <div className="profile-info-picture-container"><img src={hjordis} alt="profilbild"/></div>
                 <div className="profile-info-contact-container">
-                    <button>Då</button>
-                    <button>Då</button>
+                <h1 className="profile-name">{props.userName}</h1>
                 </div>
             </div>
 
