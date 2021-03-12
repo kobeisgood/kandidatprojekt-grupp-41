@@ -39,3 +39,12 @@ Vi hostar vår databas på [mLab](https://mlab.com/) (gratis hosting för databa
 För att kunna ansluta måste du även skapa en fil med namnet ``.env`` i servermappen ``/server``. I denna, sätt variablen ``DB_URI=<Databasens URI>`` (googla på .env-filer om du är osäker).
 
 Tutorials för MongoDB går att hitta [här](https://www.youtube.com/watch?v=bxsemcrY4gQ).
+
+## För att arkivera Git-brancher som inte längre används
+```
+ git tag archive/<branchname> <branchname>
+ git branch -D <branchname>
+ git branch -d -r origin/<branchname>
+ git push --tags
+ git push origin :<branchname>
+```
