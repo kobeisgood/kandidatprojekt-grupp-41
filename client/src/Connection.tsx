@@ -87,6 +87,13 @@ const ListenForCalls = (
         setCallerSignal(data.signalData);
         setCaller({ id: data.caller, name: data.callerName });
     });
+
+    socket.on('call-aborted', () => {
+        setIncomingCall(false);
+        setCallerSignal({});
+        setCaller({ id: "", name: "" });
+        console.log("Caller aborted call");
+    });
 };
 
 export const CallRespond = (
@@ -113,6 +120,7 @@ export const CallRespond = (
             socket.emit('accept-call', { signalData: signal, caller: caller.id });
         } else {
             socket.emit('decline-call', { caller: caller.id });
+            return;
         }
     });
 
@@ -154,14 +162,19 @@ export const CallUser = (
         setCallAccepted(true);
         peer.signal(signalData); // Accept returnning callee signal
 
-        //socket.off('call-accepted');
-        //socket.off('call-declined');
+        socket.off('call-accepted');
+        socket.off('call-declined');
     });
 
     socket.on('call-declined', () => {
         setOutgoingCall(false);
         console.log("User declined your call!");
-        //socket.off('call-accepted');
-        //socket.off('call-declined');
+        
+        socket.off('call-accepted');
+        socket.off('call-declined');
     });
+};
+
+export const CallAbort = (socket: SocketIOClient.Socket, callee: User) => {
+    socket.emit('abort-call', callee);
 };

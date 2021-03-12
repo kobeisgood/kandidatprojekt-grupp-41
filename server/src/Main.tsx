@@ -121,6 +121,10 @@ io.on('connection', (socket: Socket) => {
         socket.to(data.caller).emit('call-declined');
     });
 
+    socket.on('abort-call', (callee: User) => {
+        socket.to(callee.id).emit('call-aborted');
+    });
+
     socket.on('disconnecting', () => {
         let userId = socket.id;
         let userName = getUserName(userId);
@@ -133,8 +137,6 @@ io.on('connection', (socket: Socket) => {
     });
 
     socket.on('disconnect', () => {
-        let userId = socket.id;
-
-        console.log("User with ID " + userId + " disconnected.");
+        console.log("User with ID " + socket.id + " disconnected.");
     });
 });

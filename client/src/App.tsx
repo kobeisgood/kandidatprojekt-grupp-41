@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { User } from './Types';
-import { OpenConnection, JoinRoom, CallRespond, CallUser } from './Connection';
+import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 
 import './App.css';
@@ -22,10 +22,9 @@ export const App = () => {
     const [localStream, setLocalStream] = useState(new MediaStream());
     const [remoteStream, setRemoteStream] = useState(new MediaStream());
     const [outgoingCall, setOutgoingCall] = useState(false);
-    const [calleeName, setCalleeName] = useState("");
     const [callAccepted, setCallAccepted] = useState(false);
     const [incomingCall, setIncomingCall] = useState(false);
-    const [caller, setCaller]: [User, Function] = useState({ id: "", name: "" });
+    const [peer, setPeer]: [User, Function] = useState({ id: "", name: "" });
     const [callerSignal, setCallerSignal] = useState({});
 
     const handleNameInput = (event: any) => {
@@ -39,14 +38,22 @@ export const App = () => {
     const joinLobby = () => {
         if (socket === undefined) {
             socket = OpenConnection(nameInput);
-            JoinRoom(socket, "lobby", setUsers, setIncomingCall, setCallerSignal, setCaller);
+            JoinRoom(socket, "lobby", setUsers, setIncomingCall, setCallerSignal, setPeer);
         } else {
             console.log("Already connected to server!");
         }
     };
 
     const joinRoom = () => {
-        JoinRoom(socket, roomIdInput, setUsers, setIncomingCall, setCallerSignal, setCaller);
+        JoinRoom(socket, roomIdInput, setUsers, setIncomingCall, setCallerSignal, setPeer);
+    };
+
+    const abortCall = () => {
+        setOutgoingCall(false);
+        setCallAccepted(false);
+        setPeer({ id: "", name: "" });
+
+        CallAbort(socket, peer);
     };
 
     return (
@@ -73,7 +80,7 @@ export const App = () => {
                                 {user.id !== socket.id &&
                                     <button onClick={() => {
                                         CallUser(socket, user.id, setOutgoingCall, setCallAccepted, localStream, setRemoteStream);
-                                        setCalleeName(user.name);
+                                        setPeer(user);
                                     }}>Ring</button>
                                 }
                             </li>
@@ -83,13 +90,13 @@ export const App = () => {
             }
 
             {outgoingCall &&
-                <h3>{"Ringer " + calleeName + "..."}</h3>
+                <CallingPopup abortCall={abortCall} />
             }
 
             {incomingCall && !callAccepted &&
                 <CallPopup
-                    callerName={caller.name}
-                    callRespond={(answer: boolean) => CallRespond(socket, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream, answer)}
+                    callerName={peer.name}
+                    callRespond={(answer: boolean) => CallRespond(socket, peer, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream, answer)}
                 />
             }
 
