@@ -190,10 +190,21 @@ export const CallUser = (
     });
 };
 
+/**
+ * Aborts an outgoing call (before it's accepted by the peer).
+ * 
+ * @param socket This client's socket
+ * @param callee The callee's name
+ */
 export const CallAbort = (socket: SocketIOClient.Socket, callee: User) => {
     socket.emit('abort-call', callee);
 };
 
+/**
+ * Ends and ongoing call by destroying the node (the SimplePeer instance).
+ * 
+ * @param myNode The SimplePeer instance create in prior
+ */
 export const CallHangUp = (myNode: Peer.Instance) => {
     myNode.destroy();
 };
