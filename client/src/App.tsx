@@ -29,6 +29,7 @@ export const App = () => {
     const [caller, setCaller]: [User, Function] = useState({ id: "", name: "" });
     const [callerSignal, setCallerSignal] = useState({});
     const [goToProfile, setGoToProfile] = useState(false);
+    const [userName, setUserName] = useState("");
 
     const handleNameInput = (event: any) => {
         setNameInput(event.target.value);
@@ -42,6 +43,7 @@ export const App = () => {
         if (socket === undefined) {
             socket = OpenConnection(nameInput);
             JoinRoom(socket, "lobby", setUsers, setIncomingCall, setCallerSignal, setCaller);
+            setUserName(nameInput);
         } else {
             console.log("Already connected to server!");
         }
@@ -106,7 +108,7 @@ export const App = () => {
 
             {goToProfile &&
                 <ProfilePage 
-                    userName={calleeName}
+                    userName={userName}
                 />
             }
         </div>

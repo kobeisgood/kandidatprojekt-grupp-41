@@ -24,7 +24,8 @@ export const ProfilePage = (props: Props) => {
             <div className="profile-big-info-container">
                 <div className="profile-info-picture-container"><img src={hjordis} alt="profilbild"/></div>
                 <div className="profile-info-contact-container">
-                <h1 className="profile-name">{props.userName}</h1>
+                    <h1 className="profile-name">{props.userName}</h1>
+                    <h1 className="profile-name">070123456789</h1>
                 </div>
             </div>
 
