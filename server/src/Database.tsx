@@ -3,11 +3,11 @@ import { connect, connection, Schema, model } from 'mongoose';
 
 
 const userSchema = new Schema({
-    first_name: String,
+    firstName: String,
     password: String,
-    phone_nbr: String,
-    profile_pic: String,
-    surname: String
+    phoneNbr: String,
+    profilePic: String,
+    lastName: String
 }, { versionKey: false });
 
 const UserModel = model("User", userSchema, "User");
@@ -26,11 +26,11 @@ export const initDbConnection = () => {
 
 export const createUser = async (user: User, psw: string, picSrc: string, phone: number) => {
     const newUser = new UserModel({
-        first_name: user.firstName,
-        surname: user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         password: psw,
-        profile_pic: picSrc,
-        phone_nbr: phone
+        profilePic: picSrc,
+        phoneNbr: phone
     });
 
     try {
