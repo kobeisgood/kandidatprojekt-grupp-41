@@ -1,5 +1,5 @@
 import { User } from './Types';
-import { connect, connection, Schema, model } from 'mongoose';
+import { connect, connection, Schema, model, Mongoose } from 'mongoose';
 
 
 const userSchema = new Schema({
@@ -7,10 +7,19 @@ const userSchema = new Schema({
     password: String,
     phoneNbr: String,
     profilePic: String,
-    lastName: String
+    lastName: String,
+    contacts: [{type: Schema.Types.ObjectId, ref: 'ContactModel'}]
 }, { versionKey: false });
 
+const contactSchema = new Schema({
+    firstName: String,
+    lastName: String,
+    profilePic: String,
+    phoneNbr: String
+}, {versionKey: false})
+
 const UserModel = model("User", userSchema, "User");
+const ContactModel = model("Contact", contactSchema, "Contact");
 
 export const initDbConnection = () => {
     connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -69,3 +78,35 @@ export const updateName = (firstName: string, lastName: string) => { };
 export const updatePhone = (phone: string) => { };
 
 export const setProfilePic = () => { };
+
+// Functions for handling Contacts //
+
+
+/**
+ * 
+ * Creates a new contact
+ *
+ * @param firstName 
+ * @param lastName 
+ * @param profilePic 
+ * @param phoneNbr 
+ * @returns 
+ */
+export const createContact = async (firstName: string, lastName: string, profilePic: string, phoneNbr: string ) => {
+    const newContact = new ContactModel({
+        firstName: firstName,
+        lastName: lastName,
+        profilePic: profilePic,
+        phoneNbr: phoneNbr
+    });
+
+    try {
+        var savedContact = await newContact.save();
+        console.log("Added contact");
+
+        return savedContact;
+    } catch (err) {
+        return console.error(err);
+    }
+
+}
