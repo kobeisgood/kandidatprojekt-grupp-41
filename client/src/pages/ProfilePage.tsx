@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import '../css/profile.css';
 import hjordis from "../images/hjordis.png"
 import { UserName } from '../Types';
+import { ProfileChangeButton } from '../components/ProfileChangeButton';
+
+import micOn from "../icons/microphone-solid-on.svg"
+import micOff from "../icons/microphone-solid-off.svg"
+import camOn from "../icons/camera-solid-on.svg"
+import camOff from "../icons/camera-solid-off.svg"
 
 interface Props {
     userName: UserName
@@ -11,6 +17,11 @@ export const ProfilePage = (props: Props) => {
     const test = () => {
         console.log("ahaa");
     }
+
+    const ButtonNameClicked = () => {
+        
+    }
+    
 
     return (
         <div>
@@ -29,12 +40,20 @@ export const ProfilePage = (props: Props) => {
                 </div>
             </div>
 
-            <ul>
-                <li><button className="change-name"></button></li>
-                <li><button className="change-number"></button></li>
-                <li><button className="change-picture"></button></li>
-                <li><button className="change-password"></button></li>
-            </ul>
+            <div className="profile-buttons-container">
+                <div>
+                   <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                </div>
+                <div>
+                    <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                </div>
+                <div>
+                    <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                </div>
+                <div>
+                    <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                </div>
+            </div>
         </div>
     );
 }
