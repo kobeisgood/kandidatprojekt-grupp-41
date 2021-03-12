@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { User } from './Types';
-import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort } from './Connection';
-import { OpenLocalStream } from './StreamCamVideo';
+import Peer from 'simple-peer';
 
 import './App.css';
+
+import { User } from './Types';
+import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp } from './Connection';
+import { OpenLocalStream } from './StreamCamVideo';
 import { CallView } from './pages/CallView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
@@ -25,7 +27,8 @@ export const App = () => {
     const [callAccepted, setCallAccepted] = useState(false);
     const [incomingCall, setIncomingCall] = useState(false);
     const [peer, setPeer]: [User, Function] = useState({ id: "", name: "" });
-    const [callerSignal, setCallerSignal] = useState({});
+    const [myNode, setMyNode] = useState(new Peer());
+    const [peerSignal, setPeerSignal] = useState({});
 
     const handleNameInput = (event: any) => {
         setNameInput(event.target.value);
@@ -38,14 +41,14 @@ export const App = () => {
     const joinLobby = () => {
         if (socket === undefined) {
             socket = OpenConnection(nameInput);
-            JoinRoom(socket, "lobby", setUsers, setIncomingCall, setCallerSignal, setPeer);
+            JoinRoom(socket, "lobby", setUsers, setIncomingCall, setPeerSignal, setPeer);
         } else {
             console.log("Already connected to server!");
         }
     };
 
     const joinRoom = () => {
-        JoinRoom(socket, roomIdInput, setUsers, setIncomingCall, setCallerSignal, setPeer);
+        JoinRoom(socket, roomIdInput, setUsers, setIncomingCall, setPeerSignal, setPeer);
     };
 
     const abortCall = () => {
@@ -54,6 +57,10 @@ export const App = () => {
         setPeer({ id: "", name: "" });
 
         CallAbort(socket, peer);
+    };
+
+    const endCall = () => {
+        CallHangUp(myNode);
     };
 
     return (
@@ -79,7 +86,7 @@ export const App = () => {
                                 {user.name}
                                 {user.id !== socket.id &&
                                     <button onClick={() => {
-                                        CallUser(socket, user.id, setOutgoingCall, setCallAccepted, localStream, setRemoteStream);
+                                        CallUser(socket, user.id, setOutgoingCall, setCallAccepted, setMyNode, localStream, setRemoteStream);
                                         setPeer(user);
                                     }}>Ring</button>
                                 }
@@ -96,12 +103,12 @@ export const App = () => {
             {incomingCall && !callAccepted &&
                 <CallPopup
                     callerName={peer.name}
-                    callRespond={(answer: boolean) => CallRespond(socket, peer, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream, answer)}
+                    callRespond={(answer: boolean) => CallRespond(socket, peer, peerSignal, setCallAccepted, setIncomingCall, setMyNode, localStream, setRemoteStream, answer)}
                 />
             }
 
             {callAccepted &&
-                <CallView localStream={localStream} remoteStream={remoteStream} />
+                <CallView localStream={localStream} remoteStream={remoteStream} endCall={endCall} />
             }
         </div>
     );

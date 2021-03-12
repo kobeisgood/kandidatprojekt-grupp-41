@@ -92,7 +92,6 @@ const ListenForCalls = (
         setIncomingCall(false);
         setCallerSignal({});
         setCaller({ id: "", name: "" });
-        console.log("Caller aborted call");
     });
 };
 
@@ -102,6 +101,7 @@ export const CallRespond = (
     callerSignal: Peer.SignalData,
     setCallAccepted: Function,
     setIncomingCall: Function,
+    setMyNode: Function,
     localStream: MediaStream,
     setRemoteVideoStream: Function,
     answer: boolean
@@ -114,6 +114,7 @@ export const CallRespond = (
         trickle: false,
         stream: localStream,
     });
+    setMyNode(peer);
 
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         if (answer) {
@@ -129,6 +130,12 @@ export const CallRespond = (
         setRemoteVideoStream(stream);
     });
 
+    peer.on('close', () => {
+        console.log("You closed the connection!");
+        setCallAccepted(false);
+        peer.destroy();
+    });
+
     peer.signal(callerSignal); // Accept caller's signal
 };
 
@@ -137,6 +144,7 @@ export const CallUser = (
     callee: UserID,
     setOutgoingCall: Function,
     setCallAccepted: Function,
+    setMyNode: Function,
     localStream: MediaStream,
     setRemoteStream: Function
 ) => {
@@ -145,6 +153,7 @@ export const CallUser = (
         trickle: false,
         stream: localStream
     });
+    setMyNode(peer);
 
     // Beginning of handshake roundtrip
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
@@ -155,6 +164,12 @@ export const CallUser = (
     peer.on('stream', stream => {
         console.log("Received stream!");
         setRemoteStream(stream);
+    });
+
+    peer.on('close', () => {
+        console.log("Peer closed the connection!");
+        setCallAccepted(false);
+        peer.destroy();
     });
 
     socket.on('call-accepted', (signalData: Peer.SignalData) => {
@@ -177,4 +192,8 @@ export const CallUser = (
 
 export const CallAbort = (socket: SocketIOClient.Socket, callee: User) => {
     socket.emit('abort-call', callee);
+};
+
+export const CallHangUp = (myNode: Peer.Instance) => {
+    myNode.destroy();
 };
