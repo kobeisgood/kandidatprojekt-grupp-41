@@ -8,7 +8,7 @@ const userSchema = new Schema({
     phone_nbr: String,
     profile_pic: String,
     surname: String
-});
+}, { versionKey: false });
 
 const UserModel = model("User", userSchema, "User");
 
