@@ -1,6 +1,8 @@
 import { User } from './Types';
 import { connect, connection, Schema, model, Mongoose } from 'mongoose';
+import { app } from './Main';
 
+// ----- DB stuff for User ----- //
 
 const userSchema = new Schema({
     firstName: String,
@@ -11,15 +13,7 @@ const userSchema = new Schema({
     contacts: [{type: Schema.Types.ObjectId, ref: 'ContactModel'}]
 }, { versionKey: false });
 
-const contactSchema = new Schema({
-    firstName: String,
-    lastName: String,
-    profilePic: String,
-    phoneNbr: String
-}, {versionKey: false})
-
 const UserModel = model("User", userSchema, "User");
-const ContactModel = model("Contact", contactSchema, "Contact");
 
 export const initDbConnection = () => {
     connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -79,7 +73,44 @@ export const updatePhone = (phone: string) => { };
 
 export const setProfilePic = () => { };
 
+// ----- DB stuff for Contact ----- //
+
+const contactSchema = new Schema({
+    firstName: String,
+    lastName: String,
+    profilePic: String,
+    phoneNbr: String
+}, {versionKey: false})
+
+const ContactModel = model("Contact", contactSchema, "Contact");
+
 // Functions for handling Contacts //
+
+/*
+app.post("/contacts", function(req, res) {
+    var contact = new ContactModel({
+        firstName: req.body.firstName,
+        lastName: req.lastName.lastName,
+        profilePic: req.body.profilePic, 
+        phoneNbr: req.body.phoneNbr
+    }).save(function(err, docs){
+        if(err) throw err;
+        res.send(docs)
+    });
+
+    // Trying with test user, TODO: getUserFromSession(), functionality to get the user that is logged in 
+    var user = new UserModel({
+        firstName: "Robin",
+        password: "repo123",
+        phoneNbr: "1111111111",
+        profilePic: "robinsPic",
+        lastName: "Repo",
+        contacts: []
+    }) 
+    user.contacts.push(contact);
+    user.save(callback);
+});*/
+
 
 
 /**

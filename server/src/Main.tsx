@@ -13,7 +13,8 @@ const
     cors = require('cors'),
     useHTTPS = false; // Only enable this if you know what it means
 
-const app = express();
+
+export const app = express(); // Export so we can use it fro db stuff as well
 app.use(cors()); // For avoiding CORS errors
 
 dotenv.config(); // For reading .env file
