@@ -17,7 +17,7 @@
      return (
          <div className="profile-button-container">
              <button className="change-profile-button" onClick={() => props.buttonFunction()}> 
-                 <img src={props.icon} width="80%" height="80%" />
+                 <img src={props.icon} width="40%" height="40%" />
                  <h2>{props.functionDesc}</h2>
              </button>
          </div>         

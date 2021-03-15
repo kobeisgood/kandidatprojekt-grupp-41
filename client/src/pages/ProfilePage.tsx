@@ -4,10 +4,10 @@ import hjordis from "../images/hjordis.png"
 import { UserName } from '../Types';
 import { ProfileChangeButton } from '../components/ProfileChangeButton';
 
-import micOn from "../icons/microphone-solid-on.svg"
-import micOff from "../icons/microphone-solid-off.svg"
-import camOn from "../icons/camera-solid-on.svg"
-import camOff from "../icons/camera-solid-off.svg"
+import changeName from "../icons/profile/changeName.svg"
+import changeNumber from "../icons/profile/changeNumber.svg"
+import changePassword from "../icons/profile/changePassword.svg"
+import changePicture from "../icons/profile/changePicture.svg"
 
 interface Props {
     userName: UserName
@@ -42,16 +42,16 @@ export const ProfilePage = (props: Props) => {
 
             <div className="profile-buttons-container">
                 <div>
-                   <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                   <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ButtonNameClicked} />
                 </div>
                 <div>
-                    <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                    <ProfileChangeButton functionDesc={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} />
                 </div>
                 <div>
-                    <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                    <ProfileChangeButton functionDesc={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} />
                 </div>
                 <div>
-                    <ProfileChangeButton functionDesc={"Byt namn"} icon={micOn} buttonFunction={ButtonNameClicked} />
+                    <ProfileChangeButton functionDesc={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} />
                 </div>
             </div>
         </div>
