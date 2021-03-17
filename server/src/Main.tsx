@@ -1,17 +1,24 @@
 import { Server, Socket } from 'socket.io';
-import Peer from 'simple-peer'; // WebRTC wrapper library
+import { User, UserID, CallData } from './Types';
+import { initDbConnection, getUsers, createUser, numberExists } from './Database';
 
-const useHTTPS = false; // Only enable this if you know what it means
 
+/* SERVER INITIATION BEGIN */
 const
+    dotenv = require('dotenv'),
     express = require('express'),
     https = require('https'),
     http = require('http'),
     fs = require('fs'),
-    cors = require('cors');
+    cors = require('cors'),
+    useHTTPS = false; // Only enable this if you know what it means
 
-const app = express();
-app.use(cors());
+
+export const app = express(); // Export so we can use it fro db stuff as well
+app.use(cors()); // For avoiding CORS errors
+
+dotenv.config(); // For reading .env file
+
 
 let server: any;
 if (useHTTPS)
@@ -23,29 +30,51 @@ else
     server = http.createServer(app).listen(4000);
 
 const io = new Server(server, { cors: { origin: '*' } });
+/* SERVER INITIATION END */
 
 
+/* DATABASE INIT BEGIN */
+initDbConnection(); // Connect to database
+
+/*
+getUsers().then((users) => {
+    console.log(users);
+});
+*/
+
+/*
+numberExists("1234567890").then((exists) => {
+    console.log(exists);
+});
+*/
+
+/*
+createUser(
+    {
+        id: "test",
+        firstName: "Bob",
+        lastName: "Andersson"
+    },
+    "123",
+    "",
+    123
+).then(() => {
+    console.log("User was added!");
+});
+*/
+/* DATABASE INIT END */
+
+
+/* RUN SERVER */
 console.log("Server up and running...");
 
-type UserID = string;
-
-interface User {
-    id: UserID,
-    name: string
-}
-
-interface CallData {
-    callee: UserID,
-    signalData: Peer.SignalData,
-    caller: UserID
-}
-
-let users: User[] = []; // Stores all connected users
+let users: User[] = []; // Local copy of all connected users
 
 const addUser = (id: UserID, name: string) => {
     users.push({
         id: id,
-        name: name
+        firstName: name,
+        lastName: ""
     });
 };
 
@@ -71,7 +100,7 @@ const getUserName = (id: UserID) => {
     });
 
     if (user !== undefined)
-        return user.name;
+        return user.firstName;
     else
         return null;
 };
