@@ -1,11 +1,12 @@
-import Peer from 'simple-peer';
+import Peer from 'simple-peer'; // WebRTC wrapper library
+
 
 export type UserID = string;
-export type UserName = string;
 
 export interface User {
     id: UserID,
-    name: UserName
+    firstName: string,
+    lastName: string
 }
 
 export interface CallData {

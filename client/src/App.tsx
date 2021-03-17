@@ -26,7 +26,7 @@ export const App = () => {
     const [outgoingCall, setOutgoingCall] = useState(false);
     const [callAccepted, setCallAccepted] = useState(false);
     const [incomingCall, setIncomingCall] = useState(false);
-    const [peer, setPeer]: [User, Function] = useState({ id: "", name: "" });
+    const [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "" });
     const [myNode, setMyNode] = useState(new Peer());
     const [peerSignal, setPeerSignal] = useState({});
 
@@ -83,7 +83,7 @@ export const App = () => {
                     <ul>
                         {allUsers.map((user: User) =>
                             <li key={user.id}>
-                                {user.name}
+                                {user.firstName + " " + user.lastName}
                                 {user.id !== socket.id &&
                                     <button onClick={() => {
                                         CallUser(socket, user.id, setOutgoingCall, setCallAccepted, setMyNode, localStream, setRemoteStream);
@@ -102,7 +102,7 @@ export const App = () => {
 
             {incomingCall && !callAccepted &&
                 <CallPopup
-                    callerName={peer.name}
+                    callerName={peer.firstName + " " + peer.lastName}
                     callRespond={(answer: boolean) => CallRespond(socket, peer, peerSignal, setCallAccepted, setIncomingCall, setMyNode, localStream, setRemoteStream, answer)}
                 />
             }

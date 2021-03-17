@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
-import { UserID, UserName, User } from './Types';
+import { UserID, User } from './Types';
 
 const useHTTPS = false; // Only enable this if you know what it means
 
@@ -65,13 +65,13 @@ export const RequestUserList = (socket: SocketIOClient.Socket, update: Function)
 };
 
 const LookForUsers = (socket: SocketIOClient.Socket, setUserList: Function) => {
-    socket.on('user-connected', (user: UserName, userList: User[]) => {
-        console.log(user + ' joined the room.');
+    socket.on('user-connected', (userName: string, userList: User[]) => {
+        console.log(userName + ' joined the room.');
         setUserList(userList);
     });
 
-    socket.on('user-disconnected', (user: UserName, userList: User[]) => {
-        console.log(user + ' left the room.');
+    socket.on('user-disconnected', (userName: string, userList: User[]) => {
+        console.log(userName + ' left the room.');
         setUserList(userList);
     });
 };
@@ -85,13 +85,13 @@ const ListenForCalls = (
     socket.on('user-calling', (data: any) => {
         setIncomingCall(true);
         setCallerSignal(data.signalData);
-        setCaller({ id: data.caller, name: data.callerName });
+        setCaller({ id: data.caller, firstName: data.callerName, lastName: "" });
     });
 
     socket.on('call-aborted', () => {
         setIncomingCall(false);
         setCallerSignal({});
-        setCaller({ id: "", name: "" });
+        setCaller({ id: "", firstName: "", lastName: "" });
     });
 };
 
