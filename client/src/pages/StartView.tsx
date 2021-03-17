@@ -2,7 +2,7 @@ import '../css/start-view.css';
 import '../css/button.css';
 
 export const StartView = () => {
-    return(
+    return (
         <div className="full-page-container">
             <button className="log-out-button button button-rectangular">
                 Logga ut
@@ -18,7 +18,7 @@ export const StartView = () => {
                 <h2>Senaste samtalen</h2>
                 <div className="latest-calls-carousel-container">
                     Karusell yo
-                </div>
+                    </div>
             </div>
         </div>
     );

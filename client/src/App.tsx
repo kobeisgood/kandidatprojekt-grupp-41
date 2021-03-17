@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { User } from './Types';
 import { OpenConnection, JoinRoom, CallRespond, CallUser } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './App.css';
 import { CallView } from './pages/CallView';
@@ -13,6 +14,20 @@ import { StartView } from './pages/StartView';
 let socket: SocketIOClient.Socket;
 
 export const App = () => {
+
+    return (
+        <div className="App">
+            <Router>
+                <Switch>
+                    <Route path="/" exact component={StartView} />
+                </Switch>
+            </Router>
+        </div>
+    );
+};
+
+{/** 
+
     useEffect(() => {
         OpenLocalStream(setLocalStream); // Access browser web cam
     }, []);
@@ -50,9 +65,8 @@ export const App = () => {
         JoinRoom(socket, roomIdInput, setUsers, setIncomingCall, setCallerSignal, setCaller);
     };
 
-    return (
-        <div className="App">
-            <StartView />
+
+<StartView />
             
             {socket === undefined &&
                 <>
@@ -63,43 +77,40 @@ export const App = () => {
 
             {/*
             <input type="text" onChange={handleIdInput} placeholder="Rum-ID..." />
-            <button onClick={joinRoom}>Gå med i rum</button>*/
-            }
+            <button onClick={joinRoom}>Gå med i rum</button>
+        }
 
-            {!callAccepted &&
-                <>
-                    <h3>Inloggade användare:</h3>
-                    <ul>
-                        {allUsers.map((user: User) =>
-                            <li key={user.id}>
-                                {user.name}
-                                {user.id !== socket.id &&
-                                    <button onClick={() => {
-                                        CallUser(socket, user.id, setOutgoingCall, setCallAccepted, localStream, setRemoteStream);
-                                        setCalleeName(user.name);
-                                    }}>Ring</button>
-                                }
-                            </li>
-                        )}
-                    </ul>
-                </>
-            }
+        {!callAccepted &&
+            <>
+                <h3>Inloggade användare:</h3>
+                <ul>
+                    {allUsers.map((user: User) =>
+                        <li key={user.id}>
+                            {user.name}
+                            {user.id !== socket.id &&
+                                <button onClick={() => {
+                                    CallUser(socket, user.id, setOutgoingCall, setCallAccepted, localStream, setRemoteStream);
+                                    setCalleeName(user.name);
+                                }}>Ring</button>
+                            }
+                        </li>
+                    )}
+                </ul>
+            </>
+        }
 
-            {outgoingCall &&
-                <h3>{"Ringer " + calleeName + "..."}</h3>
-            }
+        {outgoingCall &&
+            <h3>{"Ringer " + calleeName + "..."}</h3>
+        }
 
-            {incomingCall && !callAccepted &&
-                <CallPopup
-                    callerName={caller.name}
-                    callRespond={(answer: boolean) => CallRespond(socket, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream, answer)}
-                />
-            }
+        {incomingCall && !callAccepted &&
+            <CallPopup
+                callerName={caller.name}
+                callRespond={(answer: boolean) => CallRespond(socket, caller, callerSignal, setCallAccepted, setIncomingCall, localStream, setRemoteStream, answer)}
+            />
+        }
 
-            {callAccepted &&
-                <CallView localStream={localStream} remoteStream={remoteStream} />
-            }
-            
-        </div>
-    );
-};
+        {callAccepted &&
+            <CallView localStream={localStream} remoteStream={remoteStream} />
+        }
+    **/}
