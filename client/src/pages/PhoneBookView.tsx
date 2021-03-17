@@ -1,12 +1,13 @@
 import { ContactCard } from '../components/ContactCard';
 import '../css/phone-book.css';
+import { Link } from 'react-router-dom';
 
 export const PhoneBookView = () => {
     return (
         <div className="phone-book-container">
             <div className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
-                    <button className="back-button">Tillbaka</button>
+                    <Link to="/"><button className="back-button">Tillbaka</button></Link>
                     <div className="phone-book-top-flexbox-column">
                         <p>Telefonbok</p>
                         <input type="text" className="search-contacts-input"/>

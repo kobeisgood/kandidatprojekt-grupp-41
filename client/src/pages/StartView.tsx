@@ -1,5 +1,6 @@
 import '../css/start-view.css';
 import '../css/button.css';
+import { Link } from 'react-router-dom';
 
 export const StartView = () => {
     return (
@@ -12,7 +13,7 @@ export const StartView = () => {
                 <h1>Välkommen, Hjördis!</h1>
                 <div className="start-view-button-container">
                     <button className="big-button">Min profil</button>
-                    <button className="big-button">Telefonbok</button>
+                    <Link to="/phonebook"><button className="big-button">Telefonbok</button></Link>
                     <button className="big-button">Knappsats</button>
                 </div>
                 <h2>Senaste samtalen</h2>

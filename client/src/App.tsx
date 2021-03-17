@@ -9,10 +9,8 @@ import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './App.css';
-import { CallView } from './pages/CallView';
-import { CallPopup } from './components/CallPopup';
-import { CallingPopup } from './components/CallingPopup';
 import { StartView } from './pages/StartView';
+import { PhoneBookView } from './pages/PhoneBookView';
 
 
 let socket: SocketIOClient.Socket;
@@ -24,6 +22,7 @@ export const App = () => {
             <Router>
                 <Switch>
                     <Route path="/" exact component={StartView} />
+                    <Route path="/phonebook" exact component={PhoneBookView}/>
                 </Switch>
             </Router>
         </div>
