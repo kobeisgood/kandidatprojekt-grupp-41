@@ -6,14 +6,32 @@ import './App.css';
 import { User } from './Types';
 import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import './App.css';
 import { CallView } from './pages/CallView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
+import { StartView } from './pages/StartView';
 
 
 let socket: SocketIOClient.Socket;
 
 export const App = () => {
+
+    return (
+        <div className="App">
+            <Router>
+                <Switch>
+                    <Route path="/" exact component={StartView} />
+                </Switch>
+            </Router>
+        </div>
+    );
+};
+
+{/** 
+
     useEffect(() => {
         OpenLocalStream(setLocalStream); // Access browser web cam
     }, []);
@@ -74,8 +92,8 @@ export const App = () => {
 
             {/*
             <input type="text" onChange={handleIdInput} placeholder="Rum-ID..." />
-            <button onClick={joinRoom}>Gå med i rum</button>*/
-            }
+            <button onClick={joinRoom}>Gå med i rum</button>
+        }
 
             {!callAccepted &&
                 <>

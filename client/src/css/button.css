@@ -1,0 +1,17 @@
+.button {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.button-rectangular {
+    border-radius: 20px;
+}
+
+.big-button {
+    border-radius: 20px;
+    width: 300px;
+    height: 200px;
+    font-size: 40px;
+    
+}
