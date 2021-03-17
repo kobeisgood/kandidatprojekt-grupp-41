@@ -31,6 +31,18 @@ export const CloseConnection = (socket: SocketIOClient.Socket) => {
     socket.off('user-connected');
 };
 
+export const Register = (socket: SocketIOClient.Socket, user: User, psw: string, callback: (result: boolean) => void) => {
+    socket.emit('register-user', user, psw);
+    socket.on('registration-result', (result: boolean) => {
+        if (result)
+            console.log("User was added!");
+        else
+            console.error("User could not be added!");
+
+        callback(result);
+    });
+};
+
 export const JoinRoom = (
     socket: SocketIOClient.Socket,
     roomId: string,

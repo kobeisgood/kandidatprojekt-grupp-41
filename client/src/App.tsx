@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Peer from 'simple-peer';
 
 import { User } from './Types';
-import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp } from './Connection';
+import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -22,13 +22,12 @@ import { ChangePasswordView } from './pages/ChangePasswordView';
 let socket: SocketIOClient.Socket;
 
 export const App = () => {
-
     return (
         <div className="App">
             <Router>
                 <Switch>
                     <Route path="/" exact component={StartView} />
-                    <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: ""}} />} />
+                    <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: "", phoneNbr: 0 }} />} />
                     <Route path="/changename" exact component={ChangeNameView} />
                     <Route path="/changenumber" exact component={ChangeNumberView} />
                     <Route path="/changepassword" exact component={ChangePasswordView} />
@@ -53,18 +52,28 @@ export const App = () => {
     const [outgoingCall, setOutgoingCall] = useState(false);
     const [callAccepted, setCallAccepted] = useState(false);
     const [incomingCall, setIncomingCall] = useState(false);
-    const [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "" });
+    const [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "", phoneNbr: 0 });
     const [myNode, setMyNode] = useState(new Peer());
     const [peerSignal, setPeerSignal] = useState({});
-    const [goToProfile, setGoToProfile] = useState(false); */
+    const [goToProfile, setGoToProfile] = useState(false); 
+    const [registrationSuccess, setRegistrationSuccess]: [boolean | undefined, (val: boolean) => void] = useState(); */
 
 
     /* INPUT HANDLERS 
     const [nameInput, setNameInput] = useState("");
     const [roomIdInput, setIdInput] = useState("");
+    const [firstNameInp, setFirstNameInp] = useState("");
+    const [lastNameInp, setLastNameInp] = useState("");
+    const [phoneInp, setPhoneInp] = useState("");
+    const [passwordInp, setPasswordInp] = useState("");
 
     const handleNameInput = (event: any) => { setNameInput(event.target.value); };
-    const handleIdInput = (event: any) => { setIdInput(event.target.value); }; */
+    const handleIdInput = (event: any) => { setIdInput(event.target.value); }; 
+
+    const handleFirstNameInp = (event: any) => { setFirstNameInp(event.target.value); };
+    const handleLastNameInp = (event: any) => { setLastNameInp(event.target.value); };
+    const handlePhoneInp = (event: any) => { setPhoneInp(event.target.value); };
+    const handlePasswordInp = (event: any) => { setPasswordInp(event.target.value); }; */
 
 
     /* HELPER FUNCTIONS 
@@ -92,10 +101,33 @@ export const App = () => {
 
     const endCall = () => {
         CallHangUp(myNode);
+    }; 
+
+    const register = () => {
+        if (socket === undefined) {
+            console.error("Socket is not initialized");
+            return;
+        }
+
+        const
+            parsedNbr = parseInt(phoneInp),
+            userId = socket.id;
+
+        Register(
+            socket,
+            {
+                id: userId,
+                firstName: firstNameInp,
+                lastName: lastNameInp,
+                phoneNbr: parsedNbr
+            },
+            passwordInp,
+            setRegistrationSuccess
+        );
     }; */
 
-    
-    /* APP RENDERING 
+
+    /* APP RENDERING
     return (
         <div className="App">
             <PhoneBookView />
@@ -137,17 +169,25 @@ export const App = () => {
 
             {outgoingCall &&
                 <CallingPopup abortCall={abortCall} />
+                <button onClick={joinLobby}>Anslut till server</button>
             }
 
-            {incomingCall && !callAccepted &&
-                <CallPopup
-                    callerName={peer.firstName + " " + peer.lastName}
-                    callRespond={(answer: boolean) => CallRespond(socket, peer, peerSignal, setCallAccepted, setIncomingCall, setMyNode, localStream, setRemoteStream, answer)}
-                />
+            {socket !== undefined &&
+                <form onSubmit={(event) => event.preventDefault()}>
+                    <label>Förnamn:</label><br />
+                    <input type="text" onChange={handleFirstNameInp} /><br />
+                    <label>Efternamn:</label><br />
+                    <input type="text" onChange={handleLastNameInp} /><br />
+                    <label>Mobilnummer:</label><br />
+                    <input type="number" onChange={handlePhoneInp} /><br />
+                    <label>Lösenord:</label><br />
+                    <input type="password" onChange={handlePasswordInp} /><br />
+                    <button onClick={() => register()}>Gå vidare</button>
+                </form>
             }
 
-            {callAccepted &&
-                <CallView localStream={localStream} remoteStream={remoteStream} endCall={endCall} />
+            {registrationSuccess &&
+                <h3>Användare registrerad!</h3>
             }
 
             {goToProfile &&

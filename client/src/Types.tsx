@@ -6,7 +6,8 @@ export type UserID = string;
 export interface User {
     id: UserID,
     firstName: string,
-    lastName: string
+    lastName: string,
+    phoneNbr: number
 }
 
 export interface CallData {

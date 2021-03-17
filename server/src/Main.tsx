@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
-import { CallData } from './Types';
+import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { connectToDb } from './Database';
+import { connectToDb, createUser } from './Database';
 import { connectedUsers, connectUser, disconnectUser, userIsConnected, getUserName } from './UserManagement';
 
 
@@ -30,6 +30,18 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
 
     socket.on('request-userList', () => {
         socket.emit('receive-userList', connectedUsers);
+    });
+
+    socket.on('register-user', (user: User, psw: string) => {
+        createUser(user, psw, "")
+            .then(() => {
+                console.log("New user registerd!");
+                socket.emit('registration-result', true);
+            })
+            .catch(() => {
+                console.error("User could not be added!");
+                socket.emit('registration-result', false);
+            });
     });
 
     socket.on('join-room', (roomId: string) => {

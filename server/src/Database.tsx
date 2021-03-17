@@ -30,23 +30,21 @@ export const connectToDb = () => {
 /**
  * Creates a new user in the database.
  * 
- * @param user TODO
- * @param psw TODO
- * @param picSrc TODO
- * @param phone TODO
+ * @param user The user to be added
+ * @param psw The specified password
+ * @param picSrc The path to the specified profile picture
  */
-export const createUser = async (user: User, psw: string, picSrc: string, phone: number) => {
+export const createUser = async (user: User, psw: string, picSrc: string) => {
     const newUser = new UserModel({
         firstName: user.firstName,
         lastName: user.lastName,
+        phoneNbr: user.phoneNbr,
         password: psw,
-        profilePic: picSrc,
-        phoneNbr: phone
+        profilePic: picSrc
     });
 
     try {
         const savedUser = await newUser.save();
-        console.log("Added user");
         return savedUser;
     } catch (err) {
         return console.error(err);

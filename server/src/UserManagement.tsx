@@ -14,7 +14,8 @@ export const connectUser = (id: UserID, name: string) => {
     connectedUsers.push({
         id: id,
         firstName: name,
-        lastName: ""
+        lastName: "",
+        phoneNbr: 0
     });
 };
 
