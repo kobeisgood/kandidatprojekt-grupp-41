@@ -30,7 +30,7 @@ export const App = () => {
     );
 };
 
-{/** 
+/*
 
     useEffect(() => {
         OpenLocalStream(setLocalStream); // Access browser web cam
@@ -130,4 +130,4 @@ export const App = () => {
             }
         </div>
     );
-};
+};*/
