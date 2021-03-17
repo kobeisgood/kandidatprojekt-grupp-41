@@ -6,28 +6,22 @@
  * <i className={"fas " + props.icon + " fa-6x"}> </i> 
  */
 
-import React from 'react';
 import '../css/call.css';
 
 interface Props {
-    functionDesc:string;
-    icon:string;
-    buttonFunction:Function;
-  }
-
-export const CallViewButton = (props:Props) => {
-
-    return (
-        <div className="function-button-container">
-            <button className="function-button" onClick={() => props.buttonFunction()}> 
-                <img src={props.icon} width="80%" height="80%" />
-            </button>
-            
-            <h2>{props.functionDesc}</h2>
-
-        </div>
-        
-    );
-
+    functionDesc: string;
+    icon: string;
+    buttonFunction: Function;
 }
 
+export const CallViewButton = (props: Props) => {
+    return (
+        <div className="callView-button-container">
+            <button className="callView-button" onClick={() => props.buttonFunction()}>
+                <img src={props.icon} width="80%" height="80%" alt="Icon for button in app call view" />
+            </button>
+
+            <h2>{props.functionDesc}</h2>
+        </div>
+    );
+};
