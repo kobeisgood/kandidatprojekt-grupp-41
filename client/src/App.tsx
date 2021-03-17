@@ -45,8 +45,8 @@ export const App = () => {
         OpenLocalStream(setLocalStream); // Access browser web cam
     }, []);
 
-    const [nameInput, setNameInput] = useState("");
-    const [roomIdInput, setIdInput] = useState("");
+    
+    /* APP STATES 
     const [allUsers, setUsers] = useState([]);
     const [localStream, setLocalStream] = useState(new MediaStream());
     const [remoteStream, setRemoteStream] = useState(new MediaStream());
@@ -56,16 +56,18 @@ export const App = () => {
     const [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "" });
     const [myNode, setMyNode] = useState(new Peer());
     const [peerSignal, setPeerSignal] = useState({});
-    const [goToProfile, setGoToProfile] = useState(false);
+    const [goToProfile, setGoToProfile] = useState(false); */
 
-    const handleNameInput = (event: any) => {
-        setNameInput(event.target.value);
-    };
 
-    const handleIdInput = (event: any) => {
-        setIdInput(event.target.value);
-    };
+    /* INPUT HANDLERS 
+    const [nameInput, setNameInput] = useState("");
+    const [roomIdInput, setIdInput] = useState("");
 
+    const handleNameInput = (event: any) => { setNameInput(event.target.value); };
+    const handleIdInput = (event: any) => { setIdInput(event.target.value); }; */
+
+
+    /* HELPER FUNCTIONS 
     const joinLobby = () => {
         if (socket === undefined) {
             socket = OpenConnection(nameInput);
@@ -90,8 +92,10 @@ export const App = () => {
 
     const endCall = () => {
         CallHangUp(myNode);
-    };
+    }; */
 
+    
+    /* APP RENDERING 
     return (
         <div className="App">
             <PhoneBookView />
@@ -152,5 +156,5 @@ export const App = () => {
                 />
             }
         </div>
-    );
-};*/
+    ); 
+}; */
