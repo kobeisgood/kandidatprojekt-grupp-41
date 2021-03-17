@@ -1,6 +1,5 @@
 import { User } from './Types';
-import { connect, connection, Schema, model, Mongoose } from 'mongoose';
-import { app } from './Main';
+import { connect, connection, Schema, model } from 'mongoose';
 
 // ----- DB stuff for User ----- //
 
@@ -10,7 +9,7 @@ const userSchema = new Schema({
     phoneNbr: String,
     profilePic: String,
     lastName: String,
-    contacts: [{type: Schema.Types.ObjectId, ref: 'ContactModel'}]
+    contacts: [{ type: Schema.Types.ObjectId, ref: 'ContactModel' }]
 }, { versionKey: false });
 
 const UserModel = model("User", userSchema, "User");
@@ -80,7 +79,7 @@ const contactSchema = new Schema({
     lastName: String,
     profilePic: String,
     phoneNbr: String
-}, {versionKey: false})
+}, { versionKey: false })
 
 const ContactModel = model("Contact", contactSchema, "Contact");
 
@@ -123,7 +122,7 @@ app.post("/contacts", function(req, res) {
  * @param phoneNbr 
  * @returns 
  */
-export const createContact = async (firstName: string, lastName: string, profilePic: string, phoneNbr: string ) => {
+export const createContact = async (firstName: string, lastName: string, profilePic: string, phoneNbr: string) => {
     const newContact = new ContactModel({
         firstName: firstName,
         lastName: lastName,
