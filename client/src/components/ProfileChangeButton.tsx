@@ -15,12 +15,12 @@
  export const ProfileChangeButton = (props:Props) => {
  
      return (
-         <div className="profile-button-container">
+        <div className="profile-button-container">
              <button className="change-profile-button" onClick={() => props.buttonFunction()}> 
                  <img src={props.icon} width="40%" height="40%" />
-                 <h2>{props.functionDesc}</h2>
+                 <h2 className="profile-button-names">{props.functionDesc}</h2>
              </button>
-         </div>         
+         </div>
      );
  }
  

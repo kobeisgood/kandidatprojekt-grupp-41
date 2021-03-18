@@ -1,3 +1,14 @@
+@font-face {
+    font-family: Roboto;
+    src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap')
+}
+
+.profile-button-names {
+    font-size: 36px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
 .profile-header {
     font-size: 48px;
     font-family: 'Times New Roman', Times, serif;
@@ -57,7 +68,6 @@
     border-radius: 20px;
     height: 187px;
     width: 270px;
-    /* font-size: 48px; */
 }
 
 .change-profile-button:hover {
