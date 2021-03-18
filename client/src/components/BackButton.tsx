@@ -1,5 +1,5 @@
  /* Component for go back one step in the directory
- Author: Charlie and Hanna 
+ Authors: Charlie and Hanna 
  */
 
  import React from 'react';

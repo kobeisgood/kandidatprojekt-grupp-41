@@ -1,6 +1,6 @@
  /* Component for changing name, number, picture and password
   
- Author: Charlie and Hanna 
+ Authors: Charlie and Hanna 
  */
 
  import React from 'react';

@@ -1,17 +1,33 @@
+/* --------------- FONTS THAT WE'RE USING ----------------- */
 @font-face {
     font-family: Roboto;
     src: url(../fonts/roboto/Roboto-Medium.ttf);
     font-weight: 500;
 }
 
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/roboto/Roboto-Regular.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/roboto/Roboto-Bold.ttf);
+    font-weight: 800;
+}
+
+/* Button descriptions */
 .profile-button-names {
     font-size: 36px;
     font-family: 'Roboto', sans-serif;
 }
 
+/* "Min profil" header */
 .profile-header {
     font-size: 48px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
 }
 
 .profile-header-container {
@@ -21,6 +37,7 @@
     justify-content: space-around;
 }
 
+/* Container for profile picture, name and number */
 .profile-big-info-container {
     width: 50%;
     display: flex;
@@ -28,10 +45,12 @@
     flex-wrap: wrap;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 80px;
     align-self: center;
     justify-content: center;
 }
 
+/* Container for number and name */
 .profile-info-contact-container {
     width: 50%;
     display: flex;
@@ -40,12 +59,25 @@
     justify-content: center;
 }
 
+/* Your name e.g. Hjördis Reposson */
 .profile-name {
     font-size: 48px;
     color: black;
     align-self: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 }
 
+/* Your phone number */
+.profile-number {
+    font-size: 48px;
+    color: black;
+    align-self: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+/* Container for the 4 buttons: change name, number, picture and password */
 .profile-buttons-container {
     width: 75%;
     display: flex;
@@ -55,12 +87,14 @@
     margin: auto;
 }
 
+/* Container for one of the 4 buttons */
 .profile-button-container {
     height: 187px;
     width: 270px;
     align-self: center;
 }
 
+/* Styling for each of the 4 buttons: change name, number, picture and password */
 .change-profile-button {
     color: black;
     background-color: #94E5FF;
@@ -70,20 +104,24 @@
     width: 270px;
 }
 
+/* Hover state for each button of the 4 buttons*/
 .change-profile-button:hover {
     background-color: pink;
 }
 
+/* On click styling for each button of the 4 buttons */
 .change-profile-button:active {
     background-color: yellow;
 }
 
+/* Container for back button */
 .back-button-container {
     height: 80px;
     width: 250px;
     align-self: center;
 }
 
+/* Styling for back button */
 .back-button {
     color: white;
     background-color: #484848;
@@ -93,6 +131,7 @@
     border-radius: 10px;
 }
 
+/* Container for delete account button */
 .delete-account-container {
     height: 120px;
     width: 200px;
@@ -103,12 +142,14 @@
     background-color: #FB0000;
 }
 
+/* Delete icon (trash bin) */
 .item-delete-icon {
     margin-left: 10px;
     order: 1;
     align-self: center;
 }
 
+/* Text "Ta bort konto" */
 .item-delete-header {
     font-weight: bold;
     font-size: 30px;
