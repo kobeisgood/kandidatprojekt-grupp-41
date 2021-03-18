@@ -4,8 +4,9 @@ import { OpenConnection, JoinRoom, CallRespond, CallUser } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 
 import './App.css';
+import './css/fonts.css'
 import { CallView } from './pages/CallView';
-import { ProfilePage } from './pages/ProfilePage';
+import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 
@@ -107,7 +108,7 @@ export const App = () => {
             }
 
             {goToProfile &&
-                <ProfilePage 
+                <ProfileView 
                     userName={userName}
                 />
             }

@@ -1,26 +1,8 @@
-/* --------------- FONTS THAT WE'RE USING ----------------- */
-@font-face {
-    font-family: Roboto;
-    src: url(../fonts/roboto/Roboto-Medium.ttf);
-    font-weight: 500;
-}
-
-@font-face {
-    font-family: Roboto;
-    src: url(../fonts/roboto/Roboto-Regular.ttf);
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: Roboto;
-    src: url(../fonts/roboto/Roboto-Bold.ttf);
-    font-weight: 800;
-}
-
 /* Button descriptions */
 .profile-button-names {
     font-size: 36px;
     font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 }
 
 /* "Min profil" header */
@@ -66,6 +48,10 @@
     align-self: center;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
+}
+
+.profile-name:first-child {
+    margin-bottom: 30px;
 }
 
 /* Your phone number */
