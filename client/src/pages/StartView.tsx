@@ -1,5 +1,6 @@
 import '../css/start-view.css';
 import '../css/button.css';
+import { Link } from 'react-router-dom';
 
 export const StartView = () => {
     return (
@@ -11,7 +12,9 @@ export const StartView = () => {
             <div className="start-view-flexbox-container">
                 <h1>Välkommen, Hjördis!</h1>
                 <div className="start-view-button-container">
-                    <button className="big-button">Min profil</button>
+                    <Link to="/profile">
+                        <button className="big-button">Min profil</button>
+                    </Link>
                     <button className="big-button">Telefonbok</button>
                     <button className="big-button">Knappsats</button>
                 </div>

@@ -26,6 +26,7 @@ export const App = () => {
             <Router>
                 <Switch>
                     <Route path="/" exact component={StartView} />
+                    <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: ""}} />} />
                 </Switch>
             </Router>
         </div>

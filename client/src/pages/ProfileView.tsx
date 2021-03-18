@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import '../css/profile.css';
 import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
-import { UserName } from '../Types';
+import { User } from '../Types';
 import { ProfileChangeButton } from '../components/ProfileChangeButton';
 
 import changeName from "../icons/profile/changeName.svg"
@@ -15,7 +15,7 @@ import changePicture from "../icons/profile/changePicture.svg"
 import { BackButton } from '../components/BackButton';
 
 interface Props {
-    userName: UserName
+    user: User
 }
 
 export const ProfileView = (props: Props) => {
@@ -41,7 +41,7 @@ export const ProfileView = (props: Props) => {
             <div className="profile-big-info-container">
                 <img src={hjordis} alt="profilbild" />
                 <div className="profile-info-contact-container">
-                    <h1 className="profile-name">{props.userName}</h1>
+                    <h1 className="profile-name">{props.user.firstName + " " + props.user.lastName}</h1>
                     <h1 className="profile-number">0701234567</h1>
                 </div>
             </div>
