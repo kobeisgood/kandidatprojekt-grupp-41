@@ -5,11 +5,13 @@
     font-weight: 500;
 }
 
-/* "Min profil" header */
+/* "Min profil" headline */
 .profile-header {
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
     font-weight: 800;
+    align-self: center;
+    justify-self: center;
 }
 
 .profile-header-container {

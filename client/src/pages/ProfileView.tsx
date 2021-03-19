@@ -22,13 +22,15 @@ interface Props {
 export const ProfileView = (props: Props) => {
     // Event handler for clicking back button and the change name button etc. 
     const ButtonNameClicked = () => {
-
+    
     }
-
+    const ChangeNameClicked = () => { 
+        <Link to="/changename" />
+    }
     return (
         <div>
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
-            <header className="profile-header-container profile-header">
+            <header className="profile-header-container">
                 <div className="back-button-container">
                     <Link to="/">
                         <BackButton buttonFunction={ButtonNameClicked} />
@@ -50,12 +52,12 @@ export const ProfileView = (props: Props) => {
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">
-            <Link to="/changename">
-                <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ButtonNameClicked} />
-            </Link>
-                <ProfileChangeButton functionDesc={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} />
+            {/* <Link to="/changename"> */}
+                <ProfileChangeButton label={"Ändra namn"} icon={changeName} buttonFunction={ChangeNameClicked} linkTo="/changename" />
+            {/* </Link> */}
+                <ProfileChangeButton label={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} linkTo="/" />
+                <ProfileChangeButton label={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} linkTo="/" />
+                <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} linkTo="/" />
             </div>
         </div>
     );
