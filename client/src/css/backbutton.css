@@ -1,0 +1,16 @@
+/* Container for back button */
+.back-button-container {
+    height: 80px;
+    width: 250px;
+    align-self: center;
+}
+
+/* Styling for back button */
+.back-button {
+    color: white;
+    background-color: #484848;
+    height: 80px;
+    width: 250px;
+    font-size: 36px;    
+    border-radius: 10px;
+}

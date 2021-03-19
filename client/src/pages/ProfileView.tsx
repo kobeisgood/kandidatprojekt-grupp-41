@@ -2,6 +2,7 @@
 Authors: Charlie and Hanna 
 */
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/profile.css';
 import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
@@ -22,6 +23,10 @@ export const ProfileView = (props: Props) => {
     // Event handler for clicking back button and the change name button etc. 
     const ButtonNameClicked = () => {
 
+    }
+
+    const ChangeNameClicked = () => {
+        <Link to="/changename"></Link>
     }
 
     return (
@@ -47,7 +52,7 @@ export const ProfileView = (props: Props) => {
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">
-                <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ButtonNameClicked} />
+                <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ChangeNameClicked} />
                 <ProfileChangeButton functionDesc={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} />
                 <ProfileChangeButton functionDesc={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} />
                 <ProfileChangeButton functionDesc={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} />
