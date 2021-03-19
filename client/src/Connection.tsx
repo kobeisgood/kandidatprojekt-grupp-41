@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
-import { UserID, UserName, User } from './Types';
+import { UserID, User } from './Types';
 
 const useHTTPS = false; // Only enable this if you know what it means
 
@@ -8,9 +8,9 @@ export const OpenConnection = (userName: string) => {
     let socket: SocketIOClient.Socket;
 
     if (useHTTPS)
-        socket = io.connect('https://192.168.1.125:4000');
+        socket = io.connect('https://localhost:4000');
     else
-        socket = io.connect('http://192.168.1.125:4000');
+        socket = io.connect('http://localhost:4000');
 
     socket.emit('first-connection', userName);
     socket.on('connect-response', (response: boolean) => {
@@ -65,13 +65,13 @@ export const RequestUserList = (socket: SocketIOClient.Socket, update: Function)
 };
 
 const LookForUsers = (socket: SocketIOClient.Socket, setUserList: Function) => {
-    socket.on('user-connected', (user: UserName, userList: User[]) => {
-        console.log(user + ' joined the room.');
+    socket.on('user-connected', (userName: string, userList: User[]) => {
+        console.log(userName + ' joined the room.');
         setUserList(userList);
     });
 
-    socket.on('user-disconnected', (user: UserName, userList: User[]) => {
-        console.log(user + ' left the room.');
+    socket.on('user-disconnected', (userName: string, userList: User[]) => {
+        console.log(userName + ' left the room.');
         setUserList(userList);
     });
 };
@@ -85,7 +85,13 @@ const ListenForCalls = (
     socket.on('user-calling', (data: any) => {
         setIncomingCall(true);
         setCallerSignal(data.signalData);
-        setCaller({ id: data.caller, name: data.callerName });
+        setCaller({ id: data.caller, firstName: data.callerName, lastName: "" });
+    });
+
+    socket.on('call-aborted', () => {
+        setIncomingCall(false);
+        setCallerSignal({});
+        setCaller({ id: "", firstName: "", lastName: "" });
     });
 };
 
@@ -95,6 +101,7 @@ export const CallRespond = (
     callerSignal: Peer.SignalData,
     setCallAccepted: Function,
     setIncomingCall: Function,
+    setMyNode: Function,
     localStream: MediaStream,
     setRemoteVideoStream: Function,
     answer: boolean
@@ -107,18 +114,26 @@ export const CallRespond = (
         trickle: false,
         stream: localStream,
     });
+    setMyNode(peer);
 
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         if (answer) {
             socket.emit('accept-call', { signalData: signal, caller: caller.id });
         } else {
             socket.emit('decline-call', { caller: caller.id });
+            return;
         }
     });
 
     peer.on('stream', stream => {
         console.log("Received stream!");
         setRemoteVideoStream(stream);
+    });
+
+    peer.on('close', () => {
+        console.log("You closed the connection!");
+        setCallAccepted(false);
+        peer.destroy();
     });
 
     peer.signal(callerSignal); // Accept caller's signal
@@ -129,6 +144,7 @@ export const CallUser = (
     callee: UserID,
     setOutgoingCall: Function,
     setCallAccepted: Function,
+    setMyNode: Function,
     localStream: MediaStream,
     setRemoteStream: Function
 ) => {
@@ -137,6 +153,7 @@ export const CallUser = (
         trickle: false,
         stream: localStream
     });
+    setMyNode(peer);
 
     // Beginning of handshake roundtrip
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
@@ -149,19 +166,45 @@ export const CallUser = (
         setRemoteStream(stream);
     });
 
+    peer.on('close', () => {
+        console.log("Peer closed the connection!");
+        setCallAccepted(false);
+        peer.destroy();
+    });
+
     socket.on('call-accepted', (signalData: Peer.SignalData) => {
         setOutgoingCall(false);
         setCallAccepted(true);
         peer.signal(signalData); // Accept returnning callee signal
 
-        //socket.off('call-accepted');
-        //socket.off('call-declined');
+        socket.off('call-accepted');
+        socket.off('call-declined');
     });
 
     socket.on('call-declined', () => {
         setOutgoingCall(false);
         console.log("User declined your call!");
-        //socket.off('call-accepted');
-        //socket.off('call-declined');
+        
+        socket.off('call-accepted');
+        socket.off('call-declined');
     });
+};
+
+/**
+ * Aborts an outgoing call (before it's accepted by the peer).
+ * 
+ * @param socket This client's socket
+ * @param callee The callee's name
+ */
+export const CallAbort = (socket: SocketIOClient.Socket, callee: User) => {
+    socket.emit('abort-call', callee);
+};
+
+/**
+ * Ends and ongoing call by destroying the node (the SimplePeer instance).
+ * 
+ * @param myNode The SimplePeer instance create in prior
+ */
+export const CallHangUp = (myNode: Peer.Instance) => {
+    myNode.destroy();
 };

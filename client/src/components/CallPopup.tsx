@@ -1,9 +1,8 @@
-import { UserName } from '../Types';
 import '../css/call.css';
 import '../css/button.css';
 
 interface Props {
-    callerName: UserName,
+    callerName: string,
     callRespond: Function
 }
 

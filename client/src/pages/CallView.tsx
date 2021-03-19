@@ -13,16 +13,13 @@ import camOff from "../icons/camera-solid-off.svg"
 
 interface Props {
     localStream: MediaStream,
-    remoteStream: MediaStream
+    remoteStream: MediaStream,
+    endCall: Function
 }
 
 export const CallView = (props: Props) => {
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
-
-    const test = () => {
-        console.log("ahaa");
-    }
 
     const micClicked = () => {
         setMicState(!micState);
@@ -58,7 +55,7 @@ export const CallView = (props: Props) => {
                     {camState === true ? <li> <CallViewButton functionDesc={"Stäng av kamera"} icon={camOn} buttonFunction={camClicked} /></li> :
                         <li> <CallViewButton functionDesc={"Stäng av kamera"} icon={camOff} buttonFunction={camClicked} /></li>}
 
-                    <li><EndCallButton endCallFunction={test} /></li>
+                    <li><EndCallButton endCall={props.endCall} /></li>
                 </ul>
             </div>
         </div>

@@ -31,7 +31,7 @@
     padding-top: 1vh;
 }
 
-.function-button-container {
+.callView-button-container {
     width: 30vw;
     height: 17vh;
     margin:auto;
@@ -42,13 +42,13 @@
     display: table;
 }
 
-.function-button-container h2 {
+.callView-button-container h2 {
     font-size: 1.5vw;
     font-weight: bold;
 }
 
 
-.function-button {
+.callView-button {
   height: 7vw;
   width: 7vw;
   background-color: black;
