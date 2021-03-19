@@ -25,16 +25,14 @@ export const ProfileView = (props: Props) => {
 
     }
 
-    const ChangeNameClicked = () => {
-        <Link to="/changename"></Link>
-    }
-
     return (
         <div>
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
             <header className="profile-header-container profile-header">
                 <div className="back-button-container">
-                    <BackButton buttonFunction={ButtonNameClicked} />
+                    <Link to="/">
+                        <BackButton buttonFunction={ButtonNameClicked} />
+                    </Link>
                 </div>
                 <h1 className="profile-header">Min profil</h1>
                 <button className="delete-account-container">
@@ -52,7 +50,9 @@ export const ProfileView = (props: Props) => {
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">
-                <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ChangeNameClicked} />
+            <Link to="/changename">
+                <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ButtonNameClicked} />
+            </Link>
                 <ProfileChangeButton functionDesc={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} />
                 <ProfileChangeButton functionDesc={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} />
                 <ProfileChangeButton functionDesc={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} />

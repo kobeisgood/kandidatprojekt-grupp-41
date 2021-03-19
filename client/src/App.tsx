@@ -15,6 +15,7 @@ import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { StartView } from './pages/StartView';
+import { ChangeNameView } from './pages/ChangeNameView';
 
 
 let socket: SocketIOClient.Socket;
@@ -27,6 +28,7 @@ export const App = () => {
                 <Switch>
                     <Route path="/" exact component={StartView} />
                     <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: ""}} />} />
+                    <Route path="/changename" exact component={ChangeNameView} />
                 </Switch>
             </Router>
         </div>
