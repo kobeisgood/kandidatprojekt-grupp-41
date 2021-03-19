@@ -22,7 +22,7 @@ export const App = () => {
             <Router>
                 <Switch>
                     <Route path="/" exact component={StartView} />
-                    <Route path="/phonebook" exact component={PhoneBookView}/>
+                    <Route path="/phonebook" component={PhoneBookView}/>
                 </Switch>
             </Router>
         </div>
