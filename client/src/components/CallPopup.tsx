@@ -1,8 +1,8 @@
-import { UserName } from '../Types';
 import '../css/call.css';
+import '../css/button.css';
 
 interface Props {
-    callerName: UserName,
+    callerName: string,
     callRespond: Function
 }
 
@@ -23,14 +23,14 @@ export const CallPopup = (props: Props) => {
                     <img className="caller-profile-picture" src="https://pbcdn1.podbean.com/imglogo/ep-logo/pbblog2814877/Edward_Blom2.jpg" alt="Profilbild av personen som ringer"/>
                     <div className="incoming-call-buttons-container">
                         <div className="answer-button-container incoming-call-button-container">
-                            <button onClick={acceptCall} className="answer-call-button incoming-call-button" />
+                            <button onClick={acceptCall} className="answer-call-button incoming-call-button button" />
                             <h3>Svara</h3>
                         </div>
 
                         <h3 className="caller-name-text">{props.callerName}</h3>
 
                         <div className="decline-button-container incoming-call-button-container">
-                            <button onClick={declineCall} className="decline-call-button incoming-call-button" />
+                            <button onClick={declineCall} className="decline-call-button incoming-call-button button" />
                             <h3>Avböj</h3>
                         </div>
                     </div>
