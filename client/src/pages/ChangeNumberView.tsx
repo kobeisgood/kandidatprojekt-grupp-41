@@ -14,7 +14,7 @@ interface Props {
     user: User
 }
 
-export const ChangeNameView = (props: Props) => {
+export const ChangeNumberView = (props: Props) => {
     // Event handler for clicking back button and the change name button etc. 
     const ButtonNameClicked = () => {
 
@@ -38,8 +38,8 @@ export const ChangeNameView = (props: Props) => {
                     <h1 className="profile-number">0701234567</h1>
                 </div>
             </div>
-            <TextInput label="Ändra förnamn:" placeholder="Skriv ditt förnamn här..."></TextInput>
-            <TextInput label="Ändra efternamn:" placeholder="Skriv ditt efternamn här..."></TextInput>
+            <TextInput label="Nytt mobilnummer:" placeholder="Skriv ditt mobilnummer här..."></TextInput>
+            <TextInput label="Återupprepa mobilnummer:" placeholder="Återupprepa mobilnummer här..."></TextInput>
         </div>
     );
 }

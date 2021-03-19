@@ -5,19 +5,22 @@ Authors: André, (Charlie and Hanna)
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../css/profile.css';
+import '../css/textinput.css';
 
 interface Props {
     label: string;
-    onClick: Function;
     className?: string;
+    placeholder: string;
 }
 
 export const TextInput = (props: Props) => {
-    const labelElem = props.label === undefined ? <></> : <h2 className="text-input">{props.label}</h2>;
+    const labelElem = props.label === undefined ? <></> : <label className="text-input">{props.label}</label>;
 
     return (
-        <></>
+        <form onSubmit={(event) => event.preventDefault()}>
+            {labelElem}
+            <input type="text" placeholder={props.placeholder} />
+        </form>
     );
 }
 

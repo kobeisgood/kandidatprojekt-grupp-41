@@ -4,17 +4,11 @@ Authors: Charlie and Hanna
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/profile.css';
-import hjordis from "../images/hjordis.png"
-import { User } from '../Types';
 
 import { BackButton } from '../components/BackButton';
 import { TextInput } from '../components/TextInput';
 
-interface Props {
-    user: User
-}
-
-export const ChangeNameView = (props: Props) => {
+export const ChangePasswordView = () => {
     // Event handler for clicking back button and the change name button etc. 
     const ButtonNameClicked = () => {
 
@@ -30,16 +24,9 @@ export const ChangeNameView = (props: Props) => {
                 </div>
                 <h1 className="profile-header">Min profil</h1>
             </header>
-            {/* Container for profile pic, name and number */}
-            <div className="profile-big-info-container">
-                <img src={hjordis} alt="profilbild" />
-                <div className="profile-info-contact-container">
-                    {/* <h1 className="profile-name">{props.user.firstName + " " + props.user.lastName}</h1> */}
-                    <h1 className="profile-number">0701234567</h1>
-                </div>
-            </div>
-            <TextInput label="Ändra förnamn:" placeholder="Skriv ditt förnamn här..."></TextInput>
-            <TextInput label="Ändra efternamn:" placeholder="Skriv ditt efternamn här..."></TextInput>
+            <TextInput label="Nuvarande lösenord:" placeholder="Skriv ditt nuvarande lösenord här..."></TextInput>
+            <TextInput label="Nytt lösenord:" placeholder="Skriv ditt nya lösenord här..."></TextInput>
+            <TextInput label="Återupprepa nytt lösenord:" placeholder="Återupprepa ditt nya lösenord här..."></TextInput>
         </div>
     );
 }
