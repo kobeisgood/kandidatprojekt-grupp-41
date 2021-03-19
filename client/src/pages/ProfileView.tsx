@@ -24,6 +24,10 @@ export const ProfileView = (props: Props) => {
 
     }
 
+    const ChangeNameClicked = () => {
+        
+    }
+
     return (
         <div>
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
