@@ -4,11 +4,13 @@ Authors: Charlie and Hanna
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/profile.css';
+import '../css/savebutton.css';
 import hjordis from "../images/hjordis.png"
 import { User } from '../Types';
 
 import { BackButton } from '../components/BackButton';
 import { TextInput } from '../components/TextInput';
+import { SaveButton } from '../components/SaveButton';
 
 interface Props {
     user: User
@@ -29,6 +31,8 @@ export const ChangeNameView = (props: Props) => {
                     </Link>
                 </div>
                 <h1 className="profile-header">Min profil</h1>
+                {/* <button className="hidden-container">
+                </button> */}
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
@@ -38,8 +42,11 @@ export const ChangeNameView = (props: Props) => {
                     <h1 className="profile-number">0701234567</h1>
                 </div>
             </div>
-            <TextInput label="Ändra förnamn:" placeholder="Skriv ditt förnamn här..."></TextInput>
-            <TextInput label="Ändra efternamn:" placeholder="Skriv ditt efternamn här..."></TextInput>
+            <div className="change-name-container">
+                <TextInput label="Förnamn: " placeholder="Hjördis"></TextInput>
+                <TextInput label="Efternamn: " placeholder="Reposson"></TextInput>
+            </div>
+            <SaveButton label="Spara namn" buttonFunction={ButtonNameClicked} linkTo="/profile" />
         </div>
     );
 }

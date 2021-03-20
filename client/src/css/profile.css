@@ -5,20 +5,21 @@
     font-weight: 500;
 }
 
+.profile-header-container {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    margin: 30px auto 0 auto;
+    justify-content: flex-start;
+}
+
 /* "Min profil" headline */
 .profile-header {
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
     font-weight: 800;
     align-self: center;
-    justify-self: center;
-}
-
-.profile-header-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-basis: calc(100%/3);
 }
 
 /* Container for profile picture, name and number */
@@ -27,6 +28,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-top: 55px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 80px;
@@ -104,13 +106,14 @@
 
 /* Container for delete account button */
 .delete-account-container {
-    height: 120px;
-    width: 200px;
+    height: 80px;
+    width: 250px;
     display: flex;
     font-size: 30px;
     border-radius: 20px;
     color: white;
     background-color: #FB0000;
+    flex-basis: calc(100%/3);
 }
 
 /* Delete icon (trash bin) */
@@ -127,4 +130,13 @@
     color: white;
     order: 2;
     align-self: center;
+}
+
+.change-name-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 50px;
 }

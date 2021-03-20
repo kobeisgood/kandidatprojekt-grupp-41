@@ -1,5 +1,17 @@
-.text-input {
+.input-label {
     font-size: 36px;
     font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
+}
+
+.text-input {
+    font-size: 32px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    width: 320px;
+    height: 60px;
+    border-radius: 30px;
+    border: 3px solid #767676;
+    padding-left: 15px;
+    margin-bottom: 5px;
 }

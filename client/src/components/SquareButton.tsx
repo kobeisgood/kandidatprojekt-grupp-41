@@ -20,7 +20,7 @@ export const SquareButton = (props: Props) => {
     const labelElem = props.label === undefined ? <></> : <h2 className="profile-button-names">{props.label}</h2>;
 
     return (
-        <div className="profile-button-container">
+        <div>
             {props.linkTo === undefined ?
                 <button className={props.className} onClick={() => props.onClick()}>
                     {iconElem}

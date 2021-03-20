@@ -14,12 +14,12 @@ interface Props {
 }
 
 export const TextInput = (props: Props) => {
-    const labelElem = props.label === undefined ? <></> : <label className="text-input">{props.label}</label>;
+    const labelElem = props.label === undefined ? <></> : <label className="input-label">{props.label}</label>;
 
     return (
         <form onSubmit={(event) => event.preventDefault()}>
             {labelElem}
-            <input type="text" placeholder={props.placeholder} />
+            <input className="text-input" type="text" placeholder={props.placeholder} />
         </form>
     );
 }
