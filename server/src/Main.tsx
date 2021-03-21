@@ -1,111 +1,43 @@
-import { Server, Socket } from 'socket.io';
-import Peer from 'simple-peer'; // WebRTC wrapper library
+import { Socket } from 'socket.io';
+import { CallData } from './Types';
+import { InitServer } from './Init';
+import { connectToDb } from './Database';
+import { connectedUsers, connectUser, disconnectUser, userIsConnected, getUserName } from './UserManagement';
 
-const useHTTPS = false; // Only enable this if you know what it means
 
-const
-    express = require('express'),
-    https = require('https'),
-    http = require('http'),
-    fs = require('fs'),
-    cors = require('cors');
-
-const app = express();
-app.use(cors());
-
-let server: any;
-if (useHTTPS)
-    server = https.createServer({
-        key: fs.readFileSync('src/certs/key.key'),
-        cert: fs.readFileSync('src/certs/cert.crt')
-    }, app).listen(4000);
-else
-    server = http.createServer(app).listen(4000);
-
-const io = new Server(server, { cors: { origin: '*' } });
-
+/* INITIATION */
+const io = InitServer(); // Init basic server requirements
+connectToDb(); // Connect to database
 
 console.log("Server up and running...");
 
-type UserID = string;
 
-interface User {
-    id: UserID,
-    name: string
-}
-
-interface CallData {
-    callee: UserID,
-    signalData: Peer.SignalData,
-    caller: UserID
-}
-
-let users: User[] = []; // Stores all connected users
-
-const addUser = (id: UserID, name: string) => {
-    users.push({
-        id: id,
-        name: name
-    });
-};
-
-const removeUser = (id: UserID) => {
-    users.forEach((u: User) => {
-        if (u.id === id) {
-            let index = users.indexOf(u);
-            users.splice(index, 1);
-            return;
-        }
-    });
-};
-
-const userIsConnected = (id: UserID) => {
-    return users.some((p) => {
-        return p.id === id;
-    });
-};
-
-const getUserName = (id: UserID) => {
-    let user = users.find((user: User) => {
-        return user.id === id
-    });
-
-    if (user !== undefined)
-        return user.name;
-    else
-        return null;
-};
-
-const logUsers = () => {
-    console.log("Connected ids are:");
-    users.forEach((p) => { console.log(p.id); });
-};
-
-io.on('connection', (socket: Socket) => {
+/* SERVER RUNNING */
+io.on('connection', (socket: Socket) => { // Begin listening to client connections
     socket.on('first-connection', userName => {
         let userId = socket.id;
 
         if (!userIsConnected(userId)) { // If not already connected
-            addUser(userId, userName);
+            connectUser(userId, userName);
 
             console.log("\nUser with ID " + userId + " connected.");
 
-            socket.emit('connect-response', users);
+            socket.emit('connect-response', connectedUsers);
         } else {
             socket.emit('connect-response', undefined);
         }
     });
 
     socket.on('request-userList', () => {
-        socket.emit('receive-userList', users);
+        socket.emit('receive-userList', connectedUsers);
     });
 
     socket.on('join-room', (roomId: string) => {
         let userId = socket.id;
         let userName = getUserName(userId);
-        socket.to(roomId).broadcast.emit('user-connected', userName, users);
+        socket.to(roomId).broadcast.emit('user-connected', userName, connectedUsers);
         socket.join(roomId);
-        socket.emit('join-response', users);
+        socket.emit('join-response', connectedUsers);
         console.log(userName + " joined room " + roomId);
     });
 
@@ -124,11 +56,11 @@ io.on('connection', (socket: Socket) => {
     socket.on('disconnecting', () => {
         let userId = socket.id;
         let userName = getUserName(userId);
-        removeUser(userId); // Remove user from record
+        disconnectUser(userId); // Remove user from record
 
         // Announce that user left the room
         socket.rooms.forEach(room => {
-            socket.to(room).broadcast.emit('user-disconnected', userName, users);
+            socket.to(room).broadcast.emit('user-disconnected', userName, connectedUsers);
         });
     });
 

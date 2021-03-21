@@ -1,0 +1,44 @@
+.full-page-container {
+    width: 100%;
+    height: 100%;
+    background-color: pink;
+}
+
+.start-view-flexbox-container {
+    background-color: crimson;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.log-out-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 220px;
+    height: 100px;
+    background-color: rgb(230, 132, 87);
+    font-size: 40px;
+    color: white;
+    font-weight: bold;
+    border: 0;
+}
+
+.log-out-button:hover {
+    background-color: rgb(230, 132, 87, 0.8);
+}
+
+.start-view-flexbox-container h1 {
+    font-size: 64px;
+    font-weight: 500;
+}
+
+.start-view-button-container {
+    background-color: blueviolet;
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    justify-content: space-between;
+}
+
