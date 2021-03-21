@@ -9,12 +9,12 @@ import keypadIcon from '../icons/keypad-icon.svg';
 export const StartView = () => {
     return (
         <div className="full-page-container">
-            <button className="log-out-button button button-rectangular">
+            <button className="log-out-button button-rectangular">
                 Logga ut
             </button>
 
             <div className="start-view-flexbox-container">
-                <h1>Välkommen, Hjördis!</h1>
+                <h1 className="welcome-text">Välkommen, Hjördis!</h1>
                 <div className="start-view-button-container">
                     {/* buttonFunction prop passes empty function since it already has a link */}
                     <Link to="/profile">
@@ -27,7 +27,7 @@ export const StartView = () => {
                 </div>
                 <p className="latest-calls-text">Senaste samtalen</p>
                 <div className="latest-calls-carousel-container">
-                    Karusell yo
+                    Färdig karusell yo
                 </div>
             </div>
         </div>
