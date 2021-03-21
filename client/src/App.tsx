@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import Peer from 'simple-peer';
 
-import './App.css';
-
 import { User } from './Types';
 import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
@@ -15,6 +13,7 @@ import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { StartView } from './pages/StartView';
+import { PhoneBookView } from './pages/PhoneBookView';
 
 
 let socket: SocketIOClient.Socket;
@@ -27,6 +26,7 @@ export const App = () => {
                 <Switch>
                     <Route path="/" exact component={StartView} />
                     <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: ""}} />} />
+                    <Route path="/phonebook" component={PhoneBookView}/>
                 </Switch>
             </Router>
         </div>
@@ -88,6 +88,7 @@ export const App = () => {
 
     return (
         <div className="App">
+            <PhoneBookView />
             {socket === undefined &&
                 <>
                     <input type="text" onChange={handleNameInput} placeholder="Ditt namn..." />
