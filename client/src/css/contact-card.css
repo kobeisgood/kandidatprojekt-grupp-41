@@ -1,9 +1,9 @@
 .contact-card-container {
-    background-color: cornflowerblue;
+    background-color: var(--color-contactCard);
     padding: 10px;
     width: 200px;
     border-radius: 20px;
-    border: 1px solid black;
+    border: 1px solid darkgray;
     margin-bottom: 25px;
 }
 
@@ -14,7 +14,7 @@
     justify-content: space-between;
 }
 
-.contact-card-flexbox img {
+.contact-card-profile-picture {
     border-radius: 50%;
     width: 160px;
     height: 160px;
@@ -25,23 +25,37 @@
     margin: 10px 0;
 }
 
-.contact-name span{
+.contact-name span {
     font-weight: bold;
 }
 
 .call-button {
     width: 100%;
     height: 100px;
-    background-image: url(https://cdn0.iconfinder.com/data/icons/social-and-ui-3/50/63-512.png);
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: 5px;
-    background-size: 70px 70px;
-    background-color: green;
+    background-color: var(--color-call);
     border: 0;
     border-radius: 15px;
     font-size: 48px;
     color: white;
+    padding: 10px 0;
+}
+
+.call-button-flexbox {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-around;
+}
+
+.call-button-icon {
+    width: 25%;
+    object-fit: contain;
+}
+
+.call-button-text {
+    font-size: 25px;
+    font-weight: 600;
 }
 
 .call-button:hover {
@@ -54,4 +68,3 @@
     flex-direction: column;
     align-items: center;
 }
-
