@@ -9,6 +9,11 @@ import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './App.css';
+import './css/fonts.css'
+import { CallView } from './pages/CallView';
+import { ProfileView } from './pages/ProfileView';
+import { CallPopup } from './components/CallPopup';
+import { CallingPopup } from './components/CallingPopup';
 import { StartView } from './pages/StartView';
 import { PhoneBookView } from './pages/PhoneBookView';
 
@@ -22,6 +27,7 @@ export const App = () => {
             <Router>
                 <Switch>
                     <Route path="/" exact component={StartView} />
+                    <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: ""}} />} />
                     <Route path="/phonebook" component={PhoneBookView}/>
                 </Switch>
             </Router>
@@ -46,6 +52,7 @@ export const App = () => {
     const [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "" });
     const [myNode, setMyNode] = useState(new Peer());
     const [peerSignal, setPeerSignal] = useState({});
+    const [goToProfile, setGoToProfile] = useState(false);
 
     const handleNameInput = (event: any) => {
         setNameInput(event.target.value);
@@ -59,6 +66,7 @@ export const App = () => {
         if (socket === undefined) {
             socket = OpenConnection(nameInput);
             JoinRoom(socket, "lobby", setUsers, setIncomingCall, setPeerSignal, setPeer);
+            setUserName(nameInput);
         } else {
             console.log("Already connected to server!");
         }
@@ -108,6 +116,11 @@ export const App = () => {
                                         setPeer(user);
                                     }}>Ring</button>
                                 }
+                                {user.id == socket.id &&
+                                <button onClick={() => {
+                                    setGoToProfile(true);
+                                }}>Profil</button>
+                            }
                             </li>
                         )}
                     </ul>
@@ -127,6 +140,12 @@ export const App = () => {
 
             {callAccepted &&
                 <CallView localStream={localStream} remoteStream={remoteStream} endCall={endCall} />
+            }
+
+            {goToProfile &&
+                <ProfileView 
+                    userName={userName}
+                />
             }
         </div>
     );

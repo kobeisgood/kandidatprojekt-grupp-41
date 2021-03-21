@@ -12,7 +12,9 @@ export const StartView = () => {
             <div className="start-view-flexbox-container">
                 <h1>Välkommen, Hjördis!</h1>
                 <div className="start-view-button-container">
-                    <button className="big-button">Min profil</button>
+                    <Link to="/profile">
+                        <button className="big-button">Min profil</button>
+                    </Link>
                     <Link to="/phonebook"><button className="big-button">Telefonbok</button></Link>
                     <button className="big-button">Knappsats</button>
                 </div>
