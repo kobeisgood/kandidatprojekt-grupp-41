@@ -35,16 +35,23 @@
 }
 
 .search-contacts-input {
-    width: 600px;
+    width: 80%;
     padding: 10px;
+    padding-left: 50px;
     font-size: 24px;
     border-radius: 22px;
     border: 2px solid darkgray;
+    font-weight: 600;
+    background-image: url("../icons/search-icon.svg");
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    color: rgb(60, 60, 60);
 }
 
 .contact-buttons-container {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .contact-cards-container {
@@ -61,9 +68,26 @@
 .remove-contact-button {
     border-radius: 20px;
     border: 1px solid darkgrey;
-    font-size: 16px;
+    font-size: 18px;
+    width: 150px;
+    height: 80px;
 }
 
-.add-contact-button:hover {
+.add-contact-button:hover,
+.remove-contact-button:hover {
     cursor: pointer;
+}
+
+.add-contact-button {
+    background-color: var(--color-menuButton);
+    margin-right: 10px;
+}
+
+.remove-contact-button {
+    background-color: var(--color-cancel);
+    color: white;
+}
+
+.contact-button-image {
+    width: 40px;
 }

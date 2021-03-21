@@ -1,4 +1,7 @@
-
+/* 
+    Component for a contact card
+    Authors: Daniel and Robin
+ */
 import React from 'react';
 import '../css/contact-card.css';
 import '../css/colors.css';
