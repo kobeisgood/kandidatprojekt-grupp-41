@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import Peer from 'simple-peer';
 
-import './App.css';
-
 import { User } from './Types';
 import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
