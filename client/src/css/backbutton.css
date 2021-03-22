@@ -3,6 +3,7 @@
     height: 80px;
     width: 250px;
     align-self: center;
+    flex-basis: calc(100%/3);
 }
 
 /* Styling for back button */

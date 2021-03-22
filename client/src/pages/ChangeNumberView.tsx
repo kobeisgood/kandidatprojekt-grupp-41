@@ -4,8 +4,6 @@ Authors: Charlie and Hanna
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/profile.css';
-import '../css/savebutton.css';
-import '../css/textinput.css';
 import hjordis from "../images/hjordis.png"
 import { User } from '../Types';
 
@@ -17,7 +15,7 @@ interface Props {
     user: User
 }
 
-export const ChangeNameView = (props: Props) => {
+export const ChangeNumberView = (props: Props) => {
     // Event handler for clicking back button and the change name button etc. 
     const ButtonNameClicked = () => {
 
@@ -32,8 +30,6 @@ export const ChangeNameView = (props: Props) => {
                     </Link>
                 </div>
                 <h1 className="profile-header">Min profil</h1>
-                {/* <button className="hidden-container">
-                </button> */}
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
@@ -43,11 +39,11 @@ export const ChangeNameView = (props: Props) => {
                     <h1 className="profile-number">0701234567</h1>
                 </div>
             </div>
-            <div className="change-name-container">
-                <TextInput className="text-input" type="text" label="Förnamn: " placeholder="Hjördis"></TextInput>
-                <TextInput className="text-input" type="text" label="Efternamn: " placeholder="Reposson"></TextInput>
+            <div className="change-number-container">
+                <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..."></TextInput>
+                <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." ></TextInput>
             </div>
-            <SaveButton label="Spara namn" buttonFunction={ButtonNameClicked} linkTo="/profile" />
+            <SaveButton label="Spara nummer" buttonFunction={ButtonNameClicked} linkTo="/profile" />
         </div>
     );
 }
