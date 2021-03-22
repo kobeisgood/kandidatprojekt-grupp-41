@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/profile.css';
 import '../css/savebutton.css';
+import '../css/textinput.css';
 import hjordis from "../images/hjordis.png"
 import { User } from '../Types';
 
@@ -43,8 +44,8 @@ export const ChangeNameView = (props: Props) => {
                 </div>
             </div>
             <div className="change-name-container">
-                <TextInput label="Förnamn: " placeholder="Hjördis"></TextInput>
-                <TextInput label="Efternamn: " placeholder="Reposson"></TextInput>
+                <TextInput className="text-input" type="text" label="Förnamn: " placeholder="Hjördis"></TextInput>
+                <TextInput className="text-input" type="text" label="Efternamn: " placeholder="Reposson"></TextInput>
             </div>
             <SaveButton label="Spara namn" buttonFunction={ButtonNameClicked} linkTo="/profile" />
         </div>

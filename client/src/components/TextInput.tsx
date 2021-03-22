@@ -11,6 +11,7 @@ interface Props {
     label: string;
     className?: string;
     placeholder: string;
+    type?: string;
 }
 
 export const TextInput = (props: Props) => {
@@ -19,8 +20,7 @@ export const TextInput = (props: Props) => {
     return (
         <form onSubmit={(event) => event.preventDefault()}>
             {labelElem}
-            <input className="text-input" type="text" placeholder={props.placeholder} />
+            <input className={props.className} type={props.type} placeholder={props.placeholder} />
         </form>
     );
 }
-

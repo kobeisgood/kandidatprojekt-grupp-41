@@ -22,9 +22,9 @@ interface Props {
 export const ProfileView = (props: Props) => {
     // Event handler for clicking back button and the change name button etc. 
     const ButtonNameClicked = () => {
-    
+
     }
-    const ChangeNameClicked = () => { 
+    const ChangeNameClicked = () => {
         <Link to="/changename" />
     }
     return (
@@ -37,10 +37,12 @@ export const ProfileView = (props: Props) => {
                     </Link>
                 </div>
                 <h1 className="profile-header">Min profil</h1>
-                <button className="delete-account-container">
-                    <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
-                    <header className="item-delete-header">Ta bort konto</header>
-                </button>
+                <div className="delete-account-container">
+                    <button className="delete-account-button">
+                        <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
+                        <header className="item-delete-header">Ta bort konto</header>
+                    </button>
+                </div>
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">

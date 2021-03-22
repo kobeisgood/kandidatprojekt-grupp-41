@@ -15,3 +15,27 @@
     padding-left: 15px;
     margin-bottom: 5px;
 }
+
+.text-input-number {
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    width: 320px;
+    height: 60px;
+    border-radius: 30px;
+    border: 3px solid #767676;
+    padding-left: 15px;
+    margin-bottom: 5px;
+}
+
+.text-input-password {
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    width: 320px;
+    height: 60px;
+    border-radius: 30px;
+    border: 3px solid #767676;
+    padding-left: 15px;
+    margin-bottom: 40px;
+}

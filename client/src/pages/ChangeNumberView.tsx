@@ -9,6 +9,7 @@ import { User } from '../Types';
 
 import { BackButton } from '../components/BackButton';
 import { TextInput } from '../components/TextInput';
+import { SaveButton } from '../components/SaveButton';
 
 interface Props {
     user: User
@@ -38,8 +39,11 @@ export const ChangeNumberView = (props: Props) => {
                     <h1 className="profile-number">0701234567</h1>
                 </div>
             </div>
-            <TextInput label="Nytt mobilnummer:" placeholder="Skriv ditt mobilnummer här..."></TextInput>
-            <TextInput label="Återupprepa mobilnummer:" placeholder="Återupprepa mobilnummer här..."></TextInput>
+            <div className="change-number-container">
+                <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..."></TextInput>
+                <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." ></TextInput>
+            </div>
+            <SaveButton label="Spara nummer" buttonFunction={ButtonNameClicked} linkTo="/profile" />
         </div>
     );
 }
