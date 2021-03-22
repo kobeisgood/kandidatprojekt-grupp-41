@@ -15,7 +15,7 @@ export const StartView = () => {
                     <Link to="/profile">
                         <button className="big-button">Min profil</button>
                     </Link>
-                    <button className="big-button">Telefonbok</button>
+                    <Link to="/phonebook"><button className="big-button">Telefonbok</button></Link>
                     <button className="big-button">Knappsats</button>
                 </div>
                 <h2>Senaste samtalen</h2>

@@ -1,11 +1,14 @@
 /* Button descriptions */
+
 .profile-button-names {
     font-size: 36px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
 }
 
+
 /* "Min profil" header */
+
 .profile-header {
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
@@ -19,7 +22,9 @@
     justify-content: space-around;
 }
 
+
 /* Container for profile picture, name and number */
+
 .profile-big-info-container {
     width: 50%;
     display: flex;
@@ -32,7 +37,9 @@
     justify-content: center;
 }
 
+
 /* Container for number and name */
+
 .profile-info-contact-container {
     width: 50%;
     display: flex;
@@ -41,7 +48,9 @@
     justify-content: center;
 }
 
+
 /* Your name e.g. Hjördis Reposson */
+
 .profile-name {
     font-size: 48px;
     color: black;
@@ -54,7 +63,9 @@
     margin-bottom: 30px;
 }
 
+
 /* Your phone number */
+
 .profile-number {
     font-size: 48px;
     color: black;
@@ -63,7 +74,9 @@
     font-weight: 400;
 }
 
+
 /* Container for the 4 buttons: change name, number, picture and password */
+
 .profile-buttons-container {
     width: 75%;
     display: flex;
@@ -73,14 +86,18 @@
     margin: auto;
 }
 
+
 /* Container for one of the 4 buttons */
+
 .profile-button-container {
     height: 187px;
     width: 270px;
     align-self: center;
 }
 
+
 /* Styling for each of the 4 buttons: change name, number, picture and password */
+
 .change-profile-button {
     color: black;
     background-color: #94E5FF;
@@ -90,17 +107,22 @@
     width: 270px;
 }
 
+
 /* Hover state for each button of the 4 buttons*/
+
 .change-profile-button:hover {
     background-color: pink;
 }
 
+
 /* On click styling for each button of the 4 buttons */
+
 .change-profile-button:active {
     background-color: yellow;
 }
 
 /* Container for delete account button */
+
 .delete-account-container {
     height: 120px;
     width: 200px;
@@ -111,14 +133,18 @@
     background-color: #FB0000;
 }
 
+
 /* Delete icon (trash bin) */
+
 .item-delete-icon {
     margin-left: 10px;
     order: 1;
     align-self: center;
 }
 
+
 /* Text "Ta bort konto" */
+
 .item-delete-header {
     font-weight: bold;
     font-size: 30px;

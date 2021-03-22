@@ -4,6 +4,7 @@ import { App } from './App';
 
 import './css/reset.css'
 import './index.css';
+import './css/colors.css';
 
 ReactDOM.render(
     <React.StrictMode>
