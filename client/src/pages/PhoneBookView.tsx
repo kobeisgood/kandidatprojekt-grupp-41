@@ -53,12 +53,12 @@ export const PhoneBookView = () => {
             </header>
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
+                    <ContactCard removeContactState={removeContactState}/>
+                    <ContactCard removeContactState={removeContactState} />
+                    <ContactCard removeContactState={removeContactState} />
+                    <ContactCard removeContactState={removeContactState}/>
+                    <ContactCard removeContactState={removeContactState}/>
+                    <ContactCard removeContactState={removeContactState} />
                 </div>
             </div>
         </div>
