@@ -3,9 +3,6 @@
     Author: Daniel
 */
 import '../css/start-view.css';
-import '../css/button.css';
-import { Link } from 'react-router-dom';
-import { ProfileChangeButton } from '../components/ProfileChangeButton';
 import profileIcon from '../icons/profile-icon.svg';
 import phoneBookIcon from '../icons/phone-book-icon.svg';
 import keypadIcon from '../icons/keypad-icon.svg';
