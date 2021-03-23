@@ -9,8 +9,21 @@ import '../css/colors.css';
 import { Link } from 'react-router-dom';
 import AddContactIcon from '../icons/add-contact-icon.svg';
 import RemoveContactIcon from '../icons/remove-contact-icon.svg';
+import { useState } from 'react';
+
+
+
+
 
 export const PhoneBookView = () => {
+
+    const [removeContactState, setRemoveContactState] = useState(false);
+
+    const removeContactClicked = () => {
+        setRemoveContactState(!removeContactState)
+    }
+    
+
     return (
         <div className="phone-book-container">
             <header className="phone-book-top-container">
@@ -29,10 +42,10 @@ export const PhoneBookView = () => {
                                 <p className="contact-button-text">Lägg till kontakt</p>
                             </div>
                         </button>
-                        <button className="remove-contact-button">
+                        <button className="remove-contact-button" onClick={removeContactClicked}>
                             <div className="contact-button-flexbox">
                                 <img src={RemoveContactIcon} alt="" className="contact-button-image" />
-                                <p className="contact-button-text">Ta bort kontakt</p>
+                                {removeContactState === false ? <p className="contact-button-text">Ta bort kontakt</p>:  <p className="contact-button-text">Avbryt</p>}
                             </div>
                         </button>
                     </div>
