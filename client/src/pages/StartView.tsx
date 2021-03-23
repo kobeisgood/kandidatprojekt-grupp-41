@@ -10,6 +10,8 @@ import logOutIcon from '../icons/log-out-icon.svg';
 export const StartView = () => {
     return (
         <div className="full-page-container">
+            {/* TODO
+                Add log out functionality on click */}
             <button className="log-out-button button-rectangular">
                 <div className="log-out-button-content">
                     <img src={logOutIcon} alt="Log out icon" className="log-out-button-image"/>
