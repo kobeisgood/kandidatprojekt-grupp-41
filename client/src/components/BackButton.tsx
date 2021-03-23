@@ -3,17 +3,16 @@ Authors: Charlie and Hanna
 */
 
 import React from 'react';
+import { SquareButton } from './SquareButton';
 
 interface Props {
-    buttonFunction: Function;
+    linkTo: string
 }
 
 export const BackButton = (props: Props) => {
 
     return (
-        <button className="button-general back-button" onClick={() => props.buttonFunction()}>
-            <h2>Tillbaka</h2>
-        </button>
+        <SquareButton label="&lsaquo; Tillbaka" onClick={() => void 0} linkTo={props.linkTo} className="back-button" />
     );
 }
 

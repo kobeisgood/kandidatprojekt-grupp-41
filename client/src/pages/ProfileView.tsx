@@ -32,9 +32,7 @@ export const ProfileView = (props: Props) => {
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
             <header className="profile-header-container">
                 <div className="back-button-container">
-                    <Link to="/">
-                        <BackButton buttonFunction={ButtonNameClicked} />
-                    </Link>
+                    <BackButton linkTo={"/"} />
                 </div>
                 <h1 className="profile-header">Min profil</h1>
                 <div className="delete-account-container">

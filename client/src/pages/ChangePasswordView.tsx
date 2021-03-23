@@ -20,9 +20,7 @@ export const ChangePasswordView = () => {
         <div>
             <header className="profile-header-container profile-header">
                 <div className="back-button-container">
-                    <Link to="/profile">
-                        <BackButton buttonFunction={ButtonNameClicked} />
-                    </Link>
+                    <BackButton linkTo={"/profile"} />
                 </div>
                 <h1 className="profile-header">Min profil</h1>
             </header>
