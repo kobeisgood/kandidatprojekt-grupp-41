@@ -28,9 +28,9 @@ export const App = () => {
                 <Switch>
                     <Route path="/" exact component={StartView} />
                     <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: "", phoneNbr: 0 }} />} />
-                    <Route path="/changename" exact component={ChangeNameView} />
-                    <Route path="/changenumber" exact component={ChangeNumberView} />
-                    <Route path="/changepassword" exact component={ChangePasswordView} />
+                    <Route path="/profile/changename" exact component={ChangeNameView} />
+                    <Route path="/profile/changenumber" exact component={ChangeNumberView} />
+                    <Route path="/profile/changepassword" exact component={ChangePasswordView} />
                     <Route path="/phonebook" component={PhoneBookView}/>
                 </Switch>
             </Router>

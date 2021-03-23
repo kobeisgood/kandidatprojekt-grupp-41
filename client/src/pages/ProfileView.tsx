@@ -54,10 +54,10 @@ export const ProfileView = (props: Props) => {
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">
-                <ProfileChangeButton label={"Ändra namn"} icon={changeName} buttonFunction={ChangeNameClicked} linkTo="/changename" />
-                <ProfileChangeButton label={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} linkTo="/changenumber" />
-                <ProfileChangeButton label={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} linkTo="/" />
-                <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} linkTo="/changepassword" />
+                <ProfileChangeButton label={"Ändra namn"} icon={changeName} buttonFunction={ChangeNameClicked} linkTo="/profile/changename" />
+                <ProfileChangeButton label={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} linkTo="/profile/changenumber" />
+                <ProfileChangeButton label={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} linkTo="/profile/changepicture" />
+                <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} linkTo="/profile/changepassword" />
             </div>
         </div>
     );
