@@ -4,23 +4,21 @@
  */
 
 import { ContactCard } from '../components/ContactCard';
+import { DeleteContactPopup } from '../components/DeleteContactPopup';
 import '../css/phone-book.css';
 import '../css/colors.css';
 import { Link } from 'react-router-dom';
 import AddContactIcon from '../icons/add-contact-icon.svg';
 import RemoveContactIcon from '../icons/remove-contact-icon.svg';
-import { useState, useRef} from 'react';
+import { useState } from 'react';
 
 export const PhoneBookView = () => {
 
     const [removeContactState, setRemoveContactState] = useState(false);
 
-    const contactCardRef = useRef(null)
-
     const removeContactClicked = () => {
         setRemoveContactState(!removeContactState);
     }
-
     
 
     return (
@@ -61,6 +59,7 @@ export const PhoneBookView = () => {
                     <ContactCard removeContactState={removeContactState} />
                 </div>
             </div>
+            <DeleteContactPopup /> 
         </div>
     );
 };

@@ -125,6 +125,8 @@ ul > li {
     display: flex;
     align-items: center;
     justify-content: center;
+    visibility: hidden;
+    z-index: 6;
 }
 
 .call-popup-container {
@@ -137,6 +139,12 @@ ul > li {
 
 .call-popup-container h3 {
     font-size: 50px;
+    font-weight: bold;
+}
+
+.call-popup-container h4 {
+    margin-top: 10vh;
+    font-size: 30px;
     font-weight: bold;
 }
 
