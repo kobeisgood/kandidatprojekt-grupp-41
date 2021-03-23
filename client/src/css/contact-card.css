@@ -5,6 +5,7 @@
     border-radius: 20px;
     border: 1px solid darkgray;
     margin-bottom: 25px;
+    position: relative;
 }
 
 .contact-card-flexbox {
@@ -67,4 +68,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.delete-contact-button {
+    background-color: #999999;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-left: auto;
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    top: 0;
+    box-shadow: 1px 1.5px 1px black;
+} 
+
+.delete-contact-button:hover {
+    cursor: pointer;
+    background-color: var(--color-cancel)
 }
