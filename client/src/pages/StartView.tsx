@@ -11,6 +11,7 @@ export const StartView = (props: Props) => {
 
     const logOut = () => {
         props.setMe(null);
+        localStorage.clear();
         history.push("/");
     };
 

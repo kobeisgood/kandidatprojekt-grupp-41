@@ -1,10 +1,10 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, Component } from 'react';
 import Peer from 'simple-peer';
 
 import { User } from './Types';
 import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import './App.css';
 import './css/fonts.css'
@@ -21,17 +21,25 @@ import { ChangePasswordView } from './pages/ChangePasswordView';
 
 
 export const App = () => {
+    const prevLoginInfo = () => {
+        const info = localStorage.getItem("me");
+
+        if (info !== null)
+            return JSON.parse(info);
+        else
+            return null;
+    };
+
     const
         [socket, setSocket] = useState(null),
-        [me, setMe]: [User | null, Function] = useState(null);
+        [me, setMe]: [User | null, Function] = useState(prevLoginInfo());
 
     useEffect(() => {
-        const parsedMe = JSON.parse(localStorage.getItem("me") || "");
-        setMe(parsedMe)
-    }, []); 
+        setMe(prevLoginInfo());
+    }, []);
 
     useEffect(() => {
-        localStorage.setItem("me", JSON.stringify(me))
+        localStorage.setItem("me", JSON.stringify(me));
     }, [me]);
 
     return (
@@ -39,10 +47,10 @@ export const App = () => {
             <Router>
                 <Switch>
                     <Route path="/" exact component={() => {
-                        if (me === null)
-                            return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} />;
+                        if (prevLoginInfo() === null)
+                            return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} />
                         else
-                            return <StartView setMe={setMe} />;
+                            return <Redirect push to="/start" />
                     }} />
                     <Route path="/start" exact component={() => <StartView setMe={setMe} />} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
@@ -50,6 +58,10 @@ export const App = () => {
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
                     <Route path="/phonebook" component={PhoneBookView} />
+
+                    {prevLoginInfo() === null &&
+                        <Redirect push to="/" />
+                    }
                 </Switch>
             </Router>
         </div>
