@@ -32,6 +32,7 @@ export const App = () => {
                     <Route path="/changename" exact component={ChangeNameView} />
                     <Route path="/changenumber" exact component={ChangeNumberView} />
                     <Route path="/changepassword" exact component={ChangePasswordView} />
+                    <Route path="/phonebook" component={PhoneBookView}/>
                 </Switch>
             </Router>
         </div>
