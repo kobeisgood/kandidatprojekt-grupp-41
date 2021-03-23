@@ -12,6 +12,7 @@ import { CallView } from './pages/CallView';
 import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
+import { LoginView } from './pages/LoginView';
 import { StartView } from './pages/StartView';
 import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
@@ -27,6 +28,7 @@ export const App = () => {
             <Router>
                 <Switch>
                     <Route path="/" exact component={StartView} />
+                    <Route path="/login" exact component={LoginView} />
                     <Route path="/profile" exact component={() => <ProfileView user={{ id: "", firstName: "", lastName: "", phoneNbr: 0 }} />} />
                     <Route path="/profile/changename" exact component={ChangeNameView} />
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
