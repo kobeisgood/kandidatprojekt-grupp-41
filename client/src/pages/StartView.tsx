@@ -11,7 +11,8 @@ export const StartView = () => {
     return (
         <div className="full-page-container">
             {/* TODO
-                Add log out functionality on click */}
+                - Add log out functionality on click
+                - Change to reusable button component */}
             <button className="log-out-button button-rectangular">
                 <div className="log-out-button-content">
                     <img src={logOutIcon} alt="Log out icon" className="log-out-button-image"/>
