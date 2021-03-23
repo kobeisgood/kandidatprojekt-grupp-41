@@ -7,7 +7,10 @@ export interface User {
     id: UserID,
     firstName: string,
     lastName: string,
-    phoneNbr: number
+    phoneNbr: string,
+    profilePic: string,
+    contacts: Array<Object>,
+    callEntries: Array<Object>
 }
 
 export interface CallData {

@@ -1,5 +1,5 @@
 import { User } from './Types';
-import { connect, connection, Schema, model } from 'mongoose';
+import { connect, connection, Schema, model, Document } from 'mongoose';
 
 // ----- DB stuff for User ----- //
 
@@ -12,7 +12,19 @@ const userSchema = new Schema({
     contacts: [{ type: Schema.Types.ObjectId, ref: 'ContactModel' }]
 }, { versionKey: false });
 
-const UserModel = model("User", userSchema, "User");
+interface IUser {
+    firstName: string;
+    lastName: string;
+    password: string;
+    phoneNbr: string;
+    profilePic: string;
+    contacts: Array<Object>;
+    callEntries: Array<Object>;
+}
+
+interface IUserDoc extends IUser, Document {}
+
+const UserModel = model<IUserDoc>("User", userSchema, "User");
 
 /**
  * Initializes a connection with the database. Running this will allow ```mongoose.connection``` to perform further operations.
@@ -78,6 +90,26 @@ export const updateName = (firstName: string, lastName: string) => { };
 export const updatePhone = (phone: string) => { };
 
 export const setProfilePic = () => { };
+
+/**
+ * Tries to authenticate the user using the specified password.
+ * 
+ * @param phone The phone number of the user to be authenticated
+ * @param psw The specified password of the user
+ */
+export const authenticate = async (phone: string, psw: string) => {
+    try {
+        const user = await UserModel.findOne({ phoneNbr: phone }).lean();
+
+        if (user.password === psw)
+            return user;
+        else
+            return null;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+};
 
 // ----- DB stuff for Contact ----- //
 

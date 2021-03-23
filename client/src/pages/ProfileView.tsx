@@ -16,7 +16,7 @@ import changePicture from "../icons/profile/changePicture.svg"
 import { BackButton } from '../components/BackButton';
 
 interface Props {
-    user: User
+    user: User | null
 }
 
 export const ProfileView = (props: Props) => {
@@ -27,12 +27,13 @@ export const ProfileView = (props: Props) => {
     const ChangeNameClicked = () => {
         <Link to="/changename" />
     }
+
     return (
         <div>
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
             <header className="profile-header-container">
                 <div className="back-button-container">
-                    <Link to="/">
+                    <Link to="/start">
                         <BackButton buttonFunction={ButtonNameClicked} />
                     </Link>
                 </div>
@@ -48,7 +49,7 @@ export const ProfileView = (props: Props) => {
             <div className="profile-big-info-container">
                 <img src={hjordis} alt="profilbild" />
                 <div className="profile-info-contact-container">
-                    <h1 className="profile-name">{props.user.firstName + " " + props.user.lastName}</h1>
+                    <h1 className="profile-name">{props.user ? props.user.firstName + " " + props.user.lastName : ""}</h1>
                     <h1 className="profile-number">0701234567</h1>
                 </div>
             </div>

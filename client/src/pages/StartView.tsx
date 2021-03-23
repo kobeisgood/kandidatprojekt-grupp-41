@@ -1,11 +1,22 @@
+import { Link, useHistory } from 'react-router-dom';
 import '../css/start-view.css';
 import '../css/button.css';
-import { Link } from 'react-router-dom';
 
-export const StartView = () => {
+interface Props {
+    setMe: Function;
+}
+
+export const StartView = (props: Props) => {
+    const history = useHistory();
+
+    const logOut = () => {
+        props.setMe(null);
+        history.push("/");
+    };
+
     return (
         <div className="full-page-container">
-            <button className="log-out-button button button-rectangular">
+            <button className="log-out-button button button-rectangular" onClick={logOut}>
                 Logga ut
             </button>
 

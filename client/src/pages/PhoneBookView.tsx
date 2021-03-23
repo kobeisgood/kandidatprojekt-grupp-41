@@ -16,7 +16,7 @@ export const PhoneBookView = () => {
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
                     <div className="back-button-container">
-                        <Link to="/"><button className="back-button">Tillbaka</button></Link>
+                        <Link to="/start"><button className="back-button">Tillbaka</button></Link>
                     </div>
                     <div className="phone-book-top-flexbox-column">
                         <h1 className="phone-book-text">Telefonbok</h1>
