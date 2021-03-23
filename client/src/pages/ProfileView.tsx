@@ -2,6 +2,7 @@
 Authors: Charlie and Hanna 
 */
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/profile.css';
 import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
@@ -23,19 +24,25 @@ export const ProfileView = (props: Props) => {
     const ButtonNameClicked = () => {
 
     }
-
+    const ChangeNameClicked = () => {
+        <Link to="/changename" />
+    }
     return (
         <div>
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
-            <header className="profile-header-container profile-header">
+            <header className="profile-header-container">
                 <div className="back-button-container">
-                    <BackButton buttonFunction={ButtonNameClicked} />
+                    <Link to="/">
+                        <BackButton buttonFunction={ButtonNameClicked} />
+                    </Link>
                 </div>
                 <h1 className="profile-header">Min profil</h1>
-                <button className="delete-account-container">
-                    <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
-                    <header className="item-delete-header">Ta bort konto</header>
-                </button>
+                <div className="delete-account-container">
+                    <button className="delete-account-button">
+                        <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
+                        <header className="item-delete-header">Ta bort konto</header>
+                    </button>
+                </div>
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
@@ -47,10 +54,10 @@ export const ProfileView = (props: Props) => {
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">
-                <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} />
+                <ProfileChangeButton label={"Ändra namn"} icon={changeName} buttonFunction={ChangeNameClicked} linkTo="/changename" />
+                <ProfileChangeButton label={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} linkTo="/changenumber" />
+                <ProfileChangeButton label={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} linkTo="/" />
+                <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} linkTo="/changepassword" />
             </div>
         </div>
     );

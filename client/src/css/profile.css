@@ -6,22 +6,57 @@
     font-weight: 500;
 }
 
+.profile-header-container {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    margin: 30px auto 0 auto;
+    justify-content: flex-start;
+}
 
-/* "Min profil" header */
-
+/* "Min profil" headline */
 .profile-header {
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
     font-weight: 800;
+    align-self: center;
+    flex-basis: calc(100%/3);
 }
 
-.profile-header-container {
-    width: 100%;
+/* Container for delete account button */
+.delete-account-container {
+    flex-basis: calc(100%/3);
+    height: 80px;
+    width: 250px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: row-reverse;
 }
 
+.delete-account-button {
+    height: 80px;
+    width: 250px;
+    display: flex;
+    font-size: 30px;
+    border-radius: 20px;
+    color: white;
+    background-color: #FB0000;
+}
+
+/* Delete icon (trash bin) */
+.item-delete-icon {
+    margin-left: 10px;
+    order: 1;
+    align-self: center;
+}
+
+/* Text "Ta bort konto" */
+.item-delete-header {
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    order: 2;
+    align-self: center;
+}
 
 /* Container for profile picture, name and number */
 
@@ -30,6 +65,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-top: 55px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 80px;
@@ -121,62 +157,30 @@
     background-color: yellow;
 }
 
-
-/* Container for back button */
-
-.back-button-container {
-    height: 80px;
-    width: 250px;
-    align-self: center;
-}
-
-
-/* Styling for back button */
-
-.back-button {
-    color: white;
-    background-color: #484848;
-    height: 80px;
-    width: 250px;
-    font-size: 36px;
-    border-radius: 10px;
-    border: none;
-}
-
-.back-button:hover {
-    opacity: 0.8;
-    cursor: pointer;
-}
-
-
-/* Container for delete account button */
-
-.delete-account-container {
-    height: 120px;
-    width: 200px;
+.change-name-container {
     display: flex;
-    font-size: 30px;
-    border-radius: 20px;
-    color: white;
-    background-color: #FB0000;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 50px;
 }
 
-
-/* Delete icon (trash bin) */
-
-.item-delete-icon {
-    margin-left: 10px;
-    order: 1;
-    align-self: center;
+.change-number-container {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-self: flex-start;
+    align-items: flex-end;
+    margin-bottom: 50px;
 }
 
-
-/* Text "Ta bort konto" */
-
-.item-delete-header {
-    font-weight: bold;
-    font-size: 30px;
-    color: white;
-    order: 2;
-    align-self: center;
+.change-password-container {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-self: flex-start;
+    align-items: flex-end;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
