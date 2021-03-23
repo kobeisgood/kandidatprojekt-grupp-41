@@ -5,7 +5,8 @@
 import React from 'react';
 import '../css/contact-card.css';
 import '../css/colors.css';
-import CallIcon from '../icons/call-icon.svg';
+import callIcon from '../icons/call-icon.svg';
+import { SquareButton } from './SquareButton';
 
 export const ContactCard = () => {
     return (
@@ -13,12 +14,10 @@ export const ContactCard = () => {
             <div className="contact-card-flexbox">
                 <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="Profilbild" />
                 <p className="contact-name">Repo <span>Laufsson</span></p>
-                <button className="call-button">
-                    <div className="call-button-flexbox">
-                        <img className="call-button-icon" src={CallIcon} alt="Ringikon" />
-                        <p className="call-button-text">Ring</p>
-                    </div>
-                </button>
+                {/* TODO
+                    - Add call function on click
+                    */}
+                <SquareButton label="Ring" onClick={() => void 0} icon={callIcon} className="call-button"/>
             </div>
         </div>
     );
