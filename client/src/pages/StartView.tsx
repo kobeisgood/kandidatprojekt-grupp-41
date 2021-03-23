@@ -5,12 +5,16 @@ import { ProfileChangeButton } from '../components/ProfileChangeButton';
 import profileIcon from '../icons/profile-icon.svg';
 import phoneBookIcon from '../icons/phone-book-icon.svg';
 import keypadIcon from '../icons/keypad-icon.svg';
+import logOutIcon from '../icons/log-out-icon.svg';
 
 export const StartView = () => {
     return (
         <div className="full-page-container">
             <button className="log-out-button button-rectangular">
-                Logga ut
+                <div className="log-out-button-content">
+                    <img src={logOutIcon} alt="Log out icon" className="log-out-button-image"/>
+                    <p className="log-out-button-text">Logga ut</p>
+                </div>
             </button>
 
             <div className="start-view-flexbox-container">
