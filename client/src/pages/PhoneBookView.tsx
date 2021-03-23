@@ -9,6 +9,7 @@ import '../css/colors.css';
 import { Link } from 'react-router-dom';
 import AddContactIcon from '../icons/add-contact-icon.svg';
 import RemoveContactIcon from '../icons/remove-contact-icon.svg';
+import { BackButton } from '../components/BackButton';
 
 export const PhoneBookView = () => {
     return (
@@ -16,7 +17,7 @@ export const PhoneBookView = () => {
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
                     <div className="back-button-container">
-                        <Link to="/"><button className="back-button">Tillbaka</button></Link>
+                        <BackButton linkTo={"/"} />
                     </div>
                     <div className="phone-book-top-flexbox-column">
                         <h1 className="phone-book-text">Telefonbok</h1>
