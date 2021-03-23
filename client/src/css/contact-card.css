@@ -12,6 +12,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    background-color: blueviolet;
 }
 
 .contact-card-profile-picture {
@@ -30,7 +31,7 @@
 }
 
 .call-button {
-    width: 100%;
+    width: 90%;
     height: 100px;
     background-color: var(--color-call);
     border: 0;
@@ -40,31 +41,7 @@
     padding: 10px 0;
 }
 
-.call-button-flexbox {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: space-around;
-}
-
-.call-button-icon {
-    width: 25%;
-    object-fit: contain;
-}
-
-.call-button-text {
-    font-size: 25px;
-    font-weight: 600;
-}
-
 .call-button:hover {
     opacity: 0.8;
     cursor: pointer;
-}
-
-.button-flexbox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }

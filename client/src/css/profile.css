@@ -1,10 +1,11 @@
 /* Button descriptions */
 
-.profile-button-names {
+
+/* .profile-button-names {
     font-size: 36px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
-}
+} */
 
 .profile-header-container {
     width: 75%;
@@ -14,7 +15,9 @@
     justify-content: flex-start;
 }
 
+
 /* "Min profil" headline */
+
 .profile-header {
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
@@ -23,7 +26,9 @@
     flex-basis: calc(100%/3);
 }
 
+
 /* Container for delete account button */
+
 .delete-account-container {
     flex-basis: calc(100%/3);
     height: 80px;
@@ -42,14 +47,18 @@
     background-color: #FB0000;
 }
 
+
 /* Delete icon (trash bin) */
+
 .item-delete-icon {
     margin-left: 10px;
     order: 1;
     align-self: center;
 }
 
+
 /* Text "Ta bort konto" */
+
 .item-delete-header {
     font-weight: bold;
     font-size: 30px;
@@ -57,6 +66,7 @@
     order: 2;
     align-self: center;
 }
+
 
 /* Container for profile picture, name and number */
 
