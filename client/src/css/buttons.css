@@ -14,16 +14,6 @@
 /* ------------- BACK BUTTON --------------------- */
 
 
-/* Container for back button */
-
-.back-button-container {
-    height: 80px;
-    width: 250px;
-    align-self: center;
-    flex-basis: calc(100%/3);
-}
-
-
 /* Styling for back button */
 
 .back-button {

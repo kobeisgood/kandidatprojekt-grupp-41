@@ -6,6 +6,17 @@
     flex-direction: row;
     margin: 30px auto 0 auto;
     justify-content: flex-start;
+    text-align: center;
+}
+
+
+/* Container for back button */
+
+.back-button-container {
+    height: 80px;
+    width: 250px;
+    align-self: center;
+    flex-basis: calc(100%/3);
 }
 
 

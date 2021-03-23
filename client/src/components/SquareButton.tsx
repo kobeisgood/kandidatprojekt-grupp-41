@@ -22,7 +22,7 @@ export const SquareButton = (props: Props) => {
     return (
         <div>
             {props.linkTo === undefined ?
-                <button className={`${props.className} ${"square-button"}`} onClick={() => props.onClick()}>
+                <button className={`${props.className} ${"button-general square-button"}`} onClick={() => props.onClick()}>
                     {iconElem}
                     {labelElem}
                 </button>
