@@ -6,8 +6,10 @@ import { OpenConnection, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp,
 import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import './App.css';
 import './css/fonts.css'
+import './css/buttons.css';
+import './css/colors.css';
+
 import { CallView } from './pages/CallView';
 import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';

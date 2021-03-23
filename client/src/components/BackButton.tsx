@@ -3,7 +3,6 @@
  */
 
  import React from 'react';
- import '../css/backbutton.css';
  
  interface Props {
      buttonFunction:Function;
@@ -13,7 +12,7 @@
 
      return (
          <div className="back-button-container">
-             <button className="back-button" onClick={() => props.buttonFunction()}> 
+             <button className="button-general back-button" onClick={() => props.buttonFunction()}> 
                  <h2>Tillbaka</h2>
              </button>
          </div>         
