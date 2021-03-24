@@ -9,7 +9,7 @@ const userSchema = new Schema({
     phoneNbr: String,
     profilePic: String,
     lastName: String,
-    contacts: [{ type: Schema.Types.ObjectId, ref: 'ContactModel' }]
+    contacts: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }]
 }, { versionKey: false });
 
 interface IUser {
@@ -18,11 +18,11 @@ interface IUser {
     password: string;
     phoneNbr: string;
     profilePic: string;
-    contacts: Array<Object>;
+    contacts: string[];
     callEntries: Array<Object>;
 }
 
-interface IUserDoc extends IUser, Document {}
+interface IUserDoc extends IUser, Document { }
 
 const UserModel = model<IUserDoc>("User", userSchema, "User");
 
@@ -177,5 +177,27 @@ export const createContact = async (firstName: string, lastName: string, profile
     } catch (err) {
         return console.error(err);
     }
-
 }
+
+export const getContacts = async (contactIds: string[]) => {
+    try {
+        let contacts = [];
+
+        for (let i = 0; i < contactIds.length; i++) {
+            const contact = await UserModel.findOne({ _id: contactIds[i] }).lean();
+            
+            contacts.push({
+                id: contact._id,
+                firstName: contact.firstName,
+                lastName: contact.lastName,
+                phoneNbr: contact.phoneNbr,
+                profilePic: contact.profilePic
+            });
+        }
+
+        return contacts;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+};

@@ -57,7 +57,7 @@ export const App = () => {
                     <Route path="/profile/changename" exact component={ChangeNameView} />
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
-                    <Route path="/phonebook" component={PhoneBookView} />
+                    <Route path="/phonebook" component={() => <PhoneBookView contactList={me === null ? [] : me.contacts} />} />
 
                     {prevLoginInfo() === null &&
                         <Redirect push to="/" />

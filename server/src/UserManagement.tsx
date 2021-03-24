@@ -1,11 +1,13 @@
 
-import { authenticate } from './Database';
+import { authenticate, getContacts } from './Database';
 import { UserID } from './Types';
 
 
 type PhoneNbr = string;
 
 export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
+
+
 
 
 /**
@@ -16,6 +18,9 @@ export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
  */
 export const loginUser = async (id: UserID, phone: string, psw: string) => {
     const user = await authenticate(phone, psw); // Check database for password match
+    const contacts = await getContacts(user.contacts);
+
+    user.contacts = contacts;
 
     if (user !== null) {
         connectedUsers.set(id, phone);

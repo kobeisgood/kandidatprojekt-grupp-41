@@ -9,8 +9,13 @@ import '../css/colors.css';
 import { Link } from 'react-router-dom';
 import AddContactIcon from '../icons/add-contact-icon.svg';
 import RemoveContactIcon from '../icons/remove-contact-icon.svg';
+import { Contact } from '../Types';
 
-export const PhoneBookView = () => {
+interface Props {
+    contactList: Contact[]
+}
+
+export const PhoneBookView = (props: Props) => {
     return (
         <div className="phone-book-container">
             <header className="phone-book-top-container">
@@ -40,12 +45,9 @@ export const PhoneBookView = () => {
             </header>
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
-                    <ContactCard />
+                    {props.contactList.map((contact: Contact) => {
+                        return <h1>{contact.firstName}</h1>
+                    })}
                 </div>
             </div>
         </div>

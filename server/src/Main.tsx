@@ -21,6 +21,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             loginUser(userId, phone, psw).then((user) => {
                 if (user !== null) {
                     console.log("\nUser with ID " + userId + " successfully logged in.");
+                    
                     socket.emit('login-response', {
                         id: socket.id,
                         firstName: user.firstName,
