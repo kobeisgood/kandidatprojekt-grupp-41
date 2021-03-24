@@ -17,6 +17,7 @@ import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
 import { ChangeNumberView } from './pages/ChangeNumberView';
 import { ChangePasswordView } from './pages/ChangePasswordView';
+import { ChangePictureView } from './pages/ChangePictureView';
 
 import './App.css';
 import './css/fonts.css'
@@ -60,6 +61,7 @@ export const App = () => {
                     <Route path="/profile/changename" exact component={ChangeNameView} />
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
+                    <Route path="/profile/changepicture" exact component={ChangePictureView} />
                     <Route path="/phonebook" component={() => <PhoneBookView contactList={me === null ? [] : me.contacts} />} />
 
                     {prevLoginInfo() === null &&
