@@ -2,6 +2,24 @@
 
 /* Stuff for Add Contact Popup */ 
 
+.content-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 200px; /* Probably needs to be changed to make responsive, value set for testing purposes atm */
+}
+
+.number-input-row {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+}
+
+.search-contact-button{
+    height: 20vh;
+    width: 50%;
+    background-color: var(--color-proceed);
+}
 
 /* Stuff for Delete Contact Popup */ 
 .cancel-row{
@@ -9,7 +27,11 @@
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
-    
+}
+
+.cancel-row img:hover {
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 .button-row {

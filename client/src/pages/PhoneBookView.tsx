@@ -5,6 +5,7 @@
 
 import { ContactCard } from '../components/ContactCard';
 import { DeleteContactPopup } from '../components/DeleteContactPopup';
+import { AddContactPopup } from '../components/AddContactPopup';
 import '../css/phone-book.css';
 import '../css/colors.css';
 import { Link } from 'react-router-dom';
@@ -19,6 +20,14 @@ export const PhoneBookView = () => {
     const removeContactClicked = () => {
         setRemoveContactState(!removeContactState);
     }
+
+    
+const openAddContactPopup = () => {
+    var element = document.getElementById("add-contact-popup");
+    if(element != null) {
+        element.style.visibility = 'visible'
+    }
+}
     
 
     return (
@@ -33,7 +42,7 @@ export const PhoneBookView = () => {
                         <input type="text" placeholder="Sök efter kontakt..." className="search-contacts-input" />
                     </div>
                     <div className="contact-buttons-container">
-                        <button className="add-contact-button">
+                        <button className="add-contact-button" onClick={openAddContactPopup}>
                             <div className="contact-button-flexbox">
                                 <img src={AddContactIcon} alt="" className="contact-button-image" />
                                 <p className="contact-button-text">Lägg till kontakt</p>
@@ -60,6 +69,7 @@ export const PhoneBookView = () => {
                 </div>
             </div>
             <DeleteContactPopup /> 
+            <AddContactPopup />
         </div>
     );
 };

@@ -16,7 +16,7 @@ export const DeleteContactPopup = () => {
             <div className="call-popup-container">
                 <div className="call-popup-flexbox-container">
 
-                    <div className="cancel-row"> <img src={DarkCrossIcon} alt="DarkCrossIcon"></img> </div>
+                    <div className="cancel-row"> <img src={DarkCrossIcon} alt="DarkCrossIcon" onClick={closeDeleteContactPopup}></img> </div>
 
                     <h4>Är du säker på att du vill ta bort /namn på kontakt/?</h4>
 
