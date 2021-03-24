@@ -145,32 +145,6 @@
     align-self: center;
 }
 
-
-/* Styling for each of the 4 buttons: change name, number, picture and password */
-
-.change-profile-button {
-    color: black;
-    background-color: #94E5FF;
-    border: 1px solid #999999;
-    border-radius: 20px;
-    height: 187px;
-    width: 270px;
-}
-
-
-/* Hover state for each button of the 4 buttons*/
-
-.change-profile-button:hover {
-    background-color: pink;
-}
-
-
-/* On click styling for each button of the 4 buttons */
-
-.change-profile-button:active {
-    background-color: yellow;
-}
-
 .change-name-container {
     display: flex;
     flex-direction: row;
