@@ -1,11 +1,11 @@
 /* Things that all buttons use */
 
-.button-general {
+.square-button-general {
     border: 0;
     border-radius: 10px;
 }
 
-.button-general:hover {
+.square-button-general:hover {
     opacity: 0.8;
     cursor: pointer;
 }
@@ -22,13 +22,23 @@
     height: 80px;
     width: 250px;
     font-size: 36px;
-    border-radius: 10px;
 }
 
 
-/* ------------ SquareButton ---------------------- */
+/* ------------ SQUARE BUTTON ---------------------- */
 
 .square-button-text {
     font-size: 36px;
     font-weight: 500;
+}
+
+
+/* ------------ SAVE BUTTON ----------------------- */
+
+.save-button {
+    width: 520px;
+    height: 100px;
+    background-color: #98FF74;
+    border: 1px solid #999999;
+    margin: auto;
 }

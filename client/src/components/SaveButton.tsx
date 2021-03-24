@@ -4,7 +4,6 @@ Authors: Charlie and Hanna
 */
 
 import React from 'react';
-import '../css/savebutton.css';
 import { SquareButton } from './SquareButton';
 
 interface Props {
