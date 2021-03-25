@@ -28,7 +28,7 @@ export const ChangePasswordView = () => {
                 <TextInput className="text-input-password" type="password" label="Nytt lösenord: " placeholder="Skriv ditt nya lösenord här..." onChange={() => console.log("Klick!")} />
                 <TextInput className="text-input-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa ditt nya lösenord här..." onChange={() => console.log("Klick!")} />
             </div>
-            <SaveButton label="Spara lösenord" buttonFunction={ButtonNameClicked} linkTo="/profile" />
+            <SaveButton label="Spara lösenord" onClick={ButtonNameClicked} linkTo="/profile" />
         </div>
     );
 }

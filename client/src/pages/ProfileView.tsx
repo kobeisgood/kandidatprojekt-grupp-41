@@ -53,5 +53,5 @@ export const ProfileView = (props: Props) => {
                 <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} linkTo="/profile/changepassword" />
             </div>
         </div>
-    );
+    ); 
 }

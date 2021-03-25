@@ -18,13 +18,14 @@ export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
  */
 export const loginUser = async (id: UserID, phone: string, psw: string) => {
     const user = await authenticate(phone, psw); // Check database for password match
-    const contacts = await getContacts(user.contacts);
-
-    user.contacts = contacts;
 
     if (user !== null) {
+        const contacts = await getContacts(user.contacts);
+        user.contacts = contacts;
         connectedUsers.set(id, phone);
         return user;
+    } else {
+        return null;
     }
 };
 
