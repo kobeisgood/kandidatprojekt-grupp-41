@@ -4,7 +4,7 @@
 */
 
 import { Link, useHistory } from 'react-router-dom';
-import { SquareButton } from '../components/SquareButton';
+import { ProfileChangeButton } from '../components/ProfileChangeButton';
 
 import '../css/start-view.css';
 import '../css/button.css';
@@ -28,23 +28,32 @@ export const Dahsboard = (props: Props) => {
 
     return (
         <div className="full-page-container">
-            <button className="log-out-button button button-rectangular" onClick={logOut}>
-                Logga ut
+            {/* TODO
+                - Add log out functionality on click
+                - Change to reusable button component */}
+            <button className="log-out-button button-rectangular" onClick={logOut}>
+                <div className="log-out-button-content">
+                    <img src={logOutIcon} alt="Log out icon" className="log-out-button-image"/>
+                    <p className="log-out-button-text">Logga ut</p>
+                </div>
             </button>
 
             <div className="start-view-flexbox-container">
-                <h1>Välkommen, Hjördis!</h1>
+                <h1 className="welcome-text">Välkommen, Hjördis!</h1>
                 <div className="start-view-button-container">
+                    {/* buttonFunction prop passes empty function since it already has a link */}
                     <Link to="/profile">
-                        <button className="big-button">Min profil</button>
+                        <ProfileChangeButton label="Min profil" icon={profileIcon} />
                     </Link>
-                    <Link to="/phonebook"><button className="big-button">Telefonbok</button></Link>
-                    <button className="big-button">Knappsats</button>
+                    <Link to="/phonebook">
+                        <ProfileChangeButton label="Telefonbok" icon={phoneBookIcon} />
+                    </Link>
+                    <ProfileChangeButton label="Knappsats" icon={keypadIcon} />
                 </div>
-                <h2>Senaste samtalen</h2>
+                <p className="latest-calls-text">Senaste samtalen</p>
                 <div className="latest-calls-carousel-container">
-                    Karusell yo
-                    </div>
+                    Färdig karusell yo
+                </div>
             </div>
         </div>
     );

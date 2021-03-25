@@ -3,7 +3,6 @@
 Authors: Charlie and Hanna 
 */
 
-import React from 'react';
 import { SquareButton } from './SquareButton';
 
 import '../css/profile.css';
