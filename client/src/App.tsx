@@ -11,8 +11,8 @@ import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { LoginView } from './pages/LoginView';
-import { Start } from './pages/StartView';
-import { StartView } from './pages/Dashboard';
+import { StartView } from './pages/StartView';
+import { Dahsboard } from './pages/Dashboard';
 import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
 import { ChangeNumberView } from './pages/ChangeNumberView';
@@ -54,8 +54,8 @@ export const App = () => {
                         else
                             return <Redirect push to="/dashboard" />
                     }} /> 
-                    <Route path="/" exact component={() => <Start/>} />
-                    <Route path="/dashboard" exact component={() => <StartView setMe={setMe} />} />
+                    <Route path="/" exact component={() => <StartView/>} />
+                    <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} />} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                     <Route path="/profile/changename" exact component={ChangeNameView} />
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />

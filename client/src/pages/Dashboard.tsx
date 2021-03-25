@@ -1,12 +1,23 @@
-import { Link, useHistory } from 'react-router-dom';
+/* 
+    Start view showing buttons for my profile, phone book, key pad and log out. Also contains a carousel of latest calls.
+    Author: Daniel
+*/
+
+import { useHistory } from 'react-router-dom';
+import { SquareButton } from '../components/SquareButton';
+
 import '../css/start-view.css';
 import '../css/button.css';
+import profileIcon from '../icons/profile-icon.svg';
+import phoneBookIcon from '../icons/phone-book-icon.svg';
+import keypadIcon from '../icons/keypad-icon.svg';
+import logOutIcon from '../icons/log-out-icon.svg';
 
 interface Props {
     setMe: Function;
 }
 
-export const StartView = (props: Props) => {
+export const Dahsboard = (props: Props) => {
     const history = useHistory();
 
     const logOut = () => {
