@@ -13,6 +13,7 @@ import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { LoginView } from './pages/LoginView';
+import { Start } from './pages/Start';
 import { StartView } from './pages/StartView';
 import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
@@ -46,13 +47,14 @@ export const App = () => {
         <div className="App">
             <Router>
                 <Switch>
-                    <Route path="/" exact component={() => {
+                     <Route path="/loginView" exact component={() => {
                         if (prevLoginInfo() === null)
                             return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} />
                         else
-                            return <Redirect push to="/start" />
-                    }} />
-                    <Route path="/start" exact component={() => <StartView setMe={setMe} />} />
+                            return <Redirect push to="/startView" />
+                    }} /> 
+                    <Route path="/" exact component={() => <Start/>} />
+                    <Route path="/startView" exact component={() => <StartView setMe={setMe} />} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                     <Route path="/profile/changename" exact component={ChangeNameView} />
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
@@ -60,7 +62,7 @@ export const App = () => {
                     <Route path="/phonebook" component={PhoneBookView} />
 
                     {prevLoginInfo() === null &&
-                        <Redirect push to="/" />
+                        <Redirect push to="/startView" />
                     }
                 </Switch>
             </Router>

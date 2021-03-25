@@ -1,5 +1,5 @@
-/* View for the profile page 'Min profil'
-Authors: Charlie and Hanna 
+/* View for the start page 'Välkommen till boom'
+Authors: Hanna 
 */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,9 +10,7 @@ import { SquareButton } from '../components/SquareButton';
 
 
 export const Start = () => {
-    // Event handler for clicking back button and the change name button etc. 
-    const ButtonNameClicked = () => {
-
+    function ButtonNameClicked() {
     }
 
 
@@ -22,7 +20,8 @@ export const Start = () => {
                 Välkommen till Boom
             </h1>
             <div className="buttons-container">
-                <SquareButton label={"Logga in"} onClick={ButtonNameClicked} linkTo="/LoginView" />
+                <SquareButton label="Skapa konto" onClick={() => void 0} linkTo="/startView/" className="create-acount-button" />
+                <SquareButton label="Logga in" onClick={() => void 0} linkTo="/loginView/" className="login-button" />
             </div>
         </div>
 
