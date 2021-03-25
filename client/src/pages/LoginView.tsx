@@ -4,6 +4,7 @@ import { Login } from '../Connection';
 import { useHistory } from "react-router-dom";
 import { SaveButton } from '../components/SaveButton';
 import { TextInput } from '../components/TextInput';
+
 import '../css/login-view.css';
 
 
@@ -25,7 +26,7 @@ export const LoginView = (props: Props) => {
         handlePasswordInp = (event: any) => { setPasswordInp(event.target.value); };
 
     const history = useHistory(); // For redirecting user
-    const redir = () => { history.push("/start"); };
+    const redir = () => { history.push("/dashboard"); };
 
     const attemptLogin = () => {
         setLoggingIn(true);
@@ -38,18 +39,18 @@ export const LoginView = (props: Props) => {
     return (
         <form onSubmit={(event) => event.preventDefault()}>
             <div className="login-container">
-                <TextInput className="text-input-password" type="tel" label="Ditt mobilnummer: " 
-                placeholder="Skriv ditt mobilnummer här..."></TextInput>
+                <TextInput className="text-input-password" type="text" label="Ditt mobilnummer: " 
+                placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneInp} />
+
                 <TextInput className="text-input-password" type="password" label="Ditt lösenord: " 
-                placeholder="Skriv ditt lösenord här..."></TextInput>
+                placeholder="Skriv ditt lösenord här..." onChange={handlePasswordInp} />
             
                 <label className="container">Håll mig inloggad
                     <input type="checkbox"></input>
                         <span className="checkmark"></span>
                 </label>
             </div>
-            <SaveButton label="Logga in" buttonFunction={attemptLogin} linkTo="/startView" />
-            
+            <SaveButton label="Logga in" buttonFunction={attemptLogin} />
         </form>
     );
 };

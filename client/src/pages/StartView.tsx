@@ -1,39 +1,22 @@
-import { Link, useHistory } from 'react-router-dom';
-import '../css/start-view.css';
-import '../css/button.css';
+/* View for the start page 'Välkommen till boom'
+Authors: Hanna 
+*/
+import React from 'react';
+import { SquareButton } from '../components/SquareButton';
+import '../css/start.css';
 
-interface Props {
-    setMe: Function;
-}
 
-export const StartView = (props: Props) => {
-    const history = useHistory();
-
-    const logOut = () => {
-        props.setMe(null);
-        localStorage.clear();
-        history.push("/");
-    };
+export const Start = () => {
+    function ButtonNameClicked() {}
 
     return (
-        <div className="full-page-container">
-            <button className="log-out-button button button-rectangular" onClick={logOut}>
-                Logga ut
-            </button>
-
-            <div className="start-view-flexbox-container">
-                <h1>Välkommen, Hjördis!</h1>
-                <div className="start-view-button-container">
-                    <Link to="/profile">
-                        <button className="big-button">Min profil</button>
-                    </Link>
-                    <Link to="/phonebook"><button className="big-button">Telefonbok</button></Link>
-                    <button className="big-button">Knappsats</button>
-                </div>
-                <h2>Senaste samtalen</h2>
-                <div className="latest-calls-carousel-container">
-                    Karusell yo
-                    </div>
+        <div>
+            <h1 className="header">
+                Välkommen till Boom
+            </h1>
+            <div className="buttons-container">
+                <SquareButton label="Skapa konto" onClick={() => void 0} linkTo="/dashboard" className="create-acount-button" />
+                <SquareButton label="Logga in" onClick={() => void 0} linkTo="/login" className="login-button" />
             </div>
         </div>
     );

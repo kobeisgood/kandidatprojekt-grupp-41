@@ -6,19 +6,20 @@ import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register
 import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
-import './App.css';
-import './css/fonts.css'
 import { CallView } from './pages/CallView';
 import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { LoginView } from './pages/LoginView';
-import { Start } from './pages/Start';
-import { StartView } from './pages/StartView';
+import { Start } from './pages/StartView';
+import { StartView } from './pages/Dashboard';
 import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
 import { ChangeNumberView } from './pages/ChangeNumberView';
 import { ChangePasswordView } from './pages/ChangePasswordView';
+
+import './App.css';
+import './css/fonts.css'
 
 
 export const App = () => {
@@ -47,14 +48,14 @@ export const App = () => {
         <div className="App">
             <Router>
                 <Switch>
-                     <Route path="/loginView" exact component={() => {
+                     <Route path="/login" exact component={() => {
                         if (prevLoginInfo() === null)
                             return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} />
                         else
-                            return <Redirect push to="/startView" />
+                            return <Redirect push to="/dashboard" />
                     }} /> 
                     <Route path="/" exact component={() => <Start/>} />
-                    <Route path="/startView" exact component={() => <StartView setMe={setMe} />} />
+                    <Route path="/dashboard" exact component={() => <StartView setMe={setMe} />} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                     <Route path="/profile/changename" exact component={ChangeNameView} />
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
@@ -62,7 +63,7 @@ export const App = () => {
                     <Route path="/phonebook" component={() => <PhoneBookView contactList={me === null ? [] : me.contacts} />} />
 
                     {prevLoginInfo() === null &&
-                        <Redirect push to="/startView" />
+                        <Redirect push to="/dashboard" />
                     }
                 </Switch>
             </Router>

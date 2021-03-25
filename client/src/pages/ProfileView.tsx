@@ -1,13 +1,14 @@
 /* View for the profile page 'Min profil'
 Authors: Charlie and Hanna 
 */
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import '../css/profile.css';
 import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
 import { User } from '../Types';
 import { ProfileChangeButton } from '../components/ProfileChangeButton';
+
+import '../css/profile.css';
 
 import changeName from "../icons/profile/changeName.svg"
 import changeNumber from "../icons/profile/changeNumber.svg"
@@ -33,7 +34,7 @@ export const ProfileView = (props: Props) => {
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
             <header className="profile-header-container">
                 <div className="back-button-container">
-                    <Link to="/start">
+                    <Link to="/dashboard">
                         <BackButton buttonFunction={ButtonNameClicked} />
                     </Link>
                 </div>

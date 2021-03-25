@@ -27,9 +27,9 @@ export const ChangePasswordView = () => {
                 <h1 className="profile-header">Min profil</h1>
             </header>
             <div className="change-password-container">
-                <TextInput className="text-input-password" type="password" label="Nuvarande lösenord: " placeholder="Skriv ditt nuvarande lösenord här..."></TextInput>
-                <TextInput className="text-input-password" type="password" label="Nytt lösenord: " placeholder="Skriv ditt nya lösenord här..."></TextInput>
-                <TextInput className="text-input-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa ditt nya lösenord här..."></TextInput>
+                <TextInput className="text-input-password" type="password" label="Nuvarande lösenord: " placeholder="Skriv ditt nuvarande lösenord här..." onChange={() => console.log("Klick!")} />
+                <TextInput className="text-input-password" type="password" label="Nytt lösenord: " placeholder="Skriv ditt nya lösenord här..." onChange={() => console.log("Klick!")} />
+                <TextInput className="text-input-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa ditt nya lösenord här..." onChange={() => console.log("Klick!")} />
             </div>
             <SaveButton label="Spara lösenord" buttonFunction={ButtonNameClicked} linkTo="/profile" />
         </div>

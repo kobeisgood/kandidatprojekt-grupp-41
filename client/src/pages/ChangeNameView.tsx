@@ -44,8 +44,8 @@ export const ChangeNameView = (props: Props) => {
                 </div>
             </div>
             <div className="change-name-container">
-                <TextInput className="text-input" type="text" label="Förnamn: " placeholder="Hjördis"></TextInput>
-                <TextInput className="text-input" type="text" label="Efternamn: " placeholder="Reposson"></TextInput>
+                <TextInput className="text-input" type="text" label="Förnamn: " placeholder="Hjördis" onChange={() => console.log("Klick!")} />
+                <TextInput className="text-input" type="text" label="Efternamn: " placeholder="Reposson" onChange={() => console.log("Klick!")} />
             </div>
             <SaveButton label="Spara namn" buttonFunction={ButtonNameClicked} linkTo="/profile" />
         </div>

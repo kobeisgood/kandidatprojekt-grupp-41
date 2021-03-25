@@ -40,8 +40,8 @@ export const ChangeNumberView = (props: Props) => {
                 </div>
             </div>
             <div className="change-number-container">
-                <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..."></TextInput>
-                <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." ></TextInput>
+                <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..." onChange={() => console.log("Klick!")} />
+                <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={() => console.log("Klick!")} />
             </div>
             <SaveButton label="Spara nummer" buttonFunction={ButtonNameClicked} linkTo="/profile" />
         </div>

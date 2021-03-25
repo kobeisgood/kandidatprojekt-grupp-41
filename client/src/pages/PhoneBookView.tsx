@@ -4,12 +4,13 @@
  */
 
 import { ContactCard } from '../components/ContactCard';
-import '../css/phone-book.css';
-import '../css/colors.css';
 import { Link } from 'react-router-dom';
 import AddContactIcon from '../icons/add-contact-icon.svg';
 import RemoveContactIcon from '../icons/remove-contact-icon.svg';
 import { Contact } from '../Types';
+
+import '../css/phone-book.css';
+import '../css/colors.css';
 
 interface Props {
     contactList: Contact[]
@@ -21,7 +22,7 @@ export const PhoneBookView = (props: Props) => {
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
                     <div className="back-button-container">
-                        <Link to="/start"><button className="back-button">Tillbaka</button></Link>
+                        <Link to="/dashboard"><button className="back-button">Tillbaka</button></Link>
                     </div>
                     <div className="phone-book-top-flexbox-column">
                         <h1 className="phone-book-text">Telefonbok</h1>
