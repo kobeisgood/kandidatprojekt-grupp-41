@@ -105,7 +105,7 @@ export const AddContactPopup = () => {
 
 
     return (
-        <div id="add-contact-popup" className="full-page-container">
+        <div id="add-contact-popup" className="full-page-container full-page-popup-container">
             <div className="call-popup-container">
                 <div className="call-popup-flexbox-container">
 

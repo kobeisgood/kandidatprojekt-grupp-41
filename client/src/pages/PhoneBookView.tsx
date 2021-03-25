@@ -15,8 +15,7 @@ import { Contact } from '../Types';
 import { useState } from 'react';
 
 interface Props {
-    contactList: Contact[],
-    removeContactState: Boolean
+    contactList: Contact[]
 }
 
 // Opens the add contact popup
@@ -27,8 +26,7 @@ interface Props {
     }
 }   
 export const PhoneBookView = (props: Props) => {
-
-    const [removeContactState, setRemoveContactState] = useState(false) 
+    const [removeContactState, setRemoveContactState] = useState(false);
 
     const removeContactClicked = () => {
         setRemoveContactState(!removeContactState)
@@ -69,7 +67,11 @@ export const PhoneBookView = (props: Props) => {
                     })}
                 </div>
             </div>
-            <DeleteContactPopup /> 
+
+            {removeContactState &&
+                <DeleteContactPopup /> 
+            }
+
             <AddContactPopup />
         </div>
     );

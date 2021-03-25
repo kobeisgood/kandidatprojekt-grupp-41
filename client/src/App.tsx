@@ -62,7 +62,7 @@ export const App = () => {
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
                     <Route path="/profile/changepicture" exact component={ChangePictureView} />
-                    <Route path="/phonebook" component={() => <PhoneBookView removeContactState={false} contactList={me === null ? [] : me.contacts} />} />
+                    <Route path="/phonebook" component={() => <PhoneBookView contactList={me === null ? [] : me.contacts} />} />
 
                     {prevLoginInfo() === null &&
                         <Redirect push to="/dashboard" />

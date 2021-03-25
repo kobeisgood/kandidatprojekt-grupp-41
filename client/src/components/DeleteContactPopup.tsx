@@ -29,7 +29,7 @@ const deleteContact = () => {
 
 export const DeleteContactPopup = () => {
     return (
-        <div id="remove-contact-popup" className="full-page-container">
+        <div id="remove-contact-popup" className="full-page-container full-page-popup-container">
             <div className="call-popup-container">
                 <div className="call-popup-flexbox-container">
 

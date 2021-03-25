@@ -27,7 +27,7 @@ export const ContactCard = (props: Props) => {
         <div className="contact-card-container">
             <div className="contact-card-flexbox">
 
-            { props.removeContactState === false ? <></> : 
+            { !props.removeContactState ? <></> : 
             <button className="delete-contact-button" onClick={openRemoveContactPopup}> <img src={CrossIcon} alt="CrossIcon"></img> </button>}
 
                 <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="Profilbild" />

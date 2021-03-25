@@ -109,7 +109,6 @@ ul > li {
     border-radius: 1vw;
     padding-top: 0.5vw;
     font-weight: bold;
-
 }
 
 
@@ -118,15 +117,12 @@ ul > li {
 .full-page-container {
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    visibility: hidden;
-    z-index: 6;
 }
 
 .call-popup-container {
