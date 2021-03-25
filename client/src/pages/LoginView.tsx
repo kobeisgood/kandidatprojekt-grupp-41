@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { User } from '../Types';
 import { Login } from '../Connection';
 import { useHistory } from "react-router-dom";
+import { SaveButton } from '../components/SaveButton';
+import { TextInput } from '../components/TextInput';
+import '../css/login-view.css';
 
 
 interface Props {
@@ -34,13 +37,19 @@ export const LoginView = (props: Props) => {
 
     return (
         <form onSubmit={(event) => event.preventDefault()}>
-            <label>Ditt mobilnummer:</label><br />
-            <input type="text" onChange={handlePhoneInp} /><br />
-            <label>Ditt lösenord:</label><br />
-            <input type="password" onChange={handlePasswordInp} /><br />
-            <label>Håll mig inloggad</label>
-            <input type="checkbox" defaultChecked /><br />
-            <button onClick={() => attemptLogin()}>Logga in</button>
+            <div className="login-container">
+                <TextInput className="text-input-password" type="tel" label="Ditt mobilnummer: " 
+                placeholder="Skriv ditt mobilnummer här..."></TextInput>
+                <TextInput className="text-input-password" type="password" label="Ditt lösenord: " 
+                placeholder="Skriv ditt lösenord här..."></TextInput>
+            
+                <label className="container">Håll mig inloggad
+                    <input type="checkbox"></input>
+                        <span className="checkmark"></span>
+                </label>
+            </div>
+            <SaveButton label="Logga in" buttonFunction={attemptLogin} linkTo="/startView" />
+            
         </form>
     );
 };
