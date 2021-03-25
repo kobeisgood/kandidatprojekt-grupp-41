@@ -10,14 +10,19 @@ import { SquareButton } from './SquareButton';
 interface Props {
     label: string;
     icon: string;
-    buttonFunction: Function;
+    buttonFunction?: Function;
     linkTo: string;
 }
 
 export const ProfileChangeButton = (props: Props) => {
+    const onClick = () => {
+        if (props.buttonFunction !== null)
+            return props.buttonFunction;
+        else
+            return void(0);
+    };
 
     return (
-        <SquareButton className="change-profile-button" onClick={() => props.buttonFunction()} icon={props.icon} label={props.label} linkTo={props.linkTo} />
+        <SquareButton className="change-profile-button" onClick={() => onClick()} icon={props.icon} label={props.label} linkTo={props.linkTo} />
     );
-}
-
+};
