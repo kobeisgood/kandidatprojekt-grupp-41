@@ -62,7 +62,7 @@ export const LoginView = (props: Props) => {
                         <span className="checkmark"></span>
                     </label>
                 </div>
-                <SaveButton label="Logga in" buttonFunction={attemptLogin} linkTo="/startView" />
+                <SaveButton label="Logga in" onClick={attemptLogin} />
             </form>
         </div>
     );

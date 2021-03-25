@@ -106,6 +106,7 @@ export const authenticate = async (phone: string, psw: string) => {
         else
             return null;
     } catch (err) {
+        console.log("User with phone number " + phone + " and password " + psw + " was not found!");
         console.error(err);
         return null;
     }

@@ -3,23 +3,23 @@
 Authors: Charlie and Hanna 
 */
 
-import React from 'react';
-import '../css/profile.css';
 import { SquareButton } from './SquareButton';
+
+import '../css/profile.css';
 
 interface Props {
     label: string;
     icon: string;
-    buttonFunction?: Function;
-    linkTo: string;
+    onClick?: Function;
+    linkTo?: string;
 }
 
 export const ProfileChangeButton = (props: Props) => {
     const onClick = () => {
-        if (props.buttonFunction !== null)
-            return props.buttonFunction;
+        if (props.onClick !== undefined)
+            props.onClick();
         else
-            return void(0);
+            void(0);
     };
 
     return (

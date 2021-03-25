@@ -7,7 +7,7 @@ export interface User {
     id: UserID,
     firstName: string,
     lastName: string,
-    phoneNbr: number
+    phoneNbr: string
 }
 
 export interface CallData {

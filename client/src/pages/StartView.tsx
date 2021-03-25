@@ -8,9 +8,7 @@ import cam_girl from "../images/cam_girl.png"
 import '../css/start.css';
 
 
-export const Start = () => {
-    function ButtonNameClicked() {}
-
+export const StartView = () => {
     return (
         <div>
             <h1 className="header">
@@ -27,4 +25,4 @@ export const Start = () => {
             <img className="" src={cam_girl} alt="profilbild" />
         </div>
     );
-}
+};

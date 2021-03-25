@@ -10,12 +10,12 @@ import '../css/savebutton.css';
 
 interface Props {
     label: string;
-    buttonFunction: Function;
+    onClick: Function;
     linkTo?: string;
 }
 
 export const SaveButton = (props: Props) => {
     return (
-        <SquareButton className="save-button" onClick={() => props.buttonFunction()} label={props.label} linkTo={props.linkTo} />
+        <SquareButton className="save-button" onClick={() => props.onClick()} label={props.label} linkTo={props.linkTo} />
     );
 }
