@@ -2,9 +2,17 @@ import io from 'socket.io-client';
 import Peer from 'simple-peer';
 import { UserID, User } from './Types';
 
+
 const useHTTPS = false; // Only enable this if you know what it means
 
-export const OpenConnection = (userName: string) => {
+/**
+ * Makes an attempt to login. 
+ * 
+ * @param phone The specified user phone number
+ * @param psw The specified user password
+ * @returns The socket representing the connection between client and server
+ */
+export const Login = (phone: string, psw: string, setMe: Function, andThen: Function) => {
     let socket: SocketIOClient.Socket;
 
     if (useHTTPS)
@@ -12,22 +20,21 @@ export const OpenConnection = (userName: string) => {
     else
         socket = io.connect('http://localhost:4000');
 
-    socket.emit('first-connection', userName);
-    socket.on('connect-response', (response: boolean) => {
-        if (response) {
-            console.log("Conected to server!");
-        } else {
-            console.log("Could not connect to server!");
-            return null;
-        }
+    socket.emit('login-user', phone, psw); // Send login request to server
 
-        socket.off('connect-response'); // Stop listening
+    socket.once('login-response', (user: User) => { // Begin listening for server response
+        if (user !== null) {
+            console.log("Logged in successfully!");
+            setMe(user);
+            andThen();
+        } else
+            console.log("Failed to log in!");
     });
 
     return socket;
 };
 
-export const CloseConnection = (socket: SocketIOClient.Socket) => {
+export const Logout = (socket: SocketIOClient.Socket) => {
     socket.off('user-connected');
 };
 
@@ -196,7 +203,7 @@ export const CallUser = (
     socket.on('call-declined', () => {
         setOutgoingCall(false);
         console.log("User declined your call!");
-        
+
         socket.off('call-accepted');
         socket.off('call-declined');
     });

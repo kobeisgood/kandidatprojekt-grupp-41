@@ -11,31 +11,27 @@ import '../css/colors.css';
 import { Link } from 'react-router-dom';
 import AddContactIcon from '../icons/add-contact-icon.svg';
 import RemoveContactIcon from '../icons/remove-contact-icon.svg';
-import { useState } from 'react';
+import { Contact } from '../Types';
 
-export const PhoneBookView = () => {
+interface Props {
+    contactList: Contact[]
+}
 
-    const [removeContactState, setRemoveContactState] = useState(false);
-
-    const removeContactClicked = () => {
-        setRemoveContactState(!removeContactState);
-    }
-
-    // Opens the add contact popup
+// Opens the add contact popup
     const openAddContactPopup = () => {
     var element = document.getElementById("add-contact-popup");
     if(element != null) {
         element.style.visibility = 'visible'
     }
     }   
+export const PhoneBookView = (props: Props) => {
     
-
     return (
         <div className="phone-book-container">
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
                     <div className="back-button-container">
-                        <Link to="/"><button className="back-button">Tillbaka</button></Link>
+                        <Link to="/dashboard"><button className="back-button">Tillbaka</button></Link>
                     </div>
                     <div className="phone-book-top-flexbox-column">
                         <h1 className="phone-book-text">Telefonbok</h1>
@@ -60,12 +56,9 @@ export const PhoneBookView = () => {
             </header>
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
-                    <ContactCard removeContactState={removeContactState}/>
-                    <ContactCard removeContactState={removeContactState} />
-                    <ContactCard removeContactState={removeContactState} />
-                    <ContactCard removeContactState={removeContactState}/>
-                    <ContactCard removeContactState={removeContactState}/>
-                    <ContactCard removeContactState={removeContactState} />
+                    {props.contactList.map((contact: Contact) => {
+                        return <ContactCard contact={contact} />
+                    })}
                 </div>
             </div>
             <DeleteContactPopup /> 

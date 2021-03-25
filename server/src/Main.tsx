@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
 import { connectToDb, createUser } from './Database';
-import { connectedUsers, connectUser, disconnectUser, userIsConnected, getUserName } from './UserManagement';
+import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
 /* INITIATION */
@@ -14,17 +14,28 @@ console.log("Server up and running...");
 
 /* SERVER RUNNING */
 io.on('connection', (socket: Socket) => { // Begin listening to client connections
-    socket.on('first-connection', userName => {
+    socket.on('login-user', (phone, psw) => {
         let userId = socket.id;
 
-        if (!userIsConnected(userId)) { // If not already connected
-            connectUser(userId, userName);
-
-            console.log("\nUser with ID " + userId + " connected.");
-
-            socket.emit('connect-response', connectedUsers);
-        } else {
-            socket.emit('connect-response', undefined);
+        if (!userIsLoggedIn(phone)) { // If user not already connected
+            loginUser(userId, phone, psw).then((user) => {
+                if (user !== null) {
+                    console.log("\nUser with ID " + userId + " successfully logged in.");
+                    
+                    socket.emit('login-response', {
+                        id: socket.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        phoneNbr: user.phoneNbr,
+                        profilePic: user.profilePic,
+                        contacts: user.contacts,
+                        callEntries: user.callEntries
+                    });
+                } else {
+                    console.log("\nUser with ID " + userId + " failed to log in.");
+                    socket.emit('login-response', null);
+                }
+            });
         }
     });
 
@@ -68,7 +79,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     socket.on('disconnecting', () => {
         let userId = socket.id;
         let userName = getUserName(userId);
-        disconnectUser(userId); // Remove user from record
+        logoutUser(userId); // Remove user from record
 
         // Announce that user left the room
         socket.rooms.forEach(room => {
@@ -79,6 +90,6 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     socket.on('disconnect', () => {
         let userId = socket.id;
 
-        console.log("User with ID " + userId + " disconnected.");
+        console.log("User with ID " + userId + " logged out.");
     });
 });

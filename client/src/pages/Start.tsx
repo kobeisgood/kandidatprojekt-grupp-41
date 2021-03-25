@@ -9,8 +9,6 @@ import '../css/start.css';
 
 
 export const Start = () => {
-    function ButtonNameClicked() {}
-
     return (
         <div>
             <h1 className="header">
@@ -18,13 +16,13 @@ export const Start = () => {
             </h1>
             <div className="buttons-container">
                 <label className="description-text">Har du redan ett konto?
-                    <SquareButton label="Logga in" onClick={() => void 0} linkTo="/login" className="login-button" />
+                    <SquareButton label="Logga in" onClick={() => void 0} linkTo="/loginView/" className="login-button" />
                 </label>
                 <label className="description-text">Är du ny eller saknar konto?
-                    <SquareButton label="Skapa konto" onClick={() => void 0} className="create-acount-button" />
+                    <SquareButton label="Skapa konto" onClick={() => void 0} linkTo="/startView/" className="create-acount-button" />
                 </label>
             </div>
             <img className="" src={cam_girl} alt="profilbild" />
         </div>
     );
-}
+};
