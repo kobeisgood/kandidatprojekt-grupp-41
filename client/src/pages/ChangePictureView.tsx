@@ -20,14 +20,6 @@ interface Props {
 export const ChangePictureView = (props: Props) => {
     const InpElem = useRef<HTMLInputElement>(null);
 
-    // Event handler for clicking back button and the change name button etc. 
-    const ButtonNameClicked = () => {
-
-    }
-    const ChangeNameClicked = () => {
-        <Link to="/changename" />
-    }
-
     const OpenFile = () => {
         if (InpElem.current !== null) {
             InpElem.current.click();
@@ -39,9 +31,7 @@ export const ChangePictureView = (props: Props) => {
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
             <header className="profile-header-container">
                 <div className="back-button-container">
-                    <Link to="/">
-                        <BackButton buttonFunction={ButtonNameClicked} />
-                    </Link>
+                    <BackButton linkTo="/" />
                 </div>
                 <h1 className="profile-header">Min profil</h1>
             </header>
@@ -51,7 +41,7 @@ export const ChangePictureView = (props: Props) => {
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">
-                <ProfileChangeButton label={"Ta en ny bild"} icon={camera} buttonFunction={ChangeNameClicked} linkTo="/profile" />
+                <ProfileChangeButton label={"Ta en ny bild"} icon={camera} />
                 <ProfileChangeButton label={"Välj befintlig bild"} icon={choosePicture} buttonFunction={OpenFile} />
                 <input type="file" style={{display: "none"}} ref={InpElem} />
             </div>

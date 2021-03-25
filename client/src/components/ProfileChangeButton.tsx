@@ -11,7 +11,7 @@ interface Props {
     label: string;
     icon: string;
     buttonFunction?: Function;
-    linkTo: string;
+    linkTo?: string;
 }
 
 export const ProfileChangeButton = (props: Props) => {
