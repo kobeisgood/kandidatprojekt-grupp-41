@@ -11,7 +11,7 @@ import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { LoginView } from './pages/LoginView';
-import { Start } from './pages/StartView';
+import { Start } from './pages/Start';
 import { StartView } from './pages/Dashboard';
 import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
@@ -60,7 +60,7 @@ export const App = () => {
                     <Route path="/profile/changename" exact component={ChangeNameView} />
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
-                    <Route path="/phonebook" component={() => <PhoneBookView contactList={me === null ? [] : me.contacts} />} />
+                    <Route path="/phonebook" component={() => <PhoneBookView removeContactState={false} contactList={me === null ? [] : me.contacts} />} />
 
                     {prevLoginInfo() === null &&
                         <Redirect push to="/dashboard" />

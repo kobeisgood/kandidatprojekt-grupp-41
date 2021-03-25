@@ -12,9 +12,11 @@ import { Link } from 'react-router-dom';
 import AddContactIcon from '../icons/add-contact-icon.svg';
 import RemoveContactIcon from '../icons/remove-contact-icon.svg';
 import { Contact } from '../Types';
+import { useState } from 'react';
 
 interface Props {
-    contactList: Contact[]
+    contactList: Contact[],
+    removeContactState: Boolean
 }
 
 // Opens the add contact popup
@@ -23,8 +25,14 @@ interface Props {
     if(element != null) {
         element.style.visibility = 'visible'
     }
-    }   
+}   
 export const PhoneBookView = (props: Props) => {
+
+    const [removeContactState, setRemoveContactState] = useState(false) 
+
+    const removeContactClicked = () => {
+        setRemoveContactState(!removeContactState)
+    }
     
     return (
         <div className="phone-book-container">
@@ -57,7 +65,7 @@ export const PhoneBookView = (props: Props) => {
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
-                        return <ContactCard contact={contact} />
+                        return <ContactCard contact={contact} removeContactState={removeContactState} />
                     })}
                 </div>
             </div>
