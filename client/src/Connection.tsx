@@ -50,6 +50,14 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
     });
 };
 
+// finds the contact in the db given a number TODO: should run correct method to render correct content
+export const FindContactNumber = (socket: SocketIOClient.Socket, phoneNumber: string, contactFound:Function) => {
+    socket.emit('find-contact-number', phoneNumber);
+    socket.on('number-found', () => {
+        contactFound();
+    })
+}
+
 export const JoinRoom = (
     socket: SocketIOClient.Socket,
     roomId: string,

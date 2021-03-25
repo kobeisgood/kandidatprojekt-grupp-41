@@ -1,10 +1,13 @@
 import '../css/call.css';
 import '../css/button.css';
+import '../css/savebutton.css';
 import '../css/popups.css';
 import '../css/contact-card.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 import { SquareButton } from '../components/SquareButton';
 import { useState } from 'react';
+import { Contact } from '../Types';
+import { FindContactNumber } from '../Connection';
 
 // Closes the add contact popup
 const closeAddContactPopup = () => {
@@ -14,23 +17,16 @@ const closeAddContactPopup = () => {
     }
 };
 
+interface Props {
+    socket: SocketIOClient.Socket | null
+}
 
-export const AddContactPopup = () => {
 
+export const AddContactPopup = (props:Props) => {
+
+    
     const [contactFoundState, setContactFoundState] = useState(false)
     const [contactNotFoundState, setContactNotFoundState] = useState(false)
-
-    // Searches for contact in db
-    const searchContact = () => {
-        // check in db for number
-        // if number(user) exists
-            // return new content ---> contactFound(), renderPopupContent()
-            // save data from the user in something
-            // get profile pic, name and number 
-        // else
-            // return new content ---> contactNotFound(), renderPopupContent()
-        console.log("ahaaa")
-    };
 
     const contactFound = () => {
         setContactFoundState(true);
@@ -41,6 +37,44 @@ export const AddContactPopup = () => {
         setContactNotFoundState(true)
         setContactFoundState(false)
     };
+
+    // Searches for contact in db
+    const searchContact = () => {
+
+        let contactNumber: string = (document.getElementById("add-contact-number-input") as HTMLInputElement).value;
+
+        // check in db for number, render correct content in popup
+            if(props.socket != null){
+                FindContactNumber(props.socket, contactNumber, contactFound) // TODO still need a way to check if contact not found
+            }
+            
+
+         // if contactExists
+            // find user with that phone nbr
+                // create a function in Connection, eg getSearchedContact
+                // emit a msg to the server along with the number 
+                // in main on server side, create function *on* the emit
+                // in that function, call on findContact from database.tsx
+            
+            // save first name, last name, pic (might be hard right now), phone number 
+            // return new content ---> contactFound()
+            // save data from the user in something
+            // get profile pic, name and number 
+        // else
+            // return new content ---> contactNotFound()
+        console.log("ahaaa")
+    };
+
+    // Adds the contact to the user
+    const addContact = () => {
+        // check in db for contact(user)
+        // if contact(user) exists
+            // add contact to user in db
+            // closeAddContactPopup()
+        // else
+            // return error
+        console.log('Contact added')
+    }
 
     // Renders the HTML content of the popup depending on if contact is found or not
     const renderPopupContent = () => {
@@ -58,7 +92,7 @@ export const AddContactPopup = () => {
                         <p>Mobilnummer:</p>
                         <input id="add-contact-number-input" type="number" placeholder="Skriv mobilnummer här..."></input>
                     </div>
-                    <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="search-contact-button button-rectangular button" />
+                    <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                 </div>
             )
         }
@@ -74,7 +108,7 @@ export const AddContactPopup = () => {
                             <p>*contactNumber*</p>
                         </div>
                     </div>
-                    <SquareButton label="Lägg till kontakt" onClick={addContact} className="handle-contact-button button-rectangular button" />
+                    <SquareButton label="Lägg till kontakt" onClick={addContact} className="save-button handle-contact-button button" />
                 </div>
             )
         }
@@ -87,21 +121,12 @@ export const AddContactPopup = () => {
                     <p>Mobilnummer:</p>
                     <input id="add-contact-number-input" type="number" placeholder="Skriv mobilnummer här..."></input>
                 </div>
-                <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="handle-contact-button button-rectangular button" />
+                <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
             </div>
         )
     };
 
-    // Adds the contact to the user
-    const addContact = () => {
-        // check in db for contact(user)
-        // if contact(user) exists
-            // add contact to user in db
-            // closeAddContactPopup()
-        // else
-            // return error
-        console.log('Contact added')
-    }
+    
 
 
     return (

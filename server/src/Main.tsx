@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { connectToDb, createUser } from './Database';
+import { connectToDb, createUser, numberExists } from './Database';
 import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
@@ -53,6 +53,12 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
                 console.error("User could not be added!");
                 socket.emit('registration-result', false);
             });
+    });
+
+    socket.on('find-contact-number', (phoneNumber: string) => {
+        numberExists(phoneNumber).then((result) => {
+            socket.emit('number-found', result)
+        });
     });
 
     socket.on('join-room', (roomId: string) => {

@@ -16,6 +16,7 @@ import { useState } from 'react';
 
 interface Props {
     contactList: Contact[]
+    socket: SocketIOClient.Socket | null;
 }
 
 // Opens the add contact popup
@@ -44,12 +45,14 @@ export const PhoneBookView = (props: Props) => {
                         <input type="text" placeholder="Sök efter kontakt..." className="search-contacts-input" />
                     </div>
                     <div className="contact-buttons-container">
-                        <button className="add-contact-button" onClick={openAddContactPopup}>
+
+                        {removeContactState ? <></> : <button className="add-contact-button" onClick={openAddContactPopup}>
                             <div className="contact-button-flexbox">
                                 <img src={AddContactIcon} alt="" className="contact-button-image" />
                                 <p className="contact-button-text">Lägg till kontakt</p>
                             </div>
-                        </button>
+                        </button>}
+
                         <button className="remove-contact-button" onClick={removeContactClicked}>
                             <div className="contact-button-flexbox">
                                 <img src={RemoveContactIcon} alt="" className="contact-button-image" />
@@ -72,7 +75,7 @@ export const PhoneBookView = (props: Props) => {
                 <DeleteContactPopup /> 
             }
 
-            <AddContactPopup />
+            <AddContactPopup socket={props.socket} />
         </div>
     );
 };
