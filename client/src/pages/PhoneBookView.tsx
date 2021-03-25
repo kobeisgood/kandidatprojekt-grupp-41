@@ -46,7 +46,7 @@ export const PhoneBookView = (props: Props) => {
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
-                        return <h1>{contact.firstName}</h1>
+                        return <ContactCard contact={contact} />
                     })}
                 </div>
             </div>
