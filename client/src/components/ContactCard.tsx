@@ -2,7 +2,7 @@
     Component for a contact card
     Authors: Daniel and Robin
  */
-import React, { useState } from 'react';
+import React from 'react';
 import '../css/contact-card.css';
 import '../css/colors.css';
 import CallIcon from '../icons/call-icon.svg';

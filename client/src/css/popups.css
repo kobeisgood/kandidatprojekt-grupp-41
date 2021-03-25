@@ -15,10 +15,20 @@
     width: 100%;
 }
 
-.search-contact-button{
+.handle-contact-button{
     height: 20vh;
     width: 50%;
     background-color: var(--color-proceed);
+}
+
+.contact-found-row {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.contact-found-info-col {
+    display: flex;
+    flex-direction: column;
 }
 
 /* Stuff for Delete Contact Popup */ 
