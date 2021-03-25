@@ -3,7 +3,7 @@
     Author: Daniel
 */
 
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 
 import '../css/start-view.css';
