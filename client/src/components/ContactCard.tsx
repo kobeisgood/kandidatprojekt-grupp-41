@@ -12,6 +12,7 @@ interface Props {
     removeContactState: boolean;
 }
 
+// Opens the delete contact popup
 const openRemoveContactPopup = () => {
     var element = document.getElementById("remove-contact-popup");
     if(element != null) {

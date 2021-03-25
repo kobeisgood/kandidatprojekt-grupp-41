@@ -3,6 +3,7 @@ import '../css/button.css';
 import '../css/popups.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 
+// Closes the delete contact popup
 const closeDeleteContactPopup = () => {
     var element = document.getElementById("remove-contact-popup");
     if(element != null) {
@@ -17,14 +18,13 @@ const deleteContact = () => {
     // Find the contact(user) from the id 
     // if user exists 
         // delete from db
-        // close popup 
+        // console.log("Contact deleted")
+        // closeDeleteContactPopup();
     // else 
         // return error
 
     console.log("Contact deleted")
-    
-    closeDeleteContactPopup();
-    
+  
 }
 
 export const DeleteContactPopup = () => {

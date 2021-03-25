@@ -21,13 +21,13 @@ export const PhoneBookView = () => {
         setRemoveContactState(!removeContactState);
     }
 
-    
-const openAddContactPopup = () => {
+    // Opens the add contact popup
+    const openAddContactPopup = () => {
     var element = document.getElementById("add-contact-popup");
     if(element != null) {
         element.style.visibility = 'visible'
     }
-}
+    }   
     
 
     return (
