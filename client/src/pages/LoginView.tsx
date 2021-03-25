@@ -4,7 +4,7 @@ import { Login } from '../Connection';
 import { useHistory } from "react-router-dom";
 import { SaveButton } from '../components/SaveButton';
 import { TextInput } from '../components/TextInput';
-
+import { BackButton } from '../components/BackButton';
 import '../css/login-view.css';
 
 
@@ -37,20 +37,33 @@ export const LoginView = (props: Props) => {
     };
 
     return (
-        <form onSubmit={(event) => event.preventDefault()}>
-            <div className="login-container">
-                <TextInput className="text-input-password" type="text" label="Ditt mobilnummer: " 
-                placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneInp} />
+        <div>
+            <header className="login-header-container">
+                <div className="back-button-container">
+                    <BackButton linkTo="/" />
+                </div>
+                <h1 className="login-header">Logga in</h1>
+            </header>
+            <div className="description-text-container">
+                <h2 className="description-text">
+                    Fyll i fälten nedan och tryck sedan på “Logga in” för att gå vidare.
+            </h2>
+            </div>
+            <form onSubmit={(event) => event.preventDefault()}>
+                <div className="login-container">
+                    <TextInput className="text-input-password" type="text" label="Ditt mobilnummer: "
+                        placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneInp} />
 
-                <TextInput className="text-input-password" type="password" label="Ditt lösenord: " 
-                placeholder="Skriv ditt lösenord här..." onChange={handlePasswordInp} />
-            
-                <label className="container">Håll mig inloggad
+                    <TextInput className="text-input-password" type="password" label="Ditt lösenord: "
+                        placeholder="Skriv ditt lösenord här..." onChange={handlePasswordInp} />
+
+                    <label className="container">Håll mig inloggad
                     <input type="checkbox"></input>
                         <span className="checkmark"></span>
-                </label>
-            </div>
-            <SaveButton label="Logga in" buttonFunction={attemptLogin} />
-        </form>
+                    </label>
+                </div>
+                <SaveButton label="Logga in" buttonFunction={attemptLogin} linkTo="/startView" />
+            </form>
+        </div>
     );
 };

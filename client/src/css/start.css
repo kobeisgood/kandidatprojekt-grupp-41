@@ -3,7 +3,14 @@
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     margin-top: 30px;
-    margin-bottom: 100px;
+    margin-bottom: 80px;
+}
+
+.description-text {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    align-self: center;;
 }
 
 .buttons-container {
@@ -61,3 +68,4 @@
 .create-acount-button:active {
     background-color: lavenderblush;
 }
+
