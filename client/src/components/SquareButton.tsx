@@ -16,7 +16,7 @@ interface Props {
 
 export const SquareButton = (props: Props) => {
     const iconElem = props.icon === undefined ? <></> : <img src={props.icon} width="40%" height="40%" />;
-    const labelElem = props.label === undefined ? <></> : <h2 className="square-button-text">{props.label}</h2>;
+    const labelElem = props.label === undefined ? <></> : <h2>{props.label}</h2>;
 
     return (
         <div>

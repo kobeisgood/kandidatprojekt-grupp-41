@@ -40,10 +40,7 @@ export const ProfileView = (props: Props) => {
                     - Add function on click for popup "remove account"
                      */}
                 <div className="delete-account-container">
-                    <button className="delete-account-button">
-                        <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
-                        <header className="item-delete-header">Ta bort konto</header>
-                    </button>
+                    <SquareButton label="Ta bort konto" onClick={() => void 0} icon={trashbin} className="delete-account-button" />
                 </div>
             </header>
             {/* Container for profile pic, name and number */}

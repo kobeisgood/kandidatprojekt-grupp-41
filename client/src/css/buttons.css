@@ -2,15 +2,12 @@
 
 .button-general {
     border: 1px solid #999999;
+    font-weight: 600;
 }
 
 .button-general:hover {
-    opacity: 0.8;
+    opacity: 0.7;
     cursor: pointer;
-}
-
-.square-button {
-    border-radius: 20px;
 }
 
 
@@ -30,9 +27,8 @@
 
 /* ------------ SQUARE BUTTON ---------------------- */
 
-.square-button-text {
-    font-size: 36px;
-    font-weight: 500;
+.square-button {
+    border-radius: 20px;
 }
 
 
@@ -43,6 +39,7 @@
     height: 100px;
     background-color: #98FF74;
     margin: auto;
+    font-size: 36px;
 }
 
 
@@ -56,6 +53,7 @@
     background-color: #94E5FF;
     height: 187px;
     width: 270px;
+    font-size: 36px;
 }
 
 
@@ -65,10 +63,17 @@
     height: 80px;
     width: 250px;
     display: flex;
+    align-items: center;
     font-size: 30px;
     border-radius: 20px;
     color: white;
     background-color: #FB0000;
+}
+
+.delete-account-button img {
+    margin-left: 10px;
+    width: 50px;
+    height: auto;
 }
 
 
@@ -79,7 +84,7 @@
     border-radius: 20px;
     border: 1px solid darkgrey;
     font-size: 18px;
-    width: 150px;
+    width: 170px;
     height: 80px;
 }
 
@@ -111,6 +116,7 @@
     background-color: rgb(230, 132, 87);
     color: white;
     border: 0;
+    font-size: 30px;
 }
 
 .log-out-button:hover {
@@ -127,4 +133,5 @@
     background-color: var(--color-call);
     color: white;
     border: 0;
+    font-size: 36px;
 }
