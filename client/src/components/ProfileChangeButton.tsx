@@ -16,7 +16,7 @@ interface Props {
 export const ProfileChangeButton = (props: Props) => {
 
     return (
-        <SquareButton className="change-profile-button" onClick={() => props.buttonFunction()} icon={props.icon} label={props.label} linkTo={props.linkTo} />
+        <SquareButton className="page-navigation-button" onClick={() => props.buttonFunction()} icon={props.icon} label={props.label} linkTo={props.linkTo} />
     );
 }
 

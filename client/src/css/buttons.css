@@ -17,7 +17,7 @@
         - Add this to the button class:
             display: flex;
             align-items: center;
-        - You probably also need to change the styling of the iamge, check above
+        - You probably also need to change the styling of the image, check above
     Want to change position of the button?
         - Add a container to the button in the html file
         - Change position for the container in another file, such as profile.css or contact-card.css (NOT HERE!)
@@ -31,6 +31,11 @@
 .button-general {
     border: 1px solid #999999;
     font-weight: 600;
+}
+
+.button-general img {
+    width: 40%;
+    height: 40%;
 }
 
 .button-general:hover {
@@ -79,12 +84,12 @@
 }
 
 
-/* ------------- CHANGE PROFILE BUTTON ------------ */
+/* ------------- PAGE-NAVIGATION-BUTTON ------------ */
 
 
 /* Styling for each of the 4 buttons: change name, number, picture and password */
 
-.change-profile-button {
+.page-navigation-button {
     color: black;
     background-color: #94E5FF;
     height: 187px;
@@ -101,7 +106,6 @@
     display: flex;
     align-items: center;
     font-size: 30px;
-    border-radius: 20px;
     color: white;
     background-color: #FB0000;
 }

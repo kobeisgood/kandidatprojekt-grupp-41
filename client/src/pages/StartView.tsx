@@ -23,9 +23,9 @@ export const StartView = () => {
                 <h1 className="welcome-text">Välkommen, Hjördis!</h1>
                 <div className="start-view-button-container">
                     {/* onClick prop passes empty function since it already has a link */}
-                    <SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="change-profile-button" />
-                    <SquareButton label="Telefonbok" onClick={() => void 0} icon={phoneBookIcon} linkTo="/phonebook" className="change-profile-button" />
-                    <SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="change-profile-button" />
+                    <SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" />
+                    <SquareButton label="Telefonbok" onClick={() => void 0} icon={phoneBookIcon} linkTo="/phonebook" className="page-navigation-button" />
+                    <SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button" />
                 </div>
                 <p className="latest-calls-text">Senaste samtalen</p>
                 <div className="latest-calls-carousel-container">
