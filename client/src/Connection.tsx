@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
-import { UserID, User } from './Types';
+import { UserID, User, Contact } from './Types';
 
 
 const useHTTPS = false; // Only enable this if you know what it means
@@ -51,11 +51,26 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
 };
 
 // finds the contact in the db given a number TODO: should run correct method to render correct content
-export const FindContactNumber = (socket: SocketIOClient.Socket, phoneNumber: string, contactFound:Function) => {
+export const FindContactNumber = (
+    socket: SocketIOClient.Socket, 
+    phoneNumber: string, 
+    setContactExists: Function
+    ) => {
     socket.emit('find-contact-number', phoneNumber);
     socket.on('number-found', () => {
-        contactFound();
+        setContactExists(true);
     })
+    socket.on('number-not-found', () => {
+        setContactExists(false);
+    })
+}
+
+export const GetSearchedContact = (socket:SocketIOClient.Socket, phoneNumber: string, setFoundContact:Function) => {
+    socket.emit('get-searched-contact', phoneNumber);
+    socket.on('got-contact', (contact:Contact) => {
+        setFoundContact(contact)
+        console.log(contact)
+    } )
 }
 
 export const JoinRoom = (

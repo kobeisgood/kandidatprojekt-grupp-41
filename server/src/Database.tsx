@@ -159,7 +159,7 @@ export const getContacts = async (contactIds: string[]) => {
 
         for (let i = 0; i < contactIds.length; i++) {
             const contact = await UserModel.findOne({ _id: contactIds[i] }).lean();
-            
+
             contacts.push({
                 id: contact._id,
                 firstName: contact.firstName,
@@ -176,8 +176,18 @@ export const getContacts = async (contactIds: string[]) => {
     }
 };
 
-export const findContact = async (nbr: string) => {
-    // do stuff
-    // look at method above to get inspo
-    console.log("doing find contact stuf")
+export const getContactFromNbr = async (nbr: string) => {
+    try {
+        let contact = await UserModel.findOne({ phoneNbr: nbr }).lean();
+        return {
+            id: contact._id,
+            firstName: contact.firstName,
+            lastName: contact.lastName,
+            phoneNbr: contact.phoneNbr,
+            profilePic: contact.profilePic
+        }
+    } catch (err) {
+        console.error(err)
+        return null
+    }
 }

@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { connectToDb, createUser, numberExists } from './Database';
+import { connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
 import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
@@ -57,9 +57,24 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
 
     socket.on('find-contact-number', (phoneNumber: string) => {
         numberExists(phoneNumber).then((result) => {
-            socket.emit('number-found', result)
+            if (result) {
+                socket.emit('number-found', result)
+            } else {
+                socket.emit('number-not-found', result)
+            }
+            
         });
     });
+
+    socket.on('get-searched-contact', (phoneNumber:string) => {
+        getContactFromNbr(phoneNumber).then((contact) => {
+            console.log(contact)
+            socket.emit('got-contact', contact)
+        })
+        .catch(() => {
+            console.error("Contact could not be found!")
+        });
+    })
 
     socket.on('join-room', (roomId: string) => {
         let userId = socket.id;
