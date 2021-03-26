@@ -1,3 +1,31 @@
+/* BUTTON TUTORIAL
+    Want to add/change styling for all buttons?
+        - Change styling on the button-general class below
+    Want to change styling for all square buttons?
+        - Change styling on the square-button class below
+    Want to change styling for all round buttons?
+        - Change styling on the round-button class below
+    Want to add some styling to a specific button such as color and height?
+        - Add a class to the button and style it here
+    Want to change styling of the image in the button?
+        - Add:
+            .whatever-the-button-is-called img {
+                write stuff here
+            }
+        Example can be found below at .delete-account-button img
+    Want to make the icon float to the left?
+        - Add this to the button class:
+            display: flex;
+            align-items: center;
+        - You probably also need to change the styling of the iamge, check above
+    Want to change position of the button?
+        - Add a container to the button in the html file
+        - Change position for the container in another file, such as profile.css or contact-card.css (NOT HERE!)
+    Want to create a new button component?
+        - Make sure you add the class button-general to it if it is not a SquareButton or RoundButton
+*/
+
+
 /* Things that all buttons use */
 
 .button-general {
@@ -32,13 +60,21 @@
 }
 
 
+/* ------------- ROUND BUTTON --------------------- */
+
+.round-button {
+    /* TODO
+        - Add stuff
+        */
+}
+
+
 /* ------------ SAVE BUTTON ----------------------- */
 
 .save-button {
     width: 520px;
     height: 100px;
     background-color: #98FF74;
-    margin: auto;
     font-size: 36px;
 }
 
@@ -108,14 +144,10 @@
 /* -------------- LOG OUT BUTTON -------------- */
 
 .log-out-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
     width: 220px;
     height: 100px;
     background-color: rgb(230, 132, 87);
     color: white;
-    border: 0;
     font-size: 30px;
 }
 
@@ -133,5 +165,5 @@
     background-color: var(--color-call);
     color: white;
     border: 0;
-    font-size: 36px;
+    font-size: 30px;
 }
