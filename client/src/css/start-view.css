@@ -17,6 +17,12 @@
     font-weight: 500;
 }
 
+.log-out-button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
 .welcome-text {
     margin-top: 40px;
 }

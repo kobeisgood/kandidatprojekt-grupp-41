@@ -15,7 +15,9 @@ export const StartView = () => {
             {/* TODO
                 - Add log out functionality on click
             */}
-            <SquareButton label="Logga ut" onClick={() => void 0} icon={logOutIcon} className="log-out-button" />
+            <div className="log-out-button-container">
+                <SquareButton label="Logga ut" onClick={() => void 0} icon={logOutIcon} className="log-out-button" />
+            </div>
 
             <div className="start-view-flexbox-container">
                 <h1 className="welcome-text">Välkommen, Hjördis!</h1>
