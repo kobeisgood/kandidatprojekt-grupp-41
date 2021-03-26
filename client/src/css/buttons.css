@@ -117,3 +117,14 @@
     background-color: rgb(230, 132, 87, 0.8);
     cursor: pointer;
 }
+
+
+/* -------------- CALL BUTTON ---------------- */
+
+.call-button {
+    width: 175px;
+    height: 100px;
+    background-color: var(--color-call);
+    color: white;
+    border: 0;
+}

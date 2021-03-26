@@ -12,7 +12,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-color: blueviolet;
 }
 
 .contact-card-profile-picture {
@@ -28,20 +27,4 @@
 
 .contact-name span {
     font-weight: bold;
-}
-
-.call-button {
-    width: 90%;
-    height: 100px;
-    background-color: var(--color-call);
-    border: 0;
-    border-radius: 15px;
-    font-size: 48px;
-    color: white;
-    padding: 10px 0;
-}
-
-.call-button:hover {
-    opacity: 0.8;
-    cursor: pointer;
 }
