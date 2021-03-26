@@ -12,7 +12,7 @@ import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 
 interface Props {
-    user: User
+    user: User | null
 }
 
 export const ChangeNumberView = (props: Props) => {
@@ -38,8 +38,12 @@ export const ChangeNumberView = (props: Props) => {
                 </div>
             </div>
             <div className="change-number-container">
-                <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..." onChange={() => console.log("Klick!")} />
-                <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={() => console.log("Klick!")} />
+                <div>
+                    <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..." onChange={() => console.log("Klick!")} />
+                </div>
+                <div>
+                    <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={() => console.log("Klick!")} />
+                </div>
             </div>
             <SaveButton label="Spara nummer" onClick={ButtonNameClicked} linkTo="/profile" />
         </div>

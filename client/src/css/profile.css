@@ -158,11 +158,12 @@
 }
 
 .change-name-container {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
     margin-bottom: 50px;
 }
 

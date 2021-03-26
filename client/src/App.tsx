@@ -58,8 +58,8 @@ export const App = () => {
                     <Route path="/" exact component={() => <StartView/>} />
                     <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} />} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
-                    <Route path="/profile/changename" exact component={ChangeNameView} />
-                    <Route path="/profile/changenumber" exact component={ChangeNumberView} />
+                    <Route path="/profile/changename" exact component={() => <ChangeNameView user={me} />} />
+                    <Route path="/profile/changenumber" exact component={() => <ChangeNumberView user={me} />} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
                     <Route path="/profile/changepicture" exact component={ChangePictureView} />
                     <Route path="/phonebook" component={() => <PhoneBookView contactList={me === null ? [] : me.contacts} />} />

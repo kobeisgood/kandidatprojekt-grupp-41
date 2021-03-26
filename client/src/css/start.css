@@ -10,7 +10,7 @@
     font-size: 30px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    align-self: center;;
+    align-self: center;
 }
 
 .buttons-container {
@@ -30,6 +30,7 @@
     border-radius: 20px;
     height: 187px;
     width: 270px;
+    margin-top: 10px;
 }
 
 
@@ -53,6 +54,7 @@
     border-radius: 20px;
     height: 187px;
     width: 270px;
+    margin-top: 10px;
 }
 
 

@@ -51,16 +51,19 @@ export const LoginView = (props: Props) => {
             </div>
             <form onSubmit={(event) => event.preventDefault()}>
                 <div className="login-container">
-                    <TextInput className="text-input-password" type="text" label="Ditt mobilnummer: "
-                        placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneInp} />
-
-                    <TextInput className="text-input-password" type="password" label="Ditt lösenord: "
-                        placeholder="Skriv ditt lösenord här..." onChange={handlePasswordInp} />
-
+                    <div>
+                        <TextInput className="text-input-password" type="text" label="Ditt mobilnummer: "
+                            placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneInp} />
+                    </div>
+                    <div>
+                        <TextInput className="text-input-password" type="password" label="Ditt lösenord: "
+                            placeholder="Skriv ditt lösenord här..." onChange={handlePasswordInp} />
+                    </div>
                     <label className="container">Håll mig inloggad
                     <input type="checkbox"></input>
                         <span className="checkmark"></span>
                     </label>
+
                 </div>
                 <SaveButton label="Logga in" onClick={attemptLogin} />
             </form>
