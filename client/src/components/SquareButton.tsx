@@ -26,7 +26,7 @@ export const SquareButton = (props: Props) => {
                     {labelElem}
                 </button>
                 :
-                <Link to={props.linkTo}>
+                <Link style={{textDecoration: "none"}} to={props.linkTo}>
                     <button className={`${props.className} ${"button-general square-button"}`} onClick={() => props.onClick()}>
                         {iconElem}
                         {labelElem}

@@ -22,7 +22,7 @@
         - Add a container to the button in the html file
         - Change position for the container in another file, such as profile.css or contact-card.css (NOT HERE!)
     Want to create a new button component?
-        - Make sure you add the class button-general to it if it is not a SquareButton or RoundButton
+        - Use SquareButton or RoundButton inside it and use css to style it the way you want
 */
 
 
@@ -44,20 +44,6 @@
 }
 
 
-/* ------------- BACK BUTTON --------------------- */
-
-
-/* Styling for back button */
-
-.back-button {
-    color: white;
-    background-color: #484848;
-    height: 80px;
-    width: 250px;
-    font-size: 36px;
-}
-
-
 /* ------------ SQUARE BUTTON ---------------------- */
 
 .square-button {
@@ -71,6 +57,29 @@
     /* TODO
         - Add stuff
         */
+}
+
+
+/* ------------- BACK BUTTON --------------------- */
+
+
+/* Styling for back button */
+
+.back-button {
+    color: white;
+    background-color: #484848;
+    height: 80px;
+    width: 250px;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button img {
+    width: 25px;
+    height: auto;
+    margin-right: 20px;
 }
 
 
@@ -105,13 +114,14 @@
     width: 250px;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 30px;
     color: white;
     background-color: #FB0000;
 }
 
 .delete-account-button img {
-    margin-left: 10px;
+    margin-left: 20px;
     width: 50px;
     height: auto;
 }
