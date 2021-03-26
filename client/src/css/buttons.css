@@ -117,17 +117,9 @@
 
 .add-contact-button,
 .remove-contact-button {
-    border-radius: 20px;
-    border: 1px solid darkgrey;
     font-size: 18px;
     width: 170px;
     height: 80px;
-}
-
-.add-contact-button:hover,
-.remove-contact-button:hover {
-    cursor: pointer;
-    opacity: 0.8;
 }
 
 .add-contact-button {
