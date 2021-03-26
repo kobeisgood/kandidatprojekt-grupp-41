@@ -57,3 +57,16 @@
     height: 187px;
     width: 270px;
 }
+
+
+/* -------------- DELETE ACCOUNT BUTTON -------------- */
+
+.delete-account-button {
+    height: 80px;
+    width: 250px;
+    display: flex;
+    font-size: 30px;
+    border-radius: 20px;
+    color: white;
+    background-color: #FB0000;
+}

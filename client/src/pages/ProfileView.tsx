@@ -14,6 +14,7 @@ import changeNumber from "../icons/profile/changeNumber.svg"
 import changePassword from "../icons/profile/changePassword.svg"
 import changePicture from "../icons/profile/changePicture.svg"
 import { BackButton } from '../components/BackButton';
+import { SquareButton } from '../components/SquareButton';
 
 interface Props {
     user: User
@@ -35,6 +36,9 @@ export const ProfileView = (props: Props) => {
                     <BackButton linkTo={"/"} />
                 </div>
                 <h1 className="profile-header">Min profil</h1>
+                {/* TODO
+                    - Add function on click for popup "remove account"
+                     */}
                 <div className="delete-account-container">
                     <button className="delete-account-button">
                         <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>

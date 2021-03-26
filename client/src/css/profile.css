@@ -41,16 +41,6 @@
     flex-direction: row-reverse;
 }
 
-.delete-account-button {
-    height: 80px;
-    width: 250px;
-    display: flex;
-    font-size: 30px;
-    border-radius: 20px;
-    color: white;
-    background-color: #FB0000;
-}
-
 
 /* Delete icon (trash bin) */
 
