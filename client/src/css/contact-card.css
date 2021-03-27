@@ -7,6 +7,8 @@
     margin-bottom: 25px;
 }
 
+.contact-card-container-big {}
+
 .contact-card-flexbox {
     display: flex;
     flex-direction: column;

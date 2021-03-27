@@ -54,9 +54,6 @@
 /* ------------- ROUND BUTTON --------------------- */
 
 .round-button {
-    /* TODO
-        - Add stuff
-        */
     border-radius: 50%;
 }
 
@@ -95,9 +92,6 @@
 
 
 /* ------------- PAGE-NAVIGATION-BUTTON ------------ */
-
-
-/* Styling for each of the 4 buttons: change name, number, picture and password */
 
 .page-navigation-button {
     color: black;
