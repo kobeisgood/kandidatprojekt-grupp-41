@@ -167,3 +167,16 @@
     color: white;
     font-size: 30px;
 }
+
+.call-button-big {
+    width: 220px;
+    height: 160px;
+    background-color: var(--color-call);
+    color: white;
+    font-size: 44px;
+}
+
+.call-button-big img {
+    width: 50%;
+    height: 50%;
+}

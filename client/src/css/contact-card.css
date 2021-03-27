@@ -1,13 +1,20 @@
-.contact-card-container {
+.contact-card-container,
+.contact-card-container-big {
     background-color: var(--color-contactCard);
-    padding: 10px;
-    width: 200px;
     border-radius: 20px;
     border: 1px solid darkgray;
+}
+
+.contact-card-container {
+    padding: 10px;
+    width: 200px;
     margin-bottom: 25px;
 }
 
-.contact-card-container-big {}
+.contact-card-container-big {
+    padding: 20px;
+    width: 260px;
+}
 
 .contact-card-flexbox {
     display: flex;
@@ -27,6 +34,12 @@
     margin: 10px 0;
 }
 
-.contact-name span {
+.contact-name-big {
+    font-size: 34px;
+    margin: 20px 0;
+}
+
+.contact-name span,
+.contact-name-big span {
     font-weight: bold;
 }

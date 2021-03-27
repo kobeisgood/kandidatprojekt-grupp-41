@@ -13,8 +13,8 @@ export const ContactCardBig = () => {
     return (
         <div className="contact-card-container-big">
             <div className="contact-card-flexbox">
-                <img className="contact-card-profile-picture-big" src={hjordis} alt="Profilbild" />
-                <p className="contact-name-big">Repo <span>Laufsson</span></p>
+                <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
+                <p className="contact-name-big">Repo <br/> <span>Laufsson</span></p>
                 {/* TODO
                     - Add call function on click
                     */}
