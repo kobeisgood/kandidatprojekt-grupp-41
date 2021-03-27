@@ -37,7 +37,7 @@ export const AddContactPopup = (props:Props) => {
 
     });
 
-    // Searches for contact in db, renders correct content in popuo
+    // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
 
         let contactNumber: string = (document.getElementById("add-contact-number-input") as HTMLInputElement).value;
@@ -52,12 +52,9 @@ export const AddContactPopup = (props:Props) => {
 
     // Adds the contact to the user
     const addContact = () => {
-        // check in db for contact(user)
-        // if contact(user) exists
-            // add contact to user in db
+
+        // create function in main/connection/db that adds foundContact to user 
             // closeAddContactPopup()
-        // else
-            // return error
         console.log('Contact added')
     }
 
