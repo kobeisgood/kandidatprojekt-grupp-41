@@ -20,6 +20,7 @@ export const ContactCardBig = (props: Props) => {
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name-big">Hjördis <br/> <span>Gammelsson</span></p>
                 {/* TODO
+                    - Make into a CallButton
                     - Add call function on click
                     */}
                 <SquareButton label="Ring" onClick={() => void 0} icon={callIcon} className="call-button-big"/>
