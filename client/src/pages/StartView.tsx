@@ -8,6 +8,7 @@ import phoneBookIcon from '../icons/phone-book-icon.svg';
 import keypadIcon from '../icons/keypad-icon.svg';
 import logOutIcon from '../icons/log-out-icon.svg';
 import { SquareButton } from '../components/SquareButton';
+import { Carousel } from '../components/Carousel';
 
 export const StartView = () => {
     return (
@@ -29,7 +30,7 @@ export const StartView = () => {
                 </div>
                 <p className="latest-calls-text">Senaste samtalen</p>
                 <div className="latest-calls-carousel-container">
-                    Färdig karusell yo
+                    <Carousel />
                 </div>
             </div>
         </div>
