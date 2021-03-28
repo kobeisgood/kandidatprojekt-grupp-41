@@ -43,8 +43,5 @@
 
 .latest-calls-carousel-container {
     margin-top: 20px;
-    width: 80%;
-    background-color: cornflowerblue;
-    /* height should not be fixed when carousel is implemented */
-    height: 500px;
+    width: 95%;
 }

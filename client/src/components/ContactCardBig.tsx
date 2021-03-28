@@ -9,12 +9,16 @@ import callIcon from '../icons/call-icon.svg';
 import { SquareButton } from './SquareButton';
 import hjordis from '../images/hjordis.jpg';
 
-export const ContactCardBig = () => {
+interface Props {
+    className?: string;
+}
+
+export const ContactCardBig = (props: Props) => {
     return (
-        <div className="contact-card-container-big">
+        <div className={`${"contact-card-container-big"} ${props.className}`}>
             <div className="contact-card-flexbox">
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
-                <p className="contact-name-big">Repo <br/> <span>Laufsson</span></p>
+                <p className="contact-name-big">Hjördis <br/> <span>Gammelsson</span></p>
                 {/* TODO
                     - Add call function on click
                     */}
@@ -23,6 +27,3 @@ export const ContactCardBig = () => {
         </div>
     );
 }
-    
-    
-    
