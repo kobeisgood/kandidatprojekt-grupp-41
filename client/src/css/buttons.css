@@ -1,0 +1,182 @@
+/* BUTTON TUTORIAL
+    Want to add/change styling for all buttons?
+        - Change styling on the button-general class below
+    Want to change styling for all square buttons?
+        - Change styling on the square-button class below
+    Want to change styling for all round buttons?
+        - Change styling on the round-button class below
+    Want to add some styling to a specific button such as color and height?
+        - Add a class to the button and style it here
+    Want to change styling of the image in the button?
+        - Add:
+            .whatever-the-button-is-called img {
+                write stuff here
+            }
+        Example can be found below at .delete-account-button img
+    Want to make the icon float to the left?
+        - Add this to the button class:
+            display: flex;
+            align-items: center;
+        - You probably also need to change the styling of the image, check above
+    Want to change position of the button?
+        - Add a container to the button in the html file
+        - Change position for the container in another file, such as profile.css or contact-card.css (NOT HERE!)
+    Want to create a new button component?
+        - Use SquareButton or RoundButton inside it and use css to style it the way you want
+*/
+
+
+/* Things that all buttons use */
+
+.button-general {
+    border: 1px solid #999999;
+    font-weight: 600;
+}
+
+.button-general img {
+    width: 40%;
+    height: 40%;
+}
+
+.button-general:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+
+/* ------------ SQUARE BUTTON ---------------------- */
+
+.square-button {
+    border-radius: 20px;
+}
+
+
+/* ------------- ROUND BUTTON --------------------- */
+
+.round-button {
+    border-radius: 50%;
+}
+
+
+/* ------------- BACK BUTTON --------------------- */
+
+
+/* Styling for back button */
+
+.back-button {
+    color: white;
+    background-color: #484848;
+    height: 80px;
+    width: 250px;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button img {
+    width: 25px;
+    height: auto;
+    margin-right: 20px;
+}
+
+
+/* ------------ SAVE BUTTON ----------------------- */
+
+.save-button {
+    width: 520px;
+    height: 100px;
+    background-color: #98FF74;
+    font-size: 36px;
+}
+
+
+/* ------------- PAGE-NAVIGATION-BUTTON ------------ */
+
+.page-navigation-button {
+    color: black;
+    background-color: #94E5FF;
+    height: 187px;
+    width: 270px;
+    font-size: 36px;
+}
+
+
+/* -------------- DELETE ACCOUNT BUTTON -------------- */
+
+.delete-account-button {
+    height: 80px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: white;
+    background-color: #FB0000;
+}
+
+.delete-account-button img {
+    margin-left: 20px;
+    width: 50px;
+    height: auto;
+}
+
+
+/* ------------- ADD, REMOVE CONTACT BUTTON -------------- */
+
+.add-contact-button,
+.remove-contact-button {
+    font-size: 18px;
+    width: 170px;
+    height: 80px;
+}
+
+.add-contact-button {
+    background-color: var(--color-menuButton);
+    margin-right: 10px;
+}
+
+.remove-contact-button {
+    background-color: var(--color-cancel);
+    color: white;
+}
+
+
+/* -------------- LOG OUT BUTTON -------------- */
+
+.log-out-button {
+    width: 220px;
+    height: 100px;
+    background-color: rgb(230, 132, 87);
+    color: white;
+    font-size: 30px;
+}
+
+.log-out-button:hover {
+    background-color: rgb(230, 132, 87, 0.8);
+    cursor: pointer;
+}
+
+
+/* -------------- CALL BUTTON ---------------- */
+
+.call-button {
+    width: 175px;
+    height: 100px;
+    background-color: var(--color-call);
+    color: white;
+    font-size: 30px;
+}
+
+.call-button-big {
+    width: 220px;
+    height: 160px;
+    background-color: var(--color-call);
+    color: white;
+    font-size: 44px;
+}
+
+.call-button-big img {
+    width: 50%;
+    height: 50%;
+}

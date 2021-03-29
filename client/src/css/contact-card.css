@@ -1,10 +1,19 @@
-.contact-card-container {
+.contact-card-container,
+.contact-card-container-big {
     background-color: var(--color-contactCard);
-    padding: 10px;
-    width: 200px;
     border-radius: 20px;
     border: 1px solid darkgray;
+}
+
+.contact-card-container {
+    padding: 10px;
+    width: 200px;
     margin-bottom: 25px;
+}
+
+.contact-card-container-big {
+    padding: 20px;
+    width: 230px;
 }
 
 .contact-card-flexbox {
@@ -25,46 +34,12 @@
     margin: 10px 0;
 }
 
-.contact-name span {
+.contact-name-big {
+    font-size: 34px;
+    margin: 20px 0;
+}
+
+.contact-name span,
+.contact-name-big span {
     font-weight: bold;
-}
-
-.call-button {
-    width: 100%;
-    height: 100px;
-    background-color: var(--color-call);
-    border: 0;
-    border-radius: 15px;
-    font-size: 48px;
-    color: white;
-    padding: 10px 0;
-}
-
-.call-button-flexbox {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: space-around;
-}
-
-.call-button-icon {
-    width: 25%;
-    object-fit: contain;
-}
-
-.call-button-text {
-    font-size: 25px;
-    font-weight: 600;
-}
-
-.call-button:hover {
-    opacity: 0.8;
-    cursor: pointer;
-}
-
-.button-flexbox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }

@@ -3,6 +3,7 @@
 Authors: Charlie and Hanna 
 */
 
+import React from 'react';
 import { SquareButton } from './SquareButton';
 
 import '../css/profile.css';
@@ -23,6 +24,6 @@ export const ProfileChangeButton = (props: Props) => {
     };
 
     return (
-        <SquareButton className="change-profile-button" onClick={() => onClick()} icon={props.icon} label={props.label} linkTo={props.linkTo} />
+        <SquareButton className="page-navigation-button" onClick={() => onClick()} icon={props.icon} label={props.label} linkTo={props.linkTo} />
     );
 };
