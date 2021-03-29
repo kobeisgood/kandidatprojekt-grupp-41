@@ -62,7 +62,8 @@
 
 .delete-contact-button:hover {
     cursor: pointer;
-    background-color: var(--color-cancel)
+    background-color: var(--color-cancel);
+}
 
 .contact-name span,
 .contact-name-big span {

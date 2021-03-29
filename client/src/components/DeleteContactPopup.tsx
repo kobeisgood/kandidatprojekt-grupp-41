@@ -1,5 +1,5 @@
 import '../css/call.css';
-import '../css/button.css';
+import '../css/buttons.css';
 import '../css/popups.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 

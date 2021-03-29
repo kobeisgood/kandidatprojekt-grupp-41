@@ -1,6 +1,5 @@
 import '../css/call.css';
-import '../css/button.css';
-import '../css/savebutton.css';
+import '../css/buttons.css';
 import '../css/popups.css';
 import '../css/contact-card.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';

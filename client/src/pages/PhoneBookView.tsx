@@ -8,18 +8,18 @@ import { DeleteContactPopup } from '../components/DeleteContactPopup';
 import { AddContactPopup } from '../components/AddContactPopup';
 import '../css/phone-book.css';
 import '../css/colors.css';
-import { Link } from 'react-router-dom';
 import { Contact } from '../Types';
 import { useState } from 'react';
+
+import addContactIcon from '../icons/add-contact-icon.svg';
+import removeContactIcon from '../icons/remove-contact-icon.svg';
+import { BackButton } from '../components/BackButton';
+import { SquareButton } from '../components/SquareButton';
 
 interface Props {
     contactList: Contact[]
     socket: SocketIOClient.Socket | null;
 }
-import addContactIcon from '../icons/add-contact-icon.svg';
-import removeContactIcon from '../icons/remove-contact-icon.svg';
-import { BackButton } from '../components/BackButton';
-import { SquareButton } from '../components/SquareButton';
 
 export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
@@ -51,7 +51,7 @@ export const PhoneBookView = (props: Props) => {
                         <input type="text" placeholder="Sök efter kontakt..." className="search-contacts-input" />
                     </div>
                     <div className="contact-buttons-container">
-                        {removeContactState &&
+                        {!removeContactState &&
                           <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
                         }
         
