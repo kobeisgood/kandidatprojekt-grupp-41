@@ -11,24 +11,23 @@ import { Contact } from '../Types';
 
 interface Props {
     removeContactState: boolean;
-    contact: Contact | null
+    contact: Contact | null,
+    visibilityHandler: Function
 }
 
-// Opens the delete contact popup
-const openRemoveContactPopup = () => {
-    var element = document.getElementById("remove-contact-popup");
-    if(element != null) {
-        element.style.visibility = 'visible'
-    }
-}
-    
 export const ContactCard = (props: Props) => {
+
+    // Opens the delete contact popup
+    const openRemoveContactPopup = () => {
+        props.visibilityHandler();
+    }
+
     return (
         <div className="contact-card-container">
             <div className="contact-card-flexbox">
 
-            { !props.removeContactState ? <></> : 
-            <button className="delete-contact-button" onClick={openRemoveContactPopup}> <img src={CrossIcon} alt="CrossIcon"></img> </button>}
+                {!props.removeContactState ? <></> :
+                    <button className="delete-contact-button" onClick={openRemoveContactPopup}> <img src={CrossIcon} alt="CrossIcon"></img> </button>}
 
                 <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <span>{props.contact ? props.contact.lastName : ""}</span></p>

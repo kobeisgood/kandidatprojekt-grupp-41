@@ -6,12 +6,12 @@ import '../css/contact-card.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 import { SquareButton } from '../components/SquareButton';
 import { useState } from 'react';
-import { Contact } from '../Types';
-import { FindContactNumber, GetSearchedContact } from '../Connection';
+import { GetSearchedContact } from '../Connection';
 
 
 interface Props {
     socket: SocketIOClient.Socket | null,
+    visibilityHandler: Function
 }
 
 export const AddContactPopup = (props: Props) => {
@@ -21,11 +21,8 @@ export const AddContactPopup = (props: Props) => {
 
     // Closes the add contact popup
     const closeAddContactPopup = () => {
-        var element = document.getElementById("add-contact-popup");
-        if (element != null) {
-            element.style.visibility = 'hidden'
-        }
         setNeutralPageState(true)
+        props.visibilityHandler();
     };
 
     const [foundContact, setFoundContact] = useState({

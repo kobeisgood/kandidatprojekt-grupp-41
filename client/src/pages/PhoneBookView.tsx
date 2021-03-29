@@ -19,18 +19,22 @@ interface Props {
     socket: SocketIOClient.Socket | null;
 }
 
-// Opens the add contact popup
-    const openAddContactPopup = () => {
-    var element = document.getElementById("add-contact-popup");
-    if(element != null) {
-        element.style.visibility = 'visible'
-    }
-}   
 export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
+    const [addContactVisible, setAddContactVisible] = useState(false);
+    const [removeContactVisible, setRemoveContactVisible] = useState(false);
 
+    // Handles only the cross above the contact card
     const removeContactClicked = () => {
         setRemoveContactState(!removeContactState)
+    }
+
+    const addContactVisibleHandler = () => {
+        setAddContactVisible(!addContactVisible)
+    }
+
+    const removeContactVisibleHandler = () => {
+        setRemoveContactVisible(!removeContactVisible)
     }
     
     return (
@@ -46,7 +50,7 @@ export const PhoneBookView = (props: Props) => {
                     </div>
                     <div className="contact-buttons-container">
 
-                        {removeContactState ? <></> : <button className="add-contact-button" onClick={openAddContactPopup}>
+                        {removeContactState ? <></> : <button className="add-contact-button" onClick={addContactVisibleHandler}>
                             <div className="contact-button-flexbox">
                                 <img src={AddContactIcon} alt="" className="contact-button-image" />
                                 <p className="contact-button-text">Lägg till kontakt</p>
@@ -66,16 +70,18 @@ export const PhoneBookView = (props: Props) => {
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
-                        return <ContactCard contact={contact} removeContactState={removeContactState} />
+                        return <ContactCard contact={contact} removeContactState={removeContactState} visibilityHandler={removeContactVisibleHandler} />
                     })}
                 </div>
             </div>
 
-            {removeContactState &&
-                <DeleteContactPopup /> 
+            {removeContactVisible &&
+                <DeleteContactPopup visibilityHandler={removeContactVisibleHandler} /> 
             }
 
-            <AddContactPopup socket={props.socket} />
+            {addContactVisible && 
+                <AddContactPopup visibilityHandler={addContactVisibleHandler} socket={props.socket} /> 
+            }
         </div>
     );
 };
