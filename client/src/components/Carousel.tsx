@@ -16,18 +16,27 @@ interface Props {
 }
 
 export const Carousel = (props: Props) => {
-    const carouselRef = useRef();
+    const carouselRef = useRef<HTMLDivElement>(null);
+    var scrollCounter 
 
     function scrollCarousel(scrollRight: Boolean) {
         if (scrollRight) {
-            
+            if (carouselRef.current) {
+                var scrollLeft = carouselRef.current.scrollLeft;
+                carouselRef.current.scroll({ left: scrollLeft + 200, behavior: "smooth"});
+            }
+        } else {
+            if (carouselRef.current) {
+                var scrollLeft = carouselRef.current.scrollLeft;
+                carouselRef.current.scroll({ left: scrollLeft - 200, behavior: "smooth"});
+            }
         }
     }
 
     return (
         <div className="carousel-container">
             <div onClick={() => scrollCarousel(false)}><img src={leftCarouselButton} alt="Button to scroll the carousel to the left" className="carousel-scroll-button"/></div>
-            <div className="carousel-scroll-container">
+            <div ref={carouselRef} className="carousel-scroll-container">
                 <ContactCardBig className="carousel-contact-card" />
                 <ContactCardBig className="carousel-contact-card" />
                 <ContactCardBig className="carousel-contact-card" />

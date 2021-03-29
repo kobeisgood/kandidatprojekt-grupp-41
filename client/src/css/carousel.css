@@ -10,11 +10,17 @@
     display: flex;
     width: 80%;
     scroll-snap-type: x mandatory;
-    overflow-x: auto;
     border-left: 3px solid darkgrey;
     border-right: 3px solid darkgrey;
     max-width: max-content;
     padding: 5px 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-x: auto;
+}
+
+.carousel-scroll-container::-webkit-scrollbar {
+    height: 0 !important
 }
 
 .carousel-scroll-button {
