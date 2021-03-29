@@ -50,7 +50,15 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
     });
 };
 
-// finds the contact in the db given a number TODO: should run correct method to render correct content
+/**
+ * NOT USED ATM
+ * 
+ * Searches for the existence of a user in the db given a phone number
+ * 
+ * @param socket From SocketIOClient.Socket
+ * @param phoneNumber The specified user phone number
+ * @param setContactExists Function that sets the boolean result 
+ */
 export const FindContactNumber = (
     socket: SocketIOClient.Socket, 
     phoneNumber: string, 
@@ -65,6 +73,13 @@ export const FindContactNumber = (
     })
 }
 
+/**
+ * Retrieves a user from the db given a phone number 
+ * 
+ * @param socket From SocketIOClient.Socket
+ * @param phoneNumber The specified user phone number 
+ * @param setFoundContact Function that sets the contact found 
+ */
 export const GetSearchedContact = (socket:SocketIOClient.Socket, phoneNumber: string, setFoundContact:Function) => {
     socket.emit('get-searched-contact', phoneNumber);
     socket.on('got-contact', (contact:Contact) => {
