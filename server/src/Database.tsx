@@ -125,33 +125,6 @@ const ContactModel = model("Contact", contactSchema, "Contact");
 
 // Functions for handling Contacts //
 
-/*
-app.post("/contacts", function(req, res) {
-    var contact = new ContactModel({
-        firstName: req.body.firstName,
-        lastName: req.lastName.lastName,
-        profilePic: req.body.profilePic, 
-        phoneNbr: req.body.phoneNbr
-    }).save(function(err, docs){
-        if(err) throw err;
-        res.send(docs)
-    });
-
-    // Trying with test user, TODO: getUserFromSession(), functionality to get the user that is logged in 
-    var user = new UserModel({
-        firstName: "Robin",
-        password: "repo123",
-        phoneNbr: "1111111111",
-        profilePic: "robinsPic",
-        lastName: "Repo",
-        contacts: []
-    }) 
-    user.contacts.push(contact);
-    user.save(callback);
-});*/
-
-
-
 /**
  * 
  * Creates a new contact
@@ -186,7 +159,7 @@ export const getContacts = async (contactIds: string[]) => {
 
         for (let i = 0; i < contactIds.length; i++) {
             const contact = await UserModel.findOne({ _id: contactIds[i] }).lean();
-            
+
             contacts.push({
                 id: contact._id,
                 firstName: contact.firstName,
@@ -202,3 +175,19 @@ export const getContacts = async (contactIds: string[]) => {
         return null;
     }
 };
+
+export const getContactFromNbr = async (nbr: string) => {
+    try {
+        let contact = await UserModel.findOne({ phoneNbr: nbr }).lean();
+        return {
+            id: contact._id,
+            firstName: contact.firstName,
+            lastName: contact.lastName,
+            phoneNbr: contact.phoneNbr,
+            profilePic: contact.profilePic
+        }
+    } catch (err) {
+        console.error(err)
+        return null
+    }
+}

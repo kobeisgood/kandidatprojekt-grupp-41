@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
-import { UserID, User } from './Types';
+import { UserID, User, Contact } from './Types';
 
 
 const useHTTPS = false; // Only enable this if you know what it means
@@ -49,6 +49,44 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
         callback(result);
     });
 };
+
+/**
+ * NOT USED ATM
+ * 
+ * Searches for the existence of a user in the db given a phone number
+ * 
+ * @param socket From SocketIOClient.Socket
+ * @param phoneNumber The specified user phone number
+ * @param setContactExists Function that sets the boolean result 
+ */
+export const FindContactNumber = (
+    socket: SocketIOClient.Socket, 
+    phoneNumber: string, 
+    setContactExists: Function
+    ) => {
+    socket.emit('find-contact-number', phoneNumber);
+    socket.on('number-found', () => {
+        setContactExists(true);
+    })
+    socket.on('number-not-found', () => {
+        setContactExists(false);
+    })
+}
+
+/**
+ * Retrieves a user from the db given a phone number 
+ * 
+ * @param socket From SocketIOClient.Socket
+ * @param phoneNumber The specified user phone number 
+ * @param setFoundContact Function that sets the contact found 
+ */
+export const GetSearchedContact = (socket:SocketIOClient.Socket, phoneNumber: string, setFoundContact:Function) => {
+    socket.emit('get-searched-contact', phoneNumber);
+    socket.on('got-contact', (contact:Contact) => {
+        setFoundContact(contact)
+        console.log(contact)
+    } )
+}
 
 export const JoinRoom = (
     socket: SocketIOClient.Socket,

@@ -1,0 +1,106 @@
+/* Stuff for all popups */
+
+.full-page-popup-container {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 6;
+}
+
+.cancel-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.cancel-row img:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+
+/* Stuff for Add Contact Popup */ 
+
+.content-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 350px; /* Probably needs to be changed to make responsive, value set for testing purposes atm */
+}
+
+.number-input-row {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+    align-self: center;
+}
+
+.handle-contact-button {
+    margin-top: 20px;
+}
+.handle-contact-button:hover{
+    opacity: 0.8;
+}
+
+.contact-found-row {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.contact-found-info-col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Stuff for Delete Contact Popup */ 
+
+.button-row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10vh;
+}
+
+.yes-button {
+    background-color: var(--color-proceed);
+    height: 150px;
+    width: 215px;
+    text-align: center;
+    padding-top: 0.4em;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 15%;
+    box-shadow: 0px 3px 4px grey;
+}
+
+.no-button {
+    background-color: var(--color-cancel);
+    height: 150px;
+    width: 215px;
+    text-align: center;
+    padding-top: 0.4em;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 15%;
+    box-shadow: 0px 3px 4px grey;
+}
+
+.yes-button:hover{
+    cursor:pointer;
+    opacity: 0.8;
+}
+
+.no-button:hover{
+    cursor:pointer;
+    opacity: 0.8;
+}
