@@ -9,8 +9,6 @@ import { AddContactPopup } from '../components/AddContactPopup';
 import '../css/phone-book.css';
 import '../css/colors.css';
 import { Link } from 'react-router-dom';
-import AddContactIcon from '../icons/add-contact-icon.svg';
-import RemoveContactIcon from '../icons/remove-contact-icon.svg';
 import { Contact } from '../Types';
 import { useState } from 'react';
 
@@ -18,6 +16,10 @@ interface Props {
     contactList: Contact[]
     socket: SocketIOClient.Socket | null;
 }
+import addContactIcon from '../icons/add-contact-icon.svg';
+import removeContactIcon from '../icons/remove-contact-icon.svg';
+import { BackButton } from '../components/BackButton';
+import { SquareButton } from '../components/SquareButton';
 
 export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
@@ -42,28 +44,18 @@ export const PhoneBookView = (props: Props) => {
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
                     <div className="back-button-container">
-                        <Link to="/dashboard"><button className="back-button">Tillbaka</button></Link>
+                        <BackButton linkTo="/dashboard" />
                     </div>
                     <div className="phone-book-top-flexbox-column">
                         <h1 className="phone-book-text">Telefonbok</h1>
                         <input type="text" placeholder="Sök efter kontakt..." className="search-contacts-input" />
                     </div>
                     <div className="contact-buttons-container">
-
-                        {removeContactState ? <></> : <button className="add-contact-button" onClick={addContactVisibleHandler}>
-                            <div className="contact-button-flexbox">
-                                <img src={AddContactIcon} alt="" className="contact-button-image" />
-                                <p className="contact-button-text">Lägg till kontakt</p>
-                            </div>
-                        </button>}
-
-                        <button className="remove-contact-button" onClick={removeContactClicked}>
-                            <div className="contact-button-flexbox">
-                                <img src={RemoveContactIcon} alt="" className="contact-button-image" />
-                                {removeContactState === false ? <p className="contact-button-text">Ta bort kontakt</p> :
-                                    <p className="contact-button-text">Avbryt</p>}
-                            </div>
-                        </button>
+                        {removeContactState &&
+                          <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
+                        }
+        
+                        <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt" } onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
                     </div>
                 </div>
             </header>

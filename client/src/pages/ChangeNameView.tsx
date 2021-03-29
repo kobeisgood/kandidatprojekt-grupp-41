@@ -1,10 +1,8 @@
 /* View for the changing name 'Ändra namn'
 Authors: Charlie and Hanna 
 */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import '../css/profile.css';
-import '../css/savebutton.css';
 import '../css/textinput.css';
 import hjordis from "../images/hjordis.png"
 import { User } from '../Types';

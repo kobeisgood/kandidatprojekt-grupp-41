@@ -3,8 +3,9 @@ Authors: Hanna
 */
 import React from 'react';
 import { SquareButton } from '../components/SquareButton';
-
 import cam_girl from "../images/cam_girl.png"
+
+import '../css/start-view.css';
 import '../css/start.css';
 
 

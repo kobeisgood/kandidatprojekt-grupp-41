@@ -3,11 +3,13 @@
     Authors: Daniel and Robin
  */
 import React from 'react';
-import '../css/contact-card.css';
 import '../css/colors.css';
-import CallIcon from '../icons/call-icon.svg';
 import CrossIcon from '../icons/cross-icon.svg';
 import { Contact } from '../Types';
+import { SquareButton } from './SquareButton';
+import '../css/contact-card.css';
+import callIcon from '../icons/call-icon.svg';
+import hjordis from '../images/hjordis.jpg';
 
 interface Props {
     removeContactState: boolean;
@@ -25,21 +27,17 @@ export const ContactCard = (props: Props) => {
     return (
         <div className="contact-card-container">
             <div className="contact-card-flexbox">
-
                 {!props.removeContactState ? <></> :
-                    <button className="delete-contact-button" onClick={openRemoveContactPopup}> <img src={CrossIcon} alt="CrossIcon"></img> </button>}
-
-                <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="Profilbild" />
+                    <button className="delete-contact-button" onClick={openRemoveContactPopup}> <img src={CrossIcon} alt="CrossIcon"></img> </button>
+                }
+                <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <span>{props.contact ? props.contact.lastName : ""}</span></p>
-                <button className="call-button">
-                    <div className="call-button-flexbox">
-                        <img className="call-button-icon" src={CallIcon} alt="CallIcon" />
-                        <p className="call-button-text">Ring</p>
-                    </div>
-                </button>
+                {/* TODO
+                    - Make into a CallButton
+                    - Add call function on click
+                    */}
+                <SquareButton label="Ring" onClick={() => void 0} icon={callIcon} className="call-button" />
             </div>
         </div>
     );
-}
-
-
+};

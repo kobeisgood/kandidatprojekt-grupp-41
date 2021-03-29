@@ -1,23 +1,18 @@
 /* Component for go back one step in the directory
 Authors: Charlie and Hanna 
 */
-import { Link } from 'react-router-dom';
 
-import '../css/backbutton.css';
+import React from 'react';
+import { SquareButton } from './SquareButton';
+import backArrow from '../icons/back-arrow.svg';
 
 interface Props {
-    linkTo: string;
+    linkTo: string
 }
 
 export const BackButton = (props: Props) => {
-
     return (
-        <div className="back-button-container">
-            <Link to={props.linkTo}>
-                <button className="back-button">
-                    <h2>Tillbaka</h2>
-                </button>
-            </Link>
-        </div>
+        <SquareButton label="Tillbaka" onClick={() => void 0} icon={backArrow} linkTo={props.linkTo} className="back-button" />
     );
-};
+}
+

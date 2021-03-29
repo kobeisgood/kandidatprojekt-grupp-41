@@ -21,6 +21,8 @@ import { ChangePictureView } from './pages/ChangePictureView';
 
 import './App.css';
 import './css/fonts.css'
+import './css/buttons.css';
+import './css/colors.css';
 
 
 export const App = () => {

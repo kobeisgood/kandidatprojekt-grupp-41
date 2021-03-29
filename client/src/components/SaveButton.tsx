@@ -6,8 +6,6 @@ Authors: Charlie and Hanna
 import React from 'react';
 import { SquareButton } from './SquareButton';
 
-import '../css/savebutton.css';
-
 interface Props {
     label: string;
     onClick: Function;

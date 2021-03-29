@@ -1,20 +1,27 @@
 /* Button descriptions */
 
-.profile-button-names {
-    font-size: 36px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-}
-
 .profile-header-container {
     width: 75%;
     display: flex;
     flex-direction: row;
     margin: 30px auto 0 auto;
     justify-content: flex-start;
+    text-align: center;
 }
 
+
+/* Container for back button */
+
+.back-button-container {
+    height: 80px;
+    width: 250px;
+    align-self: center;
+    flex-basis: calc(100%/3);
+}
+
+
 /* "Min profil" headline */
+
 .profile-header {
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
@@ -23,7 +30,9 @@
     flex-basis: calc(100%/3);
 }
 
+
 /* Container for delete account button */
+
 .delete-account-container {
     flex-basis: calc(100%/3);
     height: 80px;
@@ -32,24 +41,18 @@
     flex-direction: row-reverse;
 }
 
-.delete-account-button {
-    height: 80px;
-    width: 250px;
-    display: flex;
-    font-size: 30px;
-    border-radius: 20px;
-    color: white;
-    background-color: #FB0000;
-}
 
 /* Delete icon (trash bin) */
+
 .item-delete-icon {
     margin-left: 10px;
     order: 1;
     align-self: center;
 }
 
+
 /* Text "Ta bort konto" */
+
 .item-delete-header {
     font-weight: bold;
     font-size: 30px;
@@ -57,6 +60,7 @@
     order: 2;
     align-self: center;
 }
+
 
 /* Container for profile picture, name and number */
 
@@ -129,32 +133,6 @@
     height: 187px;
     width: 270px;
     align-self: center;
-}
-
-
-/* Styling for each of the 4 buttons: change name, number, picture and password */
-
-.change-profile-button {
-    color: black;
-    background-color: #94E5FF;
-    border: 1px solid #999999;
-    border-radius: 20px;
-    height: 187px;
-    width: 270px;
-}
-
-
-/* Hover state for each button of the 4 buttons*/
-
-.change-profile-button:hover {
-    background-color: pink;
-}
-
-
-/* On click styling for each button of the 4 buttons */
-
-.change-profile-button:active {
-    background-color: yellow;
 }
 
 .change-name-container {

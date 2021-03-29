@@ -3,11 +3,12 @@
     Author: Daniel
 */
 
-import { Link, useHistory } from 'react-router-dom';
-import { ProfileChangeButton } from '../components/ProfileChangeButton';
+import { useHistory } from 'react-router-dom';
+import { SquareButton } from '../components/SquareButton';
+import { Carousel } from '../components/Carousel';
 
 import '../css/start-view.css';
-import '../css/button.css';
+import '../css/buttons.css';
 import profileIcon from '../icons/profile-icon.svg';
 import phoneBookIcon from '../icons/phone-book-icon.svg';
 import keypadIcon from '../icons/keypad-icon.svg';
@@ -30,29 +31,22 @@ export const Dahsboard = (props: Props) => {
         <div className="full-page-container">
             {/* TODO
                 - Add log out functionality on click
-                - Change to reusable button component */}
-            <button className="log-out-button button-rectangular" onClick={logOut}>
-                <div className="log-out-button-content">
-                    <img src={logOutIcon} alt="Log out icon" className="log-out-button-image"/>
-                    <p className="log-out-button-text">Logga ut</p>
-                </div>
-            </button>
+            */}
+            <div className="log-out-button-container">
+                <SquareButton label="Logga ut" onClick={logOut} icon={logOutIcon} className="log-out-button" />
+            </div>
 
             <div className="start-view-flexbox-container">
                 <h1 className="welcome-text">Välkommen, Hjördis!</h1>
                 <div className="start-view-button-container">
-                    {/* buttonFunction prop passes empty function since it already has a link */}
-                    <Link to="/profile">
-                        <ProfileChangeButton label="Min profil" icon={profileIcon} />
-                    </Link>
-                    <Link to="/phonebook">
-                        <ProfileChangeButton label="Telefonbok" icon={phoneBookIcon} />
-                    </Link>
-                    <ProfileChangeButton label="Knappsats" icon={keypadIcon} />
+                    {/* onClick prop passes empty function since it already has a link */}
+                    <SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" />
+                    <SquareButton label="Telefonbok" onClick={() => void 0} icon={phoneBookIcon} linkTo="/phonebook" className="page-navigation-button" />
+                    <SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button" />
                 </div>
                 <p className="latest-calls-text">Senaste samtalen</p>
                 <div className="latest-calls-carousel-container">
-                    Färdig karusell yo
+                    <Carousel />
                 </div>
             </div>
         </div>

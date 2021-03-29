@@ -12,25 +12,15 @@
     align-items: center;
 }
 
-.log-out-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 220px;
-    height: 100px;
-    background-color: rgb(230, 132, 87);
-    color: white;
-    border: 0;
-}
-
-.log-out-button:hover {
-    background-color: rgb(230, 132, 87, 0.8);
-    cursor: pointer;
-}
-
 .start-view-flexbox-container h1 {
     font-size: 64px;
     font-weight: 500;
+}
+
+.log-out-button-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .welcome-text {
@@ -53,8 +43,5 @@
 
 .latest-calls-carousel-container {
     margin-top: 20px;
-    width: 80%;
-    background-color: cornflowerblue;
-    /* height should not be fixed when carousel is implemented */
-    height: 500px;
+    width: 95%;
 }

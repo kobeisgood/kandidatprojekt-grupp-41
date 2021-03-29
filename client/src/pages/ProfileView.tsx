@@ -12,6 +12,7 @@ import changeNumber from "../icons/profile/changeNumber.svg"
 import changePassword from "../icons/profile/changePassword.svg"
 import changePicture from "../icons/profile/changePicture.svg"
 import { BackButton } from '../components/BackButton';
+import { SquareButton } from '../components/SquareButton';
 
 import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
@@ -30,11 +31,11 @@ export const ProfileView = (props: Props) => {
                     <BackButton linkTo="/dashboard" />
                 </div>
                 <h1 className="profile-header">Min profil</h1>
+                {/* TODO
+                    - Add function on click for popup "remove account"
+                     */}
                 <div className="delete-account-container">
-                    <button className="delete-account-button">
-                        <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
-                        <header className="item-delete-header">Ta bort konto</header>
-                    </button>
+                    <SquareButton label="Ta bort konto" onClick={() => void 0} icon={trashbin} className="delete-account-button" />
                 </div>
             </header>
             {/* Container for profile pic, name and number */}
