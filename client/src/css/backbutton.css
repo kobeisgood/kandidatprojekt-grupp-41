@@ -8,6 +8,7 @@
 
 /* Styling for back button */
 .back-button {
+    cursor: pointer;
     color: white;
     background-color: #484848;
     height: 80px;

@@ -1,7 +1,7 @@
 /* View for the profile page 'Min profil'
 Authors: Charlie and Hanna 
 */
-import React from 'react';
+import React, { useState } from 'react';
 import { User } from '../Types';
 import { ProfileChangeButton } from '../components/ProfileChangeButton';
 
@@ -15,12 +15,24 @@ import { BackButton } from '../components/BackButton';
 
 import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
+import { DeleteAccount } from '../components/DeleteAccount';
 
 interface Props {
     user: User | null
 }
 
 export const ProfileView = (props: Props) => {
+    const [deleteAccountPopUp, setDeleteAccountPopUp] = useState(false);
+
+    const deleteAccountClicked = () => {
+        setDeleteAccountPopUp(true); 
+    }
+
+    const deleteAccountVisibleHandler = () => {
+        setDeleteAccountPopUp(!deleteAccountPopUp);
+    }
+
+
     // Event handler for clicking back button and the change name button etc. 
     return (
         <div>
@@ -31,7 +43,7 @@ export const ProfileView = (props: Props) => {
                 </div>
                 <h1 className="profile-header">Min profil</h1>
                 <div className="delete-account-container">
-                    <button className="delete-account-button">
+                    <button className="delete-account-button" onClick={deleteAccountClicked}>
                         <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
                         <header className="item-delete-header">Ta bort konto</header>
                     </button>
@@ -52,6 +64,7 @@ export const ProfileView = (props: Props) => {
                 <ProfileChangeButton label={"Byt bild"} icon={changePicture} linkTo="/profile/changepicture" />
                 <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} linkTo="/profile/changepassword" />
             </div>
+            {deleteAccountPopUp && <DeleteAccount visibilityHandler = {deleteAccountVisibleHandler}/>}
         </div>
     ); 
 }
