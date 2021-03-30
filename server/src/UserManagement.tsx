@@ -1,4 +1,3 @@
-
 import { authenticate, getContacts } from './Database';
 import { UserID } from './Types';
 
@@ -6,7 +5,6 @@ import { UserID } from './Types';
 type PhoneNbr = string;
 
 export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
-
 
 
 
@@ -22,7 +20,7 @@ export const loginUser = async (id: UserID, phone: string, psw: string) => {
     if (user !== null) {
         const contacts = await getContacts(user.contacts);
         user.contacts = contacts;
-        connectedUsers.set(id, phone);
+        connectedUsers.set(phone, id);
         return user;
     } else {
         return null;
@@ -64,6 +62,10 @@ export const getUserName = (id: UserID) => {
     else
         return null;*/
 };
+
+export const getUserId = (phoneNbr: string) => {
+    return connectedUsers.get(phoneNbr);
+}
 
 /**
  * Prints the IDs of all connected users to the server log.

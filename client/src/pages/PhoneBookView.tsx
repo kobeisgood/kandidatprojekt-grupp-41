@@ -18,7 +18,8 @@ import { SquareButton } from '../components/SquareButton';
 
 interface Props {
     contactList: Contact[]
-    socket: SocketIOClient.Socket | null;
+    socket: SocketIOClient.Socket | null,
+    onCall: Function
 }
 
 export const PhoneBookView = (props: Props) => {
@@ -62,7 +63,7 @@ export const PhoneBookView = (props: Props) => {
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
-                        return <ContactCard contact={contact} removeContactState={removeContactState} visibilityHandler={removeContactVisibleHandler} />
+                        return <ContactCard contact={contact} removeContactState={removeContactState} visibilityHandler={removeContactVisibleHandler} onCall={() => props.onCall(contact.phoneNbr)} />
                     })}
                 </div>
             </div>

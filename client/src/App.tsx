@@ -36,8 +36,16 @@ export const App = () => {
     };
 
     const
-        [socket, setSocket] = useState(null),
-        [me, setMe]: [User | null, Function] = useState(prevLoginInfo());
+        [socket, setSocket]: [SocketIOClient.Socket | null, Function] = useState(null),
+        [me, setMe]: [User | null, Function] = useState(prevLoginInfo()),
+        [localStream, setLocalStream] = useState(new MediaStream()),
+        [remoteStream, setRemoteStream] = useState(new MediaStream()),
+        [incomingCall, setIncomingCall] = useState(false),
+        [outgoingCall, setOutgoingCall] = useState(false),
+        [callAccepted, setCallAccepted] = useState(false),
+        [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "", phoneNbr: "", profilePic: "", contacts: [], callEntries: [] }),
+        [peerSignal, setPeerSignal] = useState({}),
+        [myNode, setMyNode] = useState(new Peer());
 
     useEffect(() => {
         setMe(prevLoginInfo());
@@ -46,6 +54,14 @@ export const App = () => {
     useEffect(() => {
         localStorage.setItem("me", JSON.stringify(me));
     }, [me]);
+
+
+    const callUser = (phoneNbr: string) =>  {
+        if (socket !== null)
+            return CallUser(socket, setOutgoingCall, setCallAccepted, setMyNode, localStream, setRemoteStream, phoneNbr);
+        else
+            return null;
+    }
 
     return (
         <div className="App">
@@ -64,7 +80,7 @@ export const App = () => {
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
                     <Route path="/profile/changepicture" exact component={ChangePictureView} />
-                    <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} />} />
+                    <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} />} />
 
                     {prevLoginInfo() === null &&
                         <Redirect push to="/dashboard" />
@@ -83,14 +99,9 @@ export const App = () => {
 
     /* APP STATES
     const [allUsers, setUsers] = useState([]);
-    const [localStream, setLocalStream] = useState(new MediaStream());
-    const [remoteStream, setRemoteStream] = useState(new MediaStream());
-    const [outgoingCall, setOutgoingCall] = useState(false);
-    const [callAccepted, setCallAccepted] = useState(false);
-    const [incomingCall, setIncomingCall] = useState(false);
-    const [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "", phoneNbr: 0 });
-    const [myNode, setMyNode] = useState(new Peer());
-    const [peerSignal, setPeerSignal] = useState({});
+
+
+
     const [goToProfile, setGoToProfile] = useState(false);
     const [registrationSuccess, setRegistrationSuccess]: [boolean | undefined, (val: boolean) => void] = useState(); */
 
