@@ -19,7 +19,8 @@ import { SquareButton } from '../components/SquareButton';
 interface Props {
     contactList: Contact[]
     socket: SocketIOClient.Socket | null,
-    onCall: Function
+    onCall: Function,
+    phoneNumber: string
 }
 
 export const PhoneBookView = (props: Props) => {
@@ -73,7 +74,12 @@ export const PhoneBookView = (props: Props) => {
             }
 
             {addContactVisible && 
-                <AddContactPopup visibilityHandler={addContactVisibleHandler} socket={props.socket} /> 
+                <AddContactPopup 
+                visibilityHandler={addContactVisibleHandler} 
+                socket={props.socket} 
+                contactList={props.contactList} 
+                phoneNumber={props.phoneNumber} 
+                /> 
             }
         </div>
     );

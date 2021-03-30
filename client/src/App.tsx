@@ -80,7 +80,16 @@ export const App = () => {
                     <Route path="/profile/changenumber" exact component={ChangeNumberView} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
                     <Route path="/profile/changepicture" exact component={ChangePictureView} />
-                    <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} />} />
+
+                    <Route path="/phonebook" component={() => 
+                    <PhoneBookView 
+                        socket={socket} 
+                        contactList={me === null ? [] : me.contacts} 
+                        onCall={callUser}
+                        phoneNumber={me === null ? "" : me.phoneNbr} 
+                    />
+                        } 
+                    />
 
                     {prevLoginInfo() === null &&
                         <Redirect push to="/dashboard" />

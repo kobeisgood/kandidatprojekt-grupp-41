@@ -1,8 +1,8 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
-import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName, getUserId } from './UserManagement';
+import { addContactToList, connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
+import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
 /* INITIATION */
@@ -74,7 +74,14 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         .catch(() => {
             console.error("Contact could not be found!")
         });
-    });
+    })
+
+    socket.on('add-searched-contact', (contact:User, loggedInUserNumber:string) => {
+        addContactToList(contact, loggedInUserNumber ).then(() => {
+            console.log('Contact has been added to db!')
+            socket.emit('contact-added')
+        })
+    })
 
     socket.on('join-room', (roomId: string) => {
         let userId = socket.id;
@@ -85,13 +92,8 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         console.log(userName + " joined room " + roomId);
     });
 
-    socket.on('call-user', (data) => {
-        const calleeId = getUserId(data.calleeNbr);
-        console.log(connectedUsers);
-        console.log(data.calleeNbr);
-        console.log(calleeId);
-        
-        socket.to(calleeId).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: getUserName(data.caller) });
+    socket.on('call-user', (data: CallData) => {
+        socket.to(data.callee).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: getUserName(data.caller) });
     });
 
     socket.on('accept-call', (data: CallData) => {

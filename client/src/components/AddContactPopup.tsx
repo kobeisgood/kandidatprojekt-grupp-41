@@ -5,12 +5,15 @@ import '../css/contact-card.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 import { SquareButton } from '../components/SquareButton';
 import { useState } from 'react';
-import { GetSearchedContact } from '../Connection';
+import { GetSearchedContact, AddFoundContact } from '../Connection';
+import { Contact } from '../Types';
 
 
 interface Props {
     socket: SocketIOClient.Socket | null,
     visibilityHandler: Function
+    contactList: Contact[], 
+    phoneNumber: string
 }
 
 export const AddContactPopup = (props: Props) => {
@@ -36,6 +39,7 @@ export const AddContactPopup = (props: Props) => {
     // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
 
+        // TODO: the input value should be a state
         let contactNumber: string = (document.getElementById("add-contact-number-input") as HTMLInputElement).value;
 
         if (props.socket != null) {
@@ -47,11 +51,17 @@ export const AddContactPopup = (props: Props) => {
     };
 
     // Adds the contact to the user
+    // TODO: make sure contact list is updated on the frontend as well 
     const addContact = () => {
 
-        // create function in main/connection/db that adds foundContact to user 
-        // closeAddContactPopup()
-        console.log('Contact added')
+        if (props.socket != null && foundContact != null) {
+            AddFoundContact(props.socket, foundContact, props.contactList, props.phoneNumber)
+            //props.contactList.push(foundContact)
+            setNeutralPageState(true)
+            closeAddContactPopup()
+        } else {
+            console.log('No such contact!')
+        } 
     }
 
     // Renders the HTML content of the popup depending on if contact is found or not

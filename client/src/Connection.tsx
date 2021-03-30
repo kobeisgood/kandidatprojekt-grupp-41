@@ -3,6 +3,7 @@ import Peer from 'simple-peer';
 import { UserID, User, Contact } from './Types';
 
 
+
 const useHTTPS = false; // Only enable this if you know what it means
 
 /**
@@ -51,7 +52,7 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
 };
 
 /**
- * NOT USED ATM
+ * OBS: NOT USED ATM
  * 
  * Searches for the existence of a user in the db given a phone number
  * 
@@ -86,6 +87,29 @@ export const GetSearchedContact = (socket:SocketIOClient.Socket, phoneNumber: st
         setFoundContact(contact)
         console.log(contact)
     } )
+}
+
+/**
+ * Adds a contact to a specified user in db
+ * 
+ * @param socket From SocketIOClient.Socket
+ * @param contact Contact that has been searched for
+ * @param contactList The current list of the logged in users contacts
+ * @param loggedInUserNumber The number of the logged in user 
+ */
+export const AddFoundContact = 
+    (
+    socket:SocketIOClient.Socket, 
+    contact:Contact, 
+    contactList:Contact[], 
+    loggedInUserNumber:string
+    ) => 
+    {
+    socket.emit('add-searched-contact', contact, loggedInUserNumber);
+    socket.once('contact-added', () => {
+        contactList.push(contact)
+        console.log(contactList)
+    })
 }
 
 export const JoinRoom = (
