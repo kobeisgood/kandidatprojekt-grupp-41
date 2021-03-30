@@ -58,7 +58,7 @@ export const App = () => {
                             return <Redirect push to="/dashboard" />
                     }} /> 
                     <Route path="/" exact component={() => <StartView/>} />
-                    <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} />} />
+                    <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} user={me}/>} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                     <Route path="/profile/changename" exact component={() => <ChangeNameView user={me} />} />
                     <Route path="/profile/changenumber" exact component={() => <ChangeNumberView user={me} />} />

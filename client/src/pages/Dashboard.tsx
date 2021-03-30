@@ -6,6 +6,7 @@
 import { useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
+import { User } from '../Types';
 
 import '../css/start-view.css';
 import '../css/buttons.css';
@@ -16,6 +17,7 @@ import logOutIcon from '../icons/log-out-icon.svg';
 
 interface Props {
     setMe: Function;
+    user: User | null;
 }
 
 export const Dahsboard = (props: Props) => {
@@ -37,7 +39,7 @@ export const Dahsboard = (props: Props) => {
             </div>
 
             <div className="start-view-flexbox-container">
-                <h1 className="welcome-text">Välkommen, Hjördis!</h1>
+                <h1 className="welcome-text">Välkommen, {props.user ? props.user.firstName + "!": ""}</h1>
                 <div className="start-view-button-container">
                     {/* onClick prop passes empty function since it already has a link */}
                     <SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" />
