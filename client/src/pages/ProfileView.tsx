@@ -1,7 +1,7 @@
 /* View for the profile page 'Min profil'
 Authors: Charlie and Hanna 
 */
-import React from 'react';
+import React, { useState } from 'react';
 import { User } from '../Types';
 import { ProfileChangeButton } from '../components/ProfileChangeButton';
 
@@ -16,12 +16,24 @@ import { SquareButton } from '../components/SquareButton';
 
 import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
+import { DeleteAccount } from '../components/DeleteAccount';
 
 interface Props {
     user: User | null
 }
 
 export const ProfileView = (props: Props) => {
+    const [deleteAccountPopUp, setDeleteAccountPopUp] = useState(false);
+
+    const deleteAccountClicked = () => {
+        setDeleteAccountPopUp(true); 
+    }
+
+    const deleteAccountVisibleHandler = () => {
+        setDeleteAccountPopUp(!deleteAccountPopUp);
+    }
+
+
     // Event handler for clicking back button and the change name button etc. 
     return (
         <div>
@@ -53,6 +65,7 @@ export const ProfileView = (props: Props) => {
                 <ProfileChangeButton label={"Byt bild"} icon={changePicture} linkTo="/profile/changepicture" />
                 <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} linkTo="/profile/changepassword" />
             </div>
+            {deleteAccountPopUp && <DeleteAccount visibilityHandler = {deleteAccountVisibleHandler}/>}
         </div>
     ); 
 }

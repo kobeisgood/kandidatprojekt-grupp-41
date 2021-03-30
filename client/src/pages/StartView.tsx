@@ -13,7 +13,7 @@ export const StartView = () => {
     return (
         <div>
             <h1 className="header">
-                Välkommen till Boom
+                Välkommen till Boom!
             </h1>
             <div className="buttons-container">
                 <label className="description-text">Har du redan ett konto?

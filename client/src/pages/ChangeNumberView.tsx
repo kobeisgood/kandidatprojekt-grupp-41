@@ -11,7 +11,7 @@ import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 
 interface Props {
-    user: User
+    user: User | null
 }
 
 export const ChangeNumberView = (props: Props) => {
@@ -32,13 +32,17 @@ export const ChangeNumberView = (props: Props) => {
             <div className="profile-big-info-container">
                 <img src={hjordis} alt="profilbild" />
                 <div className="profile-info-contact-container">
-                    {/* <h1 className="profile-name">{props.user.firstName + " " + props.user.lastName}</h1> */}
-                    <h1 className="profile-number">0701234567</h1>
+                    <h1 className="profile-name">{props.user ? props.user.firstName + " " + props.user.lastName : ""}</h1>
+                    <h1 className="profile-number">{props.user ? props.user.phoneNbr : ""}</h1>
                 </div>
             </div>
             <div className="change-number-container">
-                <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..." onChange={() => console.log("Klick!")} />
-                <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={() => console.log("Klick!")} />
+                <div>
+                    <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..." onChange={() => console.log("Klick!")} />
+                </div>
+                <div>
+                    <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={() => console.log("Klick!")} />
+                </div>
             </div>
             <SaveButton label="Spara nummer" onClick={ButtonNameClicked} linkTo="/profile" />
         </div>
