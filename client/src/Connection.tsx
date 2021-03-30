@@ -140,9 +140,10 @@ const ListenForCalls = (
     setCaller: Function
 ) => {
     socket.on('user-calling', (data: any) => {
-        setIncomingCall(true);
+        console.log("Receiving call!");
+        /*setIncomingCall(true);
         setCallerSignal(data.signalData);
-        setCaller({ id: data.caller, firstName: data.callerName, lastName: "" });
+        setCaller({ id: data.caller, firstName: data.callerName, lastName: "" });*/
     });
 
     socket.on('call-aborted', () => {
@@ -198,12 +199,12 @@ export const CallRespond = (
 
 export const CallUser = (
     socket: SocketIOClient.Socket,
-    callee: UserID,
     setOutgoingCall: Function,
     setCallAccepted: Function,
     setMyNode: Function,
     localStream: MediaStream,
-    setRemoteStream: Function
+    setRemoteStream: Function,
+    calleeNbr: string
 ) => {
     const peer = new Peer({
         initiator: true, // User is initiator of the call
@@ -215,7 +216,7 @@ export const CallUser = (
     // Beginning of handshake roundtrip
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         setOutgoingCall(true);
-        socket.emit('call-user', { callee: callee, signalData: signal, caller: socket.id });
+        socket.emit('call-user', { calleeNbr: calleeNbr, signalData: signal, caller: socket.id });
     });
 
     peer.on('stream', stream => {
