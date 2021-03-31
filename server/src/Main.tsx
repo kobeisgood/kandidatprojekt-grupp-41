@@ -1,8 +1,8 @@
 import { Socket } from 'socket.io';
-import { CallData, User } from './Types';
+import { CallData, User, Peer } from './Types';
 import { InitServer } from './Init';
 import { connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
-import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName, getUserId } from './UserManagement';
+import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserId } from './UserManagement';
 
 
 /* INITIATION */
@@ -76,6 +76,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         });
     });
 
+    /*
     socket.on('join-room', (roomId: string) => {
         let userId = socket.id;
         let userName = getUserName(userId);
@@ -84,14 +85,20 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         socket.emit('join-response', connectedUsers);
         console.log(userName + " joined room " + roomId);
     });
+    */
 
     socket.on('call-user', (data) => {
         const calleeId = getUserId(data.calleeNbr);
         console.log(connectedUsers);
         console.log(data.calleeNbr);
+
+        console.log("CalleeID:");
         console.log(calleeId);
+
+        console.log("CallerID:");
+        console.log(data.caller);
         
-        socket.to(calleeId).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: getUserName(data.caller) });
+        socket.to(calleeId).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: data.callerName });
     });
 
     socket.on('accept-call', (data: CallData) => {
@@ -99,9 +106,17 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     });
 
     socket.on('decline-call', (data: CallData) => {
+        console.log("decline call");
         socket.to(data.caller).emit('call-declined');
     });
 
+    socket.on('abort-call', (callee: Peer) => {
+        console.log("User aborted call");
+        console.log(callee);
+        socket.to(callee.id).emit('call-aborted');
+    });
+
+    /*
     socket.on('disconnecting', () => {
         let userId = socket.id;
         let userName = getUserName(userId);
@@ -112,6 +127,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             socket.to(room).broadcast.emit('user-disconnected', userName, connectedUsers);
         });
     });
+    */
 
     socket.on('disconnect', () => {
         let userId = socket.id;

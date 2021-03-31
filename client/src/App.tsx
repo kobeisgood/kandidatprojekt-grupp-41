@@ -1,12 +1,10 @@
-import { useEffect, useState, useRef, Component } from 'react';
-import Peer from 'simple-peer';
+import { useEffect, useState } from 'react';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { default as WebRTC } from 'simple-peer';
 
-import { User } from './Types';
-import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register } from './Connection';
+import { User, Peer } from './Types';
+import { CallRespond, CallUser, CallAbort, CallHangUp, ListenForCalls } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-
-import { CallView } from './pages/CallView';
 import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
@@ -18,6 +16,7 @@ import { ChangeNameView } from './pages/ChangeNameView';
 import { ChangeNumberView } from './pages/ChangeNumberView';
 import { ChangePasswordView } from './pages/ChangePasswordView';
 import { ChangePictureView } from './pages/ChangePictureView';
+import { CallView } from './pages/CallView';
 
 import './App.css';
 import './css/fonts.css'
@@ -43,9 +42,9 @@ export const App = () => {
         [incomingCall, setIncomingCall] = useState(false),
         [outgoingCall, setOutgoingCall] = useState(false),
         [callAccepted, setCallAccepted] = useState(false),
-        [peer, setPeer]: [User, Function] = useState({ id: "", firstName: "", lastName: "", phoneNbr: "", profilePic: "", contacts: [], callEntries: [] }),
+        [peer, setPeer]: [Peer, Function] = useState({ id: "", name: "" }),
         [peerSignal, setPeerSignal] = useState({}),
-        [myNode, setMyNode] = useState(new Peer());
+        [myNode, setMyNode] = useState(new WebRTC());
 
     useEffect(() => {
         setMe(prevLoginInfo());
@@ -55,38 +54,82 @@ export const App = () => {
         localStorage.setItem("me", JSON.stringify(me));
     }, [me]);
 
-
-    const callUser = (phoneNbr: string) =>  {
-        if (socket !== null)
-            return CallUser(socket, setOutgoingCall, setCallAccepted, setMyNode, localStream, setRemoteStream, phoneNbr);
+    const listenForCalls = (socket: SocketIOClient.Socket) => {
+        if (socket !== null) {
+            ListenForCalls(socket, setIncomingCall, setPeerSignal, setPeer); // Display incoming calls to user
+        }
         else
+            void 0;
+    };
+
+    const history = useHistory(); // For redirecting user
+    const redirToCallView = () => {
+        if (history !== undefined)
+            history.push("/call");
+    };
+
+    const callRespond = (pickUp: boolean) => {
+        if (socket !== null) {
+            OpenLocalStream(setLocalStream); // Access browser web cam
+            CallRespond(socket, peer, peerSignal, setCallAccepted, setIncomingCall, setMyNode, localStream, setRemoteStream, redirToCallView, pickUp);
+        } else
+            void 0;
+    };
+
+    const callUser = (phoneNbr: string) => {
+        if (socket !== null && me !== null) {
+            OpenLocalStream(setLocalStream); // Access browser web cam
+            return CallUser(socket, setOutgoingCall, setCallAccepted, setMyNode, localStream, setRemoteStream, phoneNbr, me.firstName + " " + me.lastName, redirToCallView);
+        } else
             return null;
     }
 
+    const abortCall = () => {
+        setOutgoingCall(false);
+        setCallAccepted(false);
+        setPeer({ id: "", name: "" });
+
+        if (socket !== null)
+            CallAbort(socket, peer);
+    };
+
+    const setPeerName = (newName: string) => {
+        setPeer({
+            id: peer.id,
+            name: newName
+        });
+    };
+
     return (
         <div className="App">
-            <Router>
-                <Switch>
-                     <Route path="/login" exact component={() => {
-                        if (prevLoginInfo() === null)
-                            return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} />
-                        else
-                            return <Redirect push to="/dashboard" />
-                    }} /> 
-                    <Route path="/" exact component={() => <StartView/>} />
-                    <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} />} />
-                    <Route path="/profile" exact component={() => <ProfileView user={me} />} />
-                    <Route path="/profile/changename" exact component={ChangeNameView} />
-                    <Route path="/profile/changenumber" exact component={ChangeNumberView} />
-                    <Route path="/profile/changepassword" exact component={ChangePasswordView} />
-                    <Route path="/profile/changepicture" exact component={ChangePictureView} />
-                    <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} />} />
+            {incomingCall && !callAccepted &&
+                <CallPopup callerName={peer.name} callRespond={callRespond} />
+            }
 
-                    {prevLoginInfo() === null &&
-                        <Redirect push to="/dashboard" />
-                    }
-                </Switch>
-            </Router>
+            {outgoingCall &&
+                <CallingPopup abortCall={abortCall} name={peer.name} />
+            }
+
+            <Switch>
+                <Route path="/login" exact component={() => {
+                    if (prevLoginInfo() === null)
+                        return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} listenForCalls={listenForCalls} />
+                    else
+                        return <Redirect push to="/dashboard" />
+                }} />
+                <Route path="/" exact component={() => <StartView />} />
+                <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} />} />
+                <Route path="/profile" exact component={() => <ProfileView user={me} />} />
+                <Route path="/profile/changename" exact component={ChangeNameView} />
+                <Route path="/profile/changenumber" exact component={ChangeNumberView} />
+                <Route path="/profile/changepassword" exact component={ChangePasswordView} />
+                <Route path="/profile/changepicture" exact component={ChangePictureView} />
+                <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} setPeerName={setPeerName} />} />
+                <Route path="/call" component={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode)} />} />
+
+                {/* REDIRECTS */}
+                {prevLoginInfo() === null && <Redirect push to="/dashboard" />}
+            </Switch>
         </div>
     );
 };
@@ -99,8 +142,6 @@ export const App = () => {
 
     /* APP STATES
     const [allUsers, setUsers] = useState([]);
-
-
 
     const [goToProfile, setGoToProfile] = useState(false);
     const [registrationSuccess, setRegistrationSuccess]: [boolean | undefined, (val: boolean) => void] = useState(); */

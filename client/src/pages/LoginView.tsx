@@ -13,6 +13,7 @@ interface Props {
     setSocket: Function;
     me: User | null;
     setMe: Function;
+    listenForCalls: Function;
 }
 
 export const LoginView = (props: Props) => {
@@ -26,13 +27,13 @@ export const LoginView = (props: Props) => {
         handlePasswordInp = (event: any) => { setPasswordInp(event.target.value); };
 
     const history = useHistory(); // For redirecting user
-    const redir = () => { history.push("/dashboard"); };
+    const redir = () => { history.push("/dashboard"); }; 
 
     const attemptLogin = () => {
         setLoggingIn(true);
 
         props.setSocket(
-            Login(phoneInp, passwordInp, props.setMe, redir)
+            Login(phoneInp, passwordInp, props.setMe, redir, props.listenForCalls)
         );
     };
 

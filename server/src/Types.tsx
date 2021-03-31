@@ -10,6 +10,11 @@ export interface User {
     phoneNbr: string
 }
 
+export interface Peer {
+    id: UserID,
+    name: string
+}
+
 export interface CallData {
     callee: UserID,
     signalData: Peer.SignalData,

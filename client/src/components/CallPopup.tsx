@@ -1,5 +1,5 @@
 import '../css/call.css';
-import '../css/button.css';
+import '../css/buttons.css';
 
 interface Props {
     callerName: string,
@@ -15,12 +15,13 @@ export const CallPopup = (props: Props) => {
         props.callRespond(false);
     }
 
-    return(
-        <div className="full-page-container">
+    return (
+        <>
+            <div className="call-popup-shadow" />
             <div className="call-popup-container">
                 <div className="call-popup-flexbox-container">
                     <h3>Inkommande samtal</h3>
-                    <img className="caller-profile-picture" src="https://pbcdn1.podbean.com/imglogo/ep-logo/pbblog2814877/Edward_Blom2.jpg" alt="Profilbild av personen som ringer"/>
+                    <img className="caller-profile-picture" src="https://pbcdn1.podbean.com/imglogo/ep-logo/pbblog2814877/Edward_Blom2.jpg" alt="Profilbild av personen som ringer" />
                     <div className="incoming-call-buttons-container">
                         <div className="answer-button-container incoming-call-button-container">
                             <button onClick={acceptCall} className="answer-call-button incoming-call-button button" />
@@ -36,6 +37,6 @@ export const CallPopup = (props: Props) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

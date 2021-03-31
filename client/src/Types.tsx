@@ -21,6 +21,11 @@ export interface Contact {
     profilePic: string;
 }
 
+export interface Peer {
+    id: UserID,
+    name: string
+}
+
 export interface CallEntry {
     calledUserId: UserID,
     timeOfCall: Date 

@@ -3,11 +3,12 @@
     Authors: Daniel and Robin
  */
 import React from 'react';
-import '../css/colors.css';
-import CrossIcon from '../icons/cross-icon.svg';
 import { Contact } from '../Types';
 import { SquareButton } from './SquareButton';
+
+import '../css/colors.css';
 import '../css/contact-card.css';
+import CrossIcon from '../icons/cross-icon.svg';
 import callIcon from '../icons/call-icon.svg';
 import hjordis from '../images/hjordis.jpg';
 

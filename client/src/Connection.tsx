@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
-import Peer from 'simple-peer';
-import { UserID, User, Contact } from './Types';
+import { default as WebRTC } from 'simple-peer';
+import { User, Contact, Peer } from './Types';
 
 
 const useHTTPS = false; // Only enable this if you know what it means
@@ -12,7 +12,7 @@ const useHTTPS = false; // Only enable this if you know what it means
  * @param psw The specified user password
  * @returns The socket representing the connection between client and server
  */
-export const Login = (phone: string, psw: string, setMe: Function, andThen: Function) => {
+export const Login = (phone: string, psw: string, setMe: Function, redirect: Function, listenForCalls: Function) => {
     let socket: SocketIOClient.Socket;
 
     if (useHTTPS)
@@ -26,7 +26,8 @@ export const Login = (phone: string, psw: string, setMe: Function, andThen: Func
         if (user !== null) {
             console.log("Logged in successfully!");
             setMe(user);
-            andThen();
+            redirect(); // Redirect to dashboard and listen for calls
+            listenForCalls(socket);
         } else
             console.log("Failed to log in!");
     });
@@ -133,41 +134,43 @@ const LookForUsers = (socket: SocketIOClient.Socket, setUserList: Function) => {
     });
 };
 
-const ListenForCalls = (
+export const ListenForCalls = (
     socket: SocketIOClient.Socket,
     setIncomingCall: Function,
     setCallerSignal: Function,
-    setCaller: Function
+    setPeer: Function
 ) => {
     socket.on('user-calling', (data: any) => {
-        console.log("Receiving call!");
-        /*setIncomingCall(true);
+        setIncomingCall(true);
         setCallerSignal(data.signalData);
-        setCaller({ id: data.caller, firstName: data.callerName, lastName: "" });*/
+        setPeer({ id: data.caller, name: data.callerName });
     });
 
     socket.on('call-aborted', () => {
+        console.log("Samtal avbrutet");
+        
         setIncomingCall(false);
         setCallerSignal({});
-        setCaller({ id: "", firstName: "", lastName: "" });
+        setPeer({ id: "", name: "" });
     });
 };
 
 export const CallRespond = (
     socket: SocketIOClient.Socket,
-    caller: User,
-    callerSignal: Peer.SignalData,
+    caller: Peer,
+    callerSignal: WebRTC.SignalData,
     setCallAccepted: Function,
     setIncomingCall: Function,
     setMyNode: Function,
     localStream: MediaStream,
     setRemoteVideoStream: Function,
+    redir: Function,
     answer: boolean
 ) => {
     setCallAccepted(answer);
     setIncomingCall(false);
 
-    const peer = new Peer({
+    const peer = new WebRTC({
         initiator: false, // User is receiver of call
         trickle: false,
         stream: localStream,
@@ -177,6 +180,7 @@ export const CallRespond = (
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         if (answer) {
             socket.emit('accept-call', { signalData: signal, caller: caller.id });
+            redir(); // Redirect to call view
         } else {
             socket.emit('decline-call', { caller: caller.id });
             return;
@@ -204,9 +208,11 @@ export const CallUser = (
     setMyNode: Function,
     localStream: MediaStream,
     setRemoteStream: Function,
-    calleeNbr: string
+    calleeNbr: string,
+    callerName: string,
+    redir: Function
 ) => {
-    const peer = new Peer({
+    const peer = new WebRTC({
         initiator: true, // User is initiator of the call
         trickle: false,
         stream: localStream
@@ -216,7 +222,7 @@ export const CallUser = (
     // Beginning of handshake roundtrip
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         setOutgoingCall(true);
-        socket.emit('call-user', { calleeNbr: calleeNbr, signalData: signal, caller: socket.id });
+        socket.emit('call-user', { calleeNbr: calleeNbr, signalData: signal, caller: socket.id, callerName: callerName });
     });
 
     peer.on('stream', stream => {
@@ -230,21 +236,18 @@ export const CallUser = (
         peer.destroy();
     });
 
-    socket.on('call-accepted', (signalData: Peer.SignalData) => {
+    socket.once('call-accepted', (signalData: WebRTC.SignalData) => {
         setOutgoingCall(false);
         setCallAccepted(true);
+
         peer.signal(signalData); // Accept returnning callee signal
 
-        socket.off('call-accepted');
-        socket.off('call-declined');
+        redir(); // Redirect to call view
     });
 
-    socket.on('call-declined', () => {
+    socket.once('call-declined', () => {
         setOutgoingCall(false);
         console.log("User declined your call!");
-
-        socket.off('call-accepted');
-        socket.off('call-declined');
     });
 };
 
@@ -254,7 +257,9 @@ export const CallUser = (
  * @param socket This client's socket
  * @param callee The callee's name
  */
-export const CallAbort = (socket: SocketIOClient.Socket, callee: User) => {
+export const CallAbort = (socket: SocketIOClient.Socket, callee: Peer) => {
+    console.log("Aborting call");
+    
     socket.emit('abort-call', callee);
 };
 
@@ -263,6 +268,6 @@ export const CallAbort = (socket: SocketIOClient.Socket, callee: User) => {
  * 
  * @param myNode The SimplePeer instance create in prior
  */
-export const CallHangUp = (myNode: Peer.Instance) => {
+export const CallHangUp = (myNode: WebRTC.Instance) => {
     myNode.destroy();
 };
