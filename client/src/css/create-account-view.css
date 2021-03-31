@@ -1,0 +1,42 @@
+.create-header-container {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    margin: 30px auto 0 auto;
+    justify-content: flex-start;
+}
+
+/* "Min profil" headline */
+.create-header {
+    font-size: 48px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    align-self: center;
+    flex-basis: calc(100%/3);
+}
+
+.description-text-container {
+    width: 50%;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.description-text {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    align-self: center;
+    margin-top: 100px;
+}
+
+.create-container {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-self: flex-start;
+    align-items: flex-end;
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
