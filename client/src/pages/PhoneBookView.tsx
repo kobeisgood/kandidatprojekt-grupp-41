@@ -9,7 +9,7 @@ import { AddContactPopup } from '../components/AddContactPopup';
 import '../css/phone-book.css';
 import '../css/colors.css';
 import { Contact } from '../Types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
@@ -20,7 +20,8 @@ interface Props {
     contactList: Contact[]
     socket: SocketIOClient.Socket | null,
     onCall: Function,
-    phoneNumber: string
+    phoneNumber: string,
+    setContactList:Function
 }
 
 export const PhoneBookView = (props: Props) => {
@@ -40,7 +41,8 @@ export const PhoneBookView = (props: Props) => {
     const removeContactVisibleHandler = () => {
         setRemoveContactVisible(!removeContactVisible)
     }
-    
+
+
     return (
         <div className="phone-book-container">
             <header className="phone-book-top-container">
@@ -70,7 +72,13 @@ export const PhoneBookView = (props: Props) => {
             </div>
 
             {removeContactVisible &&
-                <DeleteContactPopup visibilityHandler={removeContactVisibleHandler} /> 
+                <DeleteContactPopup 
+                visibilityHandler={removeContactVisibleHandler} 
+                socket={props.socket} 
+                contactList={props.contactList} 
+                phoneNumber={props.phoneNumber} 
+                setContactList={props.setContactList}
+                /> 
             }
 
             {addContactVisible && 
@@ -79,6 +87,7 @@ export const PhoneBookView = (props: Props) => {
                 socket={props.socket} 
                 contactList={props.contactList} 
                 phoneNumber={props.phoneNumber} 
+                setContactList={props.setContactList}
                 /> 
             }
         </div>

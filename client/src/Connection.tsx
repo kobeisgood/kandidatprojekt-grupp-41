@@ -102,12 +102,14 @@ export const AddFoundContact =
     socket:SocketIOClient.Socket, 
     contact:Contact, 
     contactList:Contact[], 
-    loggedInUserNumber:string
+    loggedInUserNumber:string,
+    setContactList:Function
     ) => 
     {
     socket.emit('add-searched-contact', contact, loggedInUserNumber);
     socket.once('contact-added', () => {
         contactList.push(contact)
+        setContactList(contactList)
         console.log(contactList)
     })
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, Component } from 'react';
 import Peer from 'simple-peer';
 
-import { User } from './Types';
+import { Contact, User } from './Types';
 import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
@@ -55,6 +55,23 @@ export const App = () => {
         localStorage.setItem("me", JSON.stringify(me));
     }, [me]);
 
+    useEffect(() => {
+        console.log('contact list updated')
+    }, [me?.contacts])
+
+    const setContactList = (contactList:Contact[]) => {
+        if(me != null)
+            setMe({
+                    id: me.id,
+                    firstName: me.firstName,
+                    lastName: me.lastName,
+                    phoneNbr: me.phoneNbr,
+                    contacts: contactList,
+                    profilePic: me.profilePic,
+                    callEntries: me.callEntries
+                })
+    }
+
 
     const callUser = (phoneNbr: string) =>  {
         if (socket !== null)
@@ -87,6 +104,7 @@ export const App = () => {
                         contactList={me === null ? [] : me.contacts} 
                         onCall={callUser}
                         phoneNumber={me === null ? "" : me.phoneNbr} 
+                        setContactList={setContactList}
                     />
                         } 
                     />

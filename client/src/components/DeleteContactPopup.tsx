@@ -2,10 +2,14 @@ import '../css/call.css';
 import '../css/buttons.css';
 import '../css/popups.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
+import { Contact } from '../Types';
 
 interface Props {
-    //socket: SocketIOClient.Socket | null,
+    socket: SocketIOClient.Socket | null,
     visibilityHandler: Function
+    contactList: Contact[], 
+    phoneNumber: string,
+    setContactList: Function
 }
 
 

@@ -13,13 +13,21 @@ interface Props {
     socket: SocketIOClient.Socket | null,
     visibilityHandler: Function
     contactList: Contact[], 
-    phoneNumber: string
+    phoneNumber: string,
+    setContactList:Function
 }
 
 export const AddContactPopup = (props: Props) => {
 
     // The content rendered when we haven't searched for a contact yet
-    const [neutralPageState, setNeutralPageState] = useState(true);
+    const 
+        [neutralPageState, setNeutralPageState] = useState(true),
+        [phoneNumberInput, setPhoneNumberInput] = useState("")
+
+    const handlePhoneNumberInput = (event:any) => {
+        setPhoneNumberInput(event.target.value);
+    }
+
 
     // Closes the add contact popup
     const closeAddContactPopup = () => {
@@ -39,23 +47,21 @@ export const AddContactPopup = (props: Props) => {
     // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
 
-        // TODO: the input value should be a state
-        let contactNumber: string = (document.getElementById("add-contact-number-input") as HTMLInputElement).value;
+        let contactNumber: string = phoneNumberInput
 
         if (props.socket != null) {
             GetSearchedContact(props.socket, contactNumber, setFoundContact)
             setNeutralPageState(false)
         }
 
-        (document.getElementById("add-contact-number-input") as HTMLInputElement).value = "";
+        setPhoneNumberInput("")
     };
 
     // Adds the contact to the user
-    // TODO: make sure contact list is updated on the frontend as well 
     const addContact = () => {
 
         if (props.socket != null && foundContact != null) {
-            AddFoundContact(props.socket, foundContact, props.contactList, props.phoneNumber)
+            AddFoundContact(props.socket, foundContact, props.contactList, props.phoneNumber, props.setContactList)
             //props.contactList.push(foundContact)
             setNeutralPageState(true)
             closeAddContactPopup()
@@ -105,7 +111,7 @@ export const AddContactPopup = (props: Props) => {
                         <p>Skriv in mobilnumret för den du vill lägga till</p>
                         <div className="number-input-row">
                             <p>Mobilnummer:</p>
-                            <input id="add-contact-number-input" type="number" placeholder="Skriv mobilnummer här..."></input>
+                            <input id="add-contact-number-input" type="number" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput}></input>
                         </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
