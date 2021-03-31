@@ -27,7 +27,6 @@ interface Props {
 export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
     const [addContactVisible, setAddContactVisible] = useState(false);
-    const [removeContactVisible, setRemoveContactVisible] = useState(false);
 
     // Handles only the cross above the contact card
     const removeContactClicked = () => {
@@ -36,10 +35,6 @@ export const PhoneBookView = (props: Props) => {
 
     const addContactVisibleHandler = () => {
         setAddContactVisible(!addContactVisible)
-    }
-
-    const removeContactVisibleHandler = () => {
-        setRemoveContactVisible(!removeContactVisible)
     }
 
 
@@ -66,20 +61,20 @@ export const PhoneBookView = (props: Props) => {
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
-                        return <ContactCard contact={contact} removeContactState={removeContactState} visibilityHandler={removeContactVisibleHandler} onCall={() => props.onCall(contact.phoneNbr)} />
+                        return <ContactCard 
+                        contact={contact} 
+                        removeContactState={removeContactState} 
+                        //visibilityHandler={removeContactVisibleHandler} 
+                        onCall={() => props.onCall(contact.phoneNbr)} 
+                        socket={props.socket} 
+                        contactList={props.contactList} 
+                        phoneNumber={props.phoneNumber} 
+                        setContactList={props.setContactList}
+
+                        />
                     })}
                 </div>
             </div>
-
-            {removeContactVisible &&
-                <DeleteContactPopup 
-                visibilityHandler={removeContactVisibleHandler} 
-                socket={props.socket} 
-                contactList={props.contactList} 
-                phoneNumber={props.phoneNumber} 
-                setContactList={props.setContactList}
-                /> 
-            }
 
             {addContactVisible && 
                 <AddContactPopup 
