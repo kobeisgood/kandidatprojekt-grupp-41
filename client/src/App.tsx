@@ -12,6 +12,7 @@ import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { LoginView } from './pages/LoginView';
 import { StartView } from './pages/StartView';
+import { CreateAccountView } from './pages/CreateAccountView';
 import { Dahsboard } from './pages/Dashboard';
 import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
@@ -58,6 +59,7 @@ export const App = () => {
                             return <Redirect push to="/dashboard" />
                     }} /> 
                     <Route path="/" exact component={() => <StartView/>} />
+                    <Route path="/createaccount" exact component={() => <CreateAccountView/>} />
                     <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} user={me}/>} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                     <Route path="/profile/changename" exact component={() => <ChangeNameView user={me} />} />
