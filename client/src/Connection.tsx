@@ -1,6 +1,7 @@
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 import Peer from 'simple-peer';
 import { UserID, User, Contact } from './Types';
+import { updateNamespaceImport } from 'typescript';
 
 
 const useHTTPS = false; // Only enable this if you know what it means
@@ -71,7 +72,23 @@ export const FindContactNumber = (
     socket.on('number-not-found', () => {
         setContactExists(false);
     })
-}
+};
+
+export const UpdateName = (
+    socket: SocketIOClient.Socket,
+    phoneNbr: string,
+    firstName: string,
+    lastName: string,
+    setName: Function
+) => {
+    socket.emit('update-name', {phoneNbr: phoneNbr, firstName: firstName, lastName: lastName});
+    socket.on('update-name-result', (result: boolean) => {
+        if (result)
+            setName(firstName, lastName); 
+        else 
+            console.error("Name update unsuccessful");
+    });
+};
 
 /**
  * Retrieves a user from the db given a phone number 

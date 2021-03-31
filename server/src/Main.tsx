@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
+import { connectToDb, createUser, getContactFromNbr, numberExists, updateName } from './Database';
 import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
@@ -52,6 +52,18 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             .catch(() => {
                 console.error("User could not be added!");
                 socket.emit('registration-result', false);
+            });
+    });
+
+    socket.on('update-name', (user: {phoneNbr: string, firstName: string, lastName: string }) => {
+        updateName(user.phoneNbr, user.firstName, user.lastName)
+            .then(() => {
+                console.log("Name update registered!");
+                socket.emit("update-name-result", true);
+            })
+            .catch(() => {
+                console.error("Name update unsuccessful");
+                socket.emit('update-name-result', false);
             });
     });
 

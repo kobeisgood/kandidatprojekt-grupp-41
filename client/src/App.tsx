@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, Component } from 'react';
 import Peer from 'simple-peer';
 
 import { User } from './Types';
-import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register } from './Connection';
+import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register, UpdateName } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ export const App = () => {
     };
 
     const
-        [socket, setSocket] = useState(null),
+        [socket, setSocket]: [SocketIOClient.Socket | null, Function] = useState(null),
         [me, setMe]: [User | null, Function] = useState(prevLoginInfo());
 
     useEffect(() => {
@@ -46,6 +46,12 @@ export const App = () => {
     useEffect(() => {
         localStorage.setItem("me", JSON.stringify(me));
     }, [me]);
+
+    const updateName = (firstName: string, lastName: string, setName: Function) => {
+        console.log("Hej updatera namn snälla")
+        if (socket !== null && me !== null)
+            UpdateName(socket, me.phoneNbr, firstName, lastName, setName);
+    };
 
     return (
         <div className="App">
@@ -60,7 +66,7 @@ export const App = () => {
                     <Route path="/" exact component={() => <StartView/>} />
                     <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} user={me}/>} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
-                    <Route path="/profile/changename" exact component={() => <ChangeNameView user={me} />} />
+                    <Route path="/profile/changename" exact component={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
                     <Route path="/profile/changenumber" exact component={() => <ChangeNumberView user={me} />} />
                     <Route path="/profile/changepassword" exact component={ChangePasswordView} />
                     <Route path="/profile/changepicture" exact component={ChangePictureView} />
@@ -73,7 +79,9 @@ export const App = () => {
             </Router>
         </div>
     );
+                
 };
+
 
 /*
     useEffect(() => {

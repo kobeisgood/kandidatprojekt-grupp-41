@@ -85,7 +85,18 @@ export const getUsers = async () => {
 
 export const addCallEntry = () => { };
 
-export const updateName = (firstName: string, lastName: string) => { };
+export const updateName = async (phoneNbr: string, firstName: string, lastName: string) => { 
+    try{
+        await UserModel.findOneAndUpdate({phoneNbr: phoneNbr}, 
+            {
+                firstName: firstName,
+                lastName: lastName
+            }
+        )      
+    } catch (err) {
+        console.error(err)
+    }
+};
 
 export const updatePhone = (phone: string) => { };
 
