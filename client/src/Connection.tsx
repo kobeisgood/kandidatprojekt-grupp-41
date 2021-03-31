@@ -108,7 +108,7 @@ export const AddFoundContact =
     {
     socket.emit('add-searched-contact', contact, loggedInUserNumber);
     socket.once('contact-added', () => {
-        contactList.push(contact)
+        contactList.push(contact) // TODO contact added on frontend even though its not added in db
         setContactList(contactList)
         console.log(contactList)
     })
