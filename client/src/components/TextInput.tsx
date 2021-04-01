@@ -10,7 +10,8 @@ interface Props {
     className?: string;
     placeholder: string;
     type?: string;
-    onChange?: ((event: React.ChangeEvent<HTMLInputElement>) => void)
+    onChange?: ((event: React.ChangeEvent<HTMLInputElement>) => void);
+    maxLength?:number
 }
 
 export const TextInput = (props: Props) => {
@@ -19,7 +20,7 @@ export const TextInput = (props: Props) => {
     return (
         <>
             {labelElem}
-            <input className={props.className} type={props.type} placeholder={props.placeholder} onChange={props.onChange} />
+            <input className={props.className} type={props.type} placeholder={props.placeholder} onChange={props.onChange} maxLength={props.maxLength} />
         </>
     );
 };
