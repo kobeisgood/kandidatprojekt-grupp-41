@@ -58,11 +58,14 @@
 .contact-found-row {
     display: flex;
     flex-flow: row wrap;
+    align-items: center;
 }
 
 .contact-found-info-col {
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
+    align-items: flex-start;
 }
 
 .popup-error-message {
@@ -70,6 +73,16 @@
     font-weight: bold;
     font-size: 48px;
     margin-top: 20px;
+}
+
+.found-contact-name {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.found-contact-number {
+    font-size: 48px;
 }
 
 /* Stuff for Delete Contact Popup */ 

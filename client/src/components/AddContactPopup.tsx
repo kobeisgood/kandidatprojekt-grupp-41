@@ -23,7 +23,8 @@ export const AddContactPopup = (props: Props) => {
     // The content rendered when we haven't searched for a contact yet
     const
         [neutralPageState, setNeutralPageState] = useState(true),
-        [phoneNumberInput, setPhoneNumberInput] = useState("")
+        [phoneNumberInput, setPhoneNumberInput] = useState(""),
+        [faultyNumberDisplayed, setFaultyNumberDisplayed] = useState("")
 
     const handlePhoneNumberInput = (event: any) => {
         setPhoneNumberInput(event.target.value);
@@ -48,20 +49,25 @@ export const AddContactPopup = (props: Props) => {
     // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
 
-        let contactNumber: string = phoneNumberInput
+        setFaultyNumberDisplayed(phoneNumberInput)
 
+        let contactNumber: string = phoneNumberInput
+        
+
+        // When you try to add yourself
         if (contactNumber == props.phoneNumber) {
             alert("Du försöker lägga till dig själv dumhuve, försök med ett annat nummer")
             return
         }
 
+        // When you try to add someone you already have in your contacts
         let foundBadNumber: boolean = false;
         let i;
         for (i = 0; i < props.contactList.length; i++) {
             var contact = props.contactList[i]
             if (contact.phoneNbr == contactNumber) {
                 foundBadNumber = true;
-                alert("Den här kontakten finns redan i din kontaktlista.... jeez kmr du int ihåg nånting?")
+                alert("Den här kontakten finns redan i din kontaktlista.... herrejevlar kmr du int håg nåting?")
                 break;
             }
         }
@@ -99,7 +105,7 @@ export const AddContactPopup = (props: Props) => {
                 {foundContact == null && !neutralPageState &&
                     <>
                         <p className="popup-error-message">Fel Nummer! </p>
-                        <p className="popup-middle-sized-text">Nummer {phoneNumberInput}  hittas inte </p> {/*TODO: make searched phone number immutable here*/}
+                        <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p> {/*TODO: make searched phone number immutable here*/}
                         <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
                         <TextInput label="Mobilnummer:" type="number" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} /> {/*TODO: make text inputs nice after merge*/}
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
@@ -112,9 +118,8 @@ export const AddContactPopup = (props: Props) => {
                         <div className="contact-found-row">
                             <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="KontaktBild" />
                             <div className="contact-found-info-col">
-                                <p>{foundContact.phoneNbr != "" ? foundContact.firstName : ""}</p>
-                                <p>{foundContact.phoneNbr != "" ? foundContact.lastName : ""}</p>
-                                <p>{foundContact.phoneNbr != "" ? foundContact.phoneNbr : ""}</p>
+                                <p className="found-contact-name">{foundContact.phoneNbr != "" ? foundContact.firstName : ""} {foundContact.phoneNbr != "" ? foundContact.lastName : ""} </p>
+                                <p className="found-contact-number">{foundContact.phoneNbr != "" ? foundContact.phoneNbr : ""}</p>
                             </div>
                         </div>
                         <SquareButton label="Lägg till kontakt" onClick={addContact} className="save-button handle-contact-button button" />
