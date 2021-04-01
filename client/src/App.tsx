@@ -47,6 +47,13 @@ export const App = () => {
         [myNode, setMyNode] = useState(new WebRTC());
 
     useEffect(() => {
+        OpenLocalStream()
+            .then((stream: MediaStream) => {
+                setLocalStream(stream)
+            }); // Access browser web cam
+    }, []);
+
+    useEffect(() => {
         setMe(prevLoginInfo());
     }, []);
 
@@ -55,11 +62,8 @@ export const App = () => {
     }, [me]);
 
     const listenForCalls = (socket: SocketIOClient.Socket) => {
-        if (socket !== null) {
-            ListenForCalls(socket, setIncomingCall, setPeerSignal, setPeer); // Display incoming calls to user
-        }
-        else
-            void 0;
+        if (socket !== null)
+            ListenForCalls(socket, setIncomingCall, setPeerSignal, setPeer, setLocalStream); // Display incoming calls to user
     };
 
     const history = useHistory(); // For redirecting user
@@ -69,16 +73,12 @@ export const App = () => {
     };
 
     const callRespond = (pickUp: boolean) => {
-        if (socket !== null) {
-            OpenLocalStream(setLocalStream); // Access browser web cam
+        if (socket !== null)
             CallRespond(socket, peer, peerSignal, setCallAccepted, setIncomingCall, setMyNode, localStream, setRemoteStream, redirToCallView, pickUp);
-        } else
-            void 0;
     };
 
     const callUser = (phoneNbr: string) => {
-        if (socket !== null && me !== null) {
-            OpenLocalStream(setLocalStream); // Access browser web cam
+        if (socket !== null && me !== null) {               
             return CallUser(socket, setOutgoingCall, setCallAccepted, setMyNode, localStream, setRemoteStream, phoneNbr, me.firstName + " " + me.lastName, redirToCallView);
         } else
             return null;

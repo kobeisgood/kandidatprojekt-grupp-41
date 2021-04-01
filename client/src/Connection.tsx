@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 import { default as WebRTC } from 'simple-peer';
 import { User, Contact, Peer } from './Types';
+import { OpenLocalStream } from './StreamCamVideo';
 
 
 const useHTTPS = false; // Only enable this if you know what it means
@@ -61,10 +62,10 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
  * @param setContactExists Function that sets the boolean result 
  */
 export const FindContactNumber = (
-    socket: SocketIOClient.Socket, 
-    phoneNumber: string, 
+    socket: SocketIOClient.Socket,
+    phoneNumber: string,
     setContactExists: Function
-    ) => {
+) => {
     socket.emit('find-contact-number', phoneNumber);
     socket.on('number-found', () => {
         setContactExists(true);
@@ -81,14 +82,15 @@ export const FindContactNumber = (
  * @param phoneNumber The specified user phone number 
  * @param setFoundContact Function that sets the contact found 
  */
-export const GetSearchedContact = (socket:SocketIOClient.Socket, phoneNumber: string, setFoundContact:Function) => {
+export const GetSearchedContact = (socket: SocketIOClient.Socket, phoneNumber: string, setFoundContact: Function) => {
     socket.emit('get-searched-contact', phoneNumber);
-    socket.on('got-contact', (contact:Contact) => {
+    socket.on('got-contact', (contact: Contact) => {
         setFoundContact(contact)
         console.log(contact)
-    } )
+    })
 }
 
+/*
 export const JoinRoom = (
     socket: SocketIOClient.Socket,
     roomId: string,
@@ -109,6 +111,7 @@ export const JoinRoom = (
         }
     })
 };
+*/
 
 export const RequestUserList = (socket: SocketIOClient.Socket, update: Function) => {
     socket.emit('request-userList');
@@ -138,9 +141,18 @@ export const ListenForCalls = (
     socket: SocketIOClient.Socket,
     setIncomingCall: Function,
     setCallerSignal: Function,
-    setPeer: Function
+    setPeer: Function,
+    setLocalStream: Function
 ) => {
     socket.on('user-calling', (data: any) => {
+        /*OpenLocalStream() // Access browser web cam
+            .then((stream: MediaStream) => {
+                setLocalStream(stream);
+                setIncomingCall(true);
+                setCallerSignal(data.signalData);
+                setPeer({ id: data.caller, name: data.callerName });
+            });*/
+
         setIncomingCall(true);
         setCallerSignal(data.signalData);
         setPeer({ id: data.caller, name: data.callerName });
@@ -148,7 +160,7 @@ export const ListenForCalls = (
 
     socket.on('call-aborted', () => {
         console.log("Samtal avbrutet");
-        
+
         setIncomingCall(false);
         setCallerSignal({});
         setPeer({ id: "", name: "" });
@@ -189,6 +201,8 @@ export const CallRespond = (
 
     peer.on('stream', stream => {
         console.log("Received stream!");
+        console.log(stream);
+        
         setRemoteVideoStream(stream);
     });
 
@@ -259,7 +273,7 @@ export const CallUser = (
  */
 export const CallAbort = (socket: SocketIOClient.Socket, callee: Peer) => {
     console.log("Aborting call");
-    
+
     socket.emit('abort-call', callee);
 };
 
