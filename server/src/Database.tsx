@@ -214,6 +214,7 @@ export const addContactToList = async (contact:User, loggedInUserNumber:string) 
         )            
     } catch (err) {
         console.error(err)
+        alert("Kontakten kunde inte läggas till!")
         return null
     }
 }
@@ -240,6 +241,7 @@ export const addContactToList = async (contact:User, loggedInUserNumber:string) 
         )            
     } catch (err) {
         console.error(err)
+        alert("Kontakten kunde inte tas bort!")
         return null
     }
 }

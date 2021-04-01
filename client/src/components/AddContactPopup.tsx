@@ -49,6 +49,25 @@ export const AddContactPopup = (props: Props) => {
 
         let contactNumber: string = phoneNumberInput
 
+        if (contactNumber == props.phoneNumber) {
+            alert("Du försöker lägga till dig själv dumhuve, försök med ett annat nummer")
+            return
+        }
+
+        let foundBadNumber:boolean = false;
+        let i;
+        for(i=0; i < props.contactList.length; i++ ) {
+            var contact = props.contactList[i]
+            if (contact.phoneNbr == contactNumber) {
+                foundBadNumber = true;
+                alert("Den här kontakten finns redan i din kontaktlista.... jeez kmr du int ihåg nånting?")
+                break;
+            }
+        }
+        if (foundBadNumber) {
+            return 
+        }
+
         if (props.socket != null) {
             GetSearchedContact(props.socket, contactNumber, setFoundContact)
             setNeutralPageState(false)
@@ -62,7 +81,6 @@ export const AddContactPopup = (props: Props) => {
 
         if (props.socket != null && foundContact != null) {
             AddFoundContact(props.socket, foundContact, props.contactList, props.phoneNumber, props.setContactList)
-            //props.contactList.push(foundContact)
             setNeutralPageState(true)
             closeAddContactPopup()
         } else {
