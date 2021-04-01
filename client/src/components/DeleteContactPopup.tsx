@@ -4,6 +4,7 @@ import '../css/popups.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 import { Contact } from '../Types';
 import { RemoveFoundContact } from '../Connection';
+import { SquareButton } from './SquareButton';
 
 interface Props {
     socket: SocketIOClient.Socket | null,
@@ -34,19 +35,12 @@ export const DeleteContactPopup = (props: Props) => {
     return (
         <div id="remove-contact-popup" className="full-page-container full-page-popup-container">
             <div className="call-popup-container">
+                <img className="cancel-button" src={DarkCrossIcon} alt="DarkCrossIcon" onClick={closeDeleteContactPopup}></img>
                 <div className="call-popup-flexbox-container">
-
-                    <div className="cancel-row"> <img src={DarkCrossIcon} alt="DarkCrossIcon" onClick={closeDeleteContactPopup}></img> </div>
-
                     <h4>Är du säker på att du vill ta bort {props.contact?.firstName} {props.contact?.lastName}?</h4>
-
                     <div className="button-row">
-                        <button id="yes-button" className="yes-button" onClick={deleteContact}>
-                            Ja
-                        </button>
-                        <button id="no-button" className="no-button" onClick={closeDeleteContactPopup}>
-                            Nej
-                        </button>
+                        <SquareButton className="yes-button" label={"Ja"} onClick={deleteContact} />
+                        <SquareButton className="no-button" label={"Nej"} onClick={closeDeleteContactPopup} />
                     </div>
 
                 </div>

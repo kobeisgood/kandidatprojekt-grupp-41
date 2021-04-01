@@ -12,19 +12,19 @@ import { Contact } from '../Types';
 interface Props {
     socket: SocketIOClient.Socket | null,
     visibilityHandler: Function
-    contactList: Contact[], 
+    contactList: Contact[],
     phoneNumber: string,
-    setContactList:Function
+    setContactList: Function
 }
 
 export const AddContactPopup = (props: Props) => {
 
     // The content rendered when we haven't searched for a contact yet
-    const 
+    const
         [neutralPageState, setNeutralPageState] = useState(true),
         [phoneNumberInput, setPhoneNumberInput] = useState("")
 
-    const handlePhoneNumberInput = (event:any) => {
+    const handlePhoneNumberInput = (event: any) => {
         setPhoneNumberInput(event.target.value);
     }
 
@@ -54,9 +54,9 @@ export const AddContactPopup = (props: Props) => {
             return
         }
 
-        let foundBadNumber:boolean = false;
+        let foundBadNumber: boolean = false;
         let i;
-        for(i=0; i < props.contactList.length; i++ ) {
+        for (i = 0; i < props.contactList.length; i++) {
             var contact = props.contactList[i]
             if (contact.phoneNbr == contactNumber) {
                 foundBadNumber = true;
@@ -65,7 +65,7 @@ export const AddContactPopup = (props: Props) => {
             }
         }
         if (foundBadNumber) {
-            return 
+            return
         }
 
         if (props.socket != null) {
@@ -85,7 +85,7 @@ export const AddContactPopup = (props: Props) => {
             closeAddContactPopup()
         } else {
             console.log('No such contact!')
-        } 
+        }
     }
 
     // Renders the HTML content of the popup depending on if contact is found or not
@@ -142,9 +142,10 @@ export const AddContactPopup = (props: Props) => {
     return (
         <div id="add-contact-popup" className="full-page-container full-page-popup-container">
             <div className="call-popup-container">
-                <div className="call-popup-flexbox-container">
 
-                    <div className="cancel-row"> <img src={DarkCrossIcon} alt="DarkCrossIcon" onClick={closeAddContactPopup} /></div>
+                <img className="cancel-button" src={DarkCrossIcon} alt="DarkCrossIcon" onClick={closeAddContactPopup}></img>
+
+                <div className="call-popup-flexbox-container">
 
                     {renderPopupContent()}
 

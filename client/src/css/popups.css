@@ -13,14 +13,11 @@
     z-index: 6;
 }
 
-.cancel-row{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    width: 100%;
+.cancel-button {
+    float:right;
 }
 
-.cancel-row img:hover {
+.cancel-button:hover {
     cursor: pointer;
     opacity: 0.8;
 }
