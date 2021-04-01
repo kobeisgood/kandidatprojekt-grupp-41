@@ -8,7 +8,7 @@ import { AddContactPopup } from '../components/AddContactPopup';
 import '../css/phone-book.css';
 import '../css/colors.css';
 import { Contact } from '../Types';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
@@ -27,6 +27,8 @@ export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
     const [addContactVisible, setAddContactVisible] = useState(false);
 
+    const addContactButtonRef = useRef(null)
+
     // Handles only the cross above the contact card
     const removeContactClicked = () => {
         setRemoveContactState(!removeContactState)
@@ -34,6 +36,7 @@ export const PhoneBookView = (props: Props) => {
 
     const addContactVisibleHandler = () => {
         setAddContactVisible(!addContactVisible)
+        setRemoveContactState(false)
     }
 
     return (
@@ -48,10 +51,7 @@ export const PhoneBookView = (props: Props) => {
                         <input type="text" placeholder="Sök efter kontakt..." className="search-contacts-input" />
                     </div>
                     <div className="contact-buttons-container">
-                        {!removeContactState &&
-                          <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
-                        }
-        
+                        <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
                         <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt" } onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
                     </div>
                 </div>
