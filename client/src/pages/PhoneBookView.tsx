@@ -4,12 +4,11 @@
  */
 
 import { ContactCard } from '../components/ContactCard';
-import { DeleteContactPopup } from '../components/DeleteContactPopup';
 import { AddContactPopup } from '../components/AddContactPopup';
 import '../css/phone-book.css';
 import '../css/colors.css';
 import { Contact } from '../Types';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
@@ -41,7 +40,7 @@ export const PhoneBookView = (props: Props) => {
         <div className="phone-book-container">
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
-                    <div className="back-button-container">
+                    <div className="back-button-phonebook-container">
                         <BackButton linkTo="/dashboard" />
                     </div>
                     <div className="phone-book-top-flexbox-column">
