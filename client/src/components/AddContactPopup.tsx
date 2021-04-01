@@ -7,6 +7,7 @@ import { SquareButton } from '../components/SquareButton';
 import { useState } from 'react';
 import { GetSearchedContact, AddFoundContact } from '../Connection';
 import { Contact } from '../Types';
+import { TextInput } from './TextInput';
 
 
 interface Props {
@@ -127,10 +128,7 @@ export const AddContactPopup = (props: Props) => {
                 {neutralPageState &&
                     <>
                         <p>Skriv in mobilnumret för den du vill lägga till</p>
-                        <div className="number-input-row">
-                            <p>Mobilnummer:</p>
-                            <input id="add-contact-number-input" type="number" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput}></input>
-                        </div>
+                        <TextInput label="Mobilnummer:" type="number" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} />
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
