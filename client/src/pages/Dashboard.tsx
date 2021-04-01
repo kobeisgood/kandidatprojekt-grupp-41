@@ -30,7 +30,7 @@ export const Dahsboard = (props: Props) => {
     };
 
     return (
-        <div className="full-page-container">
+        <div className="dashboard-full-page-container">
             {/* TODO
                 - Add log out functionality on click
             */}
@@ -42,9 +42,9 @@ export const Dahsboard = (props: Props) => {
                 <h1 className="welcome-text">Välkommen, {props.user ? props.user.firstName + "!": ""}</h1>
                 <div className="start-view-button-container">
                     {/* onClick prop passes empty function since it already has a link */}
-                    <SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" />
-                    <SquareButton label="Telefonbok" onClick={() => void 0} icon={phoneBookIcon} linkTo="/phonebook" className="page-navigation-button" />
-                    <SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button" />
+                    <div className="page-navigation-button-container"><SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" /></div>
+                    <div className="page-navigation-button-container"><SquareButton label="Telefonbok" onClick={() => void 0} icon={phoneBookIcon} linkTo="/phonebook" className="page-navigation-button" /></div>
+                    <div className="page-navigation-button-container"><SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button" /></div>
                 </div>
                 <p className="latest-calls-text">Senaste samtalen</p>
                 <div className="latest-calls-carousel-container">
