@@ -20,23 +20,21 @@
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-self: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 .description-text {
     font-size: 30px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    align-self: center;
-    margin-top: 100px;
 }
 
 .create-container {
     display: inline-flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-self: flex-start;
     align-items: flex-end;
-    margin-top: 50px;
-    margin-bottom: 80px;
+    justify-content: flex-end;
 }
