@@ -1,6 +1,8 @@
 
 import { TextInput } from './TextInput';
 import { SaveButton } from './SaveButton';
+import '../css/create-account-view.css';
+
 
 
 export const CreateAccountChoose = () => {

@@ -4,8 +4,10 @@ import { TextInput } from '../components/TextInput';
 import { BackButton } from '../components/BackButton';
 import { SaveButton } from '../components/SaveButton';
 import { CreateAccountChoose } from '../components/CreateAccountChoose';
+import { CreateAccountProfileSetUp } from '../components/CreateAccountProfileSetUp';
 import '../css/create-account-view.css';
 import React, { Component } from 'react';
+
 
 
 
@@ -15,12 +17,13 @@ export const CreateAccountView = () => {
         <div>
             <header className="create-header-container">
                 <div className="back-button-container">
-                    <BackButton linkTo="/profile" />
+                    <BackButton linkTo="/" />
                 </div>
                 <h1 className="create-header">Skapa konto</h1>
             </header>
-            <CreateAccountChoose/>
-
+            {/* <CreateAccountChoose/> */}
+            <CreateAccountProfileSetUp/>
+            
         </div>
     );
 

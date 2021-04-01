@@ -180,9 +180,7 @@
 
 .login-button {
     color: black;
-    background-color: #98FF74;
-    border: 1px solid #999999;
-    border-radius: 20px;
+    background-color: var(--color-proceed);
     height: 187px;
     width: 270px;
     margin-top: 10px;
@@ -193,11 +191,21 @@
 
 .create-acount-button {
     color: black;
-    background-color: #94E5FF;
-    border: 1px solid #999999;
-    border-radius: 20px;
+    background-color: var(--color-menuButton);
     height: 187px;
     width: 270px;
     margin-top: 10px;
     font-size: 36px;
+}
+
+/* -------------- ADD PIC BUTTON IN PROFILE SET UP ---------------- */
+
+.profile-set-upp-button {
+    height: 75px;
+    width: 350px;
+    color: black;
+    background-color: var(--color-menuButton);
+    border-radius: 20px;
+    font-size: 36px;    
+    margin-bottom: 10px;
 }
