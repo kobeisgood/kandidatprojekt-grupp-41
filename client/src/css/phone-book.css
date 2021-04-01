@@ -11,6 +11,7 @@
     align-items: center;
     padding: 30px 0;
     background-color: white;
+    z-index: 5;
 }
 
 .phone-book-top-flexbox-row {
@@ -62,31 +63,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-}
-
-.add-contact-button,
-.remove-contact-button {
-    border-radius: 20px;
-    border: 1px solid darkgrey;
-    font-size: 18px;
-    width: 150px;
-    height: 80px;
-}
-
-.add-contact-button:hover,
-.remove-contact-button:hover {
-    cursor: pointer;
-    opacity: 0.8;
-}
-
-.add-contact-button {
-    background-color: var(--color-menuButton);
-    margin-right: 10px;
-}
-
-.remove-contact-button {
-    background-color: var(--color-cancel);
-    color: white;
 }
 
 .contact-button-image {

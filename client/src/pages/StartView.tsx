@@ -1,42 +1,29 @@
+/* View for the start page 'Välkommen till boom'
+Authors: Hanna 
+*/
+import React from 'react';
+import { SquareButton } from '../components/SquareButton';
+import cam_girl from "../images/cam_girl.png"
+
 import '../css/start-view.css';
-import '../css/button.css';
-import { Link } from 'react-router-dom';
-import { ProfileChangeButton } from '../components/ProfileChangeButton';
-import profileIcon from '../icons/profile-icon.svg';
-import phoneBookIcon from '../icons/phone-book-icon.svg';
-import keypadIcon from '../icons/keypad-icon.svg';
-import logOutIcon from '../icons/log-out-icon.svg';
+import '../css/start.css';
+
 
 export const StartView = () => {
     return (
-        <div className="full-page-container">
-            {/* TODO
-                - Add log out functionality on click
-                - Change to reusable button component */}
-            <button className="log-out-button button-rectangular">
-                <div className="log-out-button-content">
-                    <img src={logOutIcon} alt="Log out icon" className="log-out-button-image"/>
-                    <p className="log-out-button-text">Logga ut</p>
-                </div>
-            </button>
-
-            <div className="start-view-flexbox-container">
-                <h1 className="welcome-text">Välkommen, Hjördis!</h1>
-                <div className="start-view-button-container">
-                    {/* buttonFunction prop passes empty function since it already has a link */}
-                    <Link to="/profile">
-                        <ProfileChangeButton functionDesc={"Min profil"} icon={profileIcon} buttonFunction={() => void 0} />
-                    </Link>
-                    <Link to="/phonebook">
-                        <ProfileChangeButton functionDesc={"Telefonbok"} icon={phoneBookIcon} buttonFunction={() => void 0} />
-                    </Link>
-                    <ProfileChangeButton functionDesc={"Knappsats"} icon={keypadIcon} buttonFunction={() => void 0} />
-                </div>
-                <p className="latest-calls-text">Senaste samtalen</p>
-                <div className="latest-calls-carousel-container">
-                    Färdig karusell yo
-                </div>
+        <div>
+            <h1 className="header">
+                Välkommen till Boom!
+            </h1>
+            <div className="buttons-container">
+                <label className="description-text">Har du redan ett konto?
+                    <SquareButton label="Logga in" onClick={() => void 0} linkTo="/login" className="login-button" />
+                </label>
+                <label className="description-text">Är du ny eller saknar konto?
+                    <SquareButton label="Skapa konto" onClick={() => void 0} className="create-acount-button" />
+                </label>
             </div>
+            <img className="" src={cam_girl} alt="profilbild" />
         </div>
     );
-}
+};

@@ -2,56 +2,70 @@
 Authors: Charlie and Hanna 
 */
 import React, { useState } from 'react';
-import '../css/profile.css';
-import hjordis from "../images/hjordis.png"
-import trashbin from "../icons/profile/trashbin.svg"
 import { User } from '../Types';
 import { ProfileChangeButton } from '../components/ProfileChangeButton';
+
+import '../css/profile.css';
 
 import changeName from "../icons/profile/changeName.svg"
 import changeNumber from "../icons/profile/changeNumber.svg"
 import changePassword from "../icons/profile/changePassword.svg"
 import changePicture from "../icons/profile/changePicture.svg"
 import { BackButton } from '../components/BackButton';
+import { SquareButton } from '../components/SquareButton';
+
+import hjordis from "../images/hjordis.png"
+import trashbin from "../icons/profile/trashbin.svg"
+import { DeleteAccount } from '../components/DeleteAccount';
 
 interface Props {
-    user: User
+    user: User | null
 }
 
 export const ProfileView = (props: Props) => {
-    // Event handler for clicking back button and the change name button etc. 
-    const ButtonNameClicked = () => {
+    const [deleteAccountPopUp, setDeleteAccountPopUp] = useState(false);
 
+    const deleteAccountClicked = () => {
+        setDeleteAccountPopUp(true); 
     }
 
+    const deleteAccountVisibleHandler = () => {
+        setDeleteAccountPopUp(!deleteAccountPopUp);
+    }
+
+
+    // Event handler for clicking back button and the change name button etc. 
     return (
         <div>
             {/* Header for 'Tillbaka', 'Min profil' and 'Ta bort konto' */}
-            <header className="profile-header-container profile-header">
+            <header className="profile-header-container">
                 <div className="back-button-container">
-                    <BackButton buttonFunction={ButtonNameClicked} />
+                    <BackButton linkTo="/dashboard" />
                 </div>
                 <h1 className="profile-header">Min profil</h1>
-                <button className="delete-account-container">
-                    <div className="item-delete-icon"><img src={trashbin} alt="trashbin" /></div>
-                    <header className="item-delete-header">Ta bort konto</header>
-                </button>
+                {/* TODO
+                    - Add function on click for popup "remove account"
+                     */}
+                <div className="delete-account-container">
+                    <SquareButton label="Ta bort konto" onClick={deleteAccountClicked} icon={trashbin} className="delete-account-button" />
+                </div>
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
                 <img src={hjordis} alt="profilbild" />
                 <div className="profile-info-contact-container">
-                    <h1 className="profile-name">{props.user.firstName + " " + props.user.lastName}</h1>
-                    <h1 className="profile-number">0701234567</h1>
+                    <h1 className="profile-name">{props.user ? props.user.firstName + " " + props.user.lastName : ""}</h1>
+                    <h1 className="profile-number">{props.user ? props.user.phoneNbr : ""}</h1>
                 </div>
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">
-                <ProfileChangeButton functionDesc={"Ändra namn"} icon={changeName} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Ändra nummer"} icon={changeNumber} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Byt bild"} icon={changePicture} buttonFunction={ButtonNameClicked} />
-                <ProfileChangeButton functionDesc={"Byt lösenord"} icon={changePassword} buttonFunction={ButtonNameClicked} />
+                <ProfileChangeButton label={"Ändra namn"} icon={changeName} linkTo="/profile/changename" />
+                <ProfileChangeButton label={"Ändra nummer"} icon={changeNumber} linkTo="/profile/changenumber" />
+                <ProfileChangeButton label={"Byt bild"} icon={changePicture} linkTo="/profile/changepicture" />
+                <ProfileChangeButton label={"Byt lösenord"} icon={changePassword} linkTo="/profile/changepassword" />
             </div>
+            {deleteAccountPopUp && <DeleteAccount visibilityHandler = {deleteAccountVisibleHandler}/>}
         </div>
-    );
+    ); 
 }

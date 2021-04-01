@@ -1,5 +1,5 @@
 import { User } from './Types';
-import { connect, connection, Schema, model } from 'mongoose';
+import { connect, connection, Schema, model, Document } from 'mongoose';
 
 // ----- DB stuff for User ----- //
 
@@ -9,10 +9,22 @@ const userSchema = new Schema({
     phoneNbr: String,
     profilePic: String,
     lastName: String,
-    contacts: [{ type: Schema.Types.ObjectId, ref: 'ContactModel' }]
+    contacts: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }]
 }, { versionKey: false });
 
-const UserModel = model("User", userSchema, "User");
+interface IUser {
+    firstName: string;
+    lastName: string;
+    password: string;
+    phoneNbr: string;
+    profilePic: string;
+    contacts: string[];
+    callEntries: Array<Object>;
+}
+
+interface IUserDoc extends IUser, Document { }
+
+const UserModel = model<IUserDoc>("User", userSchema, "User");
 
 /**
  * Initializes a connection with the database. Running this will allow ```mongoose.connection``` to perform further operations.
@@ -30,23 +42,21 @@ export const connectToDb = () => {
 /**
  * Creates a new user in the database.
  * 
- * @param user TODO
- * @param psw TODO
- * @param picSrc TODO
- * @param phone TODO
+ * @param user The user to be added
+ * @param psw The specified password
+ * @param picSrc The path to the specified profile picture
  */
-export const createUser = async (user: User, psw: string, picSrc: string, phone: number) => {
+export const createUser = async (user: User, psw: string, picSrc: string) => {
     const newUser = new UserModel({
         firstName: user.firstName,
         lastName: user.lastName,
+        phoneNbr: user.phoneNbr,
         password: psw,
-        profilePic: picSrc,
-        phoneNbr: phone
+        profilePic: picSrc
     });
 
     try {
         const savedUser = await newUser.save();
-        console.log("Added user");
         return savedUser;
     } catch (err) {
         return console.error(err);
@@ -81,6 +91,27 @@ export const updatePhone = (phone: string) => { };
 
 export const setProfilePic = () => { };
 
+/**
+ * Tries to authenticate the user using the specified password.
+ * 
+ * @param phone The phone number of the user to be authenticated
+ * @param psw The specified password of the user
+ */
+export const authenticate = async (phone: string, psw: string) => {
+    try {
+        const user = await UserModel.findOne({ phoneNbr: phone }).lean();
+
+        if (user.password === psw)
+            return user;
+        else
+            return null;
+    } catch (err) {
+        console.log("User with phone number " + phone + " and password " + psw + " was not found!");
+        console.error(err);
+        return null;
+    }
+};
+
 // ----- DB stuff for Contact ----- //
 
 const contactSchema = new Schema({
@@ -93,33 +124,6 @@ const contactSchema = new Schema({
 const ContactModel = model("Contact", contactSchema, "Contact");
 
 // Functions for handling Contacts //
-
-/*
-app.post("/contacts", function(req, res) {
-    var contact = new ContactModel({
-        firstName: req.body.firstName,
-        lastName: req.lastName.lastName,
-        profilePic: req.body.profilePic, 
-        phoneNbr: req.body.phoneNbr
-    }).save(function(err, docs){
-        if(err) throw err;
-        res.send(docs)
-    });
-
-    // Trying with test user, TODO: getUserFromSession(), functionality to get the user that is logged in 
-    var user = new UserModel({
-        firstName: "Robin",
-        password: "repo123",
-        phoneNbr: "1111111111",
-        profilePic: "robinsPic",
-        lastName: "Repo",
-        contacts: []
-    }) 
-    user.contacts.push(contact);
-    user.save(callback);
-});*/
-
-
 
 /**
  * 
@@ -147,5 +151,43 @@ export const createContact = async (firstName: string, lastName: string, profile
     } catch (err) {
         return console.error(err);
     }
+}
 
+export const getContacts = async (contactIds: string[]) => {
+    try {
+        let contacts = [];
+
+        for (let i = 0; i < contactIds.length; i++) {
+            const contact = await UserModel.findOne({ _id: contactIds[i] }).lean();
+
+            contacts.push({
+                id: contact._id,
+                firstName: contact.firstName,
+                lastName: contact.lastName,
+                phoneNbr: contact.phoneNbr,
+                profilePic: contact.profilePic
+            });
+        }
+
+        return contacts;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+
+export const getContactFromNbr = async (nbr: string) => {
+    try {
+        let contact = await UserModel.findOne({ phoneNbr: nbr }).lean();
+        return {
+            id: contact._id,
+            firstName: contact.firstName,
+            lastName: contact.lastName,
+            phoneNbr: contact.phoneNbr,
+            profilePic: contact.profilePic
+        }
+    } catch (err) {
+        console.error(err)
+        return null
+    }
 }

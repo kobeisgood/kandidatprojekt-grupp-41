@@ -1,10 +1,18 @@
 import io from 'socket.io-client';
 import Peer from 'simple-peer';
-import { UserID, User } from './Types';
+import { UserID, User, Contact } from './Types';
+
 
 const useHTTPS = false; // Only enable this if you know what it means
 
-export const OpenConnection = (userName: string) => {
+/**
+ * Makes an attempt to login. 
+ * 
+ * @param phone The specified user phone number
+ * @param psw The specified user password
+ * @returns The socket representing the connection between client and server
+ */
+export const Login = (phone: string, psw: string, setMe: Function, andThen: Function) => {
     let socket: SocketIOClient.Socket;
 
     if (useHTTPS)
@@ -12,24 +20,73 @@ export const OpenConnection = (userName: string) => {
     else
         socket = io.connect('http://localhost:4000');
 
-    socket.emit('first-connection', userName);
-    socket.on('connect-response', (response: boolean) => {
-        if (response) {
-            console.log("Conected to server!");
-        } else {
-            console.log("Could not connect to server!");
-            return null;
-        }
+    socket.emit('login-user', phone, psw); // Send login request to server
 
-        socket.off('connect-response'); // Stop listening
+    socket.once('login-response', (user: User) => { // Begin listening for server response
+        if (user !== null) {
+            console.log("Logged in successfully!");
+            setMe(user);
+            andThen();
+        } else
+            console.log("Failed to log in!");
     });
 
     return socket;
 };
 
-export const CloseConnection = (socket: SocketIOClient.Socket) => {
+export const Logout = (socket: SocketIOClient.Socket) => {
     socket.off('user-connected');
 };
+
+export const Register = (socket: SocketIOClient.Socket, user: User, psw: string, callback: (result: boolean) => void) => {
+    socket.emit('register-user', user, psw);
+    socket.on('registration-result', (result: boolean) => {
+        if (result)
+            console.log("User was added!");
+        else
+            console.error("User could not be added!");
+
+        callback(result);
+    });
+};
+
+/**
+ * NOT USED ATM
+ * 
+ * Searches for the existence of a user in the db given a phone number
+ * 
+ * @param socket From SocketIOClient.Socket
+ * @param phoneNumber The specified user phone number
+ * @param setContactExists Function that sets the boolean result 
+ */
+export const FindContactNumber = (
+    socket: SocketIOClient.Socket, 
+    phoneNumber: string, 
+    setContactExists: Function
+    ) => {
+    socket.emit('find-contact-number', phoneNumber);
+    socket.on('number-found', () => {
+        setContactExists(true);
+    })
+    socket.on('number-not-found', () => {
+        setContactExists(false);
+    })
+}
+
+/**
+ * Retrieves a user from the db given a phone number 
+ * 
+ * @param socket From SocketIOClient.Socket
+ * @param phoneNumber The specified user phone number 
+ * @param setFoundContact Function that sets the contact found 
+ */
+export const GetSearchedContact = (socket:SocketIOClient.Socket, phoneNumber: string, setFoundContact:Function) => {
+    socket.emit('get-searched-contact', phoneNumber);
+    socket.on('got-contact', (contact:Contact) => {
+        setFoundContact(contact)
+        console.log(contact)
+    } )
+}
 
 export const JoinRoom = (
     socket: SocketIOClient.Socket,
@@ -184,7 +241,7 @@ export const CallUser = (
     socket.on('call-declined', () => {
         setOutgoingCall(false);
         console.log("User declined your call!");
-        
+
         socket.off('call-accepted');
         socket.off('call-declined');
     });
