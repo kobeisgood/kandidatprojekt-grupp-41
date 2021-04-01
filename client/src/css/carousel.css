@@ -20,7 +20,7 @@
 }
 
 .carousel-scroll-container::-webkit-scrollbar {
-    height: 0 !important
+    height: 0 !important;
 }
 
 .carousel-scroll-button {

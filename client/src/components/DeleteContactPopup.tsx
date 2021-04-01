@@ -3,32 +3,15 @@ import '../css/buttons.css';
 import '../css/popups.css';
 import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 import { Contact } from '../Types';
+import { RemoveFoundContact } from '../Connection';
 
 interface Props {
     socket: SocketIOClient.Socket | null,
     visibilityHandler: Function
-    contactList: Contact[], 
+    contactList: Contact[],
     phoneNumber: string,
     setContactList: Function,
     contact: Contact | null
-}
-
-
-
-/* Should have the info from the contact as parameters(or maybe just the id), the info needs to be passed from the contact card to here */
-/* Alternatively this method could perhaps be in the contact card component and be exported to here*/
-const deleteContact = () => {
-
-    // Find the contact(user) from the id 
-    // if user exists 
-    // delete from db
-    // console.log("Contact deleted")
-    // closeDeleteContactPopup();
-    // else 
-    // return error
-
-    console.log("Contact deleted")
-
 }
 
 export const DeleteContactPopup = (props: Props) => {
@@ -36,6 +19,16 @@ export const DeleteContactPopup = (props: Props) => {
     // Closes the delete contact popup
     const closeDeleteContactPopup = () => {
         props.visibilityHandler()
+    }
+
+    const deleteContact = () => {
+        if (props.socket != null && props.contact != null) {
+            RemoveFoundContact(props.socket, props.contact, props.contactList, props.phoneNumber, props.setContactList)
+            closeDeleteContactPopup()
+        } else {
+            console.log('No such contact!')
+        }
+
     }
 
     return (

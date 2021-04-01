@@ -37,7 +37,6 @@ export const PhoneBookView = (props: Props) => {
         setAddContactVisible(!addContactVisible)
     }
 
-
     return (
         <div className="phone-book-container">
             <header className="phone-book-top-container">
@@ -70,7 +69,6 @@ export const PhoneBookView = (props: Props) => {
                         contactList={props.contactList} 
                         phoneNumber={props.phoneNumber} 
                         setContactList={props.setContactList}
-
                         />
                     })}
                 </div>

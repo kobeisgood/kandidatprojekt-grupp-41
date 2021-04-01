@@ -114,6 +114,28 @@ export const AddFoundContact =
     })
 }
 
+export const RemoveFoundContact = 
+    (
+    socket:SocketIOClient.Socket, 
+    contact:Contact, 
+    contactList:Contact[], 
+    loggedInUserNumber:string,
+    setContactList:Function
+    ) => 
+    {
+    socket.emit('remove-searched-contact', contact, loggedInUserNumber);
+    socket.once('contact-removed', () => {
+        var indexToRemove = contactList.indexOf(contact)
+        if (indexToRemove > -1) {
+            contactList.splice(indexToRemove, 1);
+        } else {
+            console.log("Tried to remove who does not exist?!");
+        }
+        setContactList(contactList)
+        console.log(contactList)
+    })
+}
+
 export const JoinRoom = (
     socket: SocketIOClient.Socket,
     roomId: string,

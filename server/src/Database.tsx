@@ -208,7 +208,33 @@ export const addContactToList = async (contact:User, loggedInUserNumber:string) 
             }, 
             { 
                 $addToSet: { // $addToSet makes sure that same contact can't be added again
-                contacts: contact.id,
+                    contacts: contact.id,
+                },
+            }
+        )            
+    } catch (err) {
+        console.error(err)
+        return null
+    }
+}
+
+/**
+ * Removes a contact from a users contact list 
+ * User is found using the number of the user that is logged in 
+ * 
+ * @param contact The contact to be added
+ * @param loggedInUserNumber Used to find correct user
+ * @returns TODO return the user to update frontend as well?
+ */
+ export const removeContactFromList = async (contact:User, loggedInUserNumber:string) => {
+    try{
+        await UserModel.findOneAndUpdate(
+            { 
+                phoneNbr: loggedInUserNumber
+            }, 
+            { 
+                $pull: {
+                    contacts: contact.id,
                 },
             }
         )            

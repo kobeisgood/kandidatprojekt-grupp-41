@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { addContactToList, connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
+import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
 import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
@@ -80,6 +80,13 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         addContactToList(contact, loggedInUserNumber ).then(() => {
             console.log('Contact has been added to db!')
             socket.emit('contact-added')
+        })
+    })
+
+    socket.on('remove-searched-contact', (contact:User, loggedInUserNumber:string) => {
+        removeContactFromList(contact, loggedInUserNumber ).then(() => {
+            console.log('Contact has been removed from db!')
+            socket.emit('contact-removed')
         })
     })
 
