@@ -10,7 +10,7 @@ interface Props {
     className?: string;
     placeholder: string;
     type?: string;
-    onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void)
+    onChange?: ((event: React.ChangeEvent<HTMLInputElement>) => void)
 }
 
 export const TextInput = (props: Props) => {

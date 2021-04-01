@@ -74,7 +74,7 @@ export const AddContactPopup = (props: Props) => {
             setNeutralPageState(false)
         }
 
-        setPhoneNumberInput("")
+        //setPhoneNumberInput("")
     };
 
     // Adds the contact to the user
@@ -98,13 +98,10 @@ export const AddContactPopup = (props: Props) => {
                 {/* Contact NOT found */}
                 {foundContact == null && !neutralPageState &&
                     <>
-                        <p>Fel Nummer! </p>
-                        <p>Nummer *nummer*  hittas inte </p>
-                        <p>Kontrollera att du har skrivit rätt </p>
-                        <div className="number-input-row">
-                            <p>Mobilnummer:</p>
-                            <input id="add-contact-number-input" type="number" placeholder="Skriv mobilnummer här..."></input>
-                        </div>
+                        <p className="popup-error-message">Fel Nummer! </p>
+                        <p className="popup-middle-sized-text">Nummer {phoneNumberInput}  hittas inte </p> {/*TODO: make searched phone number immutable here*/}
+                        <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
+                        <TextInput label="Mobilnummer:" type="number" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} /> {/*TODO: make text inputs nice after merge*/}
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
@@ -127,8 +124,8 @@ export const AddContactPopup = (props: Props) => {
                 {/* Neutral */}
                 {neutralPageState &&
                     <>
-                        <p>Skriv in mobilnumret för den du vill lägga till</p>
-                        <TextInput label="Mobilnummer:" type="number" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} />
+                        <p className="popup-middle-sized-text">Skriv in mobilnumret för den du vill lägga till</p>
+                        <TextInput label="Mobilnummer:" type="number" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} /> {/*TODO: make text inputs nice after merge*/}
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
