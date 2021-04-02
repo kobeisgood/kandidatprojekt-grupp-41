@@ -108,10 +108,11 @@ export const UpdateNbr = (
 export const UpdatePassword = (
     socket: SocketIOClient.Socket,
     phoneNbr: string,
+    oldPassword: string,
     newPassword: string,
     setPasswordChanged: Function
 ) => {
-    socket.emit('update-password', { phoneNbr: phoneNbr, newPassword: newPassword });
+    socket.emit('update-password', { phoneNbr: phoneNbr, oldPassword: oldPassword, newPassword: newPassword });
     socket.on('update-password-result', (result: boolean) => {
         if (result)
             setPasswordChanged(true);

@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword } from './Database';
+import { authenticate, connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword } from './Database';
 import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
@@ -79,14 +79,24 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     });
 
-    socket.on('update-password', (user: { phoneNbr: string, newPassword: string }) => {
-        updatePassword(user.phoneNbr, user.newPassword)
-            .then(() => {
-                console.log("Password update registered!");
-                socket.emit("update-password-result", true);
+    socket.on('update-password', (user: { phoneNbr: string, oldPassword: string, newPassword: string }) => {
+        authenticate(user.phoneNbr, user.oldPassword)
+            .then((result) => {
+                if (result !== null) {
+                updatePassword(user.phoneNbr, user.newPassword)
+                    .then(() => {
+                        console.log("Password update registered!");
+                        socket.emit("update-password-result", true);
+                    })
+                    .catch(() => {
+                        console.error("Password update unsuccesful");
+                        socket.emit('update-password-result', false);
+                    });
+                }
+                else (socket.emit('update-password-result', false))
             })
             .catch(() => {
-                console.error("Password update unsuccesful");
+                console.error("Password wrong");
                 socket.emit('update-password-result', false);
             });
     });

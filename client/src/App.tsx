@@ -57,9 +57,9 @@ export const App = () => {
             UpdateNbr(socket, me.phoneNbr, number, setNbr);
     };
 
-    const updatePassword = (newPassword: string, setPasswordChanged: Function) => {
+    const updatePassword = (oldPassword: string, newPassword: string, setPasswordChanged: Function) => {
         if (socket !== null && me !== null) 
-            UpdatePassword(socket, me.phoneNbr, newPassword, setPasswordChanged);
+            UpdatePassword(socket, me.phoneNbr, oldPassword, newPassword, setPasswordChanged);
     };
 
     return (
