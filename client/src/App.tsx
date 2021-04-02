@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, Component } from 'react';
 import Peer from 'simple-peer';
 
 import { User } from './Types';
-import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register, UpdateName } from './Connection';
+import { Login, JoinRoom, CallRespond, CallUser, CallAbort, CallHangUp, Register, UpdateName, UpdateNbr, UpdatePassword } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
@@ -48,9 +48,18 @@ export const App = () => {
     }, [me]);
 
     const updateName = (firstName: string, lastName: string, setName: Function) => {
-        console.log("Hej updatera namn snälla")
         if (socket !== null && me !== null)
             UpdateName(socket, me.phoneNbr, firstName, lastName, setName);
+    };
+
+    const updateNbr = (number: string, setNbr: Function) => {
+        if (socket !== null && me !== null)
+            UpdateNbr(socket, me.phoneNbr, number, setNbr);
+    };
+
+    const updatePassword = (oldPassword: string, newPassword: string, setPassword: Function) => {
+        if (socket !== null && me !== null) 
+            UpdatePassword(socket, me.phoneNbr, oldPassword, newPassword, setPassword);
     };
 
     return (
@@ -67,8 +76,8 @@ export const App = () => {
                     <Route path="/dashboard" exact component={() => <Dahsboard setMe={setMe} user={me}/>} />
                     <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                     <Route path="/profile/changename" exact component={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
-                    <Route path="/profile/changenumber" exact component={() => <ChangeNumberView user={me} />} />
-                    <Route path="/profile/changepassword" exact component={ChangePasswordView} />
+                    <Route path="/profile/changenumber" exact component={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
+                    <Route path="/profile/changepassword" exact component={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
                     <Route path="/profile/changepicture" exact component={ChangePictureView} />
                     <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} />} />
 

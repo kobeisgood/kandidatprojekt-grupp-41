@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { connectToDb, createUser, getContactFromNbr, numberExists, updateName } from './Database';
+import { connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword } from './Database';
 import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
 
 
@@ -64,6 +64,30 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             .catch(() => {
                 console.error("Name update unsuccessful");
                 socket.emit('update-name-result', false);
+            });
+    });
+
+    socket.on('update-nbr', (user: {phoneNbr: string, newNbr: string}) => {
+        updateNbr(user.phoneNbr, user.newNbr)
+            .then(() => {
+                console.log("Number update registered!");
+                socket.emit("update-nbr-result", true);
+            })
+            .catch(() => {
+                console.error("Number update unsuccessful");
+                socket.emit('update-nbr-result', false);
+            });
+    });
+
+    socket.on('update-password', (user: {password: string, newPassword: string}) => {
+        updatePassword(user.password, user.newPassword)
+            .then(() => {
+                console.log("Password update registered!");
+                socket.emit("update-password-result", true);
+            })
+            .catch(() => {
+                console.error("Password update unsuccesful");
+                socket.emit('update-password-result', false);
             });
     });
 

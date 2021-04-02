@@ -10,7 +10,6 @@ import { User } from '../Types';
 import { BackButton } from '../components/BackButton';
 import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
-import { UpdateName } from '../Connection';
 
 interface Props {
     me: User | null
@@ -22,7 +21,6 @@ interface Props {
 export const ChangeNameView = (props: Props) => {
     // Event handler for clicking back button and the change name button etc. 
     const setName = (firstName: string, lastName: string) => {
-        console.log("Snälla funka");
         if (props.me !== null)
             props.setMe({
                 id: props.me.id,

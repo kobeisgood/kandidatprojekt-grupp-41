@@ -1,7 +1,7 @@
 import io, { Socket } from 'socket.io-client';
 import Peer from 'simple-peer';
 import { UserID, User, Contact } from './Types';
-import { updateNamespaceImport } from 'typescript';
+import { setTokenSourceMapRange, updateNamespaceImport } from 'typescript';
 
 
 const useHTTPS = false; // Only enable this if you know what it means
@@ -87,6 +87,40 @@ export const UpdateName = (
             setName(firstName, lastName); 
         else 
             console.error("Name update unsuccessful");
+    });
+};
+
+export const UpdateNbr = (
+    socket: SocketIOClient.Socket,
+    oldNbr: string,
+    newNbr: string,
+    setNbr: Function
+) => {
+    socket.emit('update-nbr', {phoneNbr: oldNbr, newNbr: newNbr, setNbr: setNbr});
+    socket.on('update-nbr-result', (result: boolean) => {
+        if (result)
+            setNbr(newNbr);
+        else
+            console.error("Number update unsuccessful");
+    });
+};
+
+export const UpdatePassword = (
+    socket: SocketIOClient.Socket,
+    phoneNbr: string,
+    oldPassword: string, 
+    newPassword: string,
+    setPassword: Function
+) => {
+    console.log("result finns eller???")
+    socket.emit('update-password', {phoneNbr: phoneNbr, password: oldPassword, newPassword: newPassword, setPassword: setPassword});
+    socket.on('update-password-result', (result: boolean) => {
+        if (result) {
+            console.log("eller????")
+            setPassword(newPassword);
+        }
+        else 
+            console.error("Password update unsuccessful");
     });
 };
 

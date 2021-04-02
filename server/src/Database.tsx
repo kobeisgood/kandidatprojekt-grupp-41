@@ -85,14 +85,38 @@ export const getUsers = async () => {
 
 export const addCallEntry = () => { };
 
-export const updateName = async (phoneNbr: string, firstName: string, lastName: string) => { 
-    try{
-        await UserModel.findOneAndUpdate({phoneNbr: phoneNbr}, 
+export const updateName = async (phoneNbr: string, firstName: string, lastName: string) => {
+    try {
+        await UserModel.findOneAndUpdate({ phoneNbr: phoneNbr },
             {
                 firstName: firstName,
                 lastName: lastName
             }
-        )      
+        )
+    } catch (err) {
+        console.error(err)
+    }
+};
+
+export const updateNbr = async (oldNbr: string, newNbr: string) => {
+    try {
+        await UserModel.findOneAndUpdate({ phoneNbr: oldNbr },
+            {
+                phoneNbr: newNbr
+            }
+        )
+    } catch (err) {
+        console.error(err)
+    }
+};
+
+export const updatePassword = async (oldPassword: string, newPassword: string) => {
+    try {
+        await UserModel.findOneAndUpdate({ password: oldPassword },
+            {
+                password: newPassword
+            }
+        )
     } catch (err) {
         console.error(err)
     }
