@@ -110,9 +110,9 @@ export const updateNbr = async (oldNbr: string, newNbr: string) => {
     }
 };
 
-export const updatePassword = async (oldPassword: string, newPassword: string) => {
+export const updatePassword = async (phoneNbr: string, newPassword: string) => {
     try {
-        await UserModel.findOneAndUpdate({ password: oldPassword },
+        await UserModel.findOneAndUpdate({ phoneNbr: phoneNbr },
             {
                 password: newPassword
             }

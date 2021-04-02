@@ -61,10 +61,10 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
  * @param setContactExists Function that sets the boolean result 
  */
 export const FindContactNumber = (
-    socket: SocketIOClient.Socket, 
-    phoneNumber: string, 
+    socket: SocketIOClient.Socket,
+    phoneNumber: string,
     setContactExists: Function
-    ) => {
+) => {
     socket.emit('find-contact-number', phoneNumber);
     socket.on('number-found', () => {
         setContactExists(true);
@@ -81,11 +81,11 @@ export const UpdateName = (
     lastName: string,
     setName: Function
 ) => {
-    socket.emit('update-name', {phoneNbr: phoneNbr, firstName: firstName, lastName: lastName});
+    socket.emit('update-name', { phoneNbr: phoneNbr, firstName: firstName, lastName: lastName });
     socket.on('update-name-result', (result: boolean) => {
         if (result)
-            setName(firstName, lastName); 
-        else 
+            setName(firstName, lastName);
+        else
             console.error("Name update unsuccessful");
     });
 };
@@ -96,7 +96,7 @@ export const UpdateNbr = (
     newNbr: string,
     setNbr: Function
 ) => {
-    socket.emit('update-nbr', {phoneNbr: oldNbr, newNbr: newNbr, setNbr: setNbr});
+    socket.emit('update-nbr', { phoneNbr: oldNbr, newNbr: newNbr });
     socket.on('update-nbr-result', (result: boolean) => {
         if (result)
             setNbr(newNbr);
@@ -108,18 +108,14 @@ export const UpdateNbr = (
 export const UpdatePassword = (
     socket: SocketIOClient.Socket,
     phoneNbr: string,
-    oldPassword: string, 
     newPassword: string,
-    setPassword: Function
+    setPasswordChanged: Function
 ) => {
-    console.log("result finns eller???")
-    socket.emit('update-password', {phoneNbr: phoneNbr, password: oldPassword, newPassword: newPassword, setPassword: setPassword});
+    socket.emit('update-password', { phoneNbr: phoneNbr, newPassword: newPassword });
     socket.on('update-password-result', (result: boolean) => {
-        if (result) {
-            console.log("eller????")
-            setPassword(newPassword);
-        }
-        else 
+        if (result)
+            setPasswordChanged(true);
+        else
             console.error("Password update unsuccessful");
     });
 };
@@ -131,12 +127,12 @@ export const UpdatePassword = (
  * @param phoneNumber The specified user phone number 
  * @param setFoundContact Function that sets the contact found 
  */
-export const GetSearchedContact = (socket:SocketIOClient.Socket, phoneNumber: string, setFoundContact:Function) => {
+export const GetSearchedContact = (socket: SocketIOClient.Socket, phoneNumber: string, setFoundContact: Function) => {
     socket.emit('get-searched-contact', phoneNumber);
-    socket.on('got-contact', (contact:Contact) => {
+    socket.on('got-contact', (contact: Contact) => {
         setFoundContact(contact)
         console.log(contact)
-    } )
+    })
 }
 
 export const JoinRoom = (

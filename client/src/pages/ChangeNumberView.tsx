@@ -30,7 +30,8 @@ export const ChangeNumberView = (props: Props) => {
                 callEntries: props.me.callEntries
             });
         }
-    }
+    };
+    
     const
         [numberInp, setNumberInp] = useState(""),
         [numberRepeatInp, setNumberRepeatInp] = useState("");

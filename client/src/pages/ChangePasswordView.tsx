@@ -12,7 +12,7 @@ import { SaveButton } from '../components/SaveButton';
 interface Props {
     me: User | null
     setMe: Function
-    updatePassword: Function
+    updatePassword: (newPassword: string, setPasswordChanged: Function) => void
 }
 
 
@@ -21,7 +21,8 @@ export const ChangePasswordView = (props: Props) => {
     const
         [passwordInp, enterPasswordInp] = useState(""),
         [passwordRepeatInp, setPasswordRepeatInp] = useState(""),
-        [passwordRepeatAgainInp, setPasswordRepeatAgainInp] = useState("");
+        [passwordRepeatAgainInp, setPasswordRepeatAgainInp] = useState(""),
+        [passwordChanged, setPasswordChanged] = useState(false);
 
     const
         handlePasswordInp = (event: any) => { enterPasswordInp(event.target.value); },
@@ -40,7 +41,12 @@ export const ChangePasswordView = (props: Props) => {
                 </div>
                 <h1 className="profile-header">Min profil</h1>
             </header>
+
             <div className="change-password-container">
+                {passwordChanged &&
+                    <h3>Lösenord uppdaterat!</h3>
+                }
+
                 <div>
                     <TextInput className="text-input-password" type="password" label="Nuvarande lösenord: " placeholder="Skriv nuvarande lösenord..." onChange={handlePasswordInp} />
                 </div>
@@ -51,7 +57,7 @@ export const ChangePasswordView = (props: Props) => {
                     <TextInput className="text-input-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa nytt lösenord..." onChange={handlePasswordRepeatAgainInp} />
                 </div>
             </div>
-            <SaveButton label="Spara lösenord" onClick={() => isRepeatInpSame() ? props.updatePassword(passwordRepeatInp) : console.log("Password does not match")} />
+            <SaveButton label="Spara lösenord" onClick={() => isRepeatInpSame() ? props.updatePassword(passwordRepeatInp, setPasswordChanged) : console.log("Password does not match")} />
         </div>
     );
 }

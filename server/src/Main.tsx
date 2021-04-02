@@ -21,7 +21,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             loginUser(userId, phone, psw).then((user) => {
                 if (user !== null) {
                     console.log("\nUser with ID " + userId + " successfully logged in.");
-                    
+
                     socket.emit('login-response', {
                         id: socket.id,
                         firstName: user.firstName,
@@ -55,7 +55,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     });
 
-    socket.on('update-name', (user: {phoneNbr: string, firstName: string, lastName: string }) => {
+    socket.on('update-name', (user: { phoneNbr: string, firstName: string, lastName: string }) => {
         updateName(user.phoneNbr, user.firstName, user.lastName)
             .then(() => {
                 console.log("Name update registered!");
@@ -67,7 +67,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     });
 
-    socket.on('update-nbr', (user: {phoneNbr: string, newNbr: string}) => {
+    socket.on('update-nbr', (user: { phoneNbr: string, newNbr: string }) => {
         updateNbr(user.phoneNbr, user.newNbr)
             .then(() => {
                 console.log("Number update registered!");
@@ -79,8 +79,8 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     });
 
-    socket.on('update-password', (user: {password: string, newPassword: string}) => {
-        updatePassword(user.password, user.newPassword)
+    socket.on('update-password', (user: { phoneNbr: string, newPassword: string }) => {
+        updatePassword(user.phoneNbr, user.newPassword)
             .then(() => {
                 console.log("Password update registered!");
                 socket.emit("update-password-result", true);
@@ -98,18 +98,18 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             } else {
                 socket.emit('number-not-found', result)
             }
-            
+
         });
     });
 
-    socket.on('get-searched-contact', (phoneNumber:string) => {
+    socket.on('get-searched-contact', (phoneNumber: string) => {
         getContactFromNbr(phoneNumber).then((contact) => {
             console.log(contact)
             socket.emit('got-contact', contact)
         })
-        .catch(() => {
-            console.error("Contact could not be found!")
-        });
+            .catch(() => {
+                console.error("Contact could not be found!")
+            });
     })
 
     socket.on('join-room', (roomId: string) => {
