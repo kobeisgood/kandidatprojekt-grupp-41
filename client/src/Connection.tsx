@@ -88,29 +88,6 @@ export const GetSearchedContact = (socket: SocketIOClient.Socket, phoneNumber: s
     })
 }
 
-/*
-export const JoinRoom = (
-    socket: SocketIOClient.Socket,
-    roomId: string,
-    setUserList: Function,
-    setIncomingCall: Function,
-    setCallerSignal: Function,
-    setCallerName: Function
-) => {
-    socket.emit('join-room', roomId);
-    socket.on('join-response', (userList?: User[]) => {
-        if (userList !== undefined) {
-            console.log('Connected to room ' + roomId);
-            setUserList(userList);
-            LookForUsers(socket, setUserList); // Notify user when others connect
-            ListenForCalls(socket, setIncomingCall, setCallerSignal, setCallerName); // Display ncoming calls to user
-        } else {
-            console.log('Could not connect to room!');
-        }
-    })
-};
-*/
-
 export const RequestUserList = (socket: SocketIOClient.Socket, update: Function) => {
     socket.emit('request-userList');
     socket.on('receive-userList', (userList?: User[]) => {
