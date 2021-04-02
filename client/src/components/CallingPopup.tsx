@@ -1,14 +1,16 @@
 import '../css/call.css';
-import '../css/button.css';
+import '../css/buttons.css';
 
 
 interface Props {
-    abortCall: Function
+    abortCall: Function,
+    name: string
 }
 
 export const CallingPopup = (props: Props) => {
     return (
-        <div className="full-page-container">
+        <>
+            <div className="call-popup-shadow" />
             <div className="call-popup-container">
                 <div className="calling-popup-flexbox-container">
                     <div className="calling-text">
@@ -19,7 +21,7 @@ export const CallingPopup = (props: Props) => {
                     <div className="calling-horisontal-flexbox-container">
                         <div className="calling-person-container">
                             <img className="caller-profile-picture" src="https://i.redd.it/avif889dhh751.jpg" alt="Profilbild av personen som ringer" />
-                            <h3 className="caller-name-text"><span>Lauf</span> <br /> Weckvist</h3>
+                            <h3 className="caller-name-text">{props.name}</h3>
                         </div>
 
                         <div className="decline-button-container incoming-call-button-container">
@@ -29,6 +31,6 @@ export const CallingPopup = (props: Props) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

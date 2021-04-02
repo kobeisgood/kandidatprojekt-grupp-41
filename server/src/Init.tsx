@@ -23,10 +23,7 @@ export const InitServer = () => {
 
     let server: any;
     if (useHTTPS)
-        server = https.createServer({
-            key: fs.readFileSync('src/certs/key.key'),
-            cert: fs.readFileSync('src/certs/cert.crt')
-        }, app).listen(4000);
+        server = https.createServer(app).listen(4000);
     else
         server = http.createServer(app).listen(4000);
 

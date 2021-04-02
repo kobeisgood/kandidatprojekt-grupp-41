@@ -5,11 +5,11 @@
 
 import { ContactCard } from '../components/ContactCard';
 import { AddContactPopup } from '../components/AddContactPopup';
-import '../css/phone-book.css';
-import '../css/colors.css';
 import { Contact } from '../Types';
 import { useRef, useState } from 'react';
 
+import '../css/phone-book.css';
+import '../css/colors.css';
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
 import { BackButton } from '../components/BackButton';
@@ -21,6 +21,7 @@ interface Props {
     onCall: Function,
     phoneNumber: string,
     setContactList:Function
+    setPeer: Function
 }
 
 export const PhoneBookView = (props: Props) => {
@@ -59,16 +60,20 @@ export const PhoneBookView = (props: Props) => {
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
-                        return <ContactCard 
-                        contact={contact} 
-                        removeContactState={removeContactState} 
-                        //visibilityHandler={removeContactVisibleHandler} 
-                        onCall={() => props.onCall(contact.phoneNbr)} 
-                        socket={props.socket} 
-                        contactList={props.contactList} 
-                        phoneNumber={props.phoneNumber} 
-                        setContactList={props.setContactList}
-                        />
+                        return (
+                            <ContactCard
+                            key={contact.id}
+                            contact={contact}
+                            removeContactState={removeContactState}
+                            onCall={() => {
+                                props.setPeer({number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName}); props.onCall(contact.phoneNbr);
+                            }}
+                            socket={props.socket} 
+                            contactList={props.contactList} 
+                            phoneNumber={props.phoneNumber} 
+                            setContactList={props.setContactList}  
+                            />
+                        )
                     })}
                 </div>
             </div>

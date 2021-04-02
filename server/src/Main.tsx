@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
 import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
-import { connectedUsers, loginUser, logoutUser, userIsLoggedIn, getUserName } from './UserManagement';
+import { connectedUsers, loginUser, userIsLoggedIn, getUserId } from './UserManagement';
 
 
 /* INITIATION */
@@ -90,6 +90,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         })
     })
 
+    /*
     socket.on('join-room', (roomId: string) => {
         let userId = socket.id;
         let userName = getUserName(userId);
@@ -98,19 +99,33 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         socket.emit('join-response', connectedUsers);
         console.log(userName + " joined room " + roomId);
     });
+    */
 
-    socket.on('call-user', (data: CallData) => {
-        socket.to(data.callee).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: getUserName(data.caller) });
+    socket.on('call-user', (data) => {
+        const calleeId = getUserId(data.callee);
+        socket.to(calleeId).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: data.callerName });
     });
 
     socket.on('accept-call', (data: CallData) => {
-        socket.to(data.caller).emit('call-accepted', data.signalData);
+        const callerId = getUserId(data.caller);
+        socket.to(callerId).emit('call-accepted', data.signalData);
     });
 
     socket.on('decline-call', (data: CallData) => {
-        socket.to(data.caller).emit('call-declined');
+        const callerId = getUserId(data.caller);
+        socket.to(callerId).emit('call-declined');
+        console.log("Id is!");
+        console.log(callerId);
+        console.log("Nbr is!");
+        console.log(data.caller);
     });
 
+    socket.on('abort-call', (calleeNbr: string) => {
+        const calleeId = getUserId(calleeNbr);
+        socket.to(calleeId).emit('call-aborted');
+    });
+
+    /*
     socket.on('disconnecting', () => {
         let userId = socket.id;
         let userName = getUserName(userId);
@@ -121,10 +136,10 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             socket.to(room).broadcast.emit('user-disconnected', userName, connectedUsers);
         });
     });
+    */
 
     socket.on('disconnect', () => {
         let userId = socket.id;
-
         console.log("User with ID " + userId + " logged out.");
     });
 });

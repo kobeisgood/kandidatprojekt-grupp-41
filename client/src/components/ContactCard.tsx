@@ -7,7 +7,10 @@ import '../css/colors.css';
 import CrossIcon from '../icons/cross-icon.svg';
 import { Contact } from '../Types';
 import { SquareButton } from './SquareButton';
+
+import '../css/colors.css';
 import '../css/contact-card.css';
+import CrossIcon from '../icons/cross-icon.svg';
 import callIcon from '../icons/call-icon.svg';
 import hjordis from '../images/hjordis.jpg';
 import { DeleteContactPopup } from './DeleteContactPopup';
@@ -15,7 +18,6 @@ import { DeleteContactPopup } from './DeleteContactPopup';
 interface Props {
     removeContactState: boolean;
     contact: Contact | null,
-    //visibilityHandler: Function,
     onCall: Function,
     socket: SocketIOClient.Socket | null,
     contactList: Contact[], 
@@ -24,17 +26,11 @@ interface Props {
 }
 
 export const ContactCard = (props: Props) => {
-
     const [removeContactVisible, setRemoveContactVisible] = useState(false);
 
     const removeContactVisibleHandler = () => {
         setRemoveContactVisible(!removeContactVisible)
     }
-    
-    /* Opens the delete contact popup
-    const openRemoveContactPopup = () => {
-        setRemoveContactVisible(true)
-    }*/
 
     return (
         <div className="contact-card-container">

@@ -74,6 +74,15 @@ export const numberExists = async (nbr: string) => {
     }
 };
 
+export const getUser = async () => {
+    try {
+        const users = await UserModel.findOne();
+        return users;
+    } catch (err) {
+        return console.error(err);
+    }
+};
+
 export const getUsers = async () => {
     try {
         const users = await UserModel.find();

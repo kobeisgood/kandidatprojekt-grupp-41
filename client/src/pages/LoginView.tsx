@@ -13,6 +13,7 @@ interface Props {
     setSocket: Function;
     me: User | null;
     setMe: Function;
+    listenForCalls: Function;
 }
 
 export const LoginView = (props: Props) => {
@@ -26,13 +27,13 @@ export const LoginView = (props: Props) => {
         handlePasswordInp = (event: any) => { setPasswordInp(event.target.value); };
 
     const history = useHistory(); // For redirecting user
-    const redir = () => { history.push("/dashboard"); };
+    const redir = () => { history.push("/dashboard"); }; 
 
     const attemptLogin = () => {
         setLoggingIn(true);
 
         props.setSocket(
-            Login(phoneInp, passwordInp, props.setMe, redir)
+            Login(phoneInp, passwordInp, props.setMe, redir, props.listenForCalls)
         );
     };
 
@@ -51,16 +52,19 @@ export const LoginView = (props: Props) => {
             </div>
             <form onSubmit={(event) => event.preventDefault()}>
                 <div className="login-container">
-                    <TextInput className="text-input-password" type="text" label="Ditt mobilnummer: "
-                        placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneInp} />
-
-                    <TextInput className="text-input-password" type="password" label="Ditt lösenord: "
-                        placeholder="Skriv ditt lösenord här..." onChange={handlePasswordInp} />
-
+                    <div>
+                        <TextInput className="text-input-password" type="text" label="Ditt mobilnummer: "
+                            placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneInp} />
+                    </div>
+                    <div>
+                        <TextInput className="text-input-password" type="password" label="Ditt lösenord: "
+                            placeholder="Skriv ditt lösenord här..." onChange={handlePasswordInp} />
+                    </div>
                     <label className="container">Håll mig inloggad
                     <input type="checkbox"></input>
                         <span className="checkmark"></span>
                     </label>
+
                 </div>
                 <SaveButton label="Logga in" onClick={attemptLogin} />
             </form>

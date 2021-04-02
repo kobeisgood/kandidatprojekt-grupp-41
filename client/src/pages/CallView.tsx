@@ -32,7 +32,7 @@ export const CallView = (props: Props) => {
     return (
         <div className="call-container">
             <div className="video-container">
-                <VideoStreamer className="remote-video-container" stream={props.localStream} />
+                <VideoStreamer className="remote-video-container" stream={props.remoteStream} />
 
                 <div className="right-side-container">
                     <VideoStreamer className="local-video-container" stream={props.localStream} />
