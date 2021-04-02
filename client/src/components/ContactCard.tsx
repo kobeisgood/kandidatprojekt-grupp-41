@@ -3,22 +3,23 @@
     Authors: Daniel and Robin
  */
 import React from 'react';
-import '../css/colors.css';
-import CrossIcon from '../icons/cross-icon.svg';
 import { Contact } from '../Types';
 import { SquareButton } from './SquareButton';
+
+import '../css/colors.css';
 import '../css/contact-card.css';
+import CrossIcon from '../icons/cross-icon.svg';
 import callIcon from '../icons/call-icon.svg';
 import hjordis from '../images/hjordis.jpg';
 
 interface Props {
     removeContactState: boolean;
     contact: Contact | null,
-    visibilityHandler: Function
+    visibilityHandler: Function,
+    onCall: Function
 }
 
 export const ContactCard = (props: Props) => {
-
     // Opens the delete contact popup
     const openRemoveContactPopup = () => {
         props.visibilityHandler();
@@ -36,7 +37,7 @@ export const ContactCard = (props: Props) => {
                     - Make into a CallButton
                     - Add call function on click
                     */}
-                <SquareButton label="Ring" onClick={() => void 0} icon={callIcon} className="call-button" />
+                <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
             </div>
         </div>
     );

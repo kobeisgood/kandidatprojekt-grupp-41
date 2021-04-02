@@ -6,11 +6,11 @@
 import { ContactCard } from '../components/ContactCard';
 import { DeleteContactPopup } from '../components/DeleteContactPopup';
 import { AddContactPopup } from '../components/AddContactPopup';
-import '../css/phone-book.css';
-import '../css/colors.css';
 import { Contact } from '../Types';
 import { useState } from 'react';
 
+import '../css/phone-book.css';
+import '../css/colors.css';
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
 import { BackButton } from '../components/BackButton';
@@ -18,7 +18,9 @@ import { SquareButton } from '../components/SquareButton';
 
 interface Props {
     contactList: Contact[]
-    socket: SocketIOClient.Socket | null;
+    socket: SocketIOClient.Socket | null,
+    onCall: Function,
+    setPeer: Function
 }
 
 export const PhoneBookView = (props: Props) => {
@@ -62,7 +64,16 @@ export const PhoneBookView = (props: Props) => {
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
-                        return <ContactCard contact={contact} removeContactState={removeContactState} visibilityHandler={removeContactVisibleHandler} />
+                        return (
+                            <ContactCard
+                            key={contact.id}
+                            contact={contact}
+                            removeContactState={removeContactState}
+                            visibilityHandler={removeContactVisibleHandler}
+                            onCall={() => {
+                                props.setPeer({number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName}); props.onCall(contact.phoneNbr)
+                            }} />
+                        )
                     })}
                 </div>
             </div>

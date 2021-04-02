@@ -20,7 +20,7 @@ interface Props {
     user: User | null;
 }
 
-export const Dahsboard = (props: Props) => {
+export const Dashboard = (props: Props) => {
     const history = useHistory();
 
     const logOut = () => {

@@ -114,15 +114,14 @@ ul > li {
 
 /* --------------- CALL POPUP VIEW STUFF ----------------- */
 
-.full-page-container {
+.call-popup-shadow {
     height: 100%;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10;
 }
 
 .call-popup-container {
@@ -131,6 +130,12 @@ ul > li {
     height: fit-content;
     border-radius: 25px;
     padding: 35px;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 800px;
 }
 
 .call-popup-container h3 {

@@ -10,7 +10,7 @@ export interface User {
     phoneNbr: string,
     profilePic: string,
     contacts: Contact[],
-    callEntries: Array<Object>
+    callEntries: CallEntry[]
 }
 
 export interface Contact {
@@ -19,6 +19,16 @@ export interface Contact {
     lastName: string;
     phoneNbr: string;
     profilePic: string;
+}
+
+export interface Peer {
+    number: string,
+    name: string
+}
+
+export interface CallEntry {
+    calledUserId: UserID,
+    timeOfCall: Date 
 }
 
 export interface CallData {
