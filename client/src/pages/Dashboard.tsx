@@ -18,7 +18,7 @@ interface Props {
     setMe: Function;
 }
 
-export const Dahsboard = (props: Props) => {
+export const Dashboard = (props: Props) => {
     const history = useHistory();
 
     const logOut = () => {

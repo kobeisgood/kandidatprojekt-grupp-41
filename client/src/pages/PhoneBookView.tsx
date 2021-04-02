@@ -20,7 +20,7 @@ interface Props {
     contactList: Contact[]
     socket: SocketIOClient.Socket | null,
     onCall: Function,
-    setPeerName: Function
+    setPeer: Function
 }
 
 export const PhoneBookView = (props: Props) => {
@@ -71,7 +71,7 @@ export const PhoneBookView = (props: Props) => {
                             removeContactState={removeContactState}
                             visibilityHandler={removeContactVisibleHandler}
                             onCall={() => {
-                                props.setPeerName(contact.firstName + " " + contact.lastName); props.onCall(contact.phoneNbr)
+                                props.setPeer({number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName}); props.onCall(contact.phoneNbr)
                             }} />
                         )
                     })}

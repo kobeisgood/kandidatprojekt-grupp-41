@@ -22,7 +22,7 @@ export interface Contact {
 }
 
 export interface Peer {
-    id: UserID,
+    number: string,
     name: string
 }
 

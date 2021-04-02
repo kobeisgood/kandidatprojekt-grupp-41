@@ -1,8 +1,6 @@
 import io from 'socket.io-client';
 import { default as WebRTC } from 'simple-peer';
 import { User, Contact, Peer } from './Types';
-import { OpenLocalStream } from './StreamCamVideo';
-
 
 const useHTTPS = false; // Only enable this if you know what it means
 
@@ -13,7 +11,7 @@ const useHTTPS = false; // Only enable this if you know what it means
  * @param psw The specified user password
  * @returns The socket representing the connection between client and server
  */
-export const Login = (phone: string, psw: string, setMe: Function, redirect: Function, listenForCalls: Function) => {
+export const Login = (phone: string, psw: string, setMe: Function, redir: Function, listenForCalls: Function) => {
     let socket: SocketIOClient.Socket;
 
     if (useHTTPS)
@@ -27,7 +25,7 @@ export const Login = (phone: string, psw: string, setMe: Function, redirect: Fun
         if (user !== null) {
             console.log("Logged in successfully!");
             setMe(user);
-            redirect(); // Redirect to dashboard and listen for calls
+            redir(); // Redirect to dashboard and listen for calls
             listenForCalls(socket);
         } else
             console.log("Failed to log in!");
@@ -125,48 +123,48 @@ export const RequestUserList = (socket: SocketIOClient.Socket, update: Function)
     });
 };
 
-const LookForUsers = (socket: SocketIOClient.Socket, setUserList: Function) => {
-    socket.on('user-connected', (userName: string, userList: User[]) => {
-        console.log(userName + ' joined the room.');
-        setUserList(userList);
-    });
-
-    socket.on('user-disconnected', (userName: string, userList: User[]) => {
-        console.log(userName + ' left the room.');
-        setUserList(userList);
-    });
-};
-
+/**
+ * 
+ * @param socket This client's socket
+ * @param setIncomingCall A setter for the incomingCall state
+ * @param setCallerSignal A setter for the callAccepted state
+ * @param setPeer A setter for the peer state
+ */
 export const ListenForCalls = (
     socket: SocketIOClient.Socket,
     setIncomingCall: Function,
     setCallerSignal: Function,
-    setPeer: Function,
-    setLocalStream: Function
+    setPeer: Function
 ) => {
     socket.on('user-calling', (data: any) => {
-        /*OpenLocalStream() // Access browser web cam
-            .then((stream: MediaStream) => {
-                setLocalStream(stream);
-                setIncomingCall(true);
-                setCallerSignal(data.signalData);
-                setPeer({ id: data.caller, name: data.callerName });
-            });*/
-
         setIncomingCall(true);
         setCallerSignal(data.signalData);
-        setPeer({ id: data.caller, name: data.callerName });
+        setPeer({ number: data.caller, name: data.callerName });
     });
 
     socket.on('call-aborted', () => {
         console.log("Samtal avbrutet");
-
         setIncomingCall(false);
         setCallerSignal({});
-        setPeer({ id: "", name: "" });
+        setPeer({ number: "", name: "" });
     });
 };
 
+/**
+ * Responds to an incoming call.
+ * 
+ * @param socket This client's socket
+ * @param caller The user calling us
+ * @param callerSignal The signal of the user calling us
+ * @param setCallAccepted A setter for the callAccepted state
+ * @param setIncomingCall A setter for the incomingCall state
+ * @param setMyNode A setter for the myNode state
+ * @param localStream This client's video and audio stream
+ * @param setRemoteVideoStream A setter for the remoteStream state
+ * @param redir A function for redirecting the user to the correct view
+ * @param answer A boolean indicating if we accept the call
+ * @param hangUp A function for ending the call
+ */
 export const CallRespond = (
     socket: SocketIOClient.Socket,
     caller: Peer,
@@ -177,7 +175,8 @@ export const CallRespond = (
     localStream: MediaStream,
     setRemoteVideoStream: Function,
     redir: Function,
-    answer: boolean
+    answer: boolean,
+    hangUp: Function
 ) => {
     setCallAccepted(answer);
     setIncomingCall(false);
@@ -191,18 +190,17 @@ export const CallRespond = (
 
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         if (answer) {
-            socket.emit('accept-call', { signalData: signal, caller: caller.id });
+            console.log("Accepting call");
+            socket.emit('accept-call', { signalData: signal, caller: caller.number });
             redir(); // Redirect to call view
         } else {
-            socket.emit('decline-call', { caller: caller.id });
+            console.log("Declining");
+            socket.emit('decline-call', { caller: caller.number });
             return;
         }
     });
 
     peer.on('stream', stream => {
-        console.log("Received stream!");
-        console.log(stream);
-        
         setRemoteVideoStream(stream);
     });
 
@@ -210,11 +208,26 @@ export const CallRespond = (
         console.log("You closed the connection!");
         setCallAccepted(false);
         peer.destroy();
+        hangUp(peer);
     });
 
     peer.signal(callerSignal); // Accept caller's signal
 };
 
+/**
+ * Calls another user.
+ * 
+ * @param socket This client's socket
+ * @param setOutgoingCall A setter for the outgoingCall state
+ * @param setCallAccepted A setter for the callAccepted state
+ * @param setMyNode A setter for the myNode state
+ * @param localStream This client's video and audio stream
+ * @param setRemoteStream A setter for the remoteStream state
+ * @param calleeNbr The number of the user we are calling
+ * @param me This client's user object
+ * @param redir A function for redirecting the user to the correct view
+ * @param hangUp A function for ending the call
+ */
 export const CallUser = (
     socket: SocketIOClient.Socket,
     setOutgoingCall: Function,
@@ -223,8 +236,9 @@ export const CallUser = (
     localStream: MediaStream,
     setRemoteStream: Function,
     calleeNbr: string,
-    callerName: string,
-    redir: Function
+    me: User,
+    redir: Function,
+    hangUp: Function
 ) => {
     const peer = new WebRTC({
         initiator: true, // User is initiator of the call
@@ -236,7 +250,7 @@ export const CallUser = (
     // Beginning of handshake roundtrip
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         setOutgoingCall(true);
-        socket.emit('call-user', { calleeNbr: calleeNbr, signalData: signal, caller: socket.id, callerName: callerName });
+        socket.emit('call-user', { callee: calleeNbr, signalData: signal, caller: me.phoneNbr, callerName: me.firstName + " " + me.lastName });
     });
 
     peer.on('stream', stream => {
@@ -248,6 +262,7 @@ export const CallUser = (
         console.log("Peer closed the connection!");
         setCallAccepted(false);
         peer.destroy();
+        hangUp(peer);
     });
 
     socket.once('call-accepted', (signalData: WebRTC.SignalData) => {
@@ -271,17 +286,42 @@ export const CallUser = (
  * @param socket This client's socket
  * @param callee The callee's name
  */
-export const CallAbort = (socket: SocketIOClient.Socket, callee: Peer) => {
-    console.log("Aborting call");
-
-    socket.emit('abort-call', callee);
+export const CallAbort = (
+    socket: SocketIOClient.Socket,
+    calleeNbr: string
+) => {
+    console.log("Call abort (client side)");
+    socket.emit('abort-call', calleeNbr);
 };
 
 /**
  * Ends and ongoing call by destroying the node (the SimplePeer instance).
  * 
  * @param myNode The SimplePeer instance create in prior
+ * @param setRemoteStream A setter for the remoteStream state
+ * @param setCallAccepted A setter for the callAccepted state
+ * @param setPeer A setter for the peer state
+ * @param setPeerSignal A setter for the peerSignal state
+ * @param setOutgoingCall A setter for the outgoingCall state
+ * @param setIncomingCall A setter for the incomingCall state
+ * @param redir A function for redirecting the user to the correct view
  */
-export const CallHangUp = (myNode: WebRTC.Instance) => {
+export const CallHangUp = (
+    myNode: WebRTC.Instance,
+    setRemoteStream: Function,
+    setCallAccepted: Function,
+    setPeer: Function,
+    setPeerSignal: Function,
+    setOutgoingCall: Function,
+    setIncomingCall: Function,
+    redir: Function
+) => {
+    setCallAccepted(false);
+    setPeer({ number: "", name: ""});
+    setPeerSignal({});
+    setOutgoingCall(false);
+    setIncomingCall(false);
+    setRemoteStream(new MediaStream());
     myNode.destroy();
+    redir();
 };
