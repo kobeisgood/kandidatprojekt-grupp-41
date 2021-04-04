@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
 
-import { User, Peer } from './Types';
+import { User, Peer, Contact } from './Types';
 import { CallRespond, CallUser, CallAbort, CallHangUp, ListenForCalls } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 import { ProfileView } from './pages/ProfileView';
