@@ -3,17 +3,15 @@
     Authors: Daniel and Robin
  */
 import React, { useState } from 'react';
-import '../css/colors.css';
-import CrossIcon from '../icons/cross-icon.svg';
 import { Contact } from '../Types';
 import { SquareButton } from './SquareButton';
+import { DeleteContactPopup } from './DeleteContactPopup';
 
 import '../css/colors.css';
 import '../css/contact-card.css';
 import CrossIcon from '../icons/cross-icon.svg';
 import callIcon from '../icons/call-icon.svg';
 import hjordis from '../images/hjordis.jpg';
-import { DeleteContactPopup } from './DeleteContactPopup';
 
 interface Props {
     removeContactState: boolean;
