@@ -1,0 +1,73 @@
+.header{
+    font-size: 46px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-bottom: 80px;
+}
+
+.description-text {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    align-self: center;
+}
+
+.buttons-container {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.login-button {
+    color: black;
+    background-color: #98FF74;
+    border: 1px solid #999999;
+    border-radius: 20px;
+    height: 187px;
+    width: 270px;
+    margin-top: 10px;
+}
+
+
+/* Hover state for each button of the 4 buttons*/
+
+.login-button:hover {
+    background-color: lightsalmon;
+}
+
+
+/* On click styling for each button of the 4 buttons */
+
+.login-button:active {
+    background-color: lavenderblush;
+}
+
+.create-acount-button {
+    color: black;
+    background-color: #94E5FF;
+    border: 1px solid #999999;
+    border-radius: 20px;
+    height: 187px;
+    width: 270px;
+    margin-top: 10px;
+}
+
+
+/* Hover state for each button of the 4 buttons*/
+
+.create-acount-button:hover {
+    background-color: lightsalmon;
+}
+
+
+/* On click styling for each button of the 4 buttons */
+
+.create-acount-button:active {
+    background-color: lavenderblush;
+}
+

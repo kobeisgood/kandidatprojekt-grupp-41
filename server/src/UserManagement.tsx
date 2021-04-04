@@ -1,8 +1,23 @@
-  
-import { User, UserID } from './Types';
+import { authenticate, getContacts } from './Database';
+import { UserID } from './Types';
 
 
-export let connectedUsers: User[] = [];
+type PhoneNbr = string;
+
+export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
+
+
+
+/* 
+
+KOLLA OM connectedUsers ÄR RÄTT FÖR ATT KUNNA HÄMTA NAMN VID UPPRINGNING
+
+*/
+
+
+
+
+
 
 /**
  * Adds a user to the server's list of connected users.
@@ -10,12 +25,17 @@ export let connectedUsers: User[] = [];
  * @param id The user's socket ID
  * @param name The user's name
  */
-export const connectUser = (id: UserID, name: string) => {
-    connectedUsers.push({
-        id: id,
-        firstName: name,
-        lastName: ""
-    });
+export const loginUser = async (id: UserID, phone: string, psw: string) => {
+    const user = await authenticate(phone, psw); // Check database for password match
+
+    if (user !== null) {
+        const contacts = await getContacts(user.contacts);
+        user.contacts = contacts;
+        connectedUsers.set(phone, id);
+        return user;
+    } else {
+        return null;
+    }
 };
 
 /**
@@ -23,14 +43,8 @@ export const connectUser = (id: UserID, name: string) => {
  * 
  * @param id The user's socket ID
  */
-export const disconnectUser = (id: UserID) => {
-    connectedUsers.forEach((u: User) => {
-        if (u.id === id) {
-            let index = connectedUsers.indexOf(u);
-            connectedUsers.splice(index, 1);
-            return;
-        }
-    });
+export const logoutUser = (phone: string) => {
+    connectedUsers.delete(phone);
 };
 
 /**
@@ -39,10 +53,8 @@ export const disconnectUser = (id: UserID) => {
  * @param id The user's socket ID
  * @returns A boolean representing connection status of the user
  */
-export const userIsConnected = (id: UserID) => {
-    return connectedUsers.some((p) => {
-        return p.id === id;
-    });
+export const userIsLoggedIn = (phone: string) => {
+    return connectedUsers.has(phone);
 };
 
 /**
@@ -51,7 +63,9 @@ export const userIsConnected = (id: UserID) => {
  * @param id The user's socket ID
  * @returns The user's name if found, otherwise null
  */
-export const getUserName = (id: UserID) => {
+/*export const getUserName = (id: UserID) => {
+    let userPhone
+
     let user = connectedUsers.find((user: User) => {
         return user.id === id
     });
@@ -60,12 +74,16 @@ export const getUserName = (id: UserID) => {
         return user.firstName;
     else
         return null;
-};
+};*/
+
+export const getUserId = (phoneNbr: string) => {
+    return connectedUsers.get(phoneNbr);
+}
 
 /**
  * Prints the IDs of all connected users to the server log.
  */
 export const logUsers = () => {
-    console.log("Connected ids are:");
-    connectedUsers.forEach((p) => { console.log(p.id); });
+    /*console.log("Connected ids are:");
+    connectedUsers.forEach((p) => { console.log(p.id); });*/
 };
