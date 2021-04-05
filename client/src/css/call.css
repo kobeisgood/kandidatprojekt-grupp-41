@@ -58,6 +58,13 @@
   font-size: 0.8vw;
 }
 
+.mic-muted-text {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, 0);
+    z-index: 100;
+}
 
 .end-call-button {
   height: 7vw;
@@ -84,14 +91,15 @@ ul > li {
     position: absolute;
     top: 0;
     right: 0;
-    margin-right: 5em;
+    margin-right: 3em;
 }
 
 .local-video-container {
     background-color: black; 
     height: 15vw;
     width: 15vw;
-    float:right;
+    margin-left: 0.7em;
+    margin-right: 0.7em;
     margin-top: 3em;
     border-radius: 20%;
 }
@@ -99,15 +107,16 @@ ul > li {
 /* Pop up on the right side that displays if mic or cam is off */
 .function-off-container{
     height: 2vw;
-    width: 15vw;
     margin-top: 1em;
     background-color:#484848;
     clear: right;
-    font-size: 1vw;
+    font-size: 1.2vw;
     text-align: center;
     color:white;
     border-radius: 1vw;
     padding-top: 0.5vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
     font-weight: bold;
 }
 
