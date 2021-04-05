@@ -139,7 +139,5 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     */
 
     socket.on('disconnect', () => {
-        let userId = socket.id;
-        console.log("User with ID " + userId + " logged out.");
     });
 });

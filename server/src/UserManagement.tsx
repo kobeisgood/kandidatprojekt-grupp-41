@@ -1,23 +1,8 @@
 import { authenticate, getContacts } from './Database';
-import { UserID } from './Types';
+import { UserID, PhoneNbr } from './Types';
 
-
-type PhoneNbr = string;
 
 export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
-
-
-
-/* 
-
-KOLLA OM connectedUsers ÄR RÄTT FÖR ATT KUNNA HÄMTA NAMN VID UPPRINGNING
-
-*/
-
-
-
-
-
 
 /**
  * Adds a user to the server's list of connected users.
