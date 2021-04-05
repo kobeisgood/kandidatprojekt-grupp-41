@@ -52,10 +52,11 @@ export const ChangePasswordView = (props: Props) => {
                     <TextInput className="text-input-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa nytt lösenord..." onChange={handlePasswordRepeatAgainInp} />
                 </div>
             </div>
-                {passwordChanged &&
-                    <h3 className="">Lösenord uppdaterat!</h3>
-                }
-            <SaveButton label="Spara lösenord" onClick={() => isRepeatInpSame() && isExistingPasswordSame() ? props.updatePassword(existingPasswordInp, newPasswordInp, setPasswordChanged) : console.log("Password does not match")} />
+            {passwordChanged ?
+                <div className="update-password-container">
+                    <h3 className="update-password">Lösenord uppdaterat!</h3>
+                </div> : <SaveButton label="Spara lösenord" onClick={() => isRepeatInpSame() && isExistingPasswordSame() ? props.updatePassword(existingPasswordInp, newPasswordInp, setPasswordChanged) : console.log("Password does not match")} />
+            }
         </div>
     );
 }
