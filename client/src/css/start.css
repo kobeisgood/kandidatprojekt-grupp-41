@@ -27,40 +27,4 @@
 
 
 
-/* Hover state for each button of the 4 buttons*/
-
-.login-button:hover {
-    background-color: lightsalmon;
-}
-
-
-/* On click styling for each button of the 4 buttons */
-
-.login-button:active {
-    background-color: lavenderblush;
-}
-
-.create-acount-button {
-    color: black;
-    background-color: #94E5FF;
-    border: 1px solid #999999;
-    border-radius: 20px;
-    height: 187px;
-    width: 270px;
-    margin-top: 10px;
-}
-
-
-/* Hover state for each button of the 4 buttons*/
-
-.create-acount-button:hover {
-    background-color: lightsalmon;
-}
-
-
-/* On click styling for each button of the 4 buttons */
-
-.create-acount-button:active {
-    background-color: lavenderblush;
-}
 

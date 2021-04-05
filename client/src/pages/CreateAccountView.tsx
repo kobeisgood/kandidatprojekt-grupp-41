@@ -14,9 +14,9 @@ import React, { Component } from 'react';
 
 export const CreateAccountView = () => {
 
-    // The content rendered when we haven't searched for a contact yet
+    // sätter state tilltrue så vi börjar på neutralPage vilket är standarf vyn
     const [neutralPageState, setNeutralPageState] = useState(true);
-
+    //för när man klickar på tillbaka i vidare vyn alltså set up vyn
     const goBack = () => {
         setNeutralPageState(true)
     };    
@@ -26,7 +26,7 @@ export const CreateAccountView = () => {
                 <div>
                     
                             
-
+                    {/* vy när man klickat på gå vidare "set up vyn" */}
                 { !neutralPageState &&
                     <>
                     <header className="create-header-container">
@@ -67,7 +67,7 @@ export const CreateAccountView = () => {
                     </>
                 }
 
-                {/* Neutral */}
+                {/* Standard vy som man kommer till när man klickar på knappen eller skriver in /createaccount */}
                 {neutralPageState &&
                     <>
                     <header className="create-header-container">
