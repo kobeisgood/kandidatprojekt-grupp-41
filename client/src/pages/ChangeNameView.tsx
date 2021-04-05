@@ -19,7 +19,6 @@ interface Props {
 
 
 export const ChangeNameView = (props: Props) => {
-    // Event handler for clicking back button and the change name button etc. 
     const setName = (firstName: string, lastName: string) => {
         if (props.me !== null)
             props.setMe({

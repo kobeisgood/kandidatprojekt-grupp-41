@@ -17,7 +17,6 @@ interface Props {
 
 
 export const ChangePasswordView = (props: Props) => {
-    // Event handler for clicking back button and the change name button etc. 
     const
         [existingPasswordInp, setExistingPasswordInp] = useState(""),
         [newPasswordInp, setNewPasswordInp] = useState(""),
@@ -43,7 +42,6 @@ export const ChangePasswordView = (props: Props) => {
             </header>
 
             <div className="change-password-container">
-
                 <div>
                     <TextInput className="text-input-password" type="password" label="Nuvarande lösenord: " placeholder="Skriv nuvarande lösenord..." onChange={handlePasswordInp} />
                 </div>
@@ -55,7 +53,7 @@ export const ChangePasswordView = (props: Props) => {
                 </div>
             </div>
                 {passwordChanged &&
-                    <h3>Lösenord uppdaterat!</h3>
+                    <h3 className="">Lösenord uppdaterat!</h3>
                 }
             <SaveButton label="Spara lösenord" onClick={() => isRepeatInpSame() && isExistingPasswordSame() ? props.updatePassword(existingPasswordInp, newPasswordInp, setPasswordChanged) : console.log("Password does not match")} />
         </div>

@@ -85,6 +85,13 @@ export const getUsers = async () => {
 
 export const addCallEntry = () => { };
 
+/**
+ * Updates a user's name in the database. 
+ * 
+ * @param phoneNbr 
+ * @param firstName 
+ * @param lastName 
+ */
 export const updateName = async (phoneNbr: string, firstName: string, lastName: string) => {
     try {
         await UserModel.findOneAndUpdate({ phoneNbr: phoneNbr },
@@ -98,6 +105,12 @@ export const updateName = async (phoneNbr: string, firstName: string, lastName: 
     }
 };
 
+/**
+ * Updates a user's number in the database.
+ * 
+ * @param oldNbr 
+ * @param newNbr 
+ */
 export const updateNbr = async (oldNbr: string, newNbr: string) => {
     try {
         await UserModel.findOneAndUpdate({ phoneNbr: oldNbr },
@@ -110,6 +123,12 @@ export const updateNbr = async (oldNbr: string, newNbr: string) => {
     }
 };
 
+/**
+ * Updates a user's password in the database. 
+ * 
+ * @param phoneNbr 
+ * @param newPassword 
+ */
 export const updatePassword = async (phoneNbr: string, newPassword: string) => {
     try {
         await UserModel.findOneAndUpdate({ phoneNbr: phoneNbr },

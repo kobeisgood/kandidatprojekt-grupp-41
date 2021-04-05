@@ -74,6 +74,15 @@ export const FindContactNumber = (
     })
 };
 
+/**
+ * Retrieves information that the update of name is successful or not. 
+ * 
+ * @param socket 
+ * @param phoneNbr 
+ * @param firstName 
+ * @param lastName 
+ * @param setName 
+ */
 export const UpdateName = (
     socket: SocketIOClient.Socket,
     phoneNbr: string,
@@ -89,7 +98,14 @@ export const UpdateName = (
             console.error("Name update unsuccessful");
     });
 };
-
+/**
+ * Retrieves information that the update of number is successful or not. 
+ * 
+ * @param socket 
+ * @param oldNbr 
+ * @param newNbr 
+ * @param setNbr 
+ */
 export const UpdateNbr = (
     socket: SocketIOClient.Socket,
     oldNbr: string,
@@ -105,6 +121,15 @@ export const UpdateNbr = (
     });
 };
 
+/**
+ * Retrieves information that the update of password is successful or not. 
+ * 
+ * @param socket 
+ * @param phoneNbr 
+ * @param oldPassword 
+ * @param newPassword 
+ * @param setPasswordChanged 
+ */
 export const UpdatePassword = (
     socket: SocketIOClient.Socket,
     phoneNbr: string,

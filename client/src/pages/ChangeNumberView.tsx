@@ -17,7 +17,6 @@ interface Props {
 }
 
 export const ChangeNumberView = (props: Props) => {
-    // Event handler for clicking back button and the change name button etc. 
     const setNumber = (phoneNbr: string) => {
         if (props.me !== null) {
             props.setMe({
