@@ -1,7 +1,7 @@
 /* View for the changing name 'Ändra namn'
 Authors: Charlie and Hanna 
 */
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/profile.css';
 import '../css/textinput.css';
 import hjordis from "../images/hjordis.png"
@@ -12,14 +12,33 @@ import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 
 interface Props {
-    user: User | null
+    me: User | null
+    setMe: Function
+    updateName: Function
 }
 
-export const ChangeNameView = (props: Props) => {
-    // Event handler for clicking back button and the change name button etc. 
-    const ButtonNameClicked = () => {
-    }
 
+export const ChangeNameView = (props: Props) => {
+    const setName = (firstName: string, lastName: string) => {
+        if (props.me !== null)
+            props.setMe({
+                id: props.me.id,
+                firstName: firstName,
+                lastName: lastName,
+                phoneNbr: props.me.phoneNbr,
+                profilePic: props.me.profilePic,
+                contacts: props.me.contacts,
+                callEntries: props.me.callEntries
+            });
+    }
+    const
+        [firstNameInp, setFirstNameInp] = useState(""),
+        [lastNameInp, setLastNameInp] = useState("");
+                
+    const
+        handleFirstNameInp = (event: any) => { setFirstNameInp(event.target.value); },
+        handleLastNameInp = (event: any) => { setLastNameInp(event.target.value); };
+    
     return (
         <div>
             <header className="profile-header-container profile-header">
@@ -32,15 +51,15 @@ export const ChangeNameView = (props: Props) => {
             <div className="profile-big-info-container">
                 <img src={hjordis} alt="profilbild" />
                 <div className="profile-info-contact-container">
-                    <h1 className="profile-name">{props.user ? props.user.firstName + " " + props.user.lastName : ""}</h1>
-                    <h1 className="profile-number">{props.user ? props.user.phoneNbr : ""}</h1>
+                    <h1 className="profile-name">{props.me ? props.me.firstName + " " + props.me.lastName : ""}</h1>
+                    <h1 className="profile-number">{props.me ? props.me.phoneNbr : ""}</h1>
                 </div>
             </div>
             <div className="change-name-container">
-                <TextInput className="text-input" type="text" label="Förnamn: " placeholder={props.user ? props.user.firstName : ""} onChange={() => console.log("Klick!")} />
-                <TextInput className="text-input" type="text" label="Efternamn: " placeholder={props.user ? props.user.lastName : ""} onChange={() => console.log("Klick!")} />
+                <TextInput className="text-input" type="text" label="Förnamn: " placeholder={props.me ? props.me.firstName : ""} onChange={handleFirstNameInp} />
+                <TextInput className="text-input" type="text" label="Efternamn: " placeholder={props.me ? props.me.lastName : ""} onChange={handleLastNameInp} />
             </div>
-            <SaveButton label="Spara namn" onClick={ButtonNameClicked} linkTo="/profile" />
+            <SaveButton label="Spara namn" onClick={() => props.updateName(firstNameInp, lastNameInp, setName)} />
         </div>
     );
 }
