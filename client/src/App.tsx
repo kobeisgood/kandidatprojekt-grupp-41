@@ -10,6 +10,7 @@ import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
 import { LoginView } from './pages/LoginView';
 import { StartView } from './pages/StartView';
+import { CreateAccountView } from './pages/CreateAccountView';
 import { Dashboard } from './pages/Dashboard';
 import { PhoneBookView } from './pages/PhoneBookView';
 import { ChangeNameView } from './pages/ChangeNameView';
@@ -85,6 +86,7 @@ export const App = () => {
                 callEntries: me.callEntries
             })
     }
+                    
 
     const listenForCalls = (socket: SocketIOClient.Socket) => {
         if (socket !== null)
@@ -141,6 +143,7 @@ export const App = () => {
                 }} />
                 <Route path="/" exact component={() => <StartView />} />
                 <Route path="/dashboard" exact component={() => <Dashboard setMe={setMe} user={me} />} />
+                <Route path="/createaccount" exact component={() => <CreateAccountView/>} />
                 <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                 <Route path="/profile/changepicture" exact component={ChangePictureView} />
                 <Route path="/profile/changepassword" exact component={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />

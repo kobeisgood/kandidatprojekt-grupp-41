@@ -15,12 +15,19 @@
     flex-basis: calc(100%/3);
 }
 
+.back-button-container {
+  height: 80px;
+  width: 250px;
+  align-self: center;
+  flex-basis: calc(100%/3);
+}
+
 .description-text-container {
     width: 50%;
     display: inline-flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    align-self: center;
+    flex-wrap: wrap;    
+    justify-content: center;
 }
 
 .description-text {
