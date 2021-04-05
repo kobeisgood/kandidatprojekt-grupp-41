@@ -55,7 +55,7 @@ export const AddContactPopup = (props: Props) => {
         
 
         // When you try to add yourself
-        if (contactNumber == props.phoneNumber) {
+        if (contactNumber === props.phoneNumber) {
             alert("Du försöker lägga till dig själv dumhuve, försök med ett annat nummer")
             return
         }
@@ -65,7 +65,7 @@ export const AddContactPopup = (props: Props) => {
         let i;
         for (i = 0; i < props.contactList.length; i++) {
             var contact = props.contactList[i]
-            if (contact.phoneNbr == contactNumber) {
+            if (contact.phoneNbr === contactNumber) {
                 foundBadNumber = true;
                 alert("Den här kontakten finns redan i din kontaktlista.... herrejevlar kmr du int håg nåting?")
                 break;
@@ -75,7 +75,7 @@ export const AddContactPopup = (props: Props) => {
             return
         }
 
-        if (props.socket != null) {
+        if (props.socket !== null) {
             GetSearchedContact(props.socket, contactNumber, setFoundContact)
             setNeutralPageState(false)
         }
@@ -86,7 +86,7 @@ export const AddContactPopup = (props: Props) => {
     // Adds the contact to the user
     const addContact = () => {
 
-        if (props.socket != null && foundContact != null) {
+        if (props.socket !== null && foundContact !== null) {
             AddFoundContact(props.socket, foundContact, props.contactList, props.phoneNumber, props.setContactList)
             setNeutralPageState(true)
             closeAddContactPopup()
@@ -102,7 +102,7 @@ export const AddContactPopup = (props: Props) => {
                 <h3>Lägg till kontakt</h3>
 
                 {/* Contact NOT found */}
-                {foundContact == null && !neutralPageState &&
+                {foundContact === null && !neutralPageState &&
                     <>
                         <p className="popup-error-message">Fel Nummer! </p>
                         <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>
@@ -113,13 +113,13 @@ export const AddContactPopup = (props: Props) => {
                 }
 
                 {/* Contact found */}
-                {foundContact != null && !neutralPageState &&
+                {foundContact !== null && !neutralPageState &&
                     <>
                         <div className="contact-found-row">
                             <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="KontaktBild" />
                             <div className="contact-found-info-col">
-                                <p className="found-contact-name">{foundContact.phoneNbr != "" ? foundContact.firstName : ""} {foundContact.phoneNbr != "" ? foundContact.lastName : ""} </p>
-                                <p className="found-contact-number">{foundContact.phoneNbr != "" ? foundContact.phoneNbr : ""}</p>
+                                <p className="found-contact-name">{foundContact.phoneNbr !== "" ? foundContact.firstName : ""} {foundContact.phoneNbr !== "" ? foundContact.lastName : ""} </p>
+                                <p className="found-contact-number">{foundContact.phoneNbr !== "" ? foundContact.phoneNbr : ""}</p>
                             </div>
                         </div>
                         <SquareButton label="Lägg till kontakt" onClick={addContact} className="save-button handle-contact-button button" />

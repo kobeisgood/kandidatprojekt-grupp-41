@@ -12,7 +12,7 @@ export const VideoStreamer = (props: Props) => {
         
         if (videoElem !== null)
             videoElem.srcObject = props.stream;
-    }, []);
+    }, [props.stream]);
 
     const videoStreamRef = useRef<HTMLVideoElement>(null);
 

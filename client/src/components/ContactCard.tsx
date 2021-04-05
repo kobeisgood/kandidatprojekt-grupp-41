@@ -34,7 +34,7 @@ export const ContactCard = (props: Props) => {
         <div className="contact-card-container">
             <div className="contact-card-flexbox">
                 {!props.removeContactState ? <></> :
-                    <button className="delete-contact-button" onClick={removeContactVisibleHandler}> <img src={CrossIcon} alt="CrossIcon"></img> </button>
+                    <button className="delete-contact-button" onClick={removeContactVisibleHandler}> <img src={CrossIcon} alt="Delete contact icon"></img> </button>
                 }
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <span>{props.contact ? props.contact.lastName : ""}</span></p>

@@ -6,7 +6,7 @@
 import { ContactCard } from '../components/ContactCard';
 import { AddContactPopup } from '../components/AddContactPopup';
 import { Contact } from '../Types';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import '../css/phone-book.css';
 import '../css/colors.css';
@@ -27,8 +27,6 @@ interface Props {
 export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
     const [addContactVisible, setAddContactVisible] = useState(false);
-
-    const addContactButtonRef = useRef(null)
 
     // Handles only the cross above the contact card
     const removeContactClicked = () => {
