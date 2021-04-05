@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
 
 import { User, Peer, Contact } from './Types';
-import { CallRespond, CallUser, CallAbort, CallHangUp, ListenForCalls, Login, JoinRoom, Register, UpdateName, UpdateNbr, UpdatePassword } from './Connection';
+import { CallRespond, CallUser, CallAbort, CallHangUp, ListenForCalls, Login, Register, UpdateName, UpdateNbr, UpdatePassword } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 import { ProfileView } from './pages/ProfileView';
 import { CallPopup } from './components/CallPopup';
@@ -70,20 +70,21 @@ export const App = () => {
             UpdateNbr(socket, me.phoneNbr, number, setNbr);
     };
     const updatePassword = (oldPassword: string, newPassword: string, setPasswordChanged: Function) => {
-        if (socket !== null && me !== null) 
+        if (socket !== null && me !== null)
             UpdatePassword(socket, me.phoneNbr, oldPassword, newPassword, setPasswordChanged);
     };
-    const setContactList = (contactList:Contact[]) => {
-        if(me !== null)
+    const setContactList = (contactList: Contact[]) => {
+        if (me !== null)
             setMe({
-                    id: me.id,
-                    firstName: me.firstName,
-                    lastName: me.lastName,
-                    phoneNbr: me.phoneNbr,
-                    contacts: contactList,
-                    profilePic: me.profilePic,
-                    callEntries: me.callEntries
-                })           
+                id: me.id,
+                firstName: me.firstName,
+                lastName: me.lastName,
+                phoneNbr: me.phoneNbr,
+                contacts: contactList,
+                profilePic: me.profilePic,
+                callEntries: me.callEntries
+            })
+    }
 
     const listenForCalls = (socket: SocketIOClient.Socket) => {
         if (socket !== null)
@@ -106,11 +107,11 @@ export const App = () => {
     };
 
     const callUser = (phoneNbr: string) => {
-        if (socket !== null && me !== null) {               
+        if (socket !== null && me !== null) {
             return CallUser(socket, setOutgoingCall, setCallAccepted, setMyNode, localStream, setRemoteStream, phoneNbr, me, () => redir("/call"), hangUp);
         } else
             return null;
-    }   
+    };
 
     const abortCall = () => {
         setOutgoingCall(false);
@@ -147,8 +148,6 @@ export const App = () => {
                 <Route path="/profile/changename" exact component={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
                 <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
                 <Route path="/call" component={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} />} />
-
-    }
 
                 {/* REDIRECTS */}
                 {prevLoginInfo() === null && <Redirect push to="/dashboard" />}

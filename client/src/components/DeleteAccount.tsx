@@ -23,7 +23,7 @@ export const DeleteAccount = (props: Props) => {
                     </div>
                     <div className="yes-no-button-container">
                         <SquareButton className="yes-button" label={"Ja"} onClick={() => void 0}></SquareButton>
-                        <SquareButton className="no-button" label={"Nej"} onClick={() => void 0}></SquareButton>
+                        <SquareButton className="no-button" label={"Nej"} onClick={closeDeleteAccountPopUp}></SquareButton>
                     </div>
                 </div>
             </div>

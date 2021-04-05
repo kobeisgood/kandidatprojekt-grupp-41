@@ -2,7 +2,7 @@ import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
 import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword, authenticate } from './Database';
-import { connectedUsers, loginUser, userIsLoggedIn, getUserId, logoutUser, getUserName } from './UserManagement';
+import { connectedUsers, loginUser, userIsLoggedIn, getUserId, logoutUser } from './UserManagement';
 
 /* INITIATION */
 const io = InitServer(); // Init basic server requirements
