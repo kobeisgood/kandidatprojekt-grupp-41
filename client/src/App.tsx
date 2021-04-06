@@ -53,6 +53,16 @@ export const App = () => {
             .then((stream: MediaStream) => {
                 setLocalStream(stream)
             }); // Access browser web cam
+
+        window.onbeforeunload = (event: any) => {
+            const e = event || window.event;
+            // Cancel the event
+            e.preventDefault();
+            if (e)
+                e.returnValue = ''; // Legacy method for cross browser support
+                
+            return ''; // Legacy method for cross browser support
+        };
     }, []);
 
     useEffect(() => {
