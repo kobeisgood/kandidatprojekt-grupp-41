@@ -88,13 +88,15 @@ export const UpdateName = (
     phoneNbr: string,
     firstName: string,
     lastName: string,
-    setName: Function
+    setName: Function,
+    setNameChanged: Function
 ) => {
     socket.emit('update-name', { phoneNbr: phoneNbr, firstName: firstName, lastName: lastName });
     socket.on('update-name-result', (result: boolean) => {
-        if (result)
+        if (result) {
             setName(firstName, lastName);
-        else
+            setNameChanged(true);
+        } else
             console.error("Name update unsuccessful");
     });
 };
@@ -110,13 +112,15 @@ export const UpdateNbr = (
     socket: SocketIOClient.Socket,
     oldNbr: string,
     newNbr: string,
-    setNbr: Function
+    setNbr: Function,
+    setNumberChanged: Function
 ) => {
     socket.emit('update-nbr', { phoneNbr: oldNbr, newNbr: newNbr });
     socket.on('update-nbr-result', (result: boolean) => {
-        if (result)
+        if (result) {
             setNbr(newNbr);
-        else
+            setNumberChanged(true);
+        } else
             console.error("Number update unsuccessful");
     });
 };

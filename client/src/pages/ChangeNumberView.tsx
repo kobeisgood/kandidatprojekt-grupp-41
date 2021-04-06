@@ -13,7 +13,7 @@ import { SaveButton } from '../components/SaveButton';
 interface Props {
     me: User | null
     setMe: Function
-    updateNbr: Function
+    updateNbr: (numberInp: string, setNumber: Function, setNumberChanged: Function) => void
 }
 
 export const ChangeNumberView = (props: Props) => {
@@ -30,11 +30,11 @@ export const ChangeNumberView = (props: Props) => {
             });
         }
     };
-    
+
     const
         [numberInp, setNumberInp] = useState(""),
-        [numberRepeatInp, setNumberRepeatInp] = useState("");
-
+        [numberRepeatInp, setNumberRepeatInp] = useState(""),
+        [numberChanged, setNumberChanged] = useState(false);
 
     const
         handleNumberInp = (event: any) => { setNumberInp(event.target.value); },
@@ -66,7 +66,11 @@ export const ChangeNumberView = (props: Props) => {
                     <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={handleNumberRepeatInp} />
                 </div>
             </div>
-            <SaveButton label="Spara nummer" onClick={() => isInpSame() ? props.updateNbr(numberInp, setNumber) : console.log("Number does not match")} />
+            {numberChanged ?
+                <div className="update-container">
+                    <h3 className="update-text">Nummer uppdaterat!</h3>
+                </div> : <SaveButton label="Spara nummer" onClick={() => isInpSame() ? props.updateNbr(numberInp, setNumber, setNumberChanged) : console.log("Number does not match")} />
+            }
         </div>
     );
 }
