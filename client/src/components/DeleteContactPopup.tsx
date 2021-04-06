@@ -27,7 +27,7 @@ export const DeleteContactPopup = (props: Props) => {
     }
 
     // Contact is deleted in db
-    const deleteContactBackend = () => {
+    const deleteContact = () => {
         if (props.socket != null && props.contact != null) {
             RemoveFoundContact(props.socket, props.contact, props.contactList, props.phoneNumber, props.setContactList)
             setContactDeletedState(true)
@@ -36,27 +36,13 @@ export const DeleteContactPopup = (props: Props) => {
         }
     }
 
-    // Contact is deleted on the frontend
-    const deleteContactFrontend = () => {
-        if (props.contact != null) {
-            var indexToRemove = props.contactList.indexOf(props.contact)
-            if (indexToRemove > -1) {
-                props.contactList.splice(indexToRemove, 1);
-            } else {
-                console.log("Tried to remove who does not exist?!");
-            }
-            props.setContactList(props.contactList)
-        }
-        closeDeleteContactPopup()
-    }
-
 
     const contactDeletedFeedback = () => {
         return (
             <>
                 <div className="call-popup-flexbox-container">
                     <h4 className="popup-middle-sized-text bottom-buffer"> {props.contact?.firstName} {props.contact?.lastName} är nu borttagen från din telefonbok </h4>
-                    <SquareButton label="Tillbaka till telefonboken" onClick={deleteContactFrontend} className="save-button handle-contact-button button" />
+                    <SquareButton label="Tillbaka till telefonboken" onClick={closeDeleteContactPopup} className="save-button handle-contact-button button" />
                 </div>
             </>
         )
@@ -70,7 +56,7 @@ export const DeleteContactPopup = (props: Props) => {
                     <>
                         <h4 className="popup-middle-sized-text">Är du säker på att du vill ta bort {props.contact?.firstName} {props.contact?.lastName}?</h4>
                         <div className="button-row">
-                            <SquareButton className="yes-button" label={"Ja"} onClick={deleteContactBackend} />
+                            <SquareButton className="yes-button" label={"Ja"} onClick={deleteContact} />
                             <SquareButton className="no-button" label={"Nej"} onClick={closeDeleteContactPopup} />
                         </div>
                     </>}

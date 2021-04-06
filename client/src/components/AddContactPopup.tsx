@@ -35,7 +35,7 @@ export const AddContactPopup = (props: Props) => {
             lastName: "",
             phoneNbr: "",
             profilePic: "",
-    
+
         });
 
     const handlePhoneNumberInput = (event: any) => {
@@ -54,8 +54,6 @@ export const AddContactPopup = (props: Props) => {
         props.visibilityHandler();
         resetStates()
     };
-
-   
 
     // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
@@ -93,7 +91,7 @@ export const AddContactPopup = (props: Props) => {
     };
 
     // Adds the contact to the user in the database
-    const addContactDatabase = () => {
+    const addContact = () => {
         if (props.socket != null && foundContact != null) {
             setContactAddedState(true)
             AddFoundContact(props.socket, foundContact, props.contactList, props.phoneNumber, props.setContactList)
@@ -102,32 +100,10 @@ export const AddContactPopup = (props: Props) => {
         }
     }
 
-    // Adds the contact to the user on the frontend 
-    const addContactFrontend = () => {
-        if (foundContact != null) {
-            props.contactList.push(foundContact)
-            props.setContactList(props.contactList)
-            closeAddContactPopup()
-        }
-    }
-
-    // Renders the HTML content of the popup depending on if contact is found or not and when contact is added 
-    const renderPopupContent = () => {
+    // Renders content if user has inputed a faulty number(own, already existing, non-existing)
+    const searchValidationErrors = () => {
         return (
-            <div className="content-column left-buffer">
-               <h3>Lägg till kontakt</h3>
-
-                {/* Neutral */}
-                {neutralPageState &&
-                    <>
-                        <p className="popup-middle-sized-text">Skriv in mobilnumret för den du vill lägga till</p>
-                        <div className="number-input-row">
-                            <TextInput className="text-input w-400" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> 
-                        </div>
-                        <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
-                    </>
-                }
-
+            <>
                 {/* Contact NOT found */}
                 {foundContact == null && !neutralPageState && !contactAddedState &&
                     <>
@@ -135,7 +111,7 @@ export const AddContactPopup = (props: Props) => {
                         <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>
                         <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
                         <div className="number-input-row">
-                            <TextInput className="text-input w-400" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> 
+                            <TextInput className="text-input w-400 top-buffer" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
@@ -146,19 +122,57 @@ export const AddContactPopup = (props: Props) => {
                     <>
                         <p className="popup-error-message">Fel Nummer! </p>
 
-                        {ownNumber ? <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} är ditt egna nummer</p> : 
+                        {ownNumber ? <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} är ditt egna nummer</p> :
                             <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} finns redan i din kontaktlista </p>}
 
                         <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
                         <div className="number-input-row">
-                            <TextInput className="text-input w-400" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> 
+                            <TextInput className="text-input w-400 top-buffer" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
 
+            </>)
+    }
+
+    // Renders feedback when contact added
+    const addContactFeedback = () => {
+        return (
+            <>
+                {foundContact != null && !neutralPageState && contactAddedState && !incorrectNumberState &&
+                    <>
+                        <h4 className="popup-middle-sized-text bottom-buffer"> {foundContact.firstName} {foundContact.lastName} är nu tillagd i din telefonbok </h4>
+                        <SquareButton label="Tillbaka till telefonboken" onClick={closeAddContactPopup} className="save-button handle-contact-button button" />
+                    </>
+                }
+
+            </>
+        )
+    }
+
+    // Renders the HTML content of the popup depending on if contact is found or not and when contact is added 
+    const renderPopupContent = () => {
+        return (
+            <div className="content-column left-buffer">
+                <h3>Lägg till kontakt</h3>
+
+                {/* Neutral */}
+                {neutralPageState &&
+                    <>
+                        <p className="popup-middle-sized-text">Skriv in mobilnumret för den du vill lägga till</p>
+                        <div className="number-input-row">
+                            <TextInput className="text-input w-400 top-buffer" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
+                        </div>
+                        <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
+                    </>
+                }
+
+                {/* When a faulty number has been inputted */}
+                {searchValidationErrors()}
+
                 {/* Contact found */}
-                {foundContact != null && !neutralPageState && !contactAddedState && !incorrectNumberState && 
+                {foundContact != null && !neutralPageState && !contactAddedState && !incorrectNumberState &&
                     <>
                         <div className="contact-found-row">
                             <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="KontaktBild" />
@@ -167,18 +181,11 @@ export const AddContactPopup = (props: Props) => {
                                 <p className="found-contact-number">{foundContact.phoneNbr != "" ? foundContact.phoneNbr : ""}</p>
                             </div>
                         </div>
-                        <SquareButton label="Lägg till kontakt" onClick={addContactDatabase} className="save-button handle-contact-button button" />
+                        <SquareButton label="Lägg till kontakt" onClick={addContact} className="save-button handle-contact-button button" />
                     </>
                 }
 
-                {/* Contact added feedback */}
-                {foundContact != null && !neutralPageState && contactAddedState && !incorrectNumberState &&
-                    <>
-                        <h4 className="popup-middle-sized-text bottom-buffer"> {foundContact.firstName} {foundContact.lastName} är nu tillagd i din telefonbok </h4>
-                        <SquareButton label="Tillbaka till telefonboken" onClick={addContactFrontend} className="save-button handle-contact-button button" />
-                    </>
-                }
-
+                {addContactFeedback()}
             </div>
         );
     };

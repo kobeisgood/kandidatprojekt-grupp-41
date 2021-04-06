@@ -183,9 +183,9 @@ export const AddFoundContact =
     ) => 
     {
     socket.emit('add-searched-contact', contact, loggedInUserNumber);
-    socket.once('contact-added', () => {
-       // contactList.push(contact) 
-       // setContactList(contactList)
+    socket.once('contact-added', (updatedContactList:Contact[]) => {
+        //contactList.push(contact) 
+        setContactList(updatedContactList) // TODO: A contact is added sort of but not in right format! can probably be solved in db function 
     })
 }
 
@@ -200,13 +200,13 @@ export const RemoveFoundContact =
     {
     socket.emit('remove-searched-contact', contact, loggedInUserNumber);
     socket.once('contact-removed', () => {
-        /*var indexToRemove = contactList.indexOf(contact)
+        var indexToRemove = contactList.indexOf(contact)
         if (indexToRemove > -1) {
             contactList.splice(indexToRemove, 1);
         } else {
             console.log("Tried to remove who does not exist?!");
         }
-        setContactList(contactList)*/
+        setContactList(contactList)
     })
 }
 

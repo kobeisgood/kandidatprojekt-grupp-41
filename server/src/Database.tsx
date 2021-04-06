@@ -274,7 +274,10 @@ export const addContactToList = async (contact:User, loggedInUserNumber:string) 
                     contacts: contact.id,
                 },
             }
-        )            
+        )
+
+        let updatedContactList = (await UserModel.findOne({phoneNbr: loggedInUserNumber}).lean()).contacts
+        return updatedContactList
     } catch (err) {
         console.error(err)
         alert("Kontakten kunde inte läggas till!")
@@ -301,7 +304,7 @@ export const addContactToList = async (contact:User, loggedInUserNumber:string) 
                     contacts: contact.id,
                 },
             }
-        )            
+        )           
     } catch (err) {
         console.error(err)
         alert("Kontakten kunde inte tas bort!")
