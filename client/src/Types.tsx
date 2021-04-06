@@ -13,6 +13,11 @@ export interface User {
     callEntries: CallEntry[]
 }
 
+export interface PeerInfo {
+    type: string,
+    content: any
+}
+
 export interface Contact {
     id: UserID,
     firstName: string;
