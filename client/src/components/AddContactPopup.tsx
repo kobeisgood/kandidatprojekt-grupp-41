@@ -28,7 +28,15 @@ export const AddContactPopup = (props: Props) => {
         [faultyNumberDisplayed, setFaultyNumberDisplayed] = useState(""),
         [contactAddedState, setContactAddedState] = useState(false),
         [incorrectNumberState, setIncorrectNumberState] = useState(false),
-        [ownNumber, setOwnNumber] = useState(false)
+        [ownNumber, setOwnNumber] = useState(false),
+        [foundContact, setFoundContact] = useState({
+            id: "",
+            firstName: "",
+            lastName: "",
+            phoneNbr: "",
+            profilePic: "",
+    
+        });
 
     const handlePhoneNumberInput = (event: any) => {
         setPhoneNumberInput(event.target.value);
@@ -47,14 +55,7 @@ export const AddContactPopup = (props: Props) => {
         resetStates()
     };
 
-    const [foundContact, setFoundContact] = useState({
-        id: "",
-        firstName: "",
-        lastName: "",
-        phoneNbr: "",
-        profilePic: "",
-
-    });
+   
 
     // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
