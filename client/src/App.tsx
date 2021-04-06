@@ -62,13 +62,13 @@ export const App = () => {
         localStorage.setItem("me", JSON.stringify(me));
     }, [me]);
 
-    const updateName = (firstName: string, lastName: string, setName: Function) => {
+    const updateName = (firstName: string, lastName: string, setName: Function, setNameChanged: Function) => {
         if (socket !== null && me !== null)
-            UpdateName(socket, me.phoneNbr, firstName, lastName, setName);
+            UpdateName(socket, me.phoneNbr, firstName, lastName, setName, setNameChanged);
     };
-    const updateNbr = (number: string, setNbr: Function) => {
+    const updateNbr = (number: string, setNbr: Function, setNumberChanged: Function) => {
         if (socket !== null && me !== null)
-            UpdateNbr(socket, me.phoneNbr, number, setNbr);
+            UpdateNbr(socket, me.phoneNbr, number, setNbr, setNumberChanged);
     };
     const updatePassword = (oldPassword: string, newPassword: string, setPasswordChanged: Function) => {
         if (socket !== null && me !== null)
@@ -135,22 +135,22 @@ export const App = () => {
             }
 
             <Switch>
-                <Route path="/login" exact component={() => {
+                <Route path="/login" exact render={() => {
                     if (prevLoginInfo() === null)
                         return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} listenForCalls={listenForCalls} />
                     else
                         return <Redirect push to="/dashboard" />
                 }} />
-                <Route path="/" exact component={() => <StartView />} />
-                <Route path="/dashboard" exact component={() => <Dashboard setMe={setMe} user={me} />} />
-                <Route path="/createaccount" exact component={() => <CreateAccountView/>} />
-                <Route path="/profile" exact component={() => <ProfileView user={me} />} />
+                <Route path="/" exact render={() => <StartView />} />
+                <Route path="/dashboard" exact render={() => <Dashboard setMe={setMe} user={me} />} />
+                <Route path="/createaccount" exact render={() => <CreateAccountView/>} />
+                <Route path="/profile" exact render={() => <ProfileView user={me} />} />
                 <Route path="/profile/changepicture" exact component={ChangePictureView} />
-                <Route path="/profile/changepassword" exact component={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
-                <Route path="/profile/changenumber" exact component={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
-                <Route path="/profile/changename" exact component={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
-                <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
-                <Route path="/call" component={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer}/>} />
+                <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
+                <Route path="/profile/changenumber" exact render={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
+                <Route path="/profile/changename" exact render={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
+                <Route path="/phonebook" render={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
+                <Route path="/call" render={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer}/>} />
 
                 {/* REDIRECTS */}
                 {prevLoginInfo() === null && <Redirect push to="/dashboard" />}

@@ -1,7 +1,7 @@
 /* View for the changing name 'Ändra namn'
 Authors: Charlie and Hanna 
 */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/profile.css';
 import '../css/textinput.css';
 import hjordis from "../images/hjordis.png"
@@ -14,7 +14,7 @@ import { SaveButton } from '../components/SaveButton';
 interface Props {
     me: User | null
     setMe: Function
-    updateName: Function
+    updateName: (firstName: string, lastName: string, setName: Function, setNameChanged: Function) => void
 }
 
 
@@ -31,14 +31,16 @@ export const ChangeNameView = (props: Props) => {
                 callEntries: props.me.callEntries
             });
     }
+
     const
         [firstNameInp, setFirstNameInp] = useState(""),
-        [lastNameInp, setLastNameInp] = useState("");
-                
+        [lastNameInp, setLastNameInp] = useState(""),
+        [nameChanged, setNameChanged] = useState(false);
+
     const
         handleFirstNameInp = (event: any) => { setFirstNameInp(event.target.value); },
         handleLastNameInp = (event: any) => { setLastNameInp(event.target.value); };
-    
+
     return (
         <div>
             <header className="profile-header-container profile-header">
@@ -59,7 +61,12 @@ export const ChangeNameView = (props: Props) => {
                 <TextInput className="text-input" type="text" label="Förnamn: " placeholder={props.me ? props.me.firstName : ""} onChange={handleFirstNameInp} />
                 <TextInput className="text-input" type="text" label="Efternamn: " placeholder={props.me ? props.me.lastName : ""} onChange={handleLastNameInp} />
             </div>
-            <SaveButton label="Spara namn" onClick={() => props.updateName(firstNameInp, lastNameInp, setName)} />
+            {/* Feedback for showing that the name has been updated */}
+            {nameChanged ?
+                <div className="update-container">
+                    <h3 className="update-text">Namn uppdaterat!</h3>
+                </div> : <SaveButton label="Spara namn" onClick={() => props.updateName(firstNameInp, lastNameInp, setName, setNameChanged)} />
+            }
         </div>
     );
 }
