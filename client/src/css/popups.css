@@ -30,6 +30,14 @@
     margin-bottom: 20px;
 }
 
+.left-buffer{
+    margin-left: 40px;
+}
+
+.w-400{
+    width: 400px
+}
+
 /* Stuff for Add Contact Popup */ 
 
 .content-column{
@@ -43,9 +51,8 @@
     display: flex;
     flex-flow: row wrap;
     width: 100%;
-    font-size: 1.5rem;
-    text-align: center;
-    align-self: center;
+    justify-content: center;
+    align-items: center ;
 }
 
 .handle-contact-button {
@@ -84,6 +91,7 @@
 .found-contact-number {
     font-size: 48px;
 }
+
 
 /* Stuff for Delete Contact Popup */ 
 

@@ -108,9 +108,8 @@ export const AddFoundContact =
     {
     socket.emit('add-searched-contact', contact, loggedInUserNumber);
     socket.once('contact-added', () => {
-        contactList.push(contact) // TODO contact added on frontend even though its not added in db
-        setContactList(contactList)
-        console.log(contactList)
+       // contactList.push(contact) 
+       // setContactList(contactList)
     })
 }
 
@@ -125,14 +124,13 @@ export const RemoveFoundContact =
     {
     socket.emit('remove-searched-contact', contact, loggedInUserNumber);
     socket.once('contact-removed', () => {
-        var indexToRemove = contactList.indexOf(contact)
+        /*var indexToRemove = contactList.indexOf(contact)
         if (indexToRemove > -1) {
             contactList.splice(indexToRemove, 1);
         } else {
             console.log("Tried to remove who does not exist?!");
         }
-        setContactList(contactList)
-        console.log(contactList)
+        setContactList(contactList)*/
     })
 }
 
