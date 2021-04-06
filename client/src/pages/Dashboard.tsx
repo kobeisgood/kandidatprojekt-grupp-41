@@ -32,7 +32,7 @@ export const Dashboard = (props: Props) => {
     const clearLoginInfo = () => {
         props.setMe(null);
         localStorage.clear();
-        history.push("/");
+        history.push("/login");
     };
 
     return (
