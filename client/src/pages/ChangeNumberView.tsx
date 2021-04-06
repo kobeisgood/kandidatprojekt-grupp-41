@@ -1,7 +1,7 @@
 /* View for the changing name 'Ändra namn'
 Authors: Charlie and Hanna 
 */
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/profile.css';
 import hjordis from "../images/hjordis.png"
 import { User } from '../Types';
@@ -11,14 +11,36 @@ import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 
 interface Props {
-    user: User | null
+    me: User | null
+    setMe: Function
+    updateNbr: (numberInp: string, setNumber: Function, setNumberChanged: Function) => void
 }
 
 export const ChangeNumberView = (props: Props) => {
-    // Event handler for clicking back button and the change name button etc. 
-    const ButtonNameClicked = () => {
+    const setNumber = (phoneNbr: string) => {
+        if (props.me !== null) {
+            props.setMe({
+                id: props.me.id,
+                firstName: props.me.firstName,
+                lastName: props.me.lastName,
+                phoneNbr: phoneNbr,
+                profilePic: props.me.profilePic,
+                contacts: props.me.contacts,
+                callEntries: props.me.callEntries
+            });
+        }
+    };
 
-    }
+    const
+        [numberInp, setNumberInp] = useState(""),
+        [numberRepeatInp, setNumberRepeatInp] = useState(""),
+        [numberChanged, setNumberChanged] = useState(false);
+
+    const
+        handleNumberInp = (event: any) => { setNumberInp(event.target.value); },
+        handleNumberRepeatInp = (event: any) => { setNumberRepeatInp(event.target.value); };
+
+    const isInpSame = () => numberInp === numberRepeatInp;
 
     return (
         <div>
@@ -32,19 +54,24 @@ export const ChangeNumberView = (props: Props) => {
             <div className="profile-big-info-container">
                 <img src={hjordis} alt="profilbild" />
                 <div className="profile-info-contact-container">
-                    <h1 className="profile-name">{props.user ? props.user.firstName + " " + props.user.lastName : ""}</h1>
-                    <h1 className="profile-number">{props.user ? props.user.phoneNbr : ""}</h1>
+                    <h1 className="profile-name">{props.me ? props.me.firstName + " " + props.me.lastName : ""}</h1>
+                    <h1 className="profile-number">{props.me ? props.me.phoneNbr : ""}</h1>
                 </div>
             </div>
             <div className="change-number-container">
                 <div>
-                    <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..." onChange={() => console.log("Klick!")} />
+                    <TextInput className="text-input-number" type="tel" label="Nytt mobilnummer: " placeholder="Skriv nytt mobilnummer..." onChange={handleNumberInp} />
                 </div>
                 <div>
-                    <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={() => console.log("Klick!")} />
+                    <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={handleNumberRepeatInp} />
                 </div>
             </div>
-            <SaveButton label="Spara nummer" onClick={ButtonNameClicked} linkTo="/profile" />
+            {/* Feedback for showing that the number has been updated */}
+            {numberChanged ?
+                <div className="update-container">
+                    <h3 className="update-text">Nummer uppdaterat!</h3>
+                </div> : <SaveButton label="Spara nummer" onClick={() => isInpSame() ? props.updateNbr(numberInp, setNumber, setNumberChanged) : console.log("Number does not match")} />
+            }
         </div>
     );
 }

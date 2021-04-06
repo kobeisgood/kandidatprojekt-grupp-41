@@ -1,9 +1,8 @@
 import { Socket } from 'socket.io';
 import { CallData, User } from './Types';
 import { InitServer } from './Init';
-import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists } from './Database';
-import { connectedUsers, loginUser, userIsLoggedIn, getUserId } from './UserManagement';
-
+import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword, authenticate } from './Database';
+import { connectedUsers, loginUser, userIsLoggedIn, getUserId, logoutUser } from './UserManagement';
 
 /* INITIATION */
 const io = InitServer(); // Init basic server requirements
@@ -21,7 +20,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             loginUser(userId, phone, psw).then((user) => {
                 if (user !== null) {
                     console.log("\nUser with ID " + userId + " successfully logged in.");
-                    
+
                     socket.emit('login-response', {
                         id: socket.id,
                         firstName: user.firstName,
@@ -55,6 +54,52 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     });
 
+    socket.on('update-name', (user: { phoneNbr: string, firstName: string, lastName: string }) => {
+        updateName(user.phoneNbr, user.firstName, user.lastName)
+            .then(() => {
+                console.log("Name update registered!");
+                socket.emit("update-name-result", true);
+            })
+            .catch(() => {
+                console.error("Name update unsuccessful");
+                socket.emit('update-name-result', false);
+            });
+    });
+
+    socket.on('update-nbr', (user: { phoneNbr: string, newNbr: string }) => {
+        updateNbr(user.phoneNbr, user.newNbr)
+            .then(() => {
+                console.log("Number update registered!");
+                socket.emit("update-nbr-result", true);
+            })
+            .catch(() => {
+                console.error("Number update unsuccessful");
+                socket.emit('update-nbr-result', false);
+            });
+    });
+
+    socket.on('update-password', (user: { phoneNbr: string, oldPassword: string, newPassword: string }) => {
+        authenticate(user.phoneNbr, user.oldPassword)
+            .then((result) => {
+                if (result !== null) {
+                updatePassword(user.phoneNbr, user.newPassword)
+                    .then(() => {
+                        console.log("Password update registered!");
+                        socket.emit("update-password-result", true);
+                    })
+                    .catch(() => {
+                        console.error("Password update unsuccesful");
+                        socket.emit('update-password-result', false);
+                    });
+                }
+                else (socket.emit('update-password-result', false))
+            })
+            .catch(() => {
+                console.error("Password wrong");
+                socket.emit('update-password-result', false);
+            });
+    });
+
     socket.on('find-contact-number', (phoneNumber: string) => {
         numberExists(phoneNumber).then((result) => {
             if (result) {
@@ -62,18 +107,18 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             } else {
                 socket.emit('number-not-found', result)
             }
-            
+
         });
     });
 
-    socket.on('get-searched-contact', (phoneNumber:string) => {
+    socket.on('get-searched-contact', (phoneNumber: string) => {
         getContactFromNbr(phoneNumber).then((contact) => {
             console.log(contact)
             socket.emit('got-contact', contact)
         })
-        .catch(() => {
-            console.error("Contact could not be found!")
-        });
+            .catch(() => {
+                console.error("Contact could not be found!")
+            });
     })
 
     socket.on('add-searched-contact', (contact:User, loggedInUserNumber:string) => {

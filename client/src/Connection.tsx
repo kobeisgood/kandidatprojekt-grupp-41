@@ -72,7 +72,83 @@ export const FindContactNumber = (
     socket.on('number-not-found', () => {
         setContactExists(false);
     })
-}
+};
+
+/**
+ * Retrieves information that the update of name is successful or not. 
+ * 
+ * @param socket 
+ * @param phoneNbr 
+ * @param firstName 
+ * @param lastName 
+ * @param setName 
+ */
+export const UpdateName = (
+    socket: SocketIOClient.Socket,
+    phoneNbr: string,
+    firstName: string,
+    lastName: string,
+    setName: Function,
+    setNameChanged: Function
+) => {
+    socket.emit('update-name', { phoneNbr: phoneNbr, firstName: firstName, lastName: lastName });
+    socket.on('update-name-result', (result: boolean) => {
+        if (result) {
+            setName(firstName, lastName);
+            setNameChanged(true);
+        } else
+            console.error("Name update unsuccessful");
+    });
+};
+/**
+ * Retrieves information that the update of number is successful or not. 
+ * 
+ * @param socket 
+ * @param oldNbr 
+ * @param newNbr 
+ * @param setNbr 
+ */
+export const UpdateNbr = (
+    socket: SocketIOClient.Socket,
+    oldNbr: string,
+    newNbr: string,
+    setNbr: Function,
+    setNumberChanged: Function
+) => {
+    socket.emit('update-nbr', { phoneNbr: oldNbr, newNbr: newNbr });
+    socket.on('update-nbr-result', (result: boolean) => {
+        if (result) {
+            setNbr(newNbr);
+            setNumberChanged(true);
+        } else
+            console.error("Number update unsuccessful");
+    });
+};
+
+/**
+ * Retrieves information that the update of password is successful or not. 
+ * 
+ * @param socket 
+ * @param phoneNbr 
+ * @param oldPassword 
+ * @param newPassword 
+ * @param setPasswordChanged 
+ */
+export const UpdatePassword = (
+    socket: SocketIOClient.Socket,
+    phoneNbr: string,
+    oldPassword: string,
+    newPassword: string,
+    setPasswordChanged: Function
+) => {
+    socket.emit('update-password', { phoneNbr: phoneNbr, oldPassword: oldPassword, newPassword: newPassword });
+    socket.on('update-password-result', (result: boolean) => {
+        if (result)
+            setPasswordChanged(true);
+        else
+            console.error("Password update unsuccessful");
+    });
+};
 
 /**
  * Retrieves a user from the db given a phone number 
@@ -86,7 +162,7 @@ export const GetSearchedContact = (socket: SocketIOClient.Socket, phoneNumber: s
     socket.on('got-contact', (contact: Contact) => {
         setFoundContact(contact)
         console.log(contact)
-    } )
+    })
 }
 
 /**
