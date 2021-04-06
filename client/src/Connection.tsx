@@ -173,42 +173,40 @@ export const GetSearchedContact = (socket: SocketIOClient.Socket, phoneNumber: s
  * @param contactList The current list of the logged in users contacts
  * @param loggedInUserNumber The number of the logged in user 
  */
-export const AddFoundContact = 
+export const AddFoundContact =
     (
-    socket:SocketIOClient.Socket, 
-    contact:Contact, 
-    contactList:Contact[], 
-    loggedInUserNumber:string,
-    setContactList:Function
-    ) => 
-    {
-    socket.emit('add-searched-contact', contact, loggedInUserNumber);
-    socket.once('contact-added', (updatedContactList:Contact[]) => {
-        //contactList.push(contact) 
-        setContactList(updatedContactList) // TODO: A contact is added sort of but not in right format! can probably be solved in db function 
-    })
-}
+        socket: SocketIOClient.Socket,
+        contact: Contact,
+        contactList: Contact[],
+        loggedInUserNumber: string,
+        setContactList: Function
+    ) => {
+        socket.emit('add-searched-contact', contact, loggedInUserNumber);
+        socket.once('contact-added', (realUpdatedContactList: Contact[]) => {
+            //contactList.push(contact) 
+            setContactList(realUpdatedContactList) // TODO: A contact is added sort of but not in right format! can probably be solved in db function 
+        })
+    }
 
-export const RemoveFoundContact = 
+export const RemoveFoundContact =
     (
-    socket:SocketIOClient.Socket, 
-    contact:Contact, 
-    contactList:Contact[], 
-    loggedInUserNumber:string,
-    setContactList:Function
-    ) => 
-    {
-    socket.emit('remove-searched-contact', contact, loggedInUserNumber);
-    socket.once('contact-removed', () => {
-        var indexToRemove = contactList.indexOf(contact)
-        if (indexToRemove > -1) {
-            contactList.splice(indexToRemove, 1);
-        } else {
-            console.log("Tried to remove who does not exist?!");
-        }
-        setContactList(contactList)
-    })
-}
+        socket: SocketIOClient.Socket,
+        contact: Contact,
+        contactList: Contact[],
+        loggedInUserNumber: string,
+        setContactList: Function
+    ) => {
+        socket.emit('remove-searched-contact', contact, loggedInUserNumber);
+        socket.once('contact-removed', (realUpdatedContactList: Contact[]) => {
+            /*var indexToRemove = contactList.indexOf(contact)
+            if (indexToRemove > -1) {
+                contactList.splice(indexToRemove, 1);
+            } else {
+                console.log("Tried to remove who does not exist?!");
+            }*/
+            setContactList(realUpdatedContactList)
+        })
+    }
 
 export const RequestUserList = (socket: SocketIOClient.Socket, update: Function) => {
     socket.emit('request-userList');
@@ -416,7 +414,7 @@ export const CallHangUp = (
     redir: Function
 ) => {
     setCallAccepted(false);
-    setPeer({ number: "", name: ""});
+    setPeer({ number: "", name: "" });
     setPeerSignal({});
     setOutgoingCall(false);
     setIncomingCall(false);

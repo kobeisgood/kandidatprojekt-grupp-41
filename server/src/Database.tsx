@@ -263,21 +263,34 @@ export const getContactFromNbr = async (nbr: string) => {
  * @param loggedInUserNumber Used to find correct user
  * @returns TODO return the user to update frontend as well?
  */
-export const addContactToList = async (contact:User, loggedInUserNumber:string) => {
-    try{
+export const addContactToList = async (contact: User, loggedInUserNumber: string) => {
+    try {
         await UserModel.findOneAndUpdate(
-            { 
+            {
                 phoneNbr: loggedInUserNumber
-            }, 
-            { 
+            },
+            {
                 $addToSet: { // $addToSet makes sure that same contact can't be added again
                     contacts: contact.id,
                 },
             }
         )
+        let updatedContactList = (await UserModel.findOne({ phoneNbr: loggedInUserNumber }).lean()).contacts
 
-        let updatedContactList = (await UserModel.findOne({phoneNbr: loggedInUserNumber}).lean()).contacts
-        return updatedContactList
+        let realUpdatedContactList = []
+        for (let i = 0; i < updatedContactList.length; i++) {
+            const contact = await UserModel.findOne({ _id: updatedContactList[i] }).lean();
+
+            realUpdatedContactList.push({
+                id: contact._id,
+                firstName: contact.firstName,
+                lastName: contact.lastName,
+                phoneNbr: contact.phoneNbr,
+                profilePic: contact.profilePic
+            });
+        }
+
+        return realUpdatedContactList
     } catch (err) {
         console.error(err)
         alert("Kontakten kunde inte läggas till!")
@@ -293,18 +306,35 @@ export const addContactToList = async (contact:User, loggedInUserNumber:string) 
  * @param loggedInUserNumber Used to find correct user
  * @returns TODO return the user to update frontend as well?
  */
- export const removeContactFromList = async (contact:User, loggedInUserNumber:string) => {
-    try{
+export const removeContactFromList = async (contact: User, loggedInUserNumber: string) => {
+    try {
         await UserModel.findOneAndUpdate(
-            { 
+            {
                 phoneNbr: loggedInUserNumber
-            }, 
-            { 
+            },
+            {
                 $pull: {
                     contacts: contact.id,
                 },
             }
-        )           
+        )
+
+        let updatedContactList = (await UserModel.findOne({ phoneNbr: loggedInUserNumber }).lean()).contacts
+
+        let realUpdatedContactList = []
+        for (let i = 0; i < updatedContactList.length; i++) {
+            const contact = await UserModel.findOne({ _id: updatedContactList[i] }).lean();
+
+            realUpdatedContactList.push({
+                id: contact._id,
+                firstName: contact.firstName,
+                lastName: contact.lastName,
+                phoneNbr: contact.phoneNbr,
+                profilePic: contact.profilePic
+            });
+        }
+        
+        return realUpdatedContactList
     } catch (err) {
         console.error(err)
         alert("Kontakten kunde inte tas bort!")
