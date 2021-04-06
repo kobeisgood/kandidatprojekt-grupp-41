@@ -26,10 +26,7 @@ export const AddContactPopup = (props: Props) => {
         [neutralPageState, setNeutralPageState] = useState(true),
         [phoneNumberInput, setPhoneNumberInput] = useState(""),
         [faultyNumberDisplayed, setFaultyNumberDisplayed] = useState(""),
-        [contactAddedState, setContactAddedState] = useState(false),
-        [incorrectNumberState, setIncorrectNumberState] = useState(false),
-        [ownNumberState, setOwnNumberState] = useState(false),
-        [existingNumberState, setExistingNumberState] = useState(false)
+        [contactAddedState, setContactAddedState] = useState(false)
 
     const handlePhoneNumberInput = (event: any) => {
         setPhoneNumberInput(event.target.value);
@@ -54,56 +51,37 @@ export const AddContactPopup = (props: Props) => {
     // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
 
+        setFaultyNumberDisplayed(phoneNumberInput)
+
         let contactNumber: string = phoneNumberInput
 
 
         // When you try to add yourself
         if (contactNumber == props.phoneNumber) {
-            setOwnNumberState(true)
-            setIncorrectNumberState(true)
             alert("Du försöker lägga till dig själv dumhuve, försök med ett annat nummer")
             return
         }
 
         // When you try to add someone you already have in your contacts
-        //let foundBadNumber: boolean = false;
+        let foundBadNumber: boolean = false;
         let i;
         for (i = 0; i < props.contactList.length; i++) {
             var contact = props.contactList[i]
             if (contact.phoneNbr == contactNumber) {
-                setExistingNumberState(true)
-                setIncorrectNumberState(true)
-                //foundBadNumber = true;
+                foundBadNumber = true;
                 alert("Den här kontakten finns redan i din kontaktlista.... herrejevlar kmr du int håg nåting?")
-                //break;
+                break;
             }
         }
-        /*if (existingNumberState) {
+        if (foundBadNumber) {
             return
-        }*/
-
-        setFaultyNumberDisplayed(phoneNumberInput)
+        }
 
         if (props.socket != null) {
             GetSearchedContact(props.socket, contactNumber, setFoundContact)
             setNeutralPageState(false)
-        } 
+        }
     };
-
-    const wrongNumberValidation = () => {
-        return (
-            <>
-                {ownNumberState && 
-                <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} är ditt egna nummer </p>}
-
-                {existingNumberState && 
-                <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} finns redan i din kontaktlista </p>}
-
-                {!ownNumberState && !existingNumberState &&
-                <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>}
-            </>
-        )
-    }
 
     // Adds the contact to the user in the database
     const addContactDatabase = () => {
@@ -142,10 +120,10 @@ export const AddContactPopup = (props: Props) => {
                 }
 
                 {/* Contact NOT found */}
-                {foundContact == null && !neutralPageState && !contactAddedState && incorrectNumberState &&
+                {foundContact == null && !neutralPageState && !contactAddedState &&
                     <>
                         <p className="popup-error-message">Fel Nummer! </p>
-                        {wrongNumberValidation()}
+                        <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>
                         <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
                         <div className="number-input-row">
                             <TextInput className="text-input w-400" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> 
