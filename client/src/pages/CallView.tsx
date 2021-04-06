@@ -27,6 +27,8 @@ export const CallView = (props: Props) => {
     const [peerMicState, setPeerMicState] = useState(true);
 
     useEffect(() => {
+
+        /* Peer recevies data */
         props.peer.on('data', (data: string) => {
             let parsedData: PeerInfo = JSON.parse(data);
             
@@ -39,7 +41,13 @@ export const CallView = (props: Props) => {
         });
     },[]);
 
+    /**
+     * Handler for mic button
+     */
+
     const micClicked = () => {
+
+        /* Sends the current state of mic to peer */
         props.peer.send(JSON.stringify({
             type: 'mic-state',
             content: !micState
@@ -59,6 +67,7 @@ export const CallView = (props: Props) => {
 
                 {!peerMicState && 
                 <p className="function-off-container mic-muted-text">
+                     {/* Checks if first name ends with 's' */}
                     {props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 's' ? 
                         props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " mikrofon är avstängd" 
                     : 
