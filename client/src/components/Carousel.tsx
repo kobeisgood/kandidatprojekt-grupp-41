@@ -11,11 +11,8 @@ import rightCarouselButton from '../icons/carousel-button-right.svg';
 
 import '../css/carousel.css';
 
-interface Props {
-    
-}
 
-export const Carousel = (props: Props) => {
+export const Carousel = () => {
     const carouselRef = useRef<HTMLDivElement>(null);
 
     const scrollCarousel = (scrollRight: Boolean) => {
