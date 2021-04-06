@@ -261,7 +261,7 @@ export const getContactFromNbr = async (nbr: string) => {
  * 
  * @param contact The contact to be added
  * @param loggedInUserNumber Used to find correct user
- * @returns TODO return the user to update frontend as well?
+ * @returns The updated list
  */
 export const addContactToList = async (contact: User, loggedInUserNumber: string) => {
     try {
@@ -304,7 +304,7 @@ export const addContactToList = async (contact: User, loggedInUserNumber: string
  * 
  * @param contact The contact to be added
  * @param loggedInUserNumber Used to find correct user
- * @returns TODO return the user to update frontend as well?
+ * @returns The updated list
  */
 export const removeContactFromList = async (contact: User, loggedInUserNumber: string) => {
     try {
@@ -333,7 +333,7 @@ export const removeContactFromList = async (contact: User, loggedInUserNumber: s
                 profilePic: contact.profilePic
             });
         }
-        
+
         return realUpdatedContactList
     } catch (err) {
         console.error(err)

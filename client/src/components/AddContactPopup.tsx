@@ -142,8 +142,8 @@ export const AddContactPopup = (props: Props) => {
             <>
                 {foundContact != null && !neutralPageState && contactAddedState && !incorrectNumberState &&
                     <>
-                        <h4 className="popup-middle-sized-text bottom-buffer"> {foundContact.firstName} {foundContact.lastName} är nu tillagd i din telefonbok </h4>
-                        <SquareButton label="Tillbaka till telefonboken" onClick={closeAddContactPopup} className="save-button handle-contact-button button" />
+                        <h4 className="popup-middle-sized-text bottom-buffer right-buffer"> {foundContact.firstName} {foundContact.lastName} är nu tillagd i din telefonbok </h4>
+                        <SquareButton label="Tillbaka till telefonboken" onClick={closeAddContactPopup} className="save-button handle-contact-button button right-buffer" />
                     </>
                 }
 
@@ -155,7 +155,8 @@ export const AddContactPopup = (props: Props) => {
     const renderPopupContent = () => {
         return (
             <div className="content-column left-buffer">
-                <h3>Lägg till kontakt</h3>
+                {foundContact != null && !neutralPageState && contactAddedState && !incorrectNumberState ?
+                <h3 className="right-buffer">Lägg till kontakt</h3>: <h3>Lägg till kontakt</h3> }
 
                 {/* Neutral */}
                 {neutralPageState &&

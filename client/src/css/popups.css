@@ -14,7 +14,8 @@
 }
 
 .cancel-button {
-    float:right;
+    float: right;
+    z-index:10;
 }
 
 .cancel-button:hover {
@@ -38,6 +39,10 @@
     margin-top: 40px;
 }
 
+.right-buffer {
+    margin-right: 40px;
+}
+
 .w-400{
     width: 400px
 }
@@ -47,8 +52,8 @@
 .content-column{
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
-    height: 450px; /* Probably needs to be changed to make responsive, value set for testing purposes atm */
+    justify-content: space-evenly; 
+    height: 500px; /* Probably needs to be changed to make responsive, value set for testing purposes atm */
 }
 
 .number-input-row {
@@ -96,6 +101,29 @@
     font-size: 48px;
 }
 
+@media only screen and (max-width: 1160px) {
+    .number-input-row {
+        margin-top: 30px;
+    }
+
+    .popup-middle-sized-text {
+        margin-top: 10px;
+    }
+
+    .contact-found-row{
+        flex-flow: column wrap;
+        justify-content: center;
+    }
+
+    .contact-found-info-col{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content-column{
+        height: 600px;
+    }
+  }
 
 /* Stuff for Delete Contact Popup */ 
 
