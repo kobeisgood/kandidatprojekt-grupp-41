@@ -56,8 +56,12 @@ export const ChangeNameView = (props: Props) => {
                 </div>
             </div>
             <div className="change-name-container">
+                <div>
                 <TextInput className="text-input" type="text" label="Förnamn: " placeholder={props.me ? props.me.firstName : ""} onChange={handleFirstNameInp} />
+                </div>
+                <div>
                 <TextInput className="text-input" type="text" label="Efternamn: " placeholder={props.me ? props.me.lastName : ""} onChange={handleLastNameInp} />
+                </div>
             </div>
             <SaveButton label="Spara namn" onClick={() => props.updateName(firstNameInp, lastNameInp, setName)} />
         </div>
