@@ -60,12 +60,10 @@ export const App = () => {
             e.preventDefault();
             if (e)
                 e.returnValue = ''; // Legacy method for cross browser support
-                
+
             return ''; // Legacy method for cross browser support
         };
-    }, []);
 
-    useEffect(() => {
         setMe(prevLoginInfo());
     }, []);
 
