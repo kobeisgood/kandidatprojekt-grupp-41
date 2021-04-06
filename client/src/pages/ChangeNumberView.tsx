@@ -66,6 +66,7 @@ export const ChangeNumberView = (props: Props) => {
                     <TextInput className="text-input-number" type="tel" label="Återupprepa mobilnummer: " placeholder="Återupprepa mobilnummer..." onChange={handleNumberRepeatInp} />
                 </div>
             </div>
+            {/* Feedback for showing that the number has been updated */}
             {numberChanged ?
                 <div className="update-container">
                     <h3 className="update-text">Nummer uppdaterat!</h3>

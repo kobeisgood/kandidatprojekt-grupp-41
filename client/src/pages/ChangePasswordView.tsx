@@ -52,6 +52,7 @@ export const ChangePasswordView = (props: Props) => {
                     <TextInput className="text-input-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa nytt lösenord..." onChange={handlePasswordRepeatAgainInp} />
                 </div>
             </div>
+            {/* Feedback for showing that the password has been updated */}
             {passwordChanged ?
                 <div className="update-container">
                     <h3 className="update-text">Lösenord uppdaterat!</h3>

@@ -61,6 +61,7 @@ export const ChangeNameView = (props: Props) => {
                 <TextInput className="text-input" type="text" label="Förnamn: " placeholder={props.me ? props.me.firstName : ""} onChange={handleFirstNameInp} />
                 <TextInput className="text-input" type="text" label="Efternamn: " placeholder={props.me ? props.me.lastName : ""} onChange={handleLastNameInp} />
             </div>
+            {/* Feedback for showing that the name has been updated */}
             {nameChanged ?
                 <div className="update-container">
                     <h3 className="update-text">Namn uppdaterat!</h3>
