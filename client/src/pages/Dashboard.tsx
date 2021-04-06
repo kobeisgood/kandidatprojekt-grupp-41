@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
 import { User } from '../Types';
-import { socket, Logout } from '../Connection';
+import { Logout } from '../Connection';
 
 import '../css/start-view.css';
 import '../css/buttons.css';
@@ -37,9 +37,6 @@ export const Dashboard = (props: Props) => {
 
     return (
         <div className="dashboard-full-page-container">
-            {/* TODO
-                - Add log out functionality on click
-            */}
             <div className="log-out-button-container">
                 <SquareButton label="Logga ut" onClick={logOut} icon={logOutIcon} className="log-out-button" />
             </div>
