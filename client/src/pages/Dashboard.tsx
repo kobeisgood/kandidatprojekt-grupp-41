@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
 import { User } from '../Types';
+import { socket, Logout } from '../Connection';
 
 import '../css/start-view.css';
 import '../css/buttons.css';
@@ -16,14 +17,19 @@ import keypadIcon from '../icons/keypad-icon.svg';
 import logOutIcon from '../icons/log-out-icon.svg';
 
 interface Props {
+    me: User | null;
     setMe: Function;
-    user: User | null;
 }
 
 export const Dashboard = (props: Props) => {
     const history = useHistory();
 
     const logOut = () => {
+        if (props.me !== null)
+            Logout(props.me.phoneNbr, clearLoginInfo);
+    };
+
+    const clearLoginInfo = () => {
         props.setMe(null);
         localStorage.clear();
         history.push("/");
@@ -39,7 +45,7 @@ export const Dashboard = (props: Props) => {
             </div>
 
             <div className="start-view-flexbox-container">
-                <h1 className="welcome-text">Välkommen, {props.user ? props.user.firstName + "!": ""}</h1>
+                <h1 className="welcome-text">Välkommen, {props.me ? props.me.firstName + "!": ""}</h1>
                 <div className="start-view-button-container">
                     {/* onClick prop passes empty function since it already has a link */}
                     <div className="page-navigation-button-container"><SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" /></div>

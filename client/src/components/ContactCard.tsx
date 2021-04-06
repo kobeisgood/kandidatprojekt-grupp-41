@@ -17,7 +17,6 @@ interface Props {
     removeContactState: boolean;
     contact: Contact | null,
     onCall: Function,
-    socket: SocketIOClient.Socket | null,
     contactList: Contact[], 
     phoneNumber: string,
     setContactList: Function
@@ -48,7 +47,6 @@ export const ContactCard = (props: Props) => {
                 <DeleteContactPopup 
                 visibilityHandler={removeContactVisibleHandler} 
                 contact={props.contact}
-                socket={props.socket} 
                 contactList={props.contactList} 
                 phoneNumber={props.phoneNumber} 
                 setContactList={props.setContactList}

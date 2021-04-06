@@ -9,8 +9,6 @@ import '../css/login-view.css';
 
 
 interface Props {
-    socket: SocketIOClient.Socket | null;
-    setSocket: Function;
     me: User | null;
     setMe: Function;
     listenForCalls: Function;
@@ -29,9 +27,7 @@ export const LoginView = (props: Props) => {
     const redir = () => { history.push("/dashboard"); }; 
 
     const attemptLogin = () => {
-        props.setSocket(
-            Login(phoneInp, passwordInp, props.setMe, redir, props.listenForCalls)
-        );
+        Login(phoneInp, passwordInp, props.setMe, redir, props.listenForCalls)
     };
 
     return (

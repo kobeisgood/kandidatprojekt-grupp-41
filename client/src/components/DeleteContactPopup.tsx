@@ -1,13 +1,13 @@
-import '../css/call.css';
-import '../css/buttons.css';
-import '../css/popups.css';
-import DarkCrossIcon from '../icons/dark-cross-icon.svg';
 import { Contact } from '../Types';
 import { RemoveFoundContact } from '../Connection';
 import { SquareButton } from './SquareButton';
 
+import '../css/call.css';
+import '../css/buttons.css';
+import '../css/popups.css';
+import DarkCrossIcon from '../icons/dark-cross-icon.svg';
+
 interface Props {
-    socket: SocketIOClient.Socket | null,
     visibilityHandler: Function
     contactList: Contact[],
     phoneNumber: string,
@@ -16,20 +16,17 @@ interface Props {
 }
 
 export const DeleteContactPopup = (props: Props) => {
-
     // Closes the delete contact popup
     const closeDeleteContactPopup = () => {
         props.visibilityHandler()
     }
 
     const deleteContact = () => {
-        if (props.socket != null && props.contact != null) {
-            RemoveFoundContact(props.socket, props.contact, props.contactList, props.phoneNumber, props.setContactList)
-            closeDeleteContactPopup()
-        } else {
-            console.log('No such contact!')
-        }
-
+        if (props.contact != null) {
+            RemoveFoundContact(props.contact, props.contactList, props.phoneNumber, props.setContactList);
+            closeDeleteContactPopup();
+        } else
+            console.log("No such contact!");
     }
 
     return (
@@ -45,8 +42,6 @@ export const DeleteContactPopup = (props: Props) => {
 
                 </div>
             </div>
-
         </div>
-
-    )
-}
+    );
+};

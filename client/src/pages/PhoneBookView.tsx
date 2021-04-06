@@ -17,7 +17,6 @@ import { SquareButton } from '../components/SquareButton';
 
 interface Props {
     contactList: Contact[]
-    socket: SocketIOClient.Socket | null,
     onCall: Function,
     phoneNumber: string,
     setContactList:Function
@@ -60,16 +59,15 @@ export const PhoneBookView = (props: Props) => {
                     {props.contactList.map((contact: Contact) => {
                         return (
                             <ContactCard
-                            key={contact.id}
-                            contact={contact}
-                            removeContactState={removeContactState}
-                            onCall={() => {
-                                props.setPeer({number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName}); props.onCall(contact.phoneNbr);
-                            }}
-                            socket={props.socket} 
-                            contactList={props.contactList} 
-                            phoneNumber={props.phoneNumber} 
-                            setContactList={props.setContactList}  
+                                key={contact.id}
+                                contact={contact}
+                                removeContactState={removeContactState}
+                                onCall={() => {
+                                    props.setPeer({number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName}); props.onCall(contact.phoneNbr);
+                                }}
+                                contactList={props.contactList} 
+                                phoneNumber={props.phoneNumber} 
+                                setContactList={props.setContactList}  
                             />
                         )
                     })}
@@ -78,12 +76,11 @@ export const PhoneBookView = (props: Props) => {
 
             {addContactVisible && 
                 <AddContactPopup 
-                visibilityHandler={addContactVisibleHandler} 
-                socket={props.socket} 
-                contactList={props.contactList} 
-                phoneNumber={props.phoneNumber} 
-                setContactList={props.setContactList}
-                /> 
+                    visibilityHandler={addContactVisibleHandler} 
+                    contactList={props.contactList} 
+                    phoneNumber={props.phoneNumber} 
+                    setContactList={props.setContactList}
+                />
             }
         </div>
     );

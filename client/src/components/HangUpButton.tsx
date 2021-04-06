@@ -9,8 +9,8 @@ export class HangUpButton extends React.Component {
 }
 
 const streamCamVideo = () => {
-    console.log("streaming video")
     var constraints = { audio: true, video: true };
+    
     navigator.mediaDevices
         .getUserMedia(constraints)
         .then(function (mediaStream) {
