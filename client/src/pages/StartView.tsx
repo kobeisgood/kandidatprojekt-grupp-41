@@ -20,7 +20,7 @@ export const StartView = () => {
                     <SquareButton label="Logga in" onClick={() => void 0} linkTo="/login" className="login-button" />
                 </label>
                 <label className="description-text">Är du ny eller saknar konto?
-                    <SquareButton label="Skapa konto" onClick={() => void 0} className="create-acount-button" />
+                    <SquareButton label="Skapa konto" onClick={() => void 0} linkTo="/createaccount" className="create-acount-button" />
                 </label>
             </div>
             <img className="" src={cam_girl} alt="profilbild" />
