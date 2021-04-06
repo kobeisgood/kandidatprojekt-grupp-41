@@ -59,6 +59,7 @@ export const AddContactPopup = (props: Props) => {
     // Searches for contact in db, renders correct content in popup
     const searchContact = () => {
 
+        // reseting states
         setIncorrectNumberState(false)
         setOwnNumber(false)
 
@@ -72,26 +73,17 @@ export const AddContactPopup = (props: Props) => {
             setNeutralPageState(false)
             setIncorrectNumberState(true)
             setOwnNumber(true)
-           // alert("Du försöker lägga till dig själv dumhuve, försök med ett annat nummer")
-           // return
         }
 
         // When you try to add someone you already have in your contacts
-        //let foundBadNumber: boolean = false;
         let i;
         for (i = 0; i < props.contactList.length; i++) {
             var contact = props.contactList[i]
             if (contact.phoneNbr == contactNumber) {
                 setNeutralPageState(false)
                 setIncorrectNumberState(true)
-               // foundBadNumber = true;
-               // alert("Den här kontakten finns redan i din kontaktlista.... herrejevlar kmr du int håg nåting?")
-               // break;
             }
         }
-       /* if (foundBadNumber) {
-            return
-        }*/
 
         if (props.socket != null) {
             GetSearchedContact(props.socket, contactNumber, setFoundContact)
