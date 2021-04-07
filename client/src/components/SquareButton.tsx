@@ -7,7 +7,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface Props {
-    label: string;
+    label?: string;
     onClick: Function;
     icon?: string;
     linkTo?: string;

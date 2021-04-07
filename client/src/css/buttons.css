@@ -221,3 +221,48 @@
     font-size: 36px;    
     margin-bottom: 10px;
 }
+
+/* -------------- ADD PIC BUTTON IN PROFILE SET UP ---------------- */
+
+.incoming-call-button {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-top: 40px;
+}
+
+.incoming-call-button img {
+    width: 60%;
+    height: 60%;
+}
+
+
+.decline-call-button {
+    background-color: var(--color-cancel);
+}
+
+
+.answer-call-button {
+    background-color: var(--color-call);
+}
+
+
+
+.abort-button {
+    color: white;
+    width: 520px;
+    height: 100px;
+    background-color: var(--color-cancel);
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.abort-button img {
+    width: 60px;
+    height: auto;
+    margin-right: 20px;
+}
+
