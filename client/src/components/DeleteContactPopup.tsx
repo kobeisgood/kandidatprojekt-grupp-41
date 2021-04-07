@@ -29,8 +29,8 @@ export const DeleteContactPopup = (props: Props) => {
     // Contact is deleted in db
     const deleteContact = () => {
         if (props.socket != null && props.contact != null) {
-            RemoveFoundContact(props.socket, props.contact, props.contactList, props.phoneNumber, props.setContactList)
             setContactDeletedState(true)
+            RemoveFoundContact(props.socket, props.contact, props.contactList, props.phoneNumber, props.setContactList)         
         } else {
             console.log('No such contact!')
         }

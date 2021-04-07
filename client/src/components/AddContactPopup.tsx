@@ -142,7 +142,7 @@ export const AddContactPopup = (props: Props) => {
             <>
                 {foundContact != null && !neutralPageState && contactAddedState && !incorrectNumberState &&
                     <>
-                        <h4 className="popup-middle-sized-text bottom-buffer right-buffer"> {foundContact.firstName} {foundContact.lastName} är nu tillagd i din telefonbok </h4>
+                        <h4 className="popup-middle-sized-text big-bottom-buffer right-buffer"> {foundContact.firstName} {foundContact.lastName} är nu tillagd i din telefonbok </h4>
                         <SquareButton label="Tillbaka till telefonboken" onClick={closeAddContactPopup} className="save-button handle-contact-button button right-buffer" />
                     </>
                 }

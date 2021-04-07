@@ -31,6 +31,10 @@
     margin-bottom: 20px;
 }
 
+.big-bottom-buffer {
+    margin-bottom: 85px;
+}
+
 .left-buffer{
     margin-left: 40px;
 }
