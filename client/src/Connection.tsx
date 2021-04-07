@@ -184,7 +184,7 @@ export const AddFoundContact =
         socket.emit('add-searched-contact', contact, loggedInUserNumber);
         socket.once('contact-added', (realUpdatedContactList: Contact[]) => {
             //contactList.push(contact) 
-            setContactList(realUpdatedContactList) // TODO: A contact is added sort of but not in right format! can probably be solved in db function 
+            setContactList(realUpdatedContactList) 
         })
     }
 

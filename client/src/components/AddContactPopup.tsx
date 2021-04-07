@@ -156,7 +156,7 @@ export const AddContactPopup = (props: Props) => {
         return (
             <div className="content-column left-buffer">
                 {foundContact != null && !neutralPageState && contactAddedState && !incorrectNumberState ?
-                <h3 className="right-buffer">Lägg till kontakt</h3>: <h3>Lägg till kontakt</h3> }
+                <h3 className="right-buffer bottom-buffer">Lägg till kontakt</h3> : <h3>Lägg till kontakt</h3> }
 
                 {/* Neutral */}
                 {neutralPageState &&
@@ -169,7 +169,6 @@ export const AddContactPopup = (props: Props) => {
                     </>
                 }
 
-                {/* When a faulty number has been inputted */}
                 {searchValidationErrors()}
 
                 {/* Contact found */}

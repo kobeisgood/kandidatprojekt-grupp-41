@@ -52,7 +52,7 @@
 .content-column{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly; 
+    justify-content: space-around; 
     height: 500px; /* Probably needs to be changed to make responsive, value set for testing purposes atm */
 }
 
