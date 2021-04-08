@@ -14,7 +14,7 @@
 /* container that displays the remote stream */
 .remote-video-container {
     height: 80vh;
-    width: 50vw;
+    width: 65vw;
     margin:auto;
     position: relative;
     border: none;
@@ -91,7 +91,7 @@ ul > li {
     position: absolute;
     top: 0;
     right: 0;
-    margin-right: 3em;
+    margin-right: 1em;
 }
 
 .local-video-container {

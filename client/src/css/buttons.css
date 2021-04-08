@@ -222,7 +222,7 @@
     margin-bottom: 10px;
 }
 
-/* -------------- ADD PIC BUTTON IN PROFILE SET UP ---------------- */
+/* -------------- POPUP BUTTONS---------------- */
 
 .incoming-call-button {
     width: 150px;
@@ -266,3 +266,14 @@
     margin-right: 20px;
 }
 
+/* -------------- CALL VIEW BUTTONS ---------------- */
+
+.callView-button {
+    height: 7vw;
+    width: 7vw;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+    font-size: 0.8vw;
+}
