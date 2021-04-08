@@ -8,7 +8,7 @@ import { SquareButton } from './SquareButton';
 
 import '../css/colors.css';
 import '../css/contact-card.css';
-import CrossIcon from '../icons/cross-icon.svg';
+import crossIcon from '../icons/cross-icon.svg';
 import callIcon from '../icons/call-icon.svg';
 import hjordis from '../images/hjordis.jpg';
 
@@ -35,29 +35,16 @@ export const ContactCard = (props: Props) => {
         props.setDeleteContactVisible();
     };
 
-
     return (
         <div className="contact-card-container">
             <div className="contact-card-flexbox">
                 {!props.removeContactState ? <></> :
-                    <button className="delete-contact-button" onClick={openDeletePopup}> <img src={CrossIcon} alt="CrossIcon"></img> </button>
+                    <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
                 }
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <span>{props.contact ? props.contact.lastName : ""}</span></p>
                 <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
             </div>
-
-
-            {/*removeContactVisible &&
-                <DeleteContactPopup
-                visibilityHandler={removeContactVisibleHandler} 
-                contact={props.contact}
-                socket={props.socket} 
-                contactList={props.contactList} 
-                phoneNumber={props.phoneNumber} 
-                setContactList={props.setContactList}
-                /> 
-            */}
         </div>
     );
 };

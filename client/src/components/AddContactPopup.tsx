@@ -3,9 +3,9 @@ import '../css/buttons.css';
 import '../css/popups.css';
 import '../css/contact-card.css';
 import '../css/textinput.css';
-import DarkCrossIcon from '../icons/dark-cross-icon.svg';
+import darkCrossIcon from '../icons/dark-cross-icon.svg';
 import { SquareButton } from '../components/SquareButton';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GetSearchedContact, AddFoundContact } from '../Connection';
 import { Contact } from '../Types';
 import { TextInput } from './TextInput';
@@ -75,8 +75,7 @@ export const AddContactPopup = (props: Props) => {
         }
 
         // When you try to add someone you already have in your contacts
-        let i;
-        for (i = 0; i < props.contactList.length; i++) {
+        for (let i = 0; i < props.contactList.length; i++) {
             var contact = props.contactList[i]
             if (contact.phoneNbr == contactNumber) {
                 setNeutralPageState(false)
@@ -94,7 +93,7 @@ export const AddContactPopup = (props: Props) => {
     const addContact = () => {
         if (props.socket != null && foundContact != null) {
             setContactAddedState(true)
-            AddFoundContact(props.socket, foundContact, props.contactList, props.phoneNumber, props.setContactList)
+            AddFoundContact(props.socket, foundContact, props.phoneNumber, props.setContactList)
         } else {
             console.log('No such contact!')
         }
@@ -196,7 +195,7 @@ export const AddContactPopup = (props: Props) => {
             <div className="call-popup-container">
 
                 {!contactAddedState &&
-                    <img className="cancel-button" src={DarkCrossIcon} alt="DarkCrossIcon" onClick={closeAddContactPopup}></img>}
+                    <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={closeAddContactPopup}></img>}
 
                 <div className="call-popup-flexbox-container">
 

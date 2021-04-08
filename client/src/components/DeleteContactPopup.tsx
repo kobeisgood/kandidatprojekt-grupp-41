@@ -1,7 +1,7 @@
 import '../css/call.css';
 import '../css/buttons.css';
 import '../css/popups.css';
-import DarkCrossIcon from '../icons/dark-cross-icon.svg';
+import darkCrossIcon from '../icons/dark-cross-icon.svg';
 import { Contact } from '../Types';
 import { RemoveFoundContact } from '../Connection';
 import { SquareButton } from './SquareButton';
@@ -9,7 +9,6 @@ import { useState } from 'react';
 
 interface Props {
     socket: SocketIOClient.Socket | null,
-    contactList: Contact[],
     phoneNumber: string,
     setContactList: Function,
     contact: Contact | undefined,
@@ -24,12 +23,11 @@ export const DeleteContactPopup = (props: Props) => {
     const deleteContact = () => {
         if (props.socket != undefined && props.contact != undefined) {
             setContactDeletedState(true)
-            RemoveFoundContact(props.socket, props.contact, props.contactList, props.phoneNumber, props.setContactList)         
+            RemoveFoundContact(props.socket, props.contact, props.phoneNumber, props.setContactList)         
         } else {
             console.log('No such contact!')
         }
     }
-
 
     const contactDeletedFeedback = () => {
         return (
@@ -65,7 +63,7 @@ export const DeleteContactPopup = (props: Props) => {
         <div id="remove-contact-popup" className="full-page-container full-page-popup-container">
             <div className="call-popup-container">
                 {!contactDeletedState &&
-                    <img className="cancel-button" src={DarkCrossIcon} alt="DarkCrossIcon" onClick={() => props.closePopup()}></img>}
+                    <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.closePopup()}></img>}
                 <div className="call-popup-flexbox-container left-buffer">
                     {renderPopupContent()}
                 </div>

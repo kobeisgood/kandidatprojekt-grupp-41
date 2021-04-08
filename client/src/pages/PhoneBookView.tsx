@@ -6,6 +6,8 @@
 import { ContactCard } from '../components/ContactCard';
 import { AddContactPopup } from '../components/AddContactPopup';
 import { DeleteContactPopup } from '../components/DeleteContactPopup';
+import { BackButton } from '../components/BackButton';
+import { SquareButton } from '../components/SquareButton';
 import { Contact } from '../Types';
 import { useState } from 'react';
 
@@ -13,8 +15,7 @@ import '../css/phone-book.css';
 import '../css/colors.css';
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
-import { BackButton } from '../components/BackButton';
-import { SquareButton } from '../components/SquareButton';
+
 
 interface Props {
     contactList: Contact[]
@@ -25,8 +26,9 @@ interface Props {
     setPeer: Function
 }
 
-let selectedContact: { name: string, phoneNbr: string };
-    
+// A "state" of the selected contact to be deleted
+// Makes sure page doesn't get re-rendered
+let selectedContact: { name: string, phoneNbr: string };    
 const setSelectedContact = (contact: { name: string, phoneNbr: string }) => {
     selectedContact = contact;
 };
@@ -41,6 +43,7 @@ export const PhoneBookView = (props: Props) => {
         setRemoveContactState(!removeContactState)
     }
 
+    // Handles add popup visibility
     const addContactVisibleHandler = () => {
         setAddContactVisible(!addContactVisible)
         setRemoveContactState(false)
@@ -107,7 +110,6 @@ export const PhoneBookView = (props: Props) => {
                     })}
                     contactInfo={selectedContact}
                     socket={props.socket}
-                    contactList={props.contactList}
                     phoneNumber={props.phoneNumber}
                     setContactList={props.setContactList}
                     closePopup={() => setDeleteContactVisible(false)}
