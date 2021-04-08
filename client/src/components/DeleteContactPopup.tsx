@@ -12,7 +12,7 @@ interface Props {
     phoneNumber: string,
     setContactList: Function,
     contact: Contact | undefined,
-    contactInfo: { name: string, phoneNbr: string},
+    contactInfo: { name: string, phoneNbr: string },
     closePopup: Function
 }
 
@@ -23,7 +23,7 @@ export const DeleteContactPopup = (props: Props) => {
     const deleteContact = () => {
         if (props.socket != undefined && props.contact != undefined) {
             setContactDeletedState(true)
-            RemoveFoundContact(props.socket, props.contact, props.phoneNumber, props.setContactList)         
+            RemoveFoundContact(props.socket, props.contact, props.phoneNumber, props.setContactList)
         } else {
             console.log('No such contact!')
         }
@@ -33,7 +33,7 @@ export const DeleteContactPopup = (props: Props) => {
         return (
             <>
                 <div className="call-popup-flexbox-container">
-                    <h4 className="popup-middle-sized-text bottom-buffer">{props.contactInfo.name} är nu borttagen från din telefonbok </h4>
+                    <h4 className="popup-middle-sized-text big-bottom-buffer">{props.contactInfo.name} är nu borttagen från din telefonbok </h4>
                     <SquareButton label="Tillbaka till telefonboken" onClick={props.closePopup} className="save-button handle-contact-button button" />
                 </div>
             </>
@@ -43,7 +43,7 @@ export const DeleteContactPopup = (props: Props) => {
     const renderPopupContent = () => {
         return (
             <>
-                {contactDeletedState && 
+                {contactDeletedState &&
                     contactDeletedFeedback()
                 }
 
@@ -64,9 +64,15 @@ export const DeleteContactPopup = (props: Props) => {
             <div className="call-popup-container">
                 {!contactDeletedState &&
                     <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.closePopup()}></img>}
+
+                {!contactDeletedState ? 
                 <div className="call-popup-flexbox-container left-buffer">
                     {renderPopupContent()}
-                </div>
+                </div> :
+                <div className="call-popup-flexbox-container">
+                    {renderPopupContent()}
+                </div>}
+                
             </div>
         </div>
     )
