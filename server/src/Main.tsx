@@ -122,17 +122,23 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     })
 
     socket.on('add-searched-contact', (contact:User, loggedInUserNumber:string) => {
-        addContactToList(contact, loggedInUserNumber ).then(() => {
+        addContactToList(contact, loggedInUserNumber ).then((realUpdatedContactList) => {
             console.log('Contact has been added to db!')
-            socket.emit('contact-added')
+            socket.emit('contact-added', realUpdatedContactList)
         })
+            .catch(() => {
+                console.error("Contact could not be added!")
+            })
     })
 
     socket.on('remove-searched-contact', (contact:User, loggedInUserNumber:string) => {
-        removeContactFromList(contact, loggedInUserNumber ).then(() => {
+        removeContactFromList(contact, loggedInUserNumber ).then((realUpdatedContactList) => {
             console.log('Contact has been removed from db!')
-            socket.emit('contact-removed')
+            socket.emit('contact-removed', realUpdatedContactList)
         })
+            .catch(() => {
+                console.error("Contact could not be removed!")
+            })
     })
 
     /*
