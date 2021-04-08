@@ -25,6 +25,10 @@ export const CallView = (props: Props) => {
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
     const [peerMicState, setPeerMicState] = useState(true);
+    const [reactionHistoryState, setReactionHistoryState]: [string[], Function]= useState([]);
+    var timer: NodeJS.Timeout;
+
+    const availableReactions: Array<string> = ['Hej', 'Hejdå', 'test'];
 
     useEffect(() => {
 
@@ -34,12 +38,39 @@ export const CallView = (props: Props) => {
             
             switch(parsedData.type) {
                 case 'mic-state':
-                    setPeerMicState(parsedData.content);   
-                    console.log('Peer mic state: ' + peerMicState);       
+                    setPeerMicState(parsedData.content);        
+                    break;
+                case 'reaction':
+                    console.log(parsedData);
+                    setReactionHistoryState((oldArray: string[]) => [...oldArray, parsedData.content]);  
                     break;
             }
-        });
+        });  
+
     },[]);
+
+     useEffect(() => {
+
+        console.log(reactionHistoryState);
+        
+        if (reactionHistoryState.length > 0)
+            setTimer();
+
+    },[reactionHistoryState])
+ 
+    const setTimer = () => {
+        timer = setInterval(clearChatEntry, 4000);
+    }
+
+    const clearChatEntry = () => {
+        
+        clearInterval(timer);
+
+        setReactionHistoryState(
+            //reactionHistoryState.filter(reaction => reactionHistoryState.indexOf(reaction) !== 0)
+            reactionHistoryState.slice(1)
+        );
+    }; 
 
     /**
      * Handler for mic button
@@ -60,6 +91,17 @@ export const CallView = (props: Props) => {
         setCamState(!camState);
     }
 
+    const sendReaction = (data: string) => {
+        props.peer.send(JSON.stringify({
+            type: 'reaction',
+            content: data
+        }));
+
+        setReactionHistoryState((oldArray: string[]) => [...oldArray, data]); 
+        
+        //timer = setInterval(clearChatEntry, 3000);
+    }
+
     return (
         <div className="call-container">
             <div className="video-container">
@@ -76,6 +118,17 @@ export const CallView = (props: Props) => {
 
                 <div className="right-side-container">
                     <VideoStreamer className="local-video-container" stream={props.localStream} />
+                <div className="available-reactions-container">
+                    <button onClick={() => sendReaction("Hej")}>Send: {availableReactions[0]}</button>
+                    <button onClick={() => sendReaction("Hejdå")}>Send: {availableReactions[1]}</button>
+                </div>
+                <div className="reactions-container">  
+                {reactionHistoryState.map((reactionTest: string) => {
+                       return (
+                            <p>{reactionTest}</p>
+                       );
+                   })} 
+                </div>
 
                     {micState === false ? <div className="function-off-container">
                         Din mikrofon är avstängd
@@ -97,7 +150,7 @@ export const CallView = (props: Props) => {
                     </li>
                     <li>
                         <EndCallButton endCall={props.endCall} />
-                    </li>
+                    </li> 
                 </ul>
             </div>
         </div>
