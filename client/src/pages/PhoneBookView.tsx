@@ -5,8 +5,9 @@
 
 import { ContactCard } from '../components/ContactCard';
 import { AddContactPopup } from '../components/AddContactPopup';
+import { DeleteContactPopup } from '../components/DeleteContactPopup';
 import { Contact } from '../Types';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import '../css/phone-book.css';
 import '../css/colors.css';
@@ -20,15 +21,20 @@ interface Props {
     socket: SocketIOClient.Socket | null,
     onCall: Function,
     phoneNumber: string,
-    setContactList:Function
+    setContactList: Function
     setPeer: Function
 }
+
+let selectedContact: { name: string, phoneNbr: string };
+    
+const setSelectedContact = (contact: { name: string, phoneNbr: string }) => {
+    selectedContact = contact;
+};
 
 export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
     const [addContactVisible, setAddContactVisible] = useState(false);
-
-    const addContactButtonRef = useRef(null)
+    const [deleteContactVisible, setDeleteContactVisible] = useState(false);
 
     // Handles only the cross above the contact card
     const removeContactClicked = () => {
@@ -53,39 +59,59 @@ export const PhoneBookView = (props: Props) => {
                     </div>
                     <div className="contact-buttons-container">
                         <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
-                        <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt" } onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
+                        <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt"} onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
                     </div>
                 </div>
             </header>
+
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
                     {props.contactList.map((contact: Contact) => {
                         return (
                             <ContactCard
-                            key={contact.id}
-                            contact={contact}
-                            removeContactState={removeContactState}
-                            onCall={() => {
-                                props.setPeer({number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName}); props.onCall(contact.phoneNbr);
-                            }}
-                            socket={props.socket} 
-                            contactList={props.contactList} 
-                            phoneNumber={props.phoneNumber} 
-                            setContactList={props.setContactList}  
+                                key={contact.id}
+                                contact={contact}
+                                removeContactState={removeContactState}
+                                onCall={() => {
+                                    props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName }); props.onCall(contact.phoneNbr);
+                                }}
+                                socket={props.socket}
+                                contactList={props.contactList}
+                                phoneNumber={props.phoneNumber}
+                                setContactList={props.setContactList}
+                                setSelectedContact={setSelectedContact}
+                                setDeleteContactVisible={() => setDeleteContactVisible(true)}
                             />
                         )
                     })}
                 </div>
             </div>
 
-            {addContactVisible && 
-                <AddContactPopup 
-                visibilityHandler={addContactVisibleHandler} 
-                socket={props.socket} 
-                contactList={props.contactList} 
-                phoneNumber={props.phoneNumber} 
-                setContactList={props.setContactList}
-                /> 
+            {addContactVisible &&
+                <AddContactPopup
+                    visibilityHandler={addContactVisibleHandler}
+                    socket={props.socket}
+                    contactList={props.contactList}
+                    phoneNumber={props.phoneNumber}
+                    setContactList={props.setContactList}
+                />
+            }
+
+            {deleteContactVisible &&
+                <DeleteContactPopup
+                    contact={props.contactList.find((contact) => {
+                        if (contact.phoneNbr == selectedContact.phoneNbr)
+                            return contact;
+                        else
+                            return null;
+                    })}
+                    contactInfo={selectedContact}
+                    socket={props.socket}
+                    contactList={props.contactList}
+                    phoneNumber={props.phoneNumber}
+                    setContactList={props.setContactList}
+                    closePopup={() => setDeleteContactVisible(false)}
+                />
             }
         </div>
     );
