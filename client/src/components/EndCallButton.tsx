@@ -5,6 +5,9 @@
  */
 
 import '../css/call.css';
+import { SquareButton } from './SquareButton';
+import decline from '../icons/decline.svg';
+
 
 interface Props {
     endCall: Function;
@@ -13,9 +16,9 @@ interface Props {
 export const EndCallButton = (props: Props) => {
     return (
         <div className="callView-button-container">
-            <button className="end-call-button" onClick={() => props.endCall()}>
-                <i className="fas fa-phone-slash fa-6x"> </i>
-            </button>
+
+            <SquareButton onClick={() => props.endCall()} icon={decline}  className="end-call-button" />
+            
 
             <h2>Avsluta samtal</h2>
         </div>

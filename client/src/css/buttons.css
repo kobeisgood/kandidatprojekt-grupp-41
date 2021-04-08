@@ -277,3 +277,13 @@
     color: white;
     font-size: 0.8vw;
 }
+
+.end-call-button {
+    height: 7vw;
+    width: 7vw;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    color: white;
+    font-size: 0.7vw;
+  }

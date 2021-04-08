@@ -66,15 +66,6 @@
     z-index: 100;
 }
 
-.end-call-button {
-  height: 7vw;
-  width: 7vw;
-  background-color: red;
-  border-radius: 50%;
-  display: inline-block;
-  color: white;
-  font-size: 0.7vw;
-}
 
 
 ul > li {
