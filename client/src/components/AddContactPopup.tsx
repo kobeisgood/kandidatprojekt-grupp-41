@@ -110,7 +110,7 @@ export const AddContactPopup = (props: Props) => {
                         <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>
                         <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
                         <div className="number-input-row">
-                            <TextInput className="text-input w-400 top-buffer" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
+                            <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
@@ -126,7 +126,7 @@ export const AddContactPopup = (props: Props) => {
 
                         <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
                         <div className="number-input-row">
-                            <TextInput className="text-input w-400 top-buffer" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
+                            <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
@@ -162,7 +162,7 @@ export const AddContactPopup = (props: Props) => {
                     <>
                         <p className="popup-middle-sized-text">Skriv in mobilnumret för den du vill lägga till</p>
                         <div className="number-input-row">
-                            <TextInput className="text-input w-400 top-buffer" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
+                            <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>

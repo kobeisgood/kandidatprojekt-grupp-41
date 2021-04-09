@@ -108,6 +108,7 @@
 @media only screen and (max-width: 1160px) {
     .number-input-row {
         margin-top: 30px;
+        justify-content: center;
     }
 
     .popup-middle-sized-text {
