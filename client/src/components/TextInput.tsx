@@ -20,7 +20,7 @@ export const TextInput = (props: Props) => {
     return (
         <>
             {labelElem}
-            <input className={props.className} type={props.type} placeholder={props.placeholder} onChange={props.onChange} maxLength={props.maxLength} />
+            <input className={`${props.className} ${"text-input"}`} type={props.type} placeholder={props.placeholder} onChange={props.onChange} maxLength={props.maxLength} />
         </>
     );
 };

@@ -43,13 +43,13 @@ export const ChangePasswordView = (props: Props) => {
 
             <div className="change-password-container">
                 <div>
-                    <TextInput className="text-input-password" type="password" label="Nuvarande lösenord: " placeholder="Skriv nuvarande lösenord..." onChange={handlePasswordInp} />
+                    <TextInput className="text-input-change-password" type="password" label="Nuvarande lösenord: " placeholder="Skriv nuvarande lösenord..." onChange={handlePasswordInp} />
                 </div>
                 <div>
-                    <TextInput className="text-input-password" type="password" label="Nytt lösenord: " placeholder="Skriv nytt lösenord..." onChange={handlePasswordRepeatInp} />
+                    <TextInput className="text-input-change-password" type="password" label="Nytt lösenord: " placeholder="Skriv nytt lösenord..." onChange={handlePasswordRepeatInp} />
                 </div>
                 <div>
-                    <TextInput className="text-input-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa nytt lösenord..." onChange={handlePasswordRepeatAgainInp} />
+                    <TextInput className="text-input-change-password" type="password" label="Återupprepa nytt lösenord: " placeholder="Återupprepa nytt lösenord..." onChange={handlePasswordRepeatAgainInp} />
                 </div>
             </div>
             {/* Feedback for showing that the password has been updated */}

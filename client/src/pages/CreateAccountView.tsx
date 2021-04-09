@@ -51,11 +51,11 @@ export const CreateAccountView = () => {
             <form onSubmit={(event) => event.preventDefault()}>
                 <div className="crate-container">
                     <div>
-                        <TextInput className="text-input-number" type="text" label="Förnamn: "
+                        <TextInput className="text-input-create-account-tel" type="text" label="Förnamn: "
                             placeholder="Skriv ditt förnamn här..." onChange={() => void 0} />
                     </div>
                     <div>
-                        <TextInput className="text-input-number" type="text" label="Efternamn: "
+                        <TextInput className="text-input-create-account-name" type="text" label="Efternamn: "
                             placeholder="Skriv ditt efternamn här..." onChange={() => void 0} />
                     </div>
                 </div>
@@ -84,15 +84,15 @@ export const CreateAccountView = () => {
                         <form onSubmit={(event) => event.preventDefault()}>
                                 <div className="create-container">
                                     <div>
-                                        <TextInput className="text-input-number" type="text" label="Ditt mobilnummer: "
+                                        <TextInput className="text-input-create-account-tel" type="tel" label="Ditt mobilnummer: "
                                             placeholder="Skriv ditt mobilnummer här..." onChange={() => void 0} />
                                     </div>
                                     <div>
-                                        <TextInput className="text-input-password" type="password" label=" Välj ditt lösenord: "
+                                        <TextInput className="text-input-create-account-password" type="password" label=" Välj ditt lösenord: "
                                             placeholder="Välj ditt lösenord här..." onChange={() => void 0} />
                                     </div>
                                     <div>
-                                        <TextInput className="text-input-password" type="password" label="Upprepa lösenord: "
+                                        <TextInput className="text-input-create-account-password" type="password" label="Upprepa lösenord: "
                                             placeholder="Upprepa ditt lösenord här..." onChange={() => void 0} />
                                     </div>
                                 </div>
