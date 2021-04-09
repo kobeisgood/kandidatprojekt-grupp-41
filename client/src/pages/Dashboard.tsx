@@ -3,7 +3,6 @@
     Author: Daniel
 */
 
-import { useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
 import { User } from '../Types';
@@ -19,20 +18,13 @@ import logOutIcon from '../icons/log-out-icon.svg';
 interface Props {
     me: User | null;
     setMe: Function;
+    clearLoginInfo: Function;
 }
 
 export const Dashboard = (props: Props) => {
-    const history = useHistory();
-
     const logOut = () => {
         if (props.me !== null)
-            Logout(props.me.phoneNbr, clearLoginInfo);
-    };
-
-    const clearLoginInfo = () => {
-        props.setMe(null);
-        localStorage.clear();
-        history.push("/login");
+            Logout(props.me.phoneNbr, props.clearLoginInfo);
     };
 
     return (

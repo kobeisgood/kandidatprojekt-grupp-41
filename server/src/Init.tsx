@@ -27,5 +27,12 @@ export const InitServer = () => {
     else
         server = http.createServer(app).listen(4000);
 
-    return new Server(server, { cors: { origin: '*' } });
+    const io = new Server(server, { cors: { origin: '*' } })
+    const session_handler = require('io-session-handler').from(io);
+
+    session_handler.connectionListener((connection) => {
+        console.log(connection)
+    });
+
+    return io;
 };

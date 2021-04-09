@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
 
 import { socket } from './Connection';
@@ -47,7 +47,7 @@ export const App = () => {
         [peerSignal, setPeerSignal] = useState({}),
         [myNode, setMyNode] = useState(new WebRTC()),
         history = useHistory(); // For redirecting user
-
+       
     useEffect(() => {
         OpenLocalStream()
             .then((stream: MediaStream) => {
@@ -70,6 +70,20 @@ export const App = () => {
     useEffect(() => {
         localStorage.setItem("me", JSON.stringify(me));
     }, [me]);
+
+    useEffect(() => {
+        console.log(socket);
+        
+
+        if (socket === undefined)
+            clearLoginInfo();
+    });
+
+    const clearLoginInfo = () => {
+        setMe(null);
+        localStorage.clear();
+        history.push("/login");
+    };
 
     const updateName = (firstName: string, lastName: string, setName: Function) => {
         if (socket !== null && me !== null)
@@ -137,25 +151,17 @@ export const App = () => {
             }
 
             <Switch>
-                <Route path="/login" exact component={() => {
-                    if (prevLoginInfo() === null)
-                        return <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer)} />
-                    else
-                        return <Redirect push to="/dashboard" />
-                }} />
                 <Route path="/" exact component={() => <StartView />} />
-                <Route path="/dashboard" exact component={() => <Dashboard me={me} setMe={setMe} />} />
-                <Route path="/createaccount" exact component={() => <CreateAccountView/>} />
+                <Route path="/login" exact component={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer)} /> } />
+                <Route path="/dashboard" exact component={() => <Dashboard me={me} setMe={setMe} clearLoginInfo={clearLoginInfo} />} />
+                <Route path="/createaccount" exact component={() => <CreateAccountView />} />
                 <Route path="/profile" exact component={() => <ProfileView user={me} />} />
                 <Route path="/profile/changepicture" exact component={ChangePictureView} />
                 <Route path="/profile/changepassword" exact component={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
                 <Route path="/profile/changenumber" exact component={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
                 <Route path="/profile/changename" exact component={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
                 <Route path="/phonebook" component={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
-                <Route path="/call" component={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer}/>} />
-
-                {/* REDIRECTS */}
-                {prevLoginInfo() === null && <Redirect push to="/dashboard" />}
+                <Route path="/call" component={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer} />} />
             </Switch>
         </div>
     );
