@@ -21,12 +21,14 @@ interface Props {
     caller: Peer
 }
 
+let reactionHistory: string[] = [];
+var timer: NodeJS.Timeout | null = null;
+
 export const CallView = (props: Props) => {
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
     const [peerMicState, setPeerMicState] = useState(true);
-    const [reactionHistoryState, setReactionHistoryState]: [string[], Function]= useState([]);
-    var timer: NodeJS.Timeout;
+    const [dummyState, setDummyState] = useState(0); /** State that forces re-render */
 
     const availableReactions: Array<string> = ['Hej', 'Hejdå', 'test'];
 
@@ -41,36 +43,32 @@ export const CallView = (props: Props) => {
                     setPeerMicState(parsedData.content);        
                     break;
                 case 'reaction':
-                    console.log(parsedData);
-                    setReactionHistoryState((oldArray: string[]) => [...oldArray, parsedData.content]);  
+                    reactionHistory.push(props.caller.name + " säger " + parsedData.content);
+                    setDummyState(Math.random()); /** Forces re-render */
+                    setTimer();
+
                     break;
             }
         });  
 
     },[]);
-
-     useEffect(() => {
-
-        console.log(reactionHistoryState);
-        
-        if (reactionHistoryState.length > 0)
-            setTimer();
-
-    },[reactionHistoryState])
  
     const setTimer = () => {
-        timer = setInterval(clearChatEntry, 4000);
-    }
 
-    const clearChatEntry = () => {
+        if (timer === null) {
+            timer = setInterval(() => {
+                reactionHistory.shift(); /** Removes first element */
+                
+                if (timer !== null && reactionHistory.length === 0) {
+                    clearInterval(timer);
+                    timer = null;
+                }
         
-        clearInterval(timer);
+                setDummyState(Math.random());
+            }, 4000);
+        }
 
-        setReactionHistoryState(
-            //reactionHistoryState.filter(reaction => reactionHistoryState.indexOf(reaction) !== 0)
-            reactionHistoryState.slice(1)
-        );
-    }; 
+    }
 
     /**
      * Handler for mic button
@@ -97,9 +95,10 @@ export const CallView = (props: Props) => {
             content: data
         }));
 
-        setReactionHistoryState((oldArray: string[]) => [...oldArray, data]); 
-        
-        //timer = setInterval(clearChatEntry, 3000);
+        reactionHistory.push(data)
+        setDummyState(Math.random());   /** Forces re-render */
+        setTimer();
+
     }
 
     return (
@@ -123,9 +122,9 @@ export const CallView = (props: Props) => {
                     <button onClick={() => sendReaction("Hejdå")}>Send: {availableReactions[1]}</button>
                 </div>
                 <div className="reactions-container">  
-                {reactionHistoryState.map((reactionTest: string) => {
+                {reactionHistory.map((reaction: string, index) => {
                        return (
-                            <p>{reactionTest}</p>
+                            <p key={index}>{reaction}</p>
                        );
                    })} 
                 </div>
