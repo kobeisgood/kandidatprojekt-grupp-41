@@ -85,6 +85,10 @@
     font-size: 48px;
 }
 
+.search-number-container{
+    width: 100%;
+}
+
 /* Stuff for Delete Contact Popup */ 
 
 .button-row {

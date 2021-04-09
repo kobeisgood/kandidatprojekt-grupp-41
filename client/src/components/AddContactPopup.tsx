@@ -107,7 +107,9 @@ export const AddContactPopup = (props: Props) => {
                         <p className="popup-error-message">Fel Nummer! </p>
                         <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>
                         <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
-                        <TextInput label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> {/*TODO: make text inputs nice after merge*/}
+                        <div className="search-number-container">
+                            <TextInput label="Mobilnummer:" type="tel" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> {/*TODO: make text inputs nice after merge*/}
+                        </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
@@ -130,7 +132,9 @@ export const AddContactPopup = (props: Props) => {
                 {neutralPageState &&
                     <>
                         <p className="popup-middle-sized-text">Skriv in mobilnumret för den du vill lägga till</p>
-                        <TextInput label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> {/*TODO: make text inputs nice after merge*/}
+                        <div className="search-number-container">
+                            <TextInput label="Mobilnummer:" type="tel" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} /> {/*TODO: make text inputs nice after merge*/}
+                        </div>
                         <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
