@@ -11,6 +11,7 @@ import camOn from "../icons/camera-solid-on.svg"
 import camOff from "../icons/camera-solid-off.svg"
 import { default as WebRTC } from 'simple-peer';
 import { Peer, PeerInfo } from '../Types';
+import backArrow from '../icons/back-arrow.svg';
 
 
 interface Props {
@@ -29,8 +30,9 @@ export const CallView = (props: Props) => {
     const [camState, setCamState] = useState(true);
     const [peerMicState, setPeerMicState] = useState(true);
     const [dummyState, setDummyState] = useState(0); /** State that forces re-render */
+    const [slider, setSlider] = useState(false);
 
-    const availableReactions: Array<string> = ['Hej', 'Hejdå', 'test'];
+    const availableReactions: Array<string> = ['Ja', 'Nej', 'Jag ser dig', 'Jag ser dig inte', 'Jag hör dig', 'Jag hör dig inte'];
 
     useEffect(() => {
 
@@ -43,7 +45,7 @@ export const CallView = (props: Props) => {
                     setPeerMicState(parsedData.content);        
                     break;
                 case 'reaction':
-                    reactionHistory.push(props.caller.name + " säger " + parsedData.content);
+                    reactionHistory.push(props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " säger " + '"' + parsedData.content + '"');
                     setDummyState(Math.random()); /** Forces re-render */
                     setTimer();
 
@@ -89,13 +91,17 @@ export const CallView = (props: Props) => {
         setCamState(!camState);
     }
 
+    const openReactions = () => {
+        setSlider(!slider);
+    }
+
     const sendReaction = (data: string) => {
         props.peer.send(JSON.stringify({
             type: 'reaction',
             content: data
         }));
 
-        reactionHistory.push(data)
+        reactionHistory.push("Du sa " + '"' + data + '"')
         setDummyState(Math.random());   /** Forces re-render */
         setTimer();
 
@@ -103,32 +109,38 @@ export const CallView = (props: Props) => {
 
     return (
         <div className="call-container">
+            <button className={slider ? "opened-reactions-button" : "open-reactions-button"} onClick={openReactions}>
+                <img src={backArrow} className={slider ? 'rotate-back-arrow-image' : 'rotate-arrow-image'}></img>
+            </button>
+            <div className={slider ? 'slider active' : 'slider'}>
+                <button className="reaction-button" onClick={() => sendReaction(availableReactions[0])}>{availableReactions[0]}</button>
+                <button className="reaction-button" onClick={() => sendReaction(availableReactions[1])}>{availableReactions[1]}</button>
+                <button className="reaction-button" onClick={() => sendReaction(availableReactions[2])}>{availableReactions[2]}</button>
+                <button className="reaction-button" onClick={() => sendReaction(availableReactions[3])}>{availableReactions[3]}</button>
+                <button className="reaction-button" onClick={() => sendReaction(availableReactions[4])}>{availableReactions[4]}</button>
+                <button className="reaction-button" onClick={() => sendReaction(availableReactions[5])}>{availableReactions[5]}</button>
+            </div>
             <div className="video-container">
                 <VideoStreamer className="remote-video-container" stream={props.remoteStream} />
 
                 {!peerMicState && 
                 <p className="function-off-container mic-muted-text">
                      {/* Checks if first name ends with 's' */}
-                    {props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 's' ? 
+                    {props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 's' || props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'x' ? 
                         props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " mikrofon är avstängd" 
                     : 
                         props.caller.name.substr(0, props.caller.name.indexOf(' ')) + "s mikrofon är avstängd"}</p>
                 }
 
+                {reactionHistory.map((reaction: string, index) => {
+                    return (
+                        <p className="reaction" key={index}>{reaction}</p>
+                    );
+                })} 
+
                 <div className="right-side-container">
                     <VideoStreamer className="local-video-container" stream={props.localStream} />
-                <div className="available-reactions-container">
-                    <button onClick={() => sendReaction("Hej")}>Send: {availableReactions[0]}</button>
-                    <button onClick={() => sendReaction("Hejdå")}>Send: {availableReactions[1]}</button>
-                </div>
-                <div className="reactions-container">  
-                {reactionHistory.map((reaction: string, index) => {
-                       return (
-                            <p key={index}>{reaction}</p>
-                       );
-                   })} 
-                </div>
-
+                    
                     {micState === false ? <div className="function-off-container">
                         Din mikrofon är avstängd
                     </div> : <></>}
