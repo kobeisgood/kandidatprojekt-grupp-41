@@ -42,7 +42,7 @@ export const ContactCard = (props: Props) => {
                     <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
                 }
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
-                <p className="contact-name">{props.contact ? props.contact.firstName : ""} <span>{props.contact ? props.contact.lastName : ""}</span></p>
+                <p className="contact-name">{props.contact ? props.contact.firstName : ""} <br/> <span>{props.contact ? props.contact.lastName : ""}</span></p>
                 <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
             </div>
         </div>
