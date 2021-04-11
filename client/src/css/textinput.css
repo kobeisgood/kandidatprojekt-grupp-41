@@ -7,18 +7,6 @@
 }
 
 .text-input {
-    font-size: 32px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    width: 320px;
-    height: 60px;
-    border-radius: 30px;
-    border: 3px solid #767676;
-    padding-left: 15px;
-    margin-bottom: 5px;
-}
-
-.text-input-number {
     font-size: 24px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
@@ -27,17 +15,42 @@
     border-radius: 30px;
     border: 3px solid #767676;
     padding-left: 15px;
-    margin-bottom: 5px;
 }
 
-.text-input-password {
-    font-size: 24px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    width: 320px;
-    height: 60px;
-    border-radius: 30px;
-    border: 3px solid #767676;
-    padding-left: 15px;
-    margin-bottom: 40px;
+.text-input-change-name{
+    margin-bottom: 15px;
 }
+
+.text-input-change-number{
+    margin-bottom: 15px;
+}
+
+.text-input-change-password {
+    margin-bottom: 70px;
+}
+
+.text-input-login-tel{
+    margin-bottom: 15px;
+}
+
+.text-input-login-password{
+    margin-bottom: 50px;
+}
+
+.text-input-create-account-tel{
+    margin-bottom: 15px;
+}
+
+.text-input-create-account-password{
+    margin-bottom: 50px;
+}
+
+.text-input-create-account-name{
+    margin-bottom: 15px;
+}
+
+.text-input-add-contact-number{
+    width: 400px;
+    align-self: center;
+}
+

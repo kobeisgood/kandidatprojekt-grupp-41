@@ -1,23 +1,8 @@
 import { authenticate, getContacts } from './Database';
-import { UserID } from './Types';
+import { UserID, PhoneNbr } from './Types';
 
-
-type PhoneNbr = string;
 
 export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
-
-
-
-/* 
-
-KOLLA OM connectedUsers ÄR RÄTT FÖR ATT KUNNA HÄMTA NAMN VID UPPRINGNING
-
-*/
-
-
-
-
-
 
 /**
  * Adds a user to the server's list of connected users.
@@ -57,33 +42,6 @@ export const userIsLoggedIn = (phone: string) => {
     return connectedUsers.has(phone);
 };
 
-/**
- * Looks up a connected user's name from the list.
- * 
- * @param id The user's socket ID
- * @returns The user's name if found, otherwise null
- */
-/*export const getUserName = (id: UserID) => {
-    let userPhone
-
-    let user = connectedUsers.find((user: User) => {
-        return user.id === id
-    });
-
-    if (user !== undefined)
-        return user.firstName;
-    else
-        return null;
-};*/
-
 export const getUserId = (phoneNbr: string) => {
     return connectedUsers.get(phoneNbr);
 }
-
-/**
- * Prints the IDs of all connected users to the server log.
- */
-export const logUsers = () => {
-    /*console.log("Connected ids are:");
-    connectedUsers.forEach((p) => { console.log(p.id); });*/
-};

@@ -1,9 +1,9 @@
 import io from 'socket.io-client';
 import { default as WebRTC } from 'simple-peer';
-import { User, Contact, Peer } from './Types';
-
+import { User, Contact, Peer, PhoneNbr } from './Types';
 
 const useHTTPS = false; // Only enable this if you know what it means
+export let socket: SocketIOClient.Socket; // The socket representing the connection between the client and the server
 
 /**
  * Makes an attempt to login. 
@@ -12,34 +12,50 @@ const useHTTPS = false; // Only enable this if you know what it means
  * @param psw The specified user password
  * @returns The socket representing the connection between client and server
  */
-export const Login = (phone: string, psw: string, setMe: Function, redir: Function, listenForCalls: Function) => {
-    let socket: SocketIOClient.Socket;
-
+export const Login = (
+    phone: string,
+    psw: string,
+    setMe: Function,
+    redir: Function,
+    listenForCalls: Function
+) => {
     if (useHTTPS)
         socket = io.connect('https://localhost:4000');
     else
         socket = io.connect('http://localhost:4000');
 
     socket.emit('login-user', phone, psw); // Send login request to server
-
     socket.once('login-response', (user: User) => { // Begin listening for server response
         if (user !== null) {
             console.log("Logged in successfully!");
             setMe(user);
             redir(); // Redirect to dashboard and listen for calls
-            listenForCalls(socket);
+            listenForCalls();
         } else
             console.log("Failed to log in!");
     });
-
-    return socket;
 };
 
-export const Logout = (socket: SocketIOClient.Socket) => {
-    socket.off('user-connected');
+export const Logout = (
+    phone: PhoneNbr,
+    andThen: Function
+) => {
+    socket.emit('logout-user', phone); // Send logout request to server
+    socket.once('logout-response', (result: boolean) => {
+        if (result)
+            console.log("Logout successful!");
+        else
+            console.log("Logout failed!");
+
+        andThen();
+    });
 };
 
-export const Register = (socket: SocketIOClient.Socket, user: User, psw: string, callback: (result: boolean) => void) => {
+export const Register = (
+    user: User,
+    psw: string,
+    callback: (result: boolean) => void
+) => {
     socket.emit('register-user', user, psw);
     socket.on('registration-result', (result: boolean) => {
         if (result)
@@ -56,87 +72,149 @@ export const Register = (socket: SocketIOClient.Socket, user: User, psw: string,
  * 
  * Searches for the existence of a user in the db given a phone number
  * 
- * @param socket From SocketIOClient.Socket
  * @param phoneNumber The specified user phone number
  * @param setContactExists Function that sets the boolean result 
  */
 export const FindContactNumber = (
-    socket: SocketIOClient.Socket,
     phoneNumber: string,
     setContactExists: Function
 ) => {
     socket.emit('find-contact-number', phoneNumber);
     socket.on('number-found', () => {
         setContactExists(true);
-    })
+    });
+
     socket.on('number-not-found', () => {
         setContactExists(false);
     })
-}
+};
+
+/**
+ * Retrieves information that the update of name is successful or not. 
+ * 
+ * @param phoneNbr 
+ * @param firstName 
+ * @param lastName 
+ * @param setName 
+ */
+export const UpdateName = (
+    phoneNbr: string,
+    firstName: string,
+    lastName: string,
+    setName: Function,
+    setNameChanged: Function
+) => {
+    socket.emit('update-name', { phoneNbr: phoneNbr, firstName: firstName, lastName: lastName });
+    socket.on('update-name-result', (result: boolean) => {
+        if (result) {
+            setName(firstName, lastName);
+            setNameChanged(true);
+        } else
+            console.error("Name update unsuccessful");
+    });
+};
+/**
+ * Retrieves information that the update of number is successful or not. 
+ * 
+ * @param oldNbr 
+ * @param newNbr 
+ * @param setNbr 
+ */
+export const UpdateNbr = (
+    oldNbr: string,
+    newNbr: string,
+    setNbr: Function,
+    setNumberChanged: Function
+) => {
+    socket.emit('update-nbr', { phoneNbr: oldNbr, newNbr: newNbr });
+    socket.on('update-nbr-result', (result: boolean) => {
+        if (result) {
+            setNbr(newNbr);
+            setNumberChanged(true);
+        } else
+            console.error("Number update unsuccessful");
+    });
+};
+
+/**
+ * Retrieves information that the update of password is successful or not. 
+ * 
+ * @param phoneNbr 
+ * @param oldPassword 
+ * @param newPassword 
+ * @param setPasswordChanged 
+ */
+export const UpdatePassword = (
+    phoneNbr: string,
+    oldPassword: string,
+    newPassword: string,
+    setPasswordChanged: Function
+) => {
+    socket.emit('update-password', { phoneNbr: phoneNbr, oldPassword: oldPassword, newPassword: newPassword });
+    socket.on('update-password-result', (result: boolean) => {
+        if (result)
+            setPasswordChanged(true);
+        else
+            console.error("Password update unsuccessful");
+    });
+};
 
 /**
  * Retrieves a user from the db given a phone number 
  * 
- * @param socket From SocketIOClient.Socket
  * @param phoneNumber The specified user phone number 
  * @param setFoundContact Function that sets the contact found 
  */
-export const GetSearchedContact = (socket: SocketIOClient.Socket, phoneNumber: string, setFoundContact: Function) => {
+export const GetSearchedContact = (
+    phoneNumber: string,
+    setFoundContact: Function
+) => {
     socket.emit('get-searched-contact', phoneNumber);
     socket.on('got-contact', (contact: Contact) => {
         setFoundContact(contact)
-        console.log(contact)
-    } )
+    })
 }
 
 /**
  * Adds a contact to a specified user in db
  * 
- * @param socket From SocketIOClient.Socket
  * @param contact Contact that has been searched for
- * @param contactList The current list of the logged in users contacts
- * @param loggedInUserNumber The number of the logged in user 
+ * @param loggedInUserNumber The number of the logged in user
+ * @param setContactList Function that sets the contact list from the db to frontend 
  */
-export const AddFoundContact = 
+export const AddFoundContact =
     (
-    socket:SocketIOClient.Socket, 
-    contact:Contact, 
-    contactList:Contact[], 
-    loggedInUserNumber:string,
-    setContactList:Function
-    ) => 
-    {
-    socket.emit('add-searched-contact', contact, loggedInUserNumber);
-    socket.once('contact-added', () => {
-        contactList.push(contact) // TODO contact added on frontend even though its not added in db
-        setContactList(contactList)
-        console.log(contactList)
-    })
-}
+        contact: Contact,
+        loggedInUserNumber: string,
+        setContactList: Function
+    ) => {
+        socket.emit('add-searched-contact', contact, loggedInUserNumber);
+        socket.once('contact-added', (realUpdatedContactList: Contact[]) => {
+            setContactList(realUpdatedContactList)
+        })
+    }
 
-export const RemoveFoundContact = 
+/**
+ * 
+ * @param contact Contact to be removed
+ * @param loggedInUserNumber The number of the logged in user
+ * @param setContactList Function that sets the contact list from the db to frontend 
+ */
+export const RemoveFoundContact =
     (
-    socket:SocketIOClient.Socket, 
-    contact:Contact, 
-    contactList:Contact[], 
-    loggedInUserNumber:string,
-    setContactList:Function
-    ) => 
-    {
-    socket.emit('remove-searched-contact', contact, loggedInUserNumber);
-    socket.once('contact-removed', () => {
-        var indexToRemove = contactList.indexOf(contact)
-        if (indexToRemove > -1) {
-            contactList.splice(indexToRemove, 1);
-        } else {
-            console.log("Tried to remove who does not exist?!");
-        }
-        setContactList(contactList)
-        console.log(contactList)
-    })
-}
+        contact: Contact,
+        loggedInUserNumber: string,
+        setContactList: Function
+    ) => {
+        socket.emit('remove-searched-contact', contact, loggedInUserNumber);
+        socket.once('contact-removed', (realUpdatedContactList: Contact[]) => {
+            setContactList(realUpdatedContactList)
+        })
+    };
 
-export const RequestUserList = (socket: SocketIOClient.Socket, update: Function) => {
+export const RequestUserList = (
+    update: Function
+) => {
     socket.emit('request-userList');
     socket.on('receive-userList', (userList?: User[]) => {
         if (userList !== undefined) {
@@ -150,13 +228,11 @@ export const RequestUserList = (socket: SocketIOClient.Socket, update: Function)
 
 /**
  * 
- * @param socket This client's socket
  * @param setIncomingCall A setter for the incomingCall state
  * @param setCallerSignal A setter for the callAccepted state
  * @param setPeer A setter for the peer state
  */
 export const ListenForCalls = (
-    socket: SocketIOClient.Socket,
     setIncomingCall: Function,
     setCallerSignal: Function,
     setPeer: Function
@@ -178,7 +254,6 @@ export const ListenForCalls = (
 /**
  * Responds to an incoming call.
  * 
- * @param socket This client's socket
  * @param caller The user calling us
  * @param callerSignal The signal of the user calling us
  * @param setCallAccepted A setter for the callAccepted state
@@ -191,7 +266,6 @@ export const ListenForCalls = (
  * @param hangUp A function for ending the call
  */
 export const CallRespond = (
-    socket: SocketIOClient.Socket,
     caller: Peer,
     callerSignal: WebRTC.SignalData,
     setCallAccepted: Function,
@@ -242,7 +316,6 @@ export const CallRespond = (
 /**
  * Calls another user.
  * 
- * @param socket This client's socket
  * @param setOutgoingCall A setter for the outgoingCall state
  * @param setCallAccepted A setter for the callAccepted state
  * @param setMyNode A setter for the myNode state
@@ -254,7 +327,6 @@ export const CallRespond = (
  * @param hangUp A function for ending the call
  */
 export const CallUser = (
-    socket: SocketIOClient.Socket,
     setOutgoingCall: Function,
     setCallAccepted: Function,
     setMyNode: Function,
@@ -308,14 +380,11 @@ export const CallUser = (
 /**
  * Aborts an outgoing call (before it's accepted by the peer).
  * 
- * @param socket This client's socket
  * @param callee The callee's name
  */
 export const CallAbort = (
-    socket: SocketIOClient.Socket,
     calleeNbr: string
 ) => {
-    console.log("Call abort (client side)");
     socket.emit('abort-call', calleeNbr);
 };
 
@@ -342,7 +411,7 @@ export const CallHangUp = (
     redir: Function
 ) => {
     setCallAccepted(false);
-    setPeer({ number: "", name: ""});
+    setPeer({ number: "", name: "" });
     setPeerSignal({});
     setOutgoingCall(false);
     setIncomingCall(false);
