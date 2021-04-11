@@ -11,23 +11,21 @@ import rightCarouselButton from '../icons/carousel-button-right.svg';
 
 import '../css/carousel.css';
 
-interface Props {
-    
-}
 
-export const Carousel = (props: Props) => {
+export const Carousel = () => {
     const carouselRef = useRef<HTMLDivElement>(null);
-    var scrollCounter 
 
-    function scrollCarousel(scrollRight: Boolean) {
+    const scrollCarousel = (scrollRight: Boolean) => {
+        let scrollLeft;
+
         if (scrollRight) {
             if (carouselRef.current) {
-                var scrollLeft = carouselRef.current.scrollLeft;
+                scrollLeft = carouselRef.current.scrollLeft;
                 carouselRef.current.scroll({ left: scrollLeft + 200, behavior: "smooth"});
             }
         } else {
             if (carouselRef.current) {
-                var scrollLeft = carouselRef.current.scrollLeft;
+                scrollLeft = carouselRef.current.scrollLeft;
                 carouselRef.current.scroll({ left: scrollLeft - 200, behavior: "smooth"});
             }
         }

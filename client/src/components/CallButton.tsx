@@ -20,8 +20,6 @@ const offerOptions = {
 // Currently does not use the startTime variable, add if necessary. How to can be found in:
 // https://github.com/webrtc/samples/blob/gh-pages/src/content/peerconnection/pc1/js/main.js
 const call = async (localVideoElement: any, remoteVideoElement: any) => {
-    console.log("calling")
-
     const localStream = localVideoElement.srcObject;
     const videoTracks = localStream.getVideoTracks();
     const audioTracks = localStream.getAudioTracks();

@@ -35,7 +35,7 @@ export const CallPopup = (props: Props) => {
                         <h3 className="caller-name-text">{props.callerName}</h3>
 
                         <div className="decline-button-container incoming-call-button-container">
-                            <SquareButton className="decline-call-button incoming-call-button button" onClick={acceptCall} icon={accept} />  
+                            <SquareButton className="decline-call-button incoming-call-button button" onClick={declineCall} icon={decline} />  
                             <h3 className="decline-text">Avböj</h3>
                         </div>
                     </div>

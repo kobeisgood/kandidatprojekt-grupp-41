@@ -1,9 +1,7 @@
 import { SquareButton } from '../components/SquareButton';
 import decline from '../icons/decline.svg';
-import { Contact } from '../Types';
 import '../css/call.css';
 import '../css/buttons.css';
-
 
 
 interface Props {

@@ -16,7 +16,6 @@ interface Props {
     removeContactState: boolean;
     contact: Contact | null,
     onCall: Function,
-    socket: SocketIOClient.Socket | null,
     contactList: Contact[], 
     phoneNumber: string,
     setContactList: Function,
@@ -26,7 +25,7 @@ interface Props {
 
 export const ContactCard = (props: Props) => {
     const openDeletePopup = () => {
-        if (props.contact?.phoneNbr != "")
+        if (props.contact?.phoneNbr !== "")
             props.setSelectedContact({
                 name: props.contact?.firstName + " " + props.contact?.lastName,
                 phoneNbr: props.contact?.phoneNbr

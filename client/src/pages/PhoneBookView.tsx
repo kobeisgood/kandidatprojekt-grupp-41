@@ -19,7 +19,6 @@ import removeContactIcon from '../icons/remove-contact-icon.svg';
 
 interface Props {
     contactList: Contact[]
-    socket: SocketIOClient.Socket | null,
     onCall: Function,
     phoneNumber: string,
     setContactList: Function
@@ -78,7 +77,6 @@ export const PhoneBookView = (props: Props) => {
                                 onCall={() => {
                                     props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName }); props.onCall(contact.phoneNbr);
                                 }}
-                                socket={props.socket}
                                 contactList={props.contactList}
                                 phoneNumber={props.phoneNumber}
                                 setContactList={props.setContactList}
@@ -93,7 +91,6 @@ export const PhoneBookView = (props: Props) => {
             {addContactVisible &&
                 <AddContactPopup
                     visibilityHandler={addContactVisibleHandler}
-                    socket={props.socket}
                     contactList={props.contactList}
                     phoneNumber={props.phoneNumber}
                     setContactList={props.setContactList}
@@ -103,13 +100,12 @@ export const PhoneBookView = (props: Props) => {
             {deleteContactVisible &&
                 <DeleteContactPopup
                     contact={props.contactList.find((contact) => {
-                        if (contact.phoneNbr == selectedContact.phoneNbr)
+                        if (contact.phoneNbr === selectedContact.phoneNbr)
                             return contact;
                         else
                             return null;
                     })}
                     contactInfo={selectedContact}
-                    socket={props.socket}
                     phoneNumber={props.phoneNumber}
                     setContactList={props.setContactList}
                     closePopup={() => setDeleteContactVisible(false)}

@@ -7,7 +7,6 @@ import { connectedUsers, loginUser, userIsLoggedIn, getUserId, logoutUser } from
 /* INITIATION */
 const io = InitServer(); // Init basic server requirements
 connectToDb(); // Connect to database
-
 console.log("Server up and running...");
 
 
@@ -19,7 +18,7 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         if (!userIsLoggedIn(phone)) { // If user not already connected
             loginUser(userId, phone, psw).then((user) => {
                 if (user !== null) {
-                    console.log("\nUser with ID " + userId + " successfully logged in.");
+                    console.log(user.firstName + " " + user.lastName + " successfully logged in!");
 
                     socket.emit('login-response', {
                         id: socket.id,
@@ -31,10 +30,21 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
                         callEntries: user.callEntries
                     });
                 } else {
-                    console.log("\nUser with ID " + userId + " failed to log in.");
+                    console.log("\nA user failed to log in!");
                     socket.emit('login-response', null);
                 }
             });
+        }
+    });
+
+    socket.on('logout-user', (phone: string) => {
+        console.log("User logging out");
+
+        if (userIsLoggedIn(phone)) {
+            logoutUser(phone);
+            socket.emit('logout-response', true);
+        } else {
+            socket.emit('logout-response', false);
         }
     });
 
@@ -82,15 +92,15 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         authenticate(user.phoneNbr, user.oldPassword)
             .then((result) => {
                 if (result !== null) {
-                updatePassword(user.phoneNbr, user.newPassword)
-                    .then(() => {
-                        console.log("Password update registered!");
-                        socket.emit("update-password-result", true);
-                    })
-                    .catch(() => {
-                        console.error("Password update unsuccesful");
-                        socket.emit('update-password-result', false);
-                    });
+                    updatePassword(user.phoneNbr, user.newPassword)
+                        .then(() => {
+                            console.log("Password update registered!");
+                            socket.emit("update-password-result", true);
+                        })
+                        .catch(() => {
+                            console.error("Password update unsuccesful");
+                            socket.emit('update-password-result', false);
+                        });
                 }
                 else (socket.emit('update-password-result', false))
             })
@@ -113,7 +123,6 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
 
     socket.on('get-searched-contact', (phoneNumber: string) => {
         getContactFromNbr(phoneNumber).then((contact) => {
-            console.log(contact)
             socket.emit('got-contact', contact)
         })
             .catch(() => {
@@ -121,8 +130,8 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     })
 
-    socket.on('add-searched-contact', (contact:User, loggedInUserNumber:string) => {
-        addContactToList(contact, loggedInUserNumber ).then((realUpdatedContactList) => {
+    socket.on('add-searched-contact', (contact: User, loggedInUserNumber: string) => {
+        addContactToList(contact, loggedInUserNumber).then((realUpdatedContactList) => {
             console.log('Contact has been added to db!')
             socket.emit('contact-added', realUpdatedContactList)
         })
@@ -131,66 +140,39 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             })
     })
 
-    socket.on('remove-searched-contact', (contact:User, loggedInUserNumber:string) => {
-        removeContactFromList(contact, loggedInUserNumber ).then((realUpdatedContactList) => {
+    socket.on('remove-searched-contact', (contact: User, loggedInUserNumber: string) => {
+        removeContactFromList(contact, loggedInUserNumber).then((realUpdatedContactList) => {
             console.log('Contact has been removed from db!')
             socket.emit('contact-removed', realUpdatedContactList)
         })
             .catch(() => {
                 console.error("Contact could not be removed!")
             })
-    })
-
-    /*
-    socket.on('join-room', (roomId: string) => {
-        let userId = socket.id;
-        let userName = getUserName(userId);
-        socket.to(roomId).broadcast.emit('user-connected', userName, connectedUsers);
-        socket.join(roomId);
-        socket.emit('join-response', connectedUsers);
-        console.log(userName + " joined room " + roomId);
     });
-    */
 
     socket.on('call-user', (data) => {
         const calleeId = getUserId(data.callee);
         socket.to(calleeId).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: data.callerName });
     });
-
+    
     socket.on('accept-call', (data: CallData) => {
         const callerId = getUserId(data.caller);
         socket.to(callerId).emit('call-accepted', data.signalData);
     });
-
+    
     socket.on('decline-call', (data: CallData) => {
         const callerId = getUserId(data.caller);
         socket.to(callerId).emit('call-declined');
-        console.log("Id is!");
-        console.log(callerId);
-        console.log("Nbr is!");
-        console.log(data.caller);
     });
-
+    
     socket.on('abort-call', (calleeNbr: string) => {
         const calleeId = getUserId(calleeNbr);
         socket.to(calleeId).emit('call-aborted');
     });
-
-    /*
+    
     socket.on('disconnecting', () => {
-        let userId = socket.id;
-        let userName = getUserName(userId);
-        logoutUser(userId); // Remove user from record
-
-        // Announce that user left the room
-        socket.rooms.forEach(room => {
-            socket.to(room).broadcast.emit('user-disconnected', userName, connectedUsers);
-        });
     });
-    */
-
+    
     socket.on('disconnect', () => {
-        let userId = socket.id;
-        console.log("User with ID " + userId + " logged out.");
     });
 });

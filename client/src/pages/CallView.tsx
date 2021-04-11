@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CallViewButton } from '../components/CallViewButton';
 import { EndCallButton } from '../components/EndCallButton';
 import { VideoStreamer } from '../components/VideoStreamer';
@@ -53,7 +53,7 @@ export const CallView = (props: Props) => {
             }
         });
 
-    }, []);
+    }, [props.peer, props.caller.name]);
 
     const setTimer = () => {
 
@@ -119,7 +119,7 @@ export const CallView = (props: Props) => {
                     <button disabled={slider ? false : true} className={slider ? "reaction-button" : "reaction-button active"} onClick={() => sendReaction(availableReactions[5])}>{availableReactions[5]}</button>
                 </div>
                 <button className={slider ? "opened-reactions-button" : "open-reactions-button"} onClick={openReactions}>
-                    <img src={backArrow} className={slider ? 'rotate-back-arrow-image' : 'rotate-arrow-image'}></img>
+                    <img src={backArrow} className={slider ? 'rotate-back-arrow-image' : 'rotate-arrow-image'} alt="Slider"></img>
                 </button>
             </div>
             <div className="video-container">

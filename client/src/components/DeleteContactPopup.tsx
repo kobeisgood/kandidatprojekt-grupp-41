@@ -1,14 +1,14 @@
+import { Contact } from '../Types';
+import { RemoveFoundContact } from '../Connection';
+import { SquareButton } from './SquareButton';
+
 import '../css/call.css';
 import '../css/buttons.css';
 import '../css/popups.css';
 import darkCrossIcon from '../icons/dark-cross-icon.svg';
-import { Contact } from '../Types';
-import { RemoveFoundContact } from '../Connection';
-import { SquareButton } from './SquareButton';
 import { useState } from 'react';
 
 interface Props {
-    socket: SocketIOClient.Socket | null,
     phoneNumber: string,
     setContactList: Function,
     contact: Contact | undefined,
@@ -21,9 +21,9 @@ export const DeleteContactPopup = (props: Props) => {
 
     // Contact is deleted in db
     const deleteContact = () => {
-        if (props.socket != undefined && props.contact != undefined) {
+        if (props.contact !== undefined) {
             setContactDeletedState(true)
-            RemoveFoundContact(props.socket, props.contact, props.phoneNumber, props.setContactList)
+            RemoveFoundContact(props.contact, props.phoneNumber, props.setContactList)
         } else {
             console.log('No such contact!')
         }
@@ -65,14 +65,14 @@ export const DeleteContactPopup = (props: Props) => {
                 {!contactDeletedState &&
                     <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.closePopup()}></img>}
 
-                {!contactDeletedState ? 
-                <div className="call-popup-flexbox-container left-buffer">
-                    {renderPopupContent()}
-                </div> :
-                <div className="call-popup-flexbox-container">
-                    {renderPopupContent()}
-                </div>}
-                
+                {!contactDeletedState ?
+                    <div className="call-popup-flexbox-container left-buffer">
+                        {renderPopupContent()}
+                    </div> :
+                    <div className="call-popup-flexbox-container">
+                        {renderPopupContent()}
+                    </div>}
+
             </div>
         </div>
     )

@@ -2,6 +2,7 @@ import Peer from 'simple-peer'; // WebRTC wrapper library
 
 
 export type UserID = string;
+export type PhoneNbr = string;
 
 export interface User {
     id: UserID,

@@ -1,18 +1,17 @@
+import { useState } from 'react';
+import { Contact } from '../Types';
+import { GetSearchedContact, AddFoundContact } from '../Connection';
+import { SquareButton } from '../components/SquareButton';
+import { TextInput } from './TextInput';
+
 import '../css/call.css';
 import '../css/buttons.css';
 import '../css/popups.css';
 import '../css/contact-card.css';
-import '../css/textinput.css';
 import darkCrossIcon from '../icons/dark-cross-icon.svg';
-import { SquareButton } from '../components/SquareButton';
-import { useState } from 'react';
-import { GetSearchedContact, AddFoundContact } from '../Connection';
-import { Contact } from '../Types';
-import { TextInput } from './TextInput';
 
 
 interface Props {
-    socket: SocketIOClient.Socket | null,
     visibilityHandler: Function
     contactList: Contact[],
     phoneNumber: string,
@@ -20,7 +19,6 @@ interface Props {
 }
 
 export const AddContactPopup = (props: Props) => {
-
     // The content rendered when we haven't searched for a contact yet
     const
         [neutralPageState, setNeutralPageState] = useState(true),
@@ -68,7 +66,7 @@ export const AddContactPopup = (props: Props) => {
 
 
         // When you try to add yourself
-        if (contactNumber == props.phoneNumber) {
+        if (contactNumber === props.phoneNumber) {
             setNeutralPageState(false)
             setIncorrectNumberState(true)
             setOwnNumber(true)
@@ -77,26 +75,24 @@ export const AddContactPopup = (props: Props) => {
         // When you try to add someone you already have in your contacts
         for (let i = 0; i < props.contactList.length; i++) {
             var contact = props.contactList[i]
-            if (contact.phoneNbr == contactNumber) {
+            if (contact.phoneNbr === contactNumber) {
                 setNeutralPageState(false)
                 setIncorrectNumberState(true)
             }
         }
 
-        if (props.socket != null) {
-            GetSearchedContact(props.socket, contactNumber, setFoundContact)
-            setNeutralPageState(false)
-        }
+        GetSearchedContact(contactNumber, setFoundContact)
+        setNeutralPageState(false)
     };
 
     // Adds the contact to the user in the database
     const addContact = () => {
-        if (props.socket != null && foundContact != null) {
+        if (foundContact != null) {
             setContactAddedState(true)
-            AddFoundContact(props.socket, foundContact, props.phoneNumber, props.setContactList)
+            AddFoundContact(foundContact, props.phoneNumber, props.setContactList)
         } else {
             console.log('No such contact!')
-        }
+        };
     }
 
     // Renders content if user has inputed a faulty number(own, already existing, non-existing)
@@ -104,7 +100,7 @@ export const AddContactPopup = (props: Props) => {
         return (
             <>
                 {/* Contact NOT found */}
-                {foundContact == null && !neutralPageState && !contactAddedState &&
+                {foundContact === null && !neutralPageState && !contactAddedState &&
                     <>
                         <p className="popup-error-message">Fel Nummer! </p>
                         <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>
@@ -155,7 +151,7 @@ export const AddContactPopup = (props: Props) => {
         return (
             <div className="content-column left-buffer">
                 {foundContact != null && !neutralPageState && contactAddedState && !incorrectNumberState ?
-                <h3 className="right-buffer bottom-buffer">Lägg till kontakt</h3> : <h3>Lägg till kontakt</h3> }
+                    <h3 className="right-buffer bottom-buffer">Lägg till kontakt</h3> : <h3>Lägg till kontakt</h3>}
 
                 {/* Neutral */}
                 {neutralPageState &&
@@ -176,8 +172,8 @@ export const AddContactPopup = (props: Props) => {
                         <div className="contact-found-row">
                             <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="KontaktBild" />
                             <div className="contact-found-info-col">
-                                <p className="found-contact-name">{foundContact.phoneNbr != "" ? foundContact.firstName : ""} {foundContact.phoneNbr != "" ? foundContact.lastName : ""} </p>
-                                <p className="found-contact-number">{foundContact.phoneNbr != "" ? foundContact.phoneNbr : ""}</p>
+                                <p className="found-contact-name">{foundContact.phoneNbr !== "" ? foundContact.firstName : ""} {foundContact.phoneNbr !== "" ? foundContact.lastName : ""} </p>
+                                <p className="found-contact-number">{foundContact.phoneNbr !== "" ? foundContact.phoneNbr : ""}</p>
                             </div>
                         </div>
                         <SquareButton label="Lägg till kontakt" onClick={addContact} className="save-button handle-contact-button button" />
@@ -189,7 +185,6 @@ export const AddContactPopup = (props: Props) => {
         );
     };
 
-
     return (
         <div id="add-contact-popup" className="full-page-container full-page-popup-container">
             <div className="call-popup-container">
@@ -198,9 +193,7 @@ export const AddContactPopup = (props: Props) => {
                     <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={closeAddContactPopup}></img>}
 
                 <div className="call-popup-flexbox-container">
-
                     {renderPopupContent()}
-
                 </div>
             </div>
         </div>

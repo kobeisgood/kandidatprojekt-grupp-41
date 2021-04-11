@@ -1,7 +1,7 @@
 /* View for the changing name 'Ändra namn'
 Authors: Charlie and Hanna 
 */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../css/profile.css';
 import '../css/textinput.css';
 import hjordis from "../images/hjordis.png"
