@@ -39,33 +39,33 @@ export const CallView = (props: Props) => {
         /* Peer recevies data */
         props.peer.on('data', (data: string) => {
             let parsedData: PeerInfo = JSON.parse(data);
-            
-            switch(parsedData.type) {
+
+            switch (parsedData.type) {
                 case 'mic-state':
-                    setPeerMicState(parsedData.content);        
+                    setPeerMicState(parsedData.content);
                     break;
                 case 'reaction':
-                    reactionHistory.push(props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " säger " + '"' + parsedData.content + '"');
+                    reactionHistory.push(props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " sa: " + '"' + parsedData.content + '"');
                     setDummyState(Math.random()); /** Forces re-render */
                     setTimer();
 
                     break;
             }
-        });  
+        });
 
-    },[]);
- 
+    }, []);
+
     const setTimer = () => {
 
         if (timer === null) {
             timer = setInterval(() => {
                 reactionHistory.shift(); /** Removes first element */
-                
+
                 if (timer !== null && reactionHistory.length === 0) {
                     clearInterval(timer);
                     timer = null;
                 }
-        
+
                 setDummyState(Math.random());
             }, 4000);
         }
@@ -101,7 +101,7 @@ export const CallView = (props: Props) => {
             content: data
         }));
 
-        reactionHistory.push("Du sa " + '"' + data + '"')
+        reactionHistory.push("Du sa: " + '"' + data + '"')
         setDummyState(Math.random());   /** Forces re-render */
         setTimer();
 
@@ -109,38 +109,43 @@ export const CallView = (props: Props) => {
 
     return (
         <div className="call-container">
-            <button className={slider ? "opened-reactions-button" : "open-reactions-button"} onClick={openReactions}>
-                <img src={backArrow} className={slider ? 'rotate-back-arrow-image' : 'rotate-arrow-image'}></img>
-            </button>
-            <div className={slider ? 'slider active' : 'slider'}>
-                <button className="reaction-button" onClick={() => sendReaction(availableReactions[0])}>{availableReactions[0]}</button>
-                <button className="reaction-button" onClick={() => sendReaction(availableReactions[1])}>{availableReactions[1]}</button>
-                <button className="reaction-button" onClick={() => sendReaction(availableReactions[2])}>{availableReactions[2]}</button>
-                <button className="reaction-button" onClick={() => sendReaction(availableReactions[3])}>{availableReactions[3]}</button>
-                <button className="reaction-button" onClick={() => sendReaction(availableReactions[4])}>{availableReactions[4]}</button>
-                <button className="reaction-button" onClick={() => sendReaction(availableReactions[5])}>{availableReactions[5]}</button>
+            <div className={slider ? "reaction-buttons-container active" : "reaction-buttons-container"}>
+                <div className='slider'>
+                    <button disabled={slider ? false : true} className={slider ? "reaction-button" : "reaction-button active"} onClick={() => sendReaction(availableReactions[0])}>{availableReactions[0]}</button>
+                    <button disabled={slider ? false : true} className={slider ? "reaction-button" : "reaction-button active"} onClick={() => sendReaction(availableReactions[1])}>{availableReactions[1]}</button>
+                    <button disabled={slider ? false : true} className={slider ? "reaction-button" : "reaction-button active"} onClick={() => sendReaction(availableReactions[2])}>{availableReactions[2]}</button>
+                    <button disabled={slider ? false : true} className={slider ? "reaction-button" : "reaction-button active"} onClick={() => sendReaction(availableReactions[3])}>{availableReactions[3]}</button>
+                    <button disabled={slider ? false : true} className={slider ? "reaction-button" : "reaction-button active"} onClick={() => sendReaction(availableReactions[4])}>{availableReactions[4]}</button>
+                    <button disabled={slider ? false : true} className={slider ? "reaction-button" : "reaction-button active"} onClick={() => sendReaction(availableReactions[5])}>{availableReactions[5]}</button>
+                </div>
+                <button className={slider ? "opened-reactions-button" : "open-reactions-button"} onClick={openReactions}>
+                    <img src={backArrow} className={slider ? 'rotate-back-arrow-image' : 'rotate-arrow-image'}></img>
+                </button>
             </div>
             <div className="video-container">
                 <VideoStreamer className="remote-video-container" stream={props.remoteStream} />
 
-                {!peerMicState && 
-                <p className="function-off-container mic-muted-text">
-                     {/* Checks if first name ends with 's' */}
-                    {props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 's' || props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'x' ? 
-                        props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " mikrofon är avstängd" 
-                    : 
-                        props.caller.name.substr(0, props.caller.name.indexOf(' ')) + "s mikrofon är avstängd"}</p>
+                {!peerMicState &&
+                    <p className="function-off-container mic-muted-text">
+                        {/* Checks if first name ends with 's', 'x' or 'z' */}
+                        {props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 's' || 
+                        props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'x' || 
+                        props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'z' ?
+                            props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " mikrofon är avstängd"
+                            :
+                            props.caller.name.substr(0, props.caller.name.indexOf(' ')) + "s mikrofon är avstängd"}</p>
                 }
-
-                {reactionHistory.map((reaction: string, index) => {
-                    return (
-                        <p className="reaction" key={index}>{reaction}</p>
-                    );
-                })} 
+                <div className="reaction-container">
+                    {reactionHistory.map((reaction: string, index) => {
+                        return (
+                            <p className="reaction" key={index}>{reaction}</p>
+                        );
+                    })}
+                </div>
 
                 <div className="right-side-container">
                     <VideoStreamer className="local-video-container" stream={props.localStream} />
-                    
+
                     {micState === false ? <div className="function-off-container">
                         Din mikrofon är avstängd
                     </div> : <></>}
@@ -153,15 +158,15 @@ export const CallView = (props: Props) => {
 
             <div className="function-bar-container">
                 <ul>
-                    <li> 
-                        <CallViewButton functionDesc={micState ? "Stäng av din mikrofon" : "Sätt på din mikrofon"} icon={micState ? micOn : micOff} buttonFunction={micClicked} /> 
+                    <li>
+                        <CallViewButton functionDesc={micState ? "Stäng av din mikrofon" : "Sätt på din mikrofon"} icon={micState ? micOn : micOff} buttonFunction={micClicked} />
                     </li>
-                    <li> 
-                        <CallViewButton functionDesc={camState ? "Stäng av din kamera" : "Sätt på din kamera"} icon={camState ? camOn : camOff } buttonFunction={camClicked} />
+                    <li>
+                        <CallViewButton functionDesc={camState ? "Stäng av din kamera" : "Sätt på din kamera"} icon={camState ? camOn : camOff} buttonFunction={camClicked} />
                     </li>
                     <li>
                         <EndCallButton endCall={props.endCall} />
-                    </li> 
+                    </li>
                 </ul>
             </div>
         </div>
