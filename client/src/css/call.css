@@ -54,12 +54,13 @@
     transform: translate(-50%, 0);
     display: flex;
     flex-direction: column;
+    align-items: center;
     z-index: 100;
 }
 
 .reaction {
     top: 70%;
-    display: inline-block;
+    width: fit-content;
     margin-top: 1em;
     background-color: white;
     font-size: 2rem;
