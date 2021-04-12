@@ -43,4 +43,4 @@ export const ContactPopup = (props: Props) => {
 
 }
 
-// TODO: FIX DESIGN
+// TODO: FIX DESIGN, take away red crosses when contact popup opens 
