@@ -6,6 +6,7 @@
 import { ContactCard } from '../components/ContactCard';
 import { AddContactPopup } from '../components/AddContactPopup';
 import { DeleteContactPopup } from '../components/DeleteContactPopup';
+import { ContactPopup } from '../components/ContactPopup';
 import { BackButton } from '../components/BackButton';
 import { SquareButton } from '../components/SquareButton';
 import { Contact } from '../Types';
@@ -15,6 +16,7 @@ import '../css/phone-book.css';
 import '../css/colors.css';
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
+
 
 
 interface Props {
@@ -27,7 +29,7 @@ interface Props {
 
 // A "state" of the selected contact to be deleted
 // Makes sure page doesn't get re-rendered
-let selectedContact: { name: string, phoneNbr: string };    
+let selectedContact: { name: string, phoneNbr: string };
 const setSelectedContact = (contact: { name: string, phoneNbr: string }) => {
     selectedContact = contact;
 };
@@ -36,6 +38,7 @@ export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
     const [addContactVisible, setAddContactVisible] = useState(false);
     const [deleteContactVisible, setDeleteContactVisible] = useState(false);
+    const [contactVisible, setContactVisible] = useState(false)
 
     // Handles only the cross above the contact card
     const removeContactClicked = () => {
@@ -46,6 +49,11 @@ export const PhoneBookView = (props: Props) => {
     const addContactVisibleHandler = () => {
         setAddContactVisible(!addContactVisible)
         setRemoveContactState(false)
+    }
+
+    // Handles contact card popup visibility
+    const contactVisibleHandler = () => {
+        setContactVisible(!contactVisible)
     }
 
     return (
@@ -82,6 +90,7 @@ export const PhoneBookView = (props: Props) => {
                                 setContactList={props.setContactList}
                                 setSelectedContact={setSelectedContact}
                                 setDeleteContactVisible={() => setDeleteContactVisible(true)}
+                                contactPopupVisible={contactVisibleHandler}
                             />
                         )
                     })}
@@ -109,6 +118,18 @@ export const PhoneBookView = (props: Props) => {
                     phoneNumber={props.phoneNumber}
                     setContactList={props.setContactList}
                     closePopup={() => setDeleteContactVisible(false)}
+                />
+            }
+
+            {contactVisible &&
+                <ContactPopup
+                    contact={props.contactList.find((contact) => {
+                        if (contact.phoneNbr === selectedContact.phoneNbr)
+                            return contact;
+                        else
+                            return null;
+                    })}
+                    visibilityHandler={contactVisibleHandler}
                 />
             }
         </div>
