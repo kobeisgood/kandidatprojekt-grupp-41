@@ -1,4 +1,4 @@
-import { authenticate, getContacts } from './Database';
+import { authenticate, getContacts, getCallEntries } from './Database';
 import { UserID, PhoneNbr } from './Types';
 
 
@@ -16,6 +16,8 @@ export const loginUser = async (id: UserID, phone: string, psw: string) => {
     if (user !== null) {
         const contacts = await getContacts(user.contacts);
         user.contacts = contacts;
+        const callEntries = await getCallEntries(user.callEntries); /* TODO: Make function for sorting, reverse, etc. */
+        user.callEntries = callEntries;
         connectedUsers.set(phone, id);
         return user;
     } else {

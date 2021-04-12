@@ -143,7 +143,7 @@ export const App = () => {
                         return <Redirect push to="/dashboard" />
                 }} />
                 <Route path="/" exact render={() => <StartView />} />
-                <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} />} />
+                <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} />} />
                 <Route path="/createaccount" exact render={() => <CreateAccountView/>} />
                 <Route path="/profile" exact render={() => <ProfileView user={me} />} />
                 <Route path="/profile/changepicture" exact component={ChangePictureView} />
