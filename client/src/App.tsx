@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
+import FadeLoader from "react-spinners/FadeLoader";
 
 import { User, Peer, Contact } from './Types';
 import { CallRespond, CallUser, CallAbort, CallHangUp, ListenForCalls, Login, Register, UpdateName, UpdateNbr, UpdatePassword } from './Connection';
@@ -86,7 +87,7 @@ export const App = () => {
                 callEntries: me.callEntries
             })
     }
-                    
+
 
     const listenForCalls = (socket: SocketIOClient.Socket) => {
         if (socket !== null)
@@ -124,6 +125,14 @@ export const App = () => {
             CallAbort(socket, peer.number);
     };
 
+    /* Shows loading icon when all react components are loaded in */
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        console.log("component did mount mohaha");
+        setLoading(false);
+    });
+
     return (
         <div className="App">
             {incomingCall && !callAccepted &&
@@ -134,27 +143,35 @@ export const App = () => {
                 <CallingPopup abortCall={abortCall} name={peer.name} />
             }
 
-            <Switch>
-                <Route path="/login" exact component={() => {
-                    if (prevLoginInfo() === null)
-                        return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} listenForCalls={listenForCalls} />
-                    else
-                        return <Redirect push to="/dashboard" />
-                }} />
-                <Route path="/" exact component={() => <StartView />} />
-                <Route path="/dashboard" exact component={() => <Dashboard setMe={setMe} user={me} />} />
-                <Route path="/createaccount" exact component={() => <CreateAccountView/>} />
-                <Route path="/profile" exact component={() => <ProfileView user={me} />} />
-                <Route path="/profile/changepicture" exact component={ChangePictureView} />
-                <Route path="/profile/changepassword" exact component={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
-                <Route path="/profile/changenumber" exact component={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
-                <Route path="/profile/changename" exact component={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
-                <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
-                <Route path="/call" component={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer}/>} />
+            {
+                loading ?
+                    <div className="fade-loader-container">
+                        <FadeLoader loading={loading} />
+                    </div>
+                    :
 
-                {/* REDIRECTS */}
-                {prevLoginInfo() === null && <Redirect push to="/dashboard" />}
-            </Switch>
+                    <Switch>
+                        <Route path="/login" exact component={() => {
+                            if (prevLoginInfo() === null)
+                                return <LoginView socket={socket} setSocket={setSocket} me={me} setMe={setMe} listenForCalls={listenForCalls} />
+                            else
+                                return <Redirect push to="/dashboard" />
+                        }} />
+                        <Route path="/" exact component={() => <StartView />} />
+                        <Route path="/dashboard" exact component={() => <Dashboard setMe={setMe} user={me} />} />
+                        <Route path="/createaccount" exact component={() => <CreateAccountView />} />
+                        <Route path="/profile" exact component={() => <ProfileView user={me} />} />
+                        <Route path="/profile/changepicture" exact component={ChangePictureView} />
+                        <Route path="/profile/changepassword" exact component={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
+                        <Route path="/profile/changenumber" exact component={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
+                        <Route path="/profile/changename" exact component={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
+                        <Route path="/phonebook" component={() => <PhoneBookView socket={socket} contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
+                        <Route path="/call" component={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer} />} />
+
+                        {/* REDIRECTS */}
+                        {prevLoginInfo() === null && <Redirect push to="/dashboard" />}
+                    </Switch>
+            }
         </div>
     );
 };

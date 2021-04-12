@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User } from '../Types';
 import { Login } from '../Connection';
 import { useHistory } from "react-router-dom";
 import { SaveButton } from '../components/SaveButton';
 import { TextInput } from '../components/TextInput';
 import { BackButton } from '../components/BackButton';
+import FadeLoader from "react-spinners/FadeLoader";
+
 import '../css/login-view.css';
 
 
@@ -27,9 +29,10 @@ export const LoginView = (props: Props) => {
         handlePasswordInp = (event: any) => { setPasswordInp(event.target.value); };
 
     const history = useHistory(); // For redirecting user
-    const redir = () => { history.push("/dashboard"); }; 
+    const redir = () => { history.push("/dashboard"); };
 
     const attemptLogin = () => {
+        console.log("logging in");
         setLoggingIn(true);
 
         props.setSocket(
@@ -39,12 +42,21 @@ export const LoginView = (props: Props) => {
 
     return (
         <div>
+            {
+                loggingIn &&
+                <div className="fade-loader-container">
+                    <FadeLoader loading={loggingIn} />
+                </div>
+            }
+
             <header className="login-header-container">
+
                 <div className="back-button-container">
                     <BackButton linkTo="/" />
                 </div>
                 <h1 className="login-header">Logga in</h1>
             </header>
+
             <div className="description-text-container">
                 <h2 className="description-text">
                     Fyll i fälten nedan och tryck sedan på “Logga in” för att gå vidare.
@@ -66,6 +78,7 @@ export const LoginView = (props: Props) => {
                     </label>
 
                 </div>
+
                 <SaveButton label="Logga in" onClick={attemptLogin} />
             </form>
         </div>

@@ -20,7 +20,7 @@ interface Props {
     socket: SocketIOClient.Socket | null,
     onCall: Function,
     phoneNumber: string,
-    setContactList:Function
+    setContactList: Function
     setPeer: Function
 }
 
@@ -44,16 +44,25 @@ export const PhoneBookView = (props: Props) => {
         <div className="phone-book-container">
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
-                    <div className="back-button-phonebook-container">
-                        <BackButton linkTo="/dashboard" />
+                    <div className="phone-book-header-element">
+                        <div className="back-button-phonebook-container">
+                            <BackButton linkTo="/dashboard" />
+                        </div>
                     </div>
+
                     <div className="phone-book-top-flexbox-column">
                         <h1 className="phone-book-text">Telefonbok</h1>
                         <input type="text" placeholder="Sök efter kontakt..." className="search-contacts-input" />
                     </div>
+
                     <div className="contact-buttons-container">
-                        <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
-                        <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt" } onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
+                        <div className="contact-button-container">
+                            <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
+                        </div>
+
+                        <div className="contact-button-container">
+                            <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt"} onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
+                        </div>
                     </div>
                 </div>
             </header>
@@ -62,30 +71,30 @@ export const PhoneBookView = (props: Props) => {
                     {props.contactList.map((contact: Contact) => {
                         return (
                             <ContactCard
-                            key={contact.id}
-                            contact={contact}
-                            removeContactState={removeContactState}
-                            onCall={() => {
-                                props.setPeer({number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName}); props.onCall(contact.phoneNbr);
-                            }}
-                            socket={props.socket} 
-                            contactList={props.contactList} 
-                            phoneNumber={props.phoneNumber} 
-                            setContactList={props.setContactList}  
+                                key={contact.id}
+                                contact={contact}
+                                removeContactState={removeContactState}
+                                onCall={() => {
+                                    props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName }); props.onCall(contact.phoneNbr);
+                                }}
+                                socket={props.socket}
+                                contactList={props.contactList}
+                                phoneNumber={props.phoneNumber}
+                                setContactList={props.setContactList}
                             />
                         )
                     })}
                 </div>
             </div>
 
-            {addContactVisible && 
-                <AddContactPopup 
-                visibilityHandler={addContactVisibleHandler} 
-                socket={props.socket} 
-                contactList={props.contactList} 
-                phoneNumber={props.phoneNumber} 
-                setContactList={props.setContactList}
-                /> 
+            {addContactVisible &&
+                <AddContactPopup
+                    visibilityHandler={addContactVisibleHandler}
+                    socket={props.socket}
+                    contactList={props.contactList}
+                    phoneNumber={props.phoneNumber}
+                    setContactList={props.setContactList}
+                />
             }
         </div>
     );

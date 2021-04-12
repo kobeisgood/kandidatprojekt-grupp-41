@@ -3,10 +3,12 @@
     Author: Daniel
 */
 
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
 import { User } from '../Types';
+import FadeLoader from "react-spinners/FadeLoader";
 
 import '../css/start-view.css';
 import '../css/buttons.css';
@@ -31,15 +33,12 @@ export const Dashboard = (props: Props) => {
 
     return (
         <div className="dashboard-full-page-container">
-            {/* TODO
-                - Add log out functionality on click
-            */}
             <div className="log-out-button-container">
                 <SquareButton label="Logga ut" onClick={logOut} icon={logOutIcon} className="log-out-button" />
             </div>
 
             <div className="start-view-flexbox-container">
-                <h1 className="welcome-text">Välkommen, {props.user ? props.user.firstName + "!": ""}</h1>
+                <h1 className="welcome-text">Välkommen, {props.user ? props.user.firstName + "!" : ""}</h1>
                 <div className="start-view-button-container">
                     {/* onClick prop passes empty function since it already has a link */}
                     <div className="page-navigation-button-container"><SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" /></div>

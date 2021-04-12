@@ -2,6 +2,7 @@
     Component for a contact card
     Authors: Daniel and Robin
  */
+
 import React, { useState } from 'react';
 import { Contact } from '../Types';
 import { SquareButton } from './SquareButton';
@@ -18,7 +19,7 @@ interface Props {
     contact: Contact | null,
     onCall: Function,
     socket: SocketIOClient.Socket | null,
-    contactList: Contact[], 
+    contactList: Contact[],
     phoneNumber: string,
     setContactList: Function
 }
@@ -32,27 +33,25 @@ export const ContactCard = (props: Props) => {
 
     return (
         <div className="contact-card-container">
+
             <div className="contact-card-flexbox">
                 {!props.removeContactState ? <></> :
                     <button className="delete-contact-button" onClick={removeContactVisibleHandler}> <img src={CrossIcon} alt="CrossIcon"></img> </button>
                 }
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <span>{props.contact ? props.contact.lastName : ""}</span></p>
-                {/* TODO
-                    - Make into a CallButton
-                    - Add call function on click
-                    */}
                 <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
             </div>
+
             {removeContactVisible &&
-                <DeleteContactPopup 
-                visibilityHandler={removeContactVisibleHandler} 
-                contact={props.contact}
-                socket={props.socket} 
-                contactList={props.contactList} 
-                phoneNumber={props.phoneNumber} 
-                setContactList={props.setContactList}
-                /> 
+                <DeleteContactPopup
+                    visibilityHandler={removeContactVisibleHandler}
+                    contact={props.contact}
+                    socket={props.socket}
+                    contactList={props.contactList}
+                    phoneNumber={props.phoneNumber}
+                    setContactList={props.setContactList}
+                />
             }
         </div>
     );
