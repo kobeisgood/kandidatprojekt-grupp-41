@@ -130,6 +130,10 @@ export const PhoneBookView = (props: Props) => {
                             return null;
                     })}
                     visibilityHandler={contactVisibleHandler}
+                    onCall={() => {
+                        props.setPeer({ number: selectedContact.phoneNbr, name: selectedContact.name}); 
+                        props.onCall(selectedContact.phoneNbr);
+                    }}
                 />
             }
         </div>

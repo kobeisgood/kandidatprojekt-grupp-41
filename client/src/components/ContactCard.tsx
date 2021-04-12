@@ -58,3 +58,5 @@ export const ContactCard = (props: Props) => {
         </div>
     );
 };
+
+// TODO: Dont open contact popup when call button pressed
