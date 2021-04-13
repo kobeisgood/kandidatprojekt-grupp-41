@@ -37,7 +37,8 @@
 
 .contact-name-big {
     font-size: 34px;
-    margin: 20px 0;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .button-flexbox {

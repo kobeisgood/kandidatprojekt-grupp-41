@@ -176,11 +176,12 @@
 }
 
 .call-button-big {
-    width: 220px;
+    width: 300px;
     height: 160px;
     background-color: var(--color-call);
     color: white;
     font-size: 44px;
+    letter-spacing: 1px;
 }
 
 .call-button-big img {

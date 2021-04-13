@@ -46,11 +46,11 @@ export const ContactCard = (props: Props) => {
     };
 
     return (
-        <div className="contact-card-container on-hover" >
+        <div className="contact-card-container on-hover" onClick={openContactPopup}>
             {!props.removeContactState ? <></> :
                 <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
             }
-            <div className="contact-card-flexbox " onClick={openContactPopup}>
+            <div className="contact-card-flexbox " >
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <br /> <span>{props.contact ? props.contact.lastName : ""}</span></p>
             </div>
