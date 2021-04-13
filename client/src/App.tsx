@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
+import FadeLoader from "react-spinners/FadeLoader";
 
 import { socket } from './Connection';
 import { User, Peer, Contact } from './Types';
@@ -125,6 +126,14 @@ export const App = () => {
         CallAbort(peer.number);
     };
 
+    /* Shows loading icon when all react components are loaded in */
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        console.log("component did mount mohaha");
+        setLoading(false);
+    });
+
     return (
         <div className="App">
             {incomingCall && !callAccepted &&
@@ -135,6 +144,12 @@ export const App = () => {
                 <CallingPopup abortCall={abortCall} name={peer.name} />
             }
 
+            {
+                loading ?
+                    <div className="fade-loader-container">
+                        <FadeLoader loading={loading} />
+                    </div>
+                    :
             <Switch>
                 <Route path="/login" exact render={() => {
                     if (prevLoginInfo() === null)
@@ -153,9 +168,10 @@ export const App = () => {
                 <Route path="/phonebook" render={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
                 <Route path="/call" render={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer}/>} />
 
-                {/* REDIRECTS */}
-                {prevLoginInfo() === null && <Redirect push to="/dashboard" />}
-            </Switch>
+                        {/* REDIRECTS */}
+                        {prevLoginInfo() === null && <Redirect push to="/dashboard" />}
+                    </Switch>
+            }
         </div>
     );
 };

@@ -36,6 +36,7 @@ export const ContactCard = (props: Props) => {
 
     return (
         <div className="contact-card-container">
+
             <div className="contact-card-flexbox">
                 {!props.removeContactState ? <></> :
                     <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
