@@ -2,8 +2,7 @@
 Authors: Hanna 
 */
 
-import io from 'socket.io-client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SquareButton } from '../components/SquareButton';
 import cam_girl from "../images/cam_girl.png"
 

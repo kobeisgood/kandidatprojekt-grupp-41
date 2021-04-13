@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
 import FadeLoader from "react-spinners/FadeLoader";
 
@@ -147,7 +147,6 @@ export const App = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        console.log("component did mount mohaha");
         setLoading(false);
     });
 
@@ -167,19 +166,20 @@ export const App = () => {
                         <FadeLoader loading={loading} />
                     </div>
                     :
-            <Switch>
-                <Route path="/" exact render={() => <StartView />} />
-                <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
-                <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} />} />
-                <Route path="/createaccount" exact render={() => <CreateAccountView/>} />
-                <Route path="/profile" exact render={() => <ProfileView user={me} />} />
-                <Route path="/profile/changepicture" exact component={ChangePictureView} />
-                <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
-                <Route path="/profile/changenumber" exact render={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
-                <Route path="/profile/changename" exact render={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
-                <Route path="/phonebook" render={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
-                <Route path="/call" render={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer}/>} />
-            </Switch>
+                    <Switch>
+                        <Route path="/" exact render={() => <StartView />} />
+                        <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
+                        <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} />} />
+                        <Route path="/createaccount" exact render={() => <CreateAccountView />} />
+                        <Route path="/profile" exact render={() => <ProfileView user={me} />} />
+                        <Route path="/profile/changepicture" exact component={ChangePictureView} />
+                        <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
+                        <Route path="/profile/changenumber" exact render={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
+                        <Route path="/profile/changename" exact render={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
+                        <Route path="/phonebook" render={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
+                        <Route path="/call" render={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer} />} />
+                    </Switch>
+            }
         </div>
     );
 };

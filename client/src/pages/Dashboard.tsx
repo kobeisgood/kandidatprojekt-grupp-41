@@ -3,7 +3,6 @@
     Author: Daniel
 */
 
-import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
