@@ -1,23 +1,18 @@
- /* Component for go back one step in the directory
- Authors: Charlie and Hanna 
- */
+/* Component for go back one step in the directory
+Authors: Charlie and Hanna 
+*/
 
- import React from 'react';
- import '../css/backbutton.css';
- 
- interface Props {
-     buttonFunction:Function;
-   }
- 
- export const BackButton = (props:Props) => {
+import React from 'react';
+import { SquareButton } from './SquareButton';
+import backArrow from '../icons/back-arrow.svg';
 
-     return (
-         <div className="back-button-container">
-             <button className="back-button" onClick={() => props.buttonFunction()}> 
-                 <h2>Tillbaka</h2>
-             </button>
-         </div>         
-     );
- }
- 
- 
+interface Props {
+    linkTo: string
+}
+
+export const BackButton = (props: Props) => {
+    return (
+        <SquareButton label="Tillbaka" onClick={() => void 0} icon={backArrow} linkTo={props.linkTo} className="back-button" />
+    );
+}
+

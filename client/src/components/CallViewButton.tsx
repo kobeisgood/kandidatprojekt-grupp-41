@@ -7,6 +7,7 @@
  */
 
 import '../css/call.css';
+import { SquareButton } from './SquareButton';
 
 interface Props {
     functionDesc: string;
@@ -17,10 +18,9 @@ interface Props {
 export const CallViewButton = (props: Props) => {
     return (
         <div className="callView-button-container">
-            <button className="callView-button" onClick={() => props.buttonFunction()}>
-                <img src={props.icon} width="80%" height="80%" alt="Icon for button in app call view" />
-            </button>
 
+            <SquareButton  onClick={() => props.buttonFunction()} icon={props.icon}  className="callView-button" />
+            
             <h2>{props.functionDesc}</h2>
         </div>
     );

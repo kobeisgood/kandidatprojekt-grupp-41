@@ -14,7 +14,7 @@
 /* container that displays the remote stream */
 .remote-video-container {
     height: 80vh;
-    width: 50vw;
+    width: 65vw;
     margin:auto;
     position: relative;
     border: none;
@@ -47,6 +47,30 @@
     font-weight: bold;
 }
 
+.reaction-container {
+    position: absolute;
+    left: 50%;
+    bottom: 30%;
+    transform: translate(-50%, 0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 100;
+}
+
+.reaction {
+    top: 70%;
+    width: fit-content;
+    margin-top: 1em;
+    background-color: white;
+    font-size: 2rem;
+    text-align: center;
+    color: black;
+    border-radius: 1vw;
+    padding: 5px 10px;
+    font-weight: 500;
+    z-index: 100;
+}
 
 .callView-button {
   height: 7vw;
@@ -58,16 +82,14 @@
   font-size: 0.8vw;
 }
 
-
-.end-call-button {
-  height: 7vw;
-  width: 7vw;
-  background-color: red;
-  border-radius: 50%;
-  display: inline-block;
-  color: white;
-  font-size: 0.7vw;
+.mic-muted-text {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, 0);
+    z-index: 100;
 }
+
 
 
 ul > li {
@@ -84,14 +106,15 @@ ul > li {
     position: absolute;
     top: 0;
     right: 0;
-    margin-right: 5em;
+    margin-right: 1em;
 }
 
 .local-video-container {
     background-color: black; 
     height: 15vw;
     width: 15vw;
-    float:right;
+    margin-left: 0.7em;
+    margin-right: 0.7em;
     margin-top: 3em;
     border-radius: 20%;
 }
@@ -99,32 +122,134 @@ ul > li {
 /* Pop up on the right side that displays if mic or cam is off */
 .function-off-container{
     height: 2vw;
-    width: 15vw;
     margin-top: 1em;
     background-color:#484848;
     clear: right;
-    font-size: 1vw;
+    font-size: 1.2vw;
     text-align: center;
     color:white;
     border-radius: 1vw;
     padding-top: 0.5vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
     font-weight: bold;
-
 }
 
-
-/* --------------- CALL POPUP VIEW STUFF ----------------- */
-
-.full-page-container {
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    position: fixed;
+.reaction-buttons-container {
+    position: absolute;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    left: calc(-21.5vh);
+    z-index: 101;
+    transition: 350ms;
+}
+
+.reaction-buttons-container.active {
+    left: 0;
+  }
+
+.slider {
+    width: 23vh;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    left: -100%;
+    padding: 5px;
+    z-index: 102;
+  }
+
+  .open-reactions-button {
+    border: 1px solid var(--color-stroke);
+    font-weight: 500;
+    font-family: Roboto;
+    height: 100px;
+    width: 35px;
+    background-color: gray;
+    z-index: 100;
+    transition: 350ms;
+  }
+
+  .opened-reactions-button {
+    border: 1px solid var(--color-stroke);
+    font-weight: 500;
+    font-family: Roboto;
+    height: 100px;
+    width: 35px;
+    background-color: gray;
+    z-index: 100;
+    transition: 350ms;
+}
+
+  .reaction-button {
+    border: 1px solid var(--color-stroke);
+    font-weight: 500;
+    font-family: Roboto;
+    width: 100%;
+    padding: 5px 5px;
+    margin-top: 40px;
+    font-size: 26px;
+    border-radius: 12px;
+    z-index: 100;
+    background-color: var(--color-menuButton);
+  }
+
+  .reaction-button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .reaction-button.active:hover {
+    opacity: 1;
+    cursor: default;
+  }
+
+
+  .reaction-button:first-child {
+      margin-top: 0;
+  }
+
+  .open-reactions-button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .opened-reactions-button:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  .rotate-arrow-image {
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    transition: 450ms;
+  }
+
+  .rotate-back-arrow-image {
+    -webkit-transform: scaleX(1);
+    -moz-transform: scaleX(1);
+    -ms-transform: scaleX(1);
+    -o-transform: scaleX(1);
+    transform: scaleX(1);
+    transition: 450ms;
+  }
+
+
+/* --------------- CALL POPUP VIEW STUFF ----------------- */
+
+.call-popup-shadow {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10;
 }
 
 .call-popup-container {
@@ -133,10 +258,22 @@ ul > li {
     height: fit-content;
     border-radius: 25px;
     padding: 35px;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 800px;
 }
 
 .call-popup-container h3 {
     font-size: 50px;
+    font-weight: bold;
+}
+
+.call-popup-container h4 {
+    margin-top: 10vh;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -181,37 +318,14 @@ ul > li {
     align-items: center;
 }
 
-.incoming-call-button {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    margin-top: 40px;
+.answer-text{
+ color: var(--color-call);   
 }
 
-.answer-call-button {
-    background-image: url(https://cdn0.iconfinder.com/data/icons/social-and-ui-3/50/63-512.png);
-    background-size: 70px 70px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgb(132, 216, 114);
+.decline-text{
+    color: var(--color-cancel);   
 }
 
-.answer-call-button:hover {
-    background-color: rgba(132, 216, 114, 0.8);
-}
-
-.decline-call-button {
-    background-image: url(https://icon-library.com/images/hang-up-icon/hang-up-icon-23.jpg);
-    background-size: 70px 70px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgb(231, 50, 35);
-}
-
-.decline-call-button:hover {
-    background-color: rgb(231, 50, 35, 0.8);
-}
 
 /* --------------- CALLING POPUP VIEW STUFF ----------------- */
 
@@ -222,15 +336,16 @@ ul > li {
 }
 
 .calling-person-container {
+    order: 2;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 }
 
-.calling-horisontal-flexbox-container {
+.calling-vertical-flexbox-container {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
     justify-content: space-around;
     align-items: center;
 }
@@ -243,3 +358,4 @@ ul > li {
     width: 85px;
     height: auto;
 }
+

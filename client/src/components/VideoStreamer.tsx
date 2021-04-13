@@ -8,13 +8,11 @@ interface Props {
 
 export const VideoStreamer = (props: Props) => {
     useEffect(() => {
-        console.log("rendering video");
-         
         let videoElem = videoStreamRef.current;
         
         if (videoElem !== null)
             videoElem.srcObject = props.stream;
-    });
+    }, [props.stream]);
 
     const videoStreamRef = useRef<HTMLVideoElement>(null);
 

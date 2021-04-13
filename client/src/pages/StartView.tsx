@@ -1,28 +1,30 @@
-import '../css/start-view.css';
-import '../css/button.css';
-import { Link } from 'react-router-dom';
+/* View for the start page 'Välkommen till boom'
+Authors: Hanna 
+*/
+
+import io from 'socket.io-client';
+import React, { useEffect, useState } from 'react';
+import { SquareButton } from '../components/SquareButton';
+import cam_girl from "../images/cam_girl.png"
+
+import '../css/start.css';
+
 
 export const StartView = () => {
     return (
-        <div className="full-page-container">
-            <button className="log-out-button button button-rectangular">
-                Logga ut
-            </button>
-
-            <div className="start-view-flexbox-container">
-                <h1>Välkommen, Hjördis!</h1>
-                <div className="start-view-button-container">
-                    <Link to="/profile">
-                        <button className="big-button">Min profil</button>
-                    </Link>
-                    <Link to="/phonebook"><button className="big-button">Telefonbok</button></Link>
-                    <button className="big-button">Knappsats</button>
-                </div>
-                <h2>Senaste samtalen</h2>
-                <div className="latest-calls-carousel-container">
-                    Karusell yo
-                    </div>
+        <div>
+            <h1 className="header">
+                Välkommen till Boom!
+            </h1>
+            <div className="buttons-container">
+                <label className="description-text">Har du redan ett konto?
+                    <SquareButton label="Logga in" onClick={() => void 0} linkTo="/login" className="login-button" />
+                </label>
+                <label className="description-text">Är du ny eller saknar konto?
+                    <SquareButton label="Skapa konto" onClick={() => void 0} linkTo="/createaccount" className="create-acount-button" />
+                </label>
             </div>
+            <img className="start-img" src={cam_girl} alt="profilbild" />
         </div>
     );
-}
+};
