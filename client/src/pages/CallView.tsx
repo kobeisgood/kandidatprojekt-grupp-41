@@ -77,7 +77,6 @@ export const CallView = (props: Props) => {
      */
 
     const micClicked = () => {
-
         /* Sends the current state of mic to peer */
         props.peer.send(JSON.stringify({
             type: 'mic-state',
@@ -85,10 +84,16 @@ export const CallView = (props: Props) => {
         }));
 
         setMicState(!micState);
+
+        // turns off or on mic
+        props.localStream.getAudioTracks()[0].enabled = !micState;
     }
 
     const camClicked = () => {
         setCamState(!camState);
+
+        // turns off or on cam
+        props.localStream.getVideoTracks()[0].enabled = !camState;
     }
 
     const openReactions = () => {
@@ -128,9 +133,9 @@ export const CallView = (props: Props) => {
                 {!peerMicState &&
                     <p className="function-off-container mic-muted-text">
                         {/* Checks if first name ends with 's', 'x' or 'z' */}
-                        {props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 's' || 
-                        props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'x' || 
-                        props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'z' ?
+                        {props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 's' ||
+                            props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'x' ||
+                            props.caller.name.substr(0, props.caller.name.indexOf(' ')).slice(-1) === 'z' ?
                             props.caller.name.substr(0, props.caller.name.indexOf(' ')) + " mikrofon är avstängd"
                             :
                             props.caller.name.substr(0, props.caller.name.indexOf(' ')) + "s mikrofon är avstängd"}</p>

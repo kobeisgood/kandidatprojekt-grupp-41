@@ -1,7 +1,9 @@
 /* View for the start page 'Välkommen till boom'
 Authors: Hanna 
 */
-import React from 'react';
+
+import io from 'socket.io-client';
+import React, { useEffect, useState } from 'react';
 import { SquareButton } from '../components/SquareButton';
 import cam_girl from "../images/cam_girl.png"
 

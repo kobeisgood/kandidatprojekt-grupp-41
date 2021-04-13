@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
+import FadeLoader from "react-spinners/FadeLoader";
 
 import { socket } from './Connection';
 import { User, Peer, Contact } from './Types';
@@ -142,6 +143,14 @@ export const App = () => {
         CallAbort(peer.number);
     };
 
+    /* Shows loading icon when all react components are loaded in */
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        console.log("component did mount mohaha");
+        setLoading(false);
+    });
+
     return (
         <div className="App">
             {incomingCall && !callAccepted &&
@@ -152,6 +161,12 @@ export const App = () => {
                 <CallingPopup abortCall={abortCall} name={peer.name} />
             }
 
+            {
+                loading ?
+                    <div className="fade-loader-container">
+                        <FadeLoader loading={loading} />
+                    </div>
+                    :
             <Switch>
                 <Route path="/" exact render={() => <StartView />} />
                 <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />

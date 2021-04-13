@@ -52,16 +52,25 @@ export const PhoneBookView = (props: Props) => {
         <div className="phone-book-container">
             <header className="phone-book-top-container">
                 <div className="phone-book-top-flexbox-row">
-                    <div className="back-button-phonebook-container">
-                        <BackButton linkTo="/dashboard" />
+                    <div className="phone-book-header-element">
+                        <div className="back-button-phonebook-container">
+                            <BackButton linkTo="/dashboard" />
+                        </div>
                     </div>
+
                     <div className="phone-book-top-flexbox-column">
                         <h1 className="phone-book-text">Telefonbok</h1>
                         <input type="text" placeholder="Sök efter kontakt..." className="search-contacts-input" />
                     </div>
+
                     <div className="contact-buttons-container">
-                        <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
-                        <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt"} onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
+                        <div className="contact-button-container">
+                            <SquareButton label="Lägg till kontakt" onClick={addContactVisibleHandler} icon={addContactIcon} className="add-contact-button" />
+                        </div>
+
+                        <div className="contact-button-container">
+                            <SquareButton label={!removeContactState ? "Ta bort kontakt" : "Avbryt"} onClick={removeContactClicked} icon={removeContactIcon} className="remove-contact-button" />
+                        </div>
                     </div>
                 </div>
             </header>
