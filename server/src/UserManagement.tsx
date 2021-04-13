@@ -1,4 +1,4 @@
-import { authenticate, getContacts, getCallEntries } from './Database';
+import { authenticate, getContacts, getCallEntries, addCallEntryToList } from './Database';
 import { UserID, PhoneNbr } from './Types';
 
 
@@ -11,13 +11,15 @@ export let connectedUsers: Map<PhoneNbr, UserID> = new Map<PhoneNbr, UserID>();
  * @param name The user's name
  */
 export const loginUser = async (id: UserID, phone: string, psw: string) => {
-    const user = await authenticate(phone, psw); // Check database for password match
+    let user = await authenticate(phone, psw); // Check database for password match
 
     if (user !== null) {
         const contacts = await getContacts(user.contacts);
         user.contacts = contacts;
-        const callEntries = await getCallEntries(user.callEntries); /* TODO: Make function for sorting, reverse, etc. */
+
+        const callEntries = await getCallEntries(user.callEntries);
         user.callEntries = callEntries;
+
         connectedUsers.set(phone, id);
         return user;
     } else {

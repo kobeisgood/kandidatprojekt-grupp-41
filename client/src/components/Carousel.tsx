@@ -27,25 +27,27 @@ export const Carousel = (props: Props) => {
         if (scrollRight) {
             if (carouselRef.current) {
                 scrollLeft = carouselRef.current.scrollLeft;
-                carouselRef.current.scroll({ left: scrollLeft + 200, behavior: "smooth"});
+                carouselRef.current.scroll({ left: scrollLeft + 200, behavior: "smooth" });
             }
         } else {
             if (carouselRef.current) {
                 scrollLeft = carouselRef.current.scrollLeft;
-                carouselRef.current.scroll({ left: scrollLeft - 200, behavior: "smooth"});
+                carouselRef.current.scroll({ left: scrollLeft - 200, behavior: "smooth" });
             }
         }
     }
 
     return (
         <div className="carousel-container">
-            <div onClick={() => scrollCarousel(false)}><img src={leftCarouselButton} alt="Button to scroll the carousel to the left" className="carousel-scroll-button"/></div>
+            <div onClick={() => scrollCarousel(false)}><img src={leftCarouselButton} alt="Button to scroll the carousel to the left" className="carousel-scroll-button" /></div>
             <div ref={carouselRef} className="carousel-scroll-container">
-                {props.callEntries.map((contact, index) =>
-                    <ContactCardBig className="carousel-contact-card" key={index} contact={contact} onCall={props.onCall}  />
-                )}
+                {props.callEntries &&
+                    props.callEntries.map((contact, index) =>
+                        <ContactCardBig className="carousel-contact-card" key={index} contact={contact} onCall={props.onCall} />
+                    )
+                }
             </div>
-            <div onClick={() => scrollCarousel(true)}><img src={rightCarouselButton} alt="Button to scroll the carousel to the right" className="carousel-scroll-button"/></div>
+            <div onClick={() => scrollCarousel(true)}><img src={rightCarouselButton} alt="Button to scroll the carousel to the right" className="carousel-scroll-button" /></div>
         </div>
     );
 
