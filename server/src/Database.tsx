@@ -369,13 +369,12 @@ export const addCallEntryToList = async (peerNbr: PhoneNbr, myNbr: PhoneNbr, cal
         
         UserModel.exists({
             phoneNbr: myNbr,
-            callEntries: { $in: [contact._id] }
-        }, async (err) => {
-
+            callEntries: {
+                $in: [contact._id]
+            }
+        }, async (err, result) => {
             // If contact is already present in call entries, remove it first
-            if (err !== null) {
-                console.log("Contact already present in call entries");
-                
+            if (result) {
                 await UserModel.findOneAndUpdate({ phoneNbr: myNbr }, {
                     $pull: {
                         callEntries: contact._id
