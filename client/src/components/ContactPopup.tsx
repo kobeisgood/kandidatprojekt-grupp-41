@@ -20,16 +20,20 @@ interface Props {
 export const ContactPopup = (props: Props) => {
 
     return (
-        <div className=" full-page-popup-container">
-            <div className="call-popup-container">
-                <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.visibilityHandler()}></img>
-                <div className="contact-card-container-big">
-                    <div className="contact-card-flexbox">
-                        <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
-                        <p className="contact-name-big">{props.contact?.firstName} <br /> <span>{props.contact?.lastName}</span> <br/> {props.contact?.phoneNbr} </p>
+        <div className=" full-page-popup-container">       
+                <div className="contact-card-container-big-contact-popup">
+                    <img className="cancel-button-contact-popup" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.visibilityHandler()}></img>
+                    <div className="contact-card-flexbox left-buffer-contact-popup">
+                        <img className="contact-card-profile-picture-big" src={hjordis} alt="Profilbild" />
+                        <p className="contact-name-big">{
+                            props.contact?.firstName}
+                            <br />
+                            <span> {props.contact?.lastName}</span>
+                        </p>
+                        <p className="contact-name-big"> {props.contact?.phoneNbr} </p>
                         <SquareButton
                             label="Ring"
-                            onClick={() => { 
+                            onClick={() => {
                                 props.visibilityHandler();
                                 props.onCall();
                             }}
@@ -37,10 +41,9 @@ export const ContactPopup = (props: Props) => {
                             className="call-button-big" />
                     </div>
                 </div>
-            </div>
         </div>
     )
 
 }
 
-// TODO: FIX DESIGN, take away red crosses when contact popup opens 
+// TODO:, take away red crosses when contact popup opens 

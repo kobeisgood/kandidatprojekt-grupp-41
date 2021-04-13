@@ -173,3 +173,35 @@
     cursor:pointer;
     opacity: 0.8;
 }
+
+/* Stuff for contact popup */ 
+
+.cancel-button-contact-popup {
+    float: right;
+    z-index:10;
+    width: 40px;
+    height: 40px
+}
+
+.cancel-button-contact-popup:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.left-buffer-contact-popup{
+    margin-left: 40px;
+}
+
+.contact-card-profile-picture-big {
+    border-radius: 50%;
+    width: 190px;
+    height: 190px;
+}
+
+.contact-card-container-big-contact-popup {
+    padding: 20px;
+    width: 270px;
+    background-color: var(--color-contactCard);
+    border-radius: 20px;
+    border: 1px solid darkgray;
+}
