@@ -46,17 +46,15 @@ export const ContactCard = (props: Props) => {
     };
 
     return (
-        <div className="contact-card-container" >
+        <div className="contact-card-container on-hover" >
             {!props.removeContactState ? <></> :
                 <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
             }
-            <div className="contact-card-flexbox" onClick={openContactPopup}>
+            <div className="contact-card-flexbox " onClick={openContactPopup}>
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <br /> <span>{props.contact ? props.contact.lastName : ""}</span></p>
-                <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
             </div>
+            <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
         </div>
     );
 };
-
-// TODO: Dont open contact popup when call button pressed

@@ -70,3 +70,8 @@
 .contact-name-big span {
     font-weight: bold;
 }
+
+.on-hover:hover{
+    cursor: pointer;
+    background-image: linear-gradient(rgba(0, 81, 255, 0.1) 0 0);
+}
