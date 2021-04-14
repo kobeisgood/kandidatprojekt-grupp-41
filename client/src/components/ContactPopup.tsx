@@ -1,3 +1,8 @@
+/**
+ * Component for when you press a contact card in the phonebook view 
+ * 
+ */
+
 import { Contact } from "../Types";
 import { SquareButton } from './SquareButton';
 
@@ -9,7 +14,6 @@ import '../css/carousel.css';
 import darkCrossIcon from '../icons/dark-cross-icon.svg';
 import hjordis from '../images/hjordis.jpg';
 import callIcon from '../icons/call-icon.svg';
-import { Dispatch, SetStateAction } from "react";
 
 interface Props {
     contact: Contact | undefined,
@@ -17,14 +21,13 @@ interface Props {
     onCall: Function,
 }
 
-
 export const ContactPopup = (props: Props) => {
 
     return (
-        <div className=" full-page-popup-container">       
+        <div className="full-page-popup-container">       
                 <div className="contact-card-container-big-contact-popup">
-                    <img className="cancel-button-contact-popup" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.visibilityHandler()}></img>
-                    <div className="contact-card-flexbox left-buffer-contact-popup">
+                    <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.visibilityHandler()}></img>
+                    <div className="contact-card-flexbox left-buffer">
                         <img className="contact-card-profile-picture-big" src={hjordis} alt="Profilbild" />
                         <p className="contact-name-big">{
                             props.contact?.firstName}
@@ -44,7 +47,4 @@ export const ContactPopup = (props: Props) => {
                 </div>
         </div>
     )
-
 }
-
-// TODO:, take away red crosses when contact popup opens 

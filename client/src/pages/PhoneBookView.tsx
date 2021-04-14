@@ -17,8 +17,6 @@ import '../css/colors.css';
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
 
-
-
 interface Props {
     contactList: Contact[]
     onCall: Function,
@@ -27,7 +25,7 @@ interface Props {
     setPeer: Function
 }
 
-// A "state" of the selected contact to be deleted
+// A "state" of the selected contact to be deleted or called 
 // Makes sure page doesn't get re-rendered
 let selectedContact: { name: string, phoneNbr: string };
 const setSelectedContact = (contact: { name: string, phoneNbr: string }) => {
