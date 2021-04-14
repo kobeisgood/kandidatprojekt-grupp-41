@@ -13,7 +13,8 @@ import callIcon from '../icons/call-icon.svg';
 import hjordis from '../images/hjordis.jpg';
 
 interface Props {
-    removeContactState: boolean;
+    removeContactState: boolean,
+    setRemoveContactState: Function,
     contact: Contact | null,
     onCall: Function,
     contactList: Contact[],
@@ -41,16 +42,17 @@ export const ContactCard = (props: Props) => {
                 name: props.contact?.firstName + " " + props.contact?.lastName,
                 phoneNbr: props.contact?.phoneNbr
             });
-
+        
+        props.setRemoveContactState();
         props.contactPopupVisible();
     };
 
     return (
-        <div className="contact-card-container on-hover" onClick={openContactPopup}>
+        <div className="contact-card-container on-hover" >
             {!props.removeContactState ? <></> :
                 <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
             }
-            <div className="contact-card-flexbox " >
+            <div className="contact-card-flexbox" onClick={openContactPopup}>
                 <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <br /> <span>{props.contact ? props.contact.lastName : ""}</span></p>
             </div>

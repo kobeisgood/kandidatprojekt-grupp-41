@@ -9,11 +9,12 @@ import '../css/carousel.css';
 import darkCrossIcon from '../icons/dark-cross-icon.svg';
 import hjordis from '../images/hjordis.jpg';
 import callIcon from '../icons/call-icon.svg';
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
     contact: Contact | undefined,
     visibilityHandler: Function,
-    onCall: Function
+    onCall: Function,
 }
 
 
@@ -38,7 +39,7 @@ export const ContactPopup = (props: Props) => {
                                 props.onCall();
                             }}
                             icon={callIcon}
-                            className="call-button-big" />
+                            className="call-button-big-contact-popup" />
                     </div>
                 </div>
         </div>

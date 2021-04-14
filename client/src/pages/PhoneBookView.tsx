@@ -82,6 +82,7 @@ export const PhoneBookView = (props: Props) => {
                                 key={contact.id}
                                 contact={contact}
                                 removeContactState={removeContactState}
+                                setRemoveContactState={() => setRemoveContactState(false)}
                                 onCall={() => {
                                     props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName }); props.onCall(contact.phoneNbr);
                                 }}

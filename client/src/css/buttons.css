@@ -176,7 +176,7 @@
 }
 
 .call-button-big {
-    width: 300px;
+    width: 220px;
     height: 160px;
     background-color: var(--color-call);
     color: white;
@@ -251,8 +251,6 @@
 .answer-call-button {
     background-color: var(--color-call);
 }
-
-
 
 .abort-button {
     color: white;
