@@ -8,7 +8,16 @@ export interface User {
     id: UserID,
     firstName: string,
     lastName: string,
-    phoneNbr: string
+    phoneNbr: PhoneNbr,
+    profilePic: string
+}
+
+export interface Contact {
+    id: UserID,
+    firstName: string;
+    lastName: string;
+    phoneNbr: string;
+    profilePic: string;
 }
 
 export interface Peer {

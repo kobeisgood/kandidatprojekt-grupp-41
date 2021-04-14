@@ -128,7 +128,7 @@ export const CallView = (props: Props) => {
                 </button>
             </div>
             <div className="video-container">
-                <VideoStreamer className="remote-video-container" stream={props.remoteStream} />
+                <VideoStreamer className="remote-video-container" stream={props.remoteStream} muted={false} />
 
                 {!peerMicState &&
                     <p className="function-off-container mic-muted-text">
@@ -149,7 +149,7 @@ export const CallView = (props: Props) => {
                 </div>
 
                 <div className="right-side-container">
-                    <VideoStreamer className="local-video-container" stream={props.localStream} />
+                    <VideoStreamer className="local-video-container" stream={props.localStream} muted={true} />
 
                     {micState === false ? <div className="function-off-container">
                         Din mikrofon är avstängd

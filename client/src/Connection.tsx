@@ -3,7 +3,7 @@ import { default as WebRTC } from 'simple-peer';
 import { User, Contact, Peer, PhoneNbr } from './Types';
 
 const useHTTPS = false; // Only enable this if you know what it means
-export let socket: SocketIOClient.Socket; // The socket representing the connection between the client and the server
+export let socket: any; // The socket representing the connection between the client and the server
 
 /**
  * Makes an attempt to login. 
@@ -31,7 +31,7 @@ export const Login = (
             console.log("Logged in successfully!");
             setMe(user);
             redir(); // Redirect to dashboard and listen for calls
-            listenForCalls();
+            listenForCalls(); // Register call listeners
         } else
             console.log("Failed to log in!");
     });
@@ -241,7 +241,8 @@ export const RequestUserList = (
 export const ListenForCalls = (
     setIncomingCall: Function,
     setCallerSignal: Function,
-    setPeer: Function
+    setPeer: Function,
+    setCallEntries: Function
 ) => {
     socket.on('user-calling', (data: any) => {
         setIncomingCall(true);
@@ -250,10 +251,13 @@ export const ListenForCalls = (
     });
 
     socket.on('call-aborted', () => {
-        console.log("Samtal avbrutet");
         setIncomingCall(false);
         setCallerSignal({});
         setPeer({ number: "", name: "" });
+    });
+
+    socket.on('updated-call-entries', (callEntries: any) => {
+        setCallEntries(callEntries);
     });
 };
 
@@ -274,6 +278,7 @@ export const ListenForCalls = (
 export const CallRespond = (
     caller: Peer,
     callerSignal: WebRTC.SignalData,
+    me: User,
     setCallAccepted: Function,
     setIncomingCall: Function,
     setMyNode: Function,
@@ -296,7 +301,7 @@ export const CallRespond = (
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         if (answer) {
             console.log("Accepting call");
-            socket.emit('accept-call', { signalData: signal, caller: caller.number });
+            socket.emit('accept-call', { signalData: signal, caller: caller.number, callee: me.phoneNbr });
             redir(); // Redirect to call view
         } else {
             console.log("Declining");
@@ -354,6 +359,7 @@ export const CallUser = (
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         setOutgoingCall(true);
         socket.emit('call-user', { callee: calleeNbr, signalData: signal, caller: me.phoneNbr, callerName: me.firstName + " " + me.lastName });
+        console.log("User with socket ID " + socket.id + " is trying to call someone");
     });
 
     peer.on('stream', stream => {

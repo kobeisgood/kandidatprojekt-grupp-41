@@ -3,7 +3,6 @@
     Author: Daniel
 */
 
-import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
@@ -20,6 +19,7 @@ import logOutIcon from '../icons/log-out-icon.svg';
 interface Props {
     me: User | null;
     setMe: Function;
+    onCall: Function;
 }
 
 export const Dashboard = (props: Props) => {
@@ -52,7 +52,7 @@ export const Dashboard = (props: Props) => {
                 </div>
                 <p className="latest-calls-text">Senaste samtalen</p>
                 <div className="latest-calls-carousel-container">
-                    <Carousel />
+                    <Carousel callEntries={props.me ? props.me.callEntries : []} onCall={props.onCall} />
                 </div>
             </div>
         </div>

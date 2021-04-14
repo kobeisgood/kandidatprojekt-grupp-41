@@ -1,7 +1,8 @@
 import { Socket } from 'socket.io';
-import { CallData, User } from './Types';
+import Peer from 'simple-peer'; // WebRTC wrapper library
+import { CallData, PhoneNbr, User, Contact } from './Types';
 import { InitServer } from './Init';
-import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword, authenticate } from './Database';
+import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword, authenticate, addCallEntryToList } from './Database';
 import { connectedUsers, loginUser, userIsLoggedIn, getUserId, logoutUser } from './UserManagement';
 
 /* INITIATION */
@@ -150,13 +151,22 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             })
     });
 
-    socket.on('call-user', (data) => {
+    socket.on('call-user', (data: { callee: PhoneNbr, signalData: Peer.SignalData, caller: PhoneNbr, callerName: string }) => {
         const calleeId = getUserId(data.callee);
         socket.to(calleeId).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: data.callerName });
     });
     
     socket.on('accept-call', (data: CallData) => {
         const callerId = getUserId(data.caller);
+
+        addCallEntryToList(data.callee, data.caller, (newCallEntries: Contact[]) => {
+            socket.to(callerId).emit('updated-call-entries', newCallEntries);
+        });
+
+        addCallEntryToList(data.caller, data.callee, (newCallEntries: Contact[]) => {
+            socket.emit('updated-call-entries', newCallEntries);
+        });
+
         socket.to(callerId).emit('call-accepted', data.signalData);
     });
     

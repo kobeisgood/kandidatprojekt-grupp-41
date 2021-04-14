@@ -1,4 +1,4 @@
-import { User } from './Types';
+import { Contact, PhoneNbr, User } from './Types';
 import { connect, connection, Schema, model, Document } from 'mongoose';
 
 // ----- DB stuff for User ----- //
@@ -10,6 +10,7 @@ const userSchema = new Schema({
     profilePic: String,
     lastName: String,
     contacts: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }],
+    callEntries: [{ type: Schema.Types.ObjectId, ref: 'UserModel' }],
 }, { versionKey: false });
 
 interface IUser {
@@ -19,18 +20,17 @@ interface IUser {
     phoneNbr: string;
     profilePic: string;
     contacts: string[];
-    callEntries: Array<Object>;
+    callEntries: string[];
 }
 
 interface IUserDoc extends IUser, Document { }
-
 const UserModel = model<IUserDoc>("User", userSchema, "User");
 
 /**
  * Initializes a connection with the database. Running this will allow ```mongoose.connection``` to perform further operations.
  */
 export const connectToDb = () => {
-    connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+    connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
     connection.on('error', console.error.bind(console, 'Could not connect to database:'));
 
@@ -92,8 +92,6 @@ export const getUsers = async () => {
     }
 };
 
-export const addCallEntry = () => { };
-
 /**
  * Updates a user's name in the database. 
  * 
@@ -149,8 +147,6 @@ export const updatePassword = async (phoneNbr: string, newPassword: string) => {
         console.error(err)
     }
 };
-
-export const updatePhone = (phone: string) => { };
 
 export const setProfilePic = () => { };
 
@@ -239,6 +235,30 @@ export const getContacts = async (contactIds: string[]) => {
     }
 };
 
+export const getCallEntries = async (contactIds: string[]) => {
+    try {
+        let callEntries = [];
+
+        for (let i = contactIds.length - 1; i > -1; i--) {
+            const contact = await UserModel.findOne({ _id: contactIds[i] }).lean();
+
+            if (contact !== null)
+                callEntries.push({
+                    id: contact._id,
+                    firstName: contact.firstName,
+                    lastName: contact.lastName,
+                    phoneNbr: contact.phoneNbr,
+                    profilePic: contact.profilePic
+                });
+        }
+
+        return callEntries;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+
 export const getContactFromNbr = async (nbr: string) => {
     try {
         let contact = await UserModel.findOne({ phoneNbr: nbr }).lean();
@@ -290,7 +310,7 @@ export const addContactToList = async (contact: User, loggedInUserNumber: string
             });
         }
 
-        return realUpdatedContactList
+        return realUpdatedContactList;
     } catch (err) {
         console.error(err)
         alert("Kontakten kunde inte läggas till!")
@@ -339,5 +359,41 @@ export const removeContactFromList = async (contact: User, loggedInUserNumber: s
         console.error(err)
         alert("Kontakten kunde inte tas bort!")
         return null
+    }
+}
+
+export const addCallEntryToList = async (peerNbr: PhoneNbr, myNbr: PhoneNbr, callback: (newCallEntries: Contact[]) => void) => {
+    try {
+        // Lookup other person
+        let contact = await UserModel.findOne({ phoneNbr: peerNbr }).lean();
+        
+        UserModel.exists({
+            phoneNbr: myNbr,
+            callEntries: {
+                $in: [contact._id]
+            }
+        }, async (err, result) => {
+            // If contact is already present in call entries, remove it first
+            if (result) {
+                await UserModel.findOneAndUpdate({ phoneNbr: myNbr }, {
+                    $pull: {
+                        callEntries: contact._id
+                    }
+                });
+            }
+
+            // Push contact to call entries array
+            await UserModel.findOneAndUpdate({ phoneNbr: myNbr }, {
+                $addToSet: {
+                    callEntries: contact._id,
+                }
+            });
+
+            let updatedCallEntries = (await UserModel.findOne({ phoneNbr: myNbr }).lean()).callEntries;
+
+            callback(await getCallEntries(updatedCallEntries));
+        });
+    } catch (err) {
+        console.error(err);
     }
 }

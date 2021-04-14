@@ -11,7 +11,7 @@ export interface User {
     phoneNbr: string,
     profilePic: string,
     contacts: Contact[],
-    callEntries: CallEntry[]
+    callEntries: Contact[]
 }
 
 export interface PeerInfo {
@@ -34,7 +34,7 @@ export interface Peer {
 
 export interface CallEntry {
     calledUserId: UserID,
-    timeOfCall: Date 
+    timeOfCall: Date
 }
 
 export interface CallData {
