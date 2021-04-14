@@ -55,9 +55,16 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
 
     socket.on('register-user', (user: User, psw: string) => {
         createUser(user, psw, "")
-            .then(() => {
+            .then((result) => {
                 console.log("New user registerd!");
-                socket.emit('registration-result', true);
+
+                console.log("Result was:");
+                console.log(result);
+
+                if (result !== null)
+                    socket.emit('registration-result', true);
+                else
+                    socket.emit('registration-result', false);
             })
             .catch(() => {
                 console.error("User could not be added!");

@@ -39,9 +39,14 @@ export const CreateAccountView = (props: Props) => {
         setNeutralPageState(true)
     };
 
-    const attemptCreateAccount = () => {
-        console.log(phoneNumberInput + ", " + passwordInput + ", " + repeatPasswordInput, ", " + firstnameInput + ", " + lastnameInput + ", " + profilePic);
+    const goForward = () => {
+        if (passwordInput === repeatPasswordInput)
+            setNeutralPageState(false);
+        else
+            alert("Lösenorden matchar inte. Vänligen försök igen.");
+    };
 
+    const attemptCreateAccount = () => {
         let user = {
             id: "",
             firstName: firstnameInput,
@@ -96,7 +101,7 @@ export const CreateAccountView = (props: Props) => {
                             </div>
                         </form>
 
-                        <SaveButton label="Gå vidare" onClick={setNeutralPageState} />
+                        <SaveButton label="Gå vidare" onClick={goForward} />
                     </>
                 }
 

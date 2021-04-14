@@ -56,10 +56,21 @@ export const createUser = async (user: User, psw: string, picSrc: string) => {
     });
 
     try {
-        const savedUser = await newUser.save();
-        return savedUser;
+        const userExists = await UserModel.exists({ phoneNbr: user.phoneNbr });
+
+        console.log("User exists:");
+        console.log(userExists);
+
+        if (!userExists) {
+            const savedUser = await newUser.save();
+            console.log("Saved user:");
+            console.log(savedUser);
+            return savedUser;
+        } else {
+            return null;
+        }
     } catch (err) {
-        return console.error(err);
+        return null;
     }
 };
 
@@ -366,7 +377,7 @@ export const addCallEntryToList = async (peerNbr: PhoneNbr, myNbr: PhoneNbr, cal
     try {
         // Lookup other person
         let contact = await UserModel.findOne({ phoneNbr: peerNbr }).lean();
-        
+
         UserModel.exists({
             phoneNbr: myNbr,
             callEntries: {
