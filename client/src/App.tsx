@@ -157,9 +157,14 @@ export const App = () => {
                     else
                         return <Redirect push to="/dashboard" />
                 }} />
+                <Route path="/createaccount" exact render={() => {
+                    if (prevLoginInfo() === null)
+                        return <CreateAccountView callback={() => void 0} />
+                    else
+                        return <Redirect push to="/dashboard" />
+                }} />
                 <Route path="/" exact render={() => <StartView />} />
                 <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} />} />
-                <Route path="/createaccount" exact render={() => <CreateAccountView/>} />
                 <Route path="/profile" exact render={() => <ProfileView user={me} />} />
                 <Route path="/profile/changepicture" exact component={ChangePictureView} />
                 <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
