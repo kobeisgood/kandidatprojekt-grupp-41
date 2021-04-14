@@ -26,7 +26,7 @@ export const CreateAccountView = (props: Props) => {
         [profilePic, setProfilePic] = useState("pathToPic");
 
     const
-        handlePhoneNumberInput = (event: any) => { setPhoneNumberInput(event.target.value); use },
+        handlePhoneNumberInput = (event: any) => { setPhoneNumberInput(event.target.value); },
         handlePasswordInput = (event: any) => { setPasswordInput(event.target.value); },
         handleRepeatPasswordInput = (event: any) => { setRepeatPasswordInput(event.target.value); },
         handleFirstnameInput = (event: any) => { setFirstnameInput(event.target.value); },
