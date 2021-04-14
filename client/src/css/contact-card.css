@@ -21,7 +21,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .contact-card-profile-picture {
@@ -37,7 +37,8 @@
 
 .contact-name-big {
     font-size: 34px;
-    margin: 20px 0;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .button-flexbox {
@@ -69,4 +70,9 @@
 .contact-name span,
 .contact-name-big span {
     font-weight: bold;
+}
+
+.on-hover:hover{
+    cursor: pointer;
+    background-image: linear-gradient(rgba(0, 81, 255, 0.1) 0 0);
 }
