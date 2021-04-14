@@ -19,10 +19,11 @@ export const Login = (
     redir: Function,
     listenForCalls: Function
 ) => {
-    if (useHTTPS)
-        socket = io.connect('https://localhost:4000');
-    else
-        socket = io.connect('http://localhost:4000');
+    if (socket === undefined) // If socket not already set by register
+        if (useHTTPS)
+            socket = io.connect('https://localhost:4000');
+        else
+            socket = io.connect('http://localhost:4000');
 
     socket.emit('login-user', phone, psw); // Send login request to server
     socket.once('login-response', (user: User) => { // Begin listening for server response
@@ -54,16 +55,21 @@ export const Logout = (
 export const Register = (
     user: User,
     psw: string,
-    callback: (result: boolean) => void
+    callback: Function
 ) => {
+    if (socket === undefined) // If socket not already set by login
+        if (useHTTPS)
+            socket = io.connect('https://localhost:4000');
+        else
+            socket = io.connect('http://localhost:4000');
+
     socket.emit('register-user', user, psw);
     socket.on('registration-result', (result: boolean) => {
-        if (result)
+        if (result) {
             console.log("User was added!");
-        else
+            callback();
+        } else
             console.error("User could not be added!");
-
-        callback(result);
     });
 };
 

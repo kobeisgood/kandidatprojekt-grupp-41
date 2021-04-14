@@ -30,9 +30,7 @@ export const LoginView = (props: Props) => {
     const redir = () => { history.push("/dashboard"); };
 
     const attemptLogin = () => {
-        console.log("logging in");
         setLoggingIn(true);
-
         Login(phoneInp, passwordInp, props.setMe, redir, props.listenForCalls)
     };
 
