@@ -6,20 +6,35 @@ import { BackButton } from '../components/BackButton';
 import { SquareButton } from '../components/SquareButton';
 import backArrow from '../icons/back-arrow.svg';
 import '../css/create-account-view.css';
+import { ProfilePickPopup } from '../components/ProfilePickPopup';
 
 
 export const CreateAccountView = () => {
     // sätter state tilltrue så vi börjar på neutralPage vilket är standarf vyn
     const [neutralPageState, setNeutralPageState] = useState(true);
+    const [showProfilePicker, setShowProfilePicker] = useState(false);
 
     //för när man klickar på tillbaka i vidare vyn alltså set up vyn
     const goBack = () => {
         setNeutralPageState(true)
     };
 
+    // Handles profile picker 
+    const openProfilePicker = () => {
+        setShowProfilePicker(true);
+    }
+
+    const closeProfilePicker = () => {
+        setShowProfilePicker(false);
+    }
+
     const renderContent = () => {
+
         return (
             <div>
+                {showProfilePicker &&
+                    <ProfilePickPopup visibilityHandler={closeProfilePicker} />
+                }
                 {/* vy när man klickat på gå vidare "set up vyn" */}
                 { !neutralPageState &&
                     <>
@@ -38,8 +53,9 @@ export const CreateAccountView = () => {
                         <div className="create-pic-container">
                             <img className="img" src={hjordis} alt="profilbild" />
                             <div className="pic-button-container">
-                                <SquareButton label="Ta en ny bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" />
-                                <SquareButton label="Ladda upp bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" />
+                                <SquareButton label="Välj bild" onClick={openProfilePicker} className="profile-set-upp-button" />
+                                {/* <SquareButton label="Ta en ny bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" />
+                                <SquareButton label="Ladda upp bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" /> */}
                             </div>
                         </div>
                         <form onSubmit={(event) => event.preventDefault()}>
