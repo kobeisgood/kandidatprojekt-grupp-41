@@ -149,6 +149,7 @@ export const PhoneBookView = (props: Props) => {
                         props.setPeer({ number: selectedContact.phoneNbr, name: selectedContact.name}); 
                         props.onCall(selectedContact.phoneNbr);
                     }}
+                    profilePic={props.profilePic}
                 />
             }
         </div>

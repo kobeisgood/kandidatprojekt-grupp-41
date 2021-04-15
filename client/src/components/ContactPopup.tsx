@@ -12,13 +12,13 @@ import '../css/contact-card.css';
 import '../css/carousel.css';
 
 import darkCrossIcon from '../icons/dark-cross-icon.svg';
-import hjordis from '../images/hjordis.jpg';
 import callIcon from '../icons/call-icon.svg';
 
 interface Props {
     contact: Contact | undefined,
     visibilityHandler: Function,
     onCall: Function,
+    profilePic: Function
 }
 
 export const ContactPopup = (props: Props) => {
@@ -28,7 +28,7 @@ export const ContactPopup = (props: Props) => {
                 <div className="contact-card-container-big-contact-popup">
                     <img className="cancel-button" src={darkCrossIcon} alt="DarkCrossIcon" onClick={() => props.visibilityHandler()}></img>
                     <div className="contact-card-flexbox left-buffer">
-                        <img className="contact-card-profile-picture-big" src={hjordis} alt="Profilbild" />
+                        <img className="contact-card-profile-picture-big" src={props.profilePic(props.contact?.profilePic)} alt="Profilbild" />
                         <p className="contact-name-big">{
                             props.contact?.firstName}
                             <br />
