@@ -247,13 +247,13 @@ export const ListenForCalls = (
     socket.on('user-calling', (data: any) => {
         setIncomingCall(true);
         setCallerSignal(data.signalData);
-        setPeer({ number: data.caller, name: data.callerName });
+        setPeer({ number: data.caller, name: data.callerName, profilePic: data.profilePic });
     });
 
     socket.on('call-aborted', () => {
         setIncomingCall(false);
         setCallerSignal({});
-        setPeer({ number: "", name: "" });
+        setPeer({ number: "", name: "", profilePic: "" });
     });
 
     socket.on('updated-call-entries', (callEntries: any) => {
@@ -358,7 +358,7 @@ export const CallUser = (
     // Beginning of handshake roundtrip
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         setOutgoingCall(true);
-        socket.emit('call-user', { callee: calleeNbr, signalData: signal, caller: me.phoneNbr, callerName: me.firstName + " " + me.lastName });
+        socket.emit('call-user', { callee: calleeNbr, signalData: signal, caller: me.phoneNbr, callerName: me.firstName + " " + me.lastName, profilePic: me.profilePic });
         console.log("User with socket ID " + socket.id + " is trying to call someone");
     });
 
@@ -423,7 +423,7 @@ export const CallHangUp = (
     redir: Function
 ) => {
     setCallAccepted(false);
-    setPeer({ number: "", name: "" });
+    setPeer({ number: "", name: "", profilePic: "" });
     setPeerSignal({});
     setOutgoingCall(false);
     setIncomingCall(false);

@@ -16,6 +16,7 @@ import '../css/carousel.css';
 interface Props {
     callEntries: Contact[];
     onCall: Function;
+    profilePic: Function
 }
 
 export const Carousel = (props: Props) => {
@@ -43,7 +44,7 @@ export const Carousel = (props: Props) => {
             <div ref={carouselRef} className="carousel-scroll-container">
                 {props.callEntries &&
                     props.callEntries.map((contact, index) =>
-                        <ContactCardBig className="carousel-contact-card" key={index} contact={contact} onCall={props.onCall} />
+                        <ContactCardBig className="carousel-contact-card" key={index} contact={contact} onCall={props.onCall} profilePic={props.profilePic} />
                     )
                 }
             </div>

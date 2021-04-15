@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 import { Login, Register } from '../Connection';
-import { User } from '../Types';
 import hjordis from "../images/hjordis.png"
 import { BackButton } from '../components/BackButton';
 import { SquareButton } from '../components/SquareButton';
@@ -24,8 +23,7 @@ export const CreateAccountView = (props: Props) => {
         [passwordInput, setPasswordInput] = useState(""),
         [repeatPasswordInput, setRepeatPasswordInput] = useState(""),
         [firstnameInput, setFirstnameInput] = useState(""),
-        [lastnameInput, setLastnameInput] = useState(""),
-        [profilePic, setProfilePic] = useState("pathToPic");
+        [lastnameInput, setLastnameInput] = useState("");
 
     const
         handlePhoneNumberInput = (event: any) => { setPhoneNumberInput(event.target.value); },

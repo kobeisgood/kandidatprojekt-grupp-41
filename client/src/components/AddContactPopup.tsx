@@ -15,7 +15,8 @@ interface Props {
     visibilityHandler: Function
     contactList: Contact[],
     phoneNumber: string,
-    setContactList: Function
+    setContactList: Function,
+    profilePic: Function
 }
 
 export const AddContactPopup = (props: Props) => {
@@ -170,7 +171,7 @@ export const AddContactPopup = (props: Props) => {
                 {foundContact != null && !neutralPageState && !contactAddedState && !incorrectNumberState &&
                     <>
                         <div className="contact-found-row">
-                            <img className="contact-card-profile-picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Edward_blom.melodifestivalen2018.18d873.1460307.jpg/1200px-Edward_blom.melodifestivalen2018.18d873.1460307.jpg" alt="KontaktBild" />
+                            <img className="contact-card-profile-picture" src={props.profilePic(foundContact.profilePic)} alt="KontaktBild" />
                             <div className="contact-found-info-col">
                                 <p className="found-contact-name">{foundContact.phoneNbr !== "" ? foundContact.firstName : ""} {foundContact.phoneNbr !== "" ? foundContact.lastName : ""} </p>
                                 <p className="found-contact-number">{foundContact.phoneNbr !== "" ? foundContact.phoneNbr : ""}</p>

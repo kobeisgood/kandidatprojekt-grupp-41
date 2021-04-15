@@ -22,7 +22,8 @@ interface Props {
     onCall: Function,
     phoneNumber: string,
     setContactList: Function
-    setPeer: Function
+    setPeer: Function,
+    profilePic: Function
 }
 
 // A "state" of the selected contact to be deleted
@@ -84,13 +85,14 @@ export const PhoneBookView = (props: Props) => {
                                 contact={contact}
                                 removeContactState={removeContactState}
                                 onCall={() => {
-                                    props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName }); props.onCall(contact.phoneNbr);
+                                    props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName, profilePic: contact.profilePic }); props.onCall(contact.phoneNbr);
                                 }}
                                 contactList={props.contactList}
                                 phoneNumber={props.phoneNumber}
                                 setContactList={props.setContactList}
                                 setSelectedContact={setSelectedContact}
                                 setDeleteContactVisible={() => setDeleteContactVisible(true)}
+                                profilePic={props.profilePic}
                             />
                         )
                     })}
@@ -103,6 +105,7 @@ export const PhoneBookView = (props: Props) => {
                     contactList={props.contactList}
                     phoneNumber={props.phoneNumber}
                     setContactList={props.setContactList}
+                    profilePic={props.profilePic}
                 />
             }
 
