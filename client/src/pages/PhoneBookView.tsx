@@ -6,6 +6,7 @@
 import { ContactCard } from '../components/ContactCard';
 import { AddContactPopup } from '../components/AddContactPopup';
 import { DeleteContactPopup } from '../components/DeleteContactPopup';
+import { ContactPopup } from '../components/ContactPopup';
 import { BackButton } from '../components/BackButton';
 import { SquareButton } from '../components/SquareButton';
 import { Contact } from '../Types';
@@ -16,7 +17,6 @@ import '../css/colors.css';
 import addContactIcon from '../icons/add-contact-icon.svg';
 import removeContactIcon from '../icons/remove-contact-icon.svg';
 
-
 interface Props {
     contactList: Contact[]
     onCall: Function,
@@ -26,7 +26,7 @@ interface Props {
     profilePic: Function
 }
 
-// A "state" of the selected contact to be deleted
+// A "state" of the selected contact to be deleted or called 
 // Makes sure page doesn't get re-rendered
 let selectedContact: { name: string, phoneNbr: string };
 const setSelectedContact = (contact: { name: string, phoneNbr: string }) => {
@@ -37,6 +37,7 @@ export const PhoneBookView = (props: Props) => {
     const [removeContactState, setRemoveContactState] = useState(false);
     const [addContactVisible, setAddContactVisible] = useState(false);
     const [deleteContactVisible, setDeleteContactVisible] = useState(false);
+    const [contactVisible, setContactVisible] = useState(false)
 
     // Handles only the cross above the contact card
     const removeContactClicked = () => {
@@ -47,6 +48,11 @@ export const PhoneBookView = (props: Props) => {
     const addContactVisibleHandler = () => {
         setAddContactVisible(!addContactVisible)
         setRemoveContactState(false)
+    }
+
+    // Handles contact card popup visibility
+    const contactVisibleHandler = () => {
+        setContactVisible(!contactVisible)
     }
 
     return (
@@ -85,6 +91,7 @@ export const PhoneBookView = (props: Props) => {
                                     key={contact.id}
                                     contact={contact}
                                     removeContactState={removeContactState}
+                                    setRemoveContactState={() => setRemoveContactState(false)}
                                     onCall={() => {
                                         props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName, profilePic: contact.profilePic }); props.onCall(contact.phoneNbr);
                                     }}
@@ -94,6 +101,7 @@ export const PhoneBookView = (props: Props) => {
                                     setSelectedContact={setSelectedContact}
                                     setDeleteContactVisible={() => setDeleteContactVisible(true)}
                                     profilePic={props.profilePic}
+                                    contactPopupVisible={contactVisibleHandler}
                                 />
                             )
                         })
@@ -125,6 +133,22 @@ export const PhoneBookView = (props: Props) => {
                     phoneNumber={props.phoneNumber}
                     setContactList={props.setContactList}
                     closePopup={() => setDeleteContactVisible(false)}
+                />
+            }
+
+            {contactVisible &&
+                <ContactPopup
+                    contact={props.contactList.find((contact) => {
+                        if (contact.phoneNbr === selectedContact.phoneNbr)
+                            return contact;
+                        else
+                            return null;
+                    })}
+                    visibilityHandler={contactVisibleHandler}
+                    onCall={() => {
+                        props.setPeer({ number: selectedContact.phoneNbr, name: selectedContact.name}); 
+                        props.onCall(selectedContact.phoneNbr);
+                    }}
                 />
             }
         </div>

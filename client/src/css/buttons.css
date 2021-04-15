@@ -181,11 +181,16 @@
     background-color: var(--color-call);
     color: white;
     font-size: 44px;
+    letter-spacing: 1px;
 }
 
 .call-button-big img {
     width: 50%;
     height: 50%;
+}
+
+.call-button:hover {
+    background-image: linear-gradient(rgba(101, 255, 108, 0.3) 0 0);
 }
 
 /* -------------- LOGIN BUTTON ---------------- */
@@ -246,8 +251,6 @@
 .answer-call-button {
     background-color: var(--color-call);
 }
-
-
 
 .abort-button {
     color: white;

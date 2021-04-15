@@ -12,7 +12,8 @@ import crossIcon from '../icons/cross-icon.svg';
 import callIcon from '../icons/call-icon.svg';
 
 interface Props {
-    removeContactState: boolean;
+    removeContactState: boolean,
+    setRemoveContactState: Function,
     contact: Contact | null,
     onCall: Function,
     contactList: Contact[],
@@ -21,6 +22,7 @@ interface Props {
     setSelectedContact: Function,
     setDeleteContactVisible: Function,
     profilePic: Function
+    contactPopupVisible: Function
 }
 
 export const ContactCard = (props: Props) => {
@@ -34,17 +36,27 @@ export const ContactCard = (props: Props) => {
         props.setDeleteContactVisible();
     };
 
-    return (
-        <div className="contact-card-container">
+    const openContactPopup = () => {
+        if (props.contact?.phoneNbr !== "")
+            props.setSelectedContact({
+                name: props.contact?.firstName + " " + props.contact?.lastName,
+                phoneNbr: props.contact?.phoneNbr
+            });
+        
+        props.setRemoveContactState();
+        props.contactPopupVisible();
+    };
 
-            <div className="contact-card-flexbox">
-                {!props.removeContactState ? <></> :
-                    <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
-                }
+    return (
+        <div className="contact-card-container on-hover" >
+            {!props.removeContactState ? <></> :
+                <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
+            }
+            <div className="contact-card-flexbox" onClick={openContactPopup}>
                 <img className="contact-card-profile-picture" src={props.profilePic(props.contact?.profilePic)} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <br /> <span>{props.contact ? props.contact.lastName : ""}</span></p>
-                <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
             </div>
+            <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
         </div>
     );
 };

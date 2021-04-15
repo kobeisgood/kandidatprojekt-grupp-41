@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 import { Login, Register } from '../Connection';
@@ -7,6 +7,7 @@ import { SquareButton } from '../components/SquareButton';
 import backArrow from '../icons/back-arrow.svg';
 import '../css/create-account-view.css';
 import { useHistory } from 'react-router-dom';
+import { ProfilePickPopup } from '../components/ProfilePickPopup';
 
 interface Props {
     setMe: Function,
@@ -17,6 +18,7 @@ interface Props {
 export const CreateAccountView = (props: Props) => {
     // sätter state tilltrue så vi börjar på neutralPage vilket är standarf vyn
     const [neutralPageState, setNeutralPageState] = useState(true);
+    const [showProfilePicker, setShowProfilePicker] = useState(false);
 
     const
         [phoneNumberInput, setPhoneNumberInput] = useState(""),
@@ -32,6 +34,10 @@ export const CreateAccountView = (props: Props) => {
         handleRepeatPasswordInput = (event: any) => { setRepeatPasswordInput(event.target.value); },
         handleFirstnameInput = (event: any) => { setFirstnameInput(event.target.value); },
         handleLastnameInput = (event: any) => { setLastnameInput(event.target.value); };
+
+    useEffect(() => {
+        setShowProfilePicker(false);
+    }, [chosenPic]);
 
     //för när man klickar på tillbaka i vidare vyn alltså set up vyn
     const goBack = () => {
@@ -65,10 +71,23 @@ export const CreateAccountView = (props: Props) => {
     const loginWithNewAccount = () => {
         Login(phoneNumberInput, passwordInput, props.setMe, redir, props.listenForCalls);
     };
+    // Handles profile picker 
+    const openProfilePicker = () => {
+        setShowProfilePicker(true);
+    }
+
+    const closeProfilePicker = () => {
+        setShowProfilePicker(false);
+    }
 
     const renderContent = () => {
+
         return (
             <div>
+                {showProfilePicker &&
+                    <ProfilePickPopup visibilityHandler={closeProfilePicker} choosePic={setChosenPic} />
+                }
+
                 {/* Standard vy som man kommer till när man klickar på knappen eller skriver in /createaccount */}
                 {neutralPageState &&
                     <>
@@ -122,8 +141,7 @@ export const CreateAccountView = (props: Props) => {
                         <div className="create-pic-container">
                             <img className="img" src={props.profilePic(chosenPic)} alt="profilbild" />
                             <div className="pic-button-container">
-                                <SquareButton label="Välj bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" />
-                                {/* <SquareButton label="Ladda upp bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" /> */}
+                                <SquareButton label="Välj bild" onClick={openProfilePicker} className="profile-set-upp-button" />                                {/* <SquareButton label="Ladda upp bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" /> */}
                             </div>
                         </div>
                         <form onSubmit={(event) => event.preventDefault()}>

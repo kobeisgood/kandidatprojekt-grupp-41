@@ -20,7 +20,7 @@
 
 .cancel-button:hover {
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.6;
 }
 
 .popup-middle-sized-text {
@@ -172,4 +172,35 @@
 .no-button:hover{
     cursor:pointer;
     opacity: 0.8;
+}
+
+/* Stuff for contact popup */ 
+
+.contact-card-profile-picture-big {
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+}
+
+.contact-card-container-big-contact-popup {
+    padding: 20px;
+    width: 358px;
+    height: 568px;
+    background-color: var(--color-contactCard);
+    border-radius: 20px;
+    border: 1px solid darkgray;
+}
+
+.call-button-big-contact-popup {
+    width: 300px;
+    height: 160px;
+    background-color: var(--color-call);
+    color: white;
+    font-size: 44px;
+    letter-spacing: 1px;
+}
+
+.call-button-big-contact-popup img {
+    width: 50%;
+    height: 50%;
 }
