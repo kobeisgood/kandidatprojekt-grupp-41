@@ -52,7 +52,7 @@ export const ChangeNumberView = (props: Props) => {
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
-                <img src={props.profilePic(props.me?.phoneNbr)} alt="profilbild" />
+                <img src={props.profilePic(props.me?.profilePic)} alt="profilbild" />
                 <div className="profile-info-contact-container">
                     <h1 className="profile-name">{props.me ? props.me.firstName + " " + props.me.lastName : ""}</h1>
                     <h1 className="profile-number">{props.me ? props.me.phoneNbr : ""}</h1>

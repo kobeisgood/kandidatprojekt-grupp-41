@@ -54,12 +54,9 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     });
 
     socket.on('register-user', (user: User, psw: string) => {
-        createUser(user, psw, "")
+        createUser(user, psw)
             .then((result) => {
                 console.log("New user registerd!");
-
-                console.log("Result was:");
-                console.log(result);
 
                 if (result !== null)
                     socket.emit('registration-result', true);

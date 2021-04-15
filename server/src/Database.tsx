@@ -46,13 +46,13 @@ export const connectToDb = () => {
  * @param psw The specified password
  * @param picSrc The path to the specified profile picture
  */
-export const createUser = async (user: User, psw: string, picSrc: string) => {
+export const createUser = async (user: User, psw: string) => {
     const newUser = new UserModel({
         firstName: user.firstName,
         lastName: user.lastName,
         phoneNbr: user.phoneNbr,
         password: psw,
-        profilePic: picSrc
+        profilePic: user.profilePic
     });
 
     try {

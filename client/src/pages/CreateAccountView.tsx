@@ -37,6 +37,7 @@ export const CreateAccountView = (props: Props) => {
 
     useEffect(() => {
         setShowProfilePicker(false);
+        console.log(chosenPic);
     }, [chosenPic]);
 
     //för när man klickar på tillbaka i vidare vyn alltså set up vyn
@@ -61,6 +62,9 @@ export const CreateAccountView = (props: Props) => {
             contacts: [],
             callEntries: []
         };
+
+        console.log(user);
+        
 
         Register(user, passwordInput, loginWithNewAccount);
     }
