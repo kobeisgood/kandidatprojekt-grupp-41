@@ -51,10 +51,16 @@ export const Dashboard = (props: Props) => {
                     <div className="page-navigation-button-container"><SquareButton label="Telefonbok" onClick={() => void 0} icon={phoneBookIcon} linkTo="/phonebook" className="page-navigation-button" /></div>
                     <div className="page-navigation-button-container"><SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button" /></div>
                 </div>
-                <p className="latest-calls-text">Senaste samtalen</p>
-                <div className="latest-calls-carousel-container">
-                    <Carousel callEntries={props.me ? props.me.callEntries : []} onCall={props.onCall} profilePic={props.profilePic} />
-                </div>
+                {props.me !== null && props.me?.callEntries.length > 0 ?
+                    <>
+                        <p className="latest-calls-text">Senaste samtalen</p>
+                        <div className="latest-calls-carousel-container">
+                            <Carousel callEntries={props.me ? props.me.callEntries : []} onCall={props.onCall} profilePic={props.profilePic} />
+                        </div>
+                    </>
+                    :
+                    <p className="latest-calls-text no-calls">Du har inga senaste samtal</p>
+                }
             </div>
         </div>
     );

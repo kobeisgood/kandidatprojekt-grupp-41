@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 import { Login, Register } from '../Connection';
-import hjordis from "../images/hjordis.png"
 import { BackButton } from '../components/BackButton';
 import { SquareButton } from '../components/SquareButton';
 import backArrow from '../icons/back-arrow.svg';
@@ -11,7 +10,8 @@ import { useHistory } from 'react-router-dom';
 
 interface Props {
     setMe: Function,
-    listenForCalls: Function
+    listenForCalls: Function,
+    profilePic: Function
 }
 
 export const CreateAccountView = (props: Props) => {
@@ -23,7 +23,8 @@ export const CreateAccountView = (props: Props) => {
         [passwordInput, setPasswordInput] = useState(""),
         [repeatPasswordInput, setRepeatPasswordInput] = useState(""),
         [firstnameInput, setFirstnameInput] = useState(""),
-        [lastnameInput, setLastnameInput] = useState("");
+        [lastnameInput, setLastnameInput] = useState(""),
+        [chosenPic, setChosenPic] = useState("");
 
     const
         handlePhoneNumberInput = (event: any) => { setPhoneNumberInput(event.target.value); },
@@ -50,7 +51,7 @@ export const CreateAccountView = (props: Props) => {
             firstName: firstnameInput,
             lastName: lastnameInput,
             phoneNbr: phoneNumberInput,
-            profilePic: "",
+            profilePic: chosenPic,
             contacts: [],
             callEntries: []
         };
@@ -119,7 +120,7 @@ export const CreateAccountView = (props: Props) => {
                         </div>
 
                         <div className="create-pic-container">
-                            <img className="img" src={hjordis} alt="profilbild" />
+                            <img className="img" src={props.profilePic(chosenPic)} alt="profilbild" />
                             <div className="pic-button-container">
                                 <SquareButton label="Välj bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" />
                                 {/* <SquareButton label="Ladda upp bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" /> */}

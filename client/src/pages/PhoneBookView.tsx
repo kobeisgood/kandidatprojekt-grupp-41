@@ -28,7 +28,7 @@ interface Props {
 
 // A "state" of the selected contact to be deleted
 // Makes sure page doesn't get re-rendered
-let selectedContact: { name: string, phoneNbr: string };    
+let selectedContact: { name: string, phoneNbr: string };
 const setSelectedContact = (contact: { name: string, phoneNbr: string }) => {
     selectedContact = contact;
 };
@@ -78,24 +78,28 @@ export const PhoneBookView = (props: Props) => {
 
             <div className="contact-cards-container">
                 <div className="contact-cards-flexbox">
-                    {props.contactList.map((contact: Contact) => {
-                        return (
-                            <ContactCard
-                                key={contact.id}
-                                contact={contact}
-                                removeContactState={removeContactState}
-                                onCall={() => {
-                                    props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName, profilePic: contact.profilePic }); props.onCall(contact.phoneNbr);
-                                }}
-                                contactList={props.contactList}
-                                phoneNumber={props.phoneNumber}
-                                setContactList={props.setContactList}
-                                setSelectedContact={setSelectedContact}
-                                setDeleteContactVisible={() => setDeleteContactVisible(true)}
-                                profilePic={props.profilePic}
-                            />
-                        )
-                    })}
+                    {props.contactList.length > 0 ?
+                        props.contactList.map((contact: Contact) => {
+                            return (
+                                <ContactCard
+                                    key={contact.id}
+                                    contact={contact}
+                                    removeContactState={removeContactState}
+                                    onCall={() => {
+                                        props.setPeer({ number: contact.phoneNbr, name: contact.firstName + " " + contact.lastName, profilePic: contact.profilePic }); props.onCall(contact.phoneNbr);
+                                    }}
+                                    contactList={props.contactList}
+                                    phoneNumber={props.phoneNumber}
+                                    setContactList={props.setContactList}
+                                    setSelectedContact={setSelectedContact}
+                                    setDeleteContactVisible={() => setDeleteContactVisible(true)}
+                                    profilePic={props.profilePic}
+                                />
+                            )
+                        })
+                        :
+                        <p className="no-contacts-label">Du har inga kontakter än. <br/><br/> <span>Lägg till en genom att trycka på "Lägg till kontakt" uppe i högra hörnet.</span></p>
+                    }
                 </div>
             </div>
 

@@ -190,7 +190,7 @@ export const App = () => {
                         <Route path="/" exact render={() => <StartView />} />
                         <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
                         <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} profilePic={profilePic} />} />
-                        <Route path="/createaccount" exact render={() => <CreateAccountView setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
+                        <Route path="/createaccount" exact render={() => <CreateAccountView setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} profilePic={profilePic} />} />
                         <Route path="/profile" exact render={() => <ProfileView user={me} profilePic={profilePic} />} />
                         <Route path="/profile/changepicture" exact component={() => <ChangePictureView user={me} profilePic={profilePic} />} />
                         <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
