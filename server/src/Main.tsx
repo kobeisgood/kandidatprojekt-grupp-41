@@ -1,13 +1,14 @@
 import { Socket } from 'socket.io';
 import Peer from 'simple-peer'; // WebRTC wrapper library
 import { CallData, PhoneNbr, User, Contact } from './Types';
-import { InitServer } from './Init';
+import { InitServer, RedirectServer } from './Init';
 import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword, authenticate, addCallEntryToList } from './Database';
 import { connectedUsers, loginUser, userIsLoggedIn, getUserId, logoutUser } from './UserManagement';
 
 /* INITIATION */
 const io = InitServer(); // Init basic server requirements
 connectToDb(); // Connect to database
+RedirectServer(); // For redirecting HTTP traffic to HTTPS version of page
 console.log("Server up and running...");
 
 
