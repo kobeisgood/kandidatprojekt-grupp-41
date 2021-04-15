@@ -4,7 +4,7 @@ Authors: Hanna
 
 import React from 'react';
 import { SquareButton } from '../components/SquareButton';
-import cam_girl from "../images/cam_girl.png"
+import cam_granny from "../images/cam-granny.png"
 
 import '../css/start.css';
 
@@ -23,7 +23,7 @@ export const StartView = () => {
                     <SquareButton label="Skapa konto" onClick={() => void 0} linkTo="/createaccount" className="create-acount-button" />
                 </label>
             </div>
-            <img className="start-img" src={cam_girl} alt="profilbild" />
+            <img className="start-img" src={cam_granny} alt="profilbild" />
         </div>
     );
 };
