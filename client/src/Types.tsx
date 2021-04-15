@@ -29,7 +29,8 @@ export interface Contact {
 
 export interface Peer {
     number: string,
-    name: string
+    name: string,
+    profilePic: string
 }
 
 export interface CallEntry {

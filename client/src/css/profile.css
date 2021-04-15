@@ -77,6 +77,10 @@
     justify-content: center;
 }
 
+.profile-big-info-container img {
+    width: 250px;
+}
+
 
 /* Container for number and name */
 

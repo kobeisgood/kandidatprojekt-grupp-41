@@ -30,7 +30,7 @@ export const CallView = (props: Props) => {
     const [camState, setCamState] = useState(true);
     const [peerMicState, setPeerMicState] = useState(true);
     const [dummyState, setDummyState] = useState(0); /** State that forces re-render */
-    const [slider, setSlider] = useState(false);
+    const [slider, setSlider] = useState(true);
 
     const availableReactions: Array<string> = ['Ja', 'Nej', 'Jag ser dig', 'Jag ser dig inte', 'Jag hör dig', 'Jag hör dig inte'];
 

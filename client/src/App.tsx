@@ -26,6 +26,11 @@ import './css/fonts.css'
 import './css/buttons.css';
 import './css/colors.css';
 
+import pic1 from './images/profilePics/1.svg';
+import pic2 from './images/profilePics/2.svg';
+import pic3 from './images/profilePics/3.svg';
+import pic4 from './images/profilePics/4.svg';
+
 
 export const App = () => {
     const prevLoginInfo = () => {
@@ -44,7 +49,7 @@ export const App = () => {
         [incomingCall, setIncomingCall] = useState(false),
         [outgoingCall, setOutgoingCall] = useState(false),
         [callAccepted, setCallAccepted] = useState(false),
-        [peer, setPeer]: [Peer, Function] = useState({ number: "", name: "" }),
+        [peer, setPeer]: [Peer, Function] = useState({ number: "", name: "", profilePic: "" }),
         [peerSignal, setPeerSignal] = useState({}),
         [myNode, setMyNode] = useState(new WebRTC()),
         history = useHistory(), // For redirecting user
@@ -86,6 +91,21 @@ export const App = () => {
             });
         }
     }, [updatedCallEntries]);
+
+    const profilePic = (picStr: string) => {
+        switch (picStr) {
+            case "1":
+                return pic1;
+            case "2":
+                return pic2;
+            case "3":
+                return pic3;
+            case "4":
+                return pic4;
+            default:
+                return pic1;
+        }
+    };
 
     const updateName = (firstName: string, lastName: string, setName: Function, setNameChanged: Function) => {
         if (socket !== null && me !== null)
@@ -139,7 +159,7 @@ export const App = () => {
     const abortCall = () => {
         setOutgoingCall(false);
         setCallAccepted(false);
-        setPeer({ id: "", name: "" });
+        setPeer({ id: "", name: "", profilePic: "" });
         CallAbort(peer.number);
     };
 
@@ -153,11 +173,11 @@ export const App = () => {
     return (
         <div className="App">
             {incomingCall && !callAccepted &&
-                <CallPopup callerName={peer.name} callRespond={callRespond} />
+                <CallPopup callerName={peer.name} callerPic={peer.profilePic} callRespond={callRespond} profilePic={profilePic} />
             }
 
             {outgoingCall &&
-                <CallingPopup abortCall={abortCall} name={peer.name} />
+                <CallingPopup abortCall={abortCall} name={peer.name} pic={peer.profilePic} profilePic={profilePic} />
             }
 
             {
@@ -169,14 +189,14 @@ export const App = () => {
                     <Switch>
                         <Route path="/" exact render={() => <StartView />} />
                         <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
-                        <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} />} />
-                        <Route path="/createaccount" exact render={() => <CreateAccountView />} />
-                        <Route path="/profile" exact render={() => <ProfileView user={me} />} />
-                        <Route path="/profile/changepicture" exact component={ChangePictureView} />
+                        <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} profilePic={profilePic} />} />
+                        <Route path="/createaccount" exact render={() => <CreateAccountView setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} profilePic={profilePic} />} />
+                        <Route path="/profile" exact render={() => <ProfileView user={me} profilePic={profilePic} />} />
+                        <Route path="/profile/changepicture" exact component={() => <ChangePictureView user={me} profilePic={profilePic} />} />
                         <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
-                        <Route path="/profile/changenumber" exact render={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} />} />
-                        <Route path="/profile/changename" exact render={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} />} />
-                        <Route path="/phonebook" render={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} />} />
+                        <Route path="/profile/changenumber" exact render={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} profilePic={profilePic} />} />
+                        <Route path="/profile/changename" exact render={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} profilePic={profilePic} />} />
+                        <Route path="/phonebook" render={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} profilePic={profilePic} />} />
                         <Route path="/call" render={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer} />} />
                     </Switch>
             }

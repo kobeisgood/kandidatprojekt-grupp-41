@@ -14,12 +14,12 @@ import changePicture from "../icons/profile/changePicture.svg"
 import { BackButton } from '../components/BackButton';
 import { SquareButton } from '../components/SquareButton';
 
-import hjordis from "../images/hjordis.png"
 import trashbin from "../icons/profile/trashbin.svg"
 import { DeleteAccount } from '../components/DeleteAccount';
 
 interface Props {
-    user: User | null
+    user: User | null,
+    profilePic: Function
 }
 
 export const ProfileView = (props: Props) => {
@@ -52,7 +52,7 @@ export const ProfileView = (props: Props) => {
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
-                <img src={hjordis} alt="profilbild" />
+                <img src={props.profilePic(props.user?.profilePic)} alt="profilbild" />
                 <div className="profile-info-contact-container">
                     <h1 className="profile-name">{props.user ? props.user.firstName + " " + props.user.lastName : ""}</h1>
                     <h1 className="profile-number">{props.user ? props.user.phoneNbr : ""}</h1>

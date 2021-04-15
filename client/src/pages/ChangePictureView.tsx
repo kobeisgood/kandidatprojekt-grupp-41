@@ -9,11 +9,11 @@ import { BackButton } from '../components/BackButton';
 import '../css/profile.css';
 import camera from "../icons/profile/camera.svg"
 import choosePicture from "../icons/profile/choosePicture.svg"
-import hjordis from "../images/hjordis.png"
 
 
 interface Props {
-    user: User
+    user: User | null,
+    profilePic: Function
 }
 
 export const ChangePictureView = (props: Props) => {
@@ -35,7 +35,7 @@ export const ChangePictureView = (props: Props) => {
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
-                <img src={hjordis} alt="profilbild" />
+                <img src={props.profilePic(props.user?.profilePic)} alt="profilbild" />
             </div>
             {/* Container for the 4 buttons: 'Ändra namn', 'Ändra nummer', 'Byt bild' and 'Byt lösenord' */}
             <div className="profile-buttons-container">

@@ -6,7 +6,9 @@ import '../css/buttons.css';
 
 interface Props {
     abortCall: Function,
-    name: string
+    name: string,
+    pic: string,
+    profilePic: Function
 }
 
 export const CallingPopup = (props: Props) => {
@@ -21,7 +23,7 @@ export const CallingPopup = (props: Props) => {
                     </div>
                     <div className="calling-vertical-flexbox-container">
                         <div className="calling-person-container">
-                            <img className="caller-profile-picture" src="https://i.redd.it/avif889dhh751.jpg" alt="Profilbild av personen som ringer" />
+                            <img className="caller-profile-picture" src={props.profilePic(props.pic)} alt="Profilbild av personen som ringer" />
                             <h3 className="caller-name-text">{props.name}</h3>
                         </div>
                         <div>

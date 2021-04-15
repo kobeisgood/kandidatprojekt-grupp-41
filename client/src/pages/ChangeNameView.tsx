@@ -4,7 +4,6 @@ Authors: Charlie and Hanna
 import React, { useState } from 'react';
 import '../css/profile.css';
 import '../css/textinput.css';
-import hjordis from "../images/hjordis.png"
 import { User } from '../Types';
 
 import { BackButton } from '../components/BackButton';
@@ -14,7 +13,8 @@ import { SaveButton } from '../components/SaveButton';
 interface Props {
     me: User | null
     setMe: Function
-    updateName: (firstName: string, lastName: string, setName: Function, setNameChanged: Function) => void
+    updateName: (firstName: string, lastName: string, setName: Function, setNameChanged: Function) => void,
+    profilePic: Function
 }
 
 
@@ -51,7 +51,7 @@ export const ChangeNameView = (props: Props) => {
             </header>
             {/* Container for profile pic, name and number */}
             <div className="profile-big-info-container">
-                <img src={hjordis} alt="profilbild" />
+                <img src={props.profilePic(props.me?.profilePic)} alt="profilbild" />
                 <div className="profile-info-contact-container">
                     <h1 className="profile-name">{props.me ? props.me.firstName + " " + props.me.lastName : ""}</h1>
                     <h1 className="profile-number">{props.me ? props.me.phoneNbr : ""}</h1>
