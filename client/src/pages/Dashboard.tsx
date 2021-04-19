@@ -49,7 +49,9 @@ export const Dashboard = (props: Props) => {
                     {/* onClick prop passes empty function since it already has a link */}
                     <div className="page-navigation-button-container"><SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" /></div>
                     <div className="page-navigation-button-container"><SquareButton label="Telefonbok" onClick={() => void 0} icon={phoneBookIcon} linkTo="/phonebook" className="page-navigation-button" /></div>
-                    <div className="page-navigation-button-container"><SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button" /></div>
+                    {/* Knappsats is currently disabled
+                        Remove disabled-page-navigation-button css to enable */}
+                    <div className="page-navigation-button-container"><SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button disabled-page-navigation-button" /></div>
                 </div>
                 {props.me !== null && props.me?.callEntries.length > 0 ?
                     <>

@@ -35,8 +35,6 @@
     box-shadow: rgba(0, 0, 0, 0.25) 1.95px 1.95px 2.6px;
 }
 
-
-
 .button-general img {
     width: 40%;
     height: 40%;
@@ -51,6 +49,7 @@
     background-image: linear-gradient(rgba(255, 255, 255, 0.1) 0 0);
     box-shadow: inset rgba(0, 0, 0, 0.25) 1.95px 1.95px 2.6px;
 }
+
 
 /* ------------ SQUARE BUTTON ---------------------- */
 
@@ -88,7 +87,7 @@
     margin-right: 20px;
 }
 
-.back-button:hover{
+.back-button:hover {
     background-image: linear-gradient(rgba(255, 255, 255, 0.1) 0 0);
 }
 
@@ -111,6 +110,21 @@
     height: 187px;
     width: 270px;
     font-size: 36px;
+}
+
+.disabled-page-navigation-button {
+    background-color: rgb(200, 200, 200);
+    cursor: default;
+}
+
+.disabled-page-navigation-button:hover {
+    cursor: default;
+    background-image: none;
+}
+
+.disabled-page-navigation-button:active {
+    background-image: none;
+    box-shadow: rgba(0, 0, 0, 0.25) 1.95px 1.95px 2.6px;
 }
 
 
@@ -193,6 +207,7 @@
     background-image: linear-gradient(rgba(101, 255, 108, 0.3) 0 0);
 }
 
+
 /* -------------- LOGIN BUTTON ---------------- */
 
 .login-button {
@@ -203,6 +218,7 @@
     margin-top: 10px;
     font-size: 36px;
 }
+
 
 /* -------------- CREATE ACCOUNT BUTTON ---------------- */
 
@@ -215,6 +231,7 @@
     font-size: 36px;
 }
 
+
 /* -------------- ADD PIC BUTTON IN PROFILE SET UP ---------------- */
 
 .profile-set-upp-button {
@@ -223,9 +240,10 @@
     color: black;
     background-color: var(--color-menuButton);
     border-radius: 20px;
-    font-size: 36px;    
+    font-size: 36px;
     margin-bottom: 10px;
 }
+
 
 /* -------------- POPUP BUTTONS---------------- */
 
@@ -242,11 +260,9 @@
     height: 60%;
 }
 
-
 .decline-call-button {
     background-color: var(--color-cancel);
 }
-
 
 .answer-call-button {
     background-color: var(--color-call);
@@ -269,6 +285,7 @@
     margin-right: 20px;
 }
 
+
 /* -------------- CALL VIEW BUTTONS ---------------- */
 
 .callView-button {
@@ -289,4 +306,4 @@
     display: inline-block;
     color: white;
     font-size: 0.7vw;
-  }
+}
