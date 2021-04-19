@@ -17,40 +17,43 @@
     padding-left: 15px;
 }
 
-.text-input-change-name{
+.text-input-change-name {
     margin-bottom: 15px;
 }
 
-.text-input-change-number{
+.text-input-change-number {
     margin-bottom: 15px;
 }
 
-.text-input-change-password {
+.text-input-current-password {
     margin-bottom: 70px;
 }
 
-.text-input-login-tel{
+.text-input-change-password {
+    margin-bottom: 10px;
+}
+
+.text-input-login-tel {
     margin-bottom: 15px;
 }
 
-.text-input-login-password{
+.text-input-login-password {
     margin-bottom: 50px;
 }
 
-.text-input-create-account-tel{
+.text-input-create-account-tel {
     margin-bottom: 15px;
 }
 
-.text-input-create-account-password{
+.text-input-create-account-password {
     margin-bottom: 50px;
 }
 
-.text-input-create-account-name{
+.text-input-create-account-name {
     margin-bottom: 15px;
 }
 
-.text-input-add-contact-number{
+.text-input-add-contact-number {
     width: 400px;
     align-self: center;
 }
-
