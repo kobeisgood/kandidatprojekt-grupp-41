@@ -64,7 +64,7 @@ export const CreateAccountView = (props: Props) => {
         };
 
         console.log(user);
-        
+
 
         Register(user, passwordInput, loginWithNewAccount);
     }
@@ -108,22 +108,25 @@ export const CreateAccountView = (props: Props) => {
                         </div>
                         <form onSubmit={(event) => event.preventDefault()}>
                             <div className="create-container">
-                                <div>
-                                    <TextInput className="text-input-create-account-tel" type="tel" label="Ditt mobilnummer: "
-                                        placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneNumberInput} />
-                                </div>
-                                <div>
-                                    <TextInput className="text-input-create-account-password" type="password" label=" Välj ditt lösenord: "
-                                        placeholder="Välj ditt lösenord här..." onChange={handlePasswordInput} />
-                                </div>
-                                <div>
-                                    <TextInput className="text-input-create-account-password" type="password" label="Upprepa lösenord: "
-                                        placeholder="Upprepa ditt lösenord här..." onChange={handleRepeatPasswordInput} />
+                                <div className="create-input-container">
+                                    <div>
+                                        <TextInput className="text-input-create-account-tel" type="tel" label="Ditt mobilnummer: "
+                                            placeholder="Skriv ditt mobilnummer här..." onChange={handlePhoneNumberInput} />
+                                    </div>
+                                    <div>
+                                        <TextInput className="text-input-create-account-password" type="password" label=" Välj ditt lösenord: "
+                                            placeholder="Välj ditt lösenord här..." onChange={handlePasswordInput} />
+                                    </div>
+                                    <div>
+                                        <TextInput className="" type="password" label="Upprepa lösenord: "
+                                            placeholder="Upprepa ditt lösenord här..." onChange={handleRepeatPasswordInput} />
+                                    </div>
                                 </div>
                             </div>
                         </form>
-
-                        <SaveButton label="Gå vidare" onClick={goForward} />
+                        <div className="create-save-button-container">
+                            <SaveButton label="Gå vidare" onClick={goForward} />
+                        </div>
                     </>
                 }
 
@@ -143,25 +146,31 @@ export const CreateAccountView = (props: Props) => {
                         </div>
 
                         <div className="create-pic-container">
-                            <img className="img" src={props.profilePic(chosenPic)} alt="profilbild" />
-                            <div className="pic-button-container">
-                                <SquareButton label="Välj bild" onClick={openProfilePicker} className="profile-set-upp-button" />                                {/* <SquareButton label="Ladda upp bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" /> */}
+                            <div className="create-pic-content">
+                                <img className="create-profile-pic" src={props.profilePic(chosenPic)} alt="profilbild" />
+                                <div className="pic-button-container">
+                                    <SquareButton label="Välj bild" onClick={openProfilePicker} className="profile-set-upp-button" />                                {/* <SquareButton label="Ladda upp bild" onClick={() => void 0} linkTo="/login" className="profile-set-upp-button" /> */}
+                                </div>
                             </div>
                         </div>
                         <form onSubmit={(event) => event.preventDefault()}>
-                            <div className="crate-container">
-                                <div>
-                                    <TextInput className="text-input-create-account-tel" type="text" label="Förnamn: "
-                                        placeholder="Skriv ditt förnamn här..." onChange={handleFirstnameInput} />
-                                </div>
-                                <div>
-                                    <TextInput className="text-input-create-account-name" type="text" label="Efternamn: "
-                                        placeholder="Skriv ditt efternamn här..." onChange={handleLastnameInput} />
+                            <div className="create-container">
+                                <div className="create-input-container">
+                                    <div>
+                                        <TextInput className="text-input-create-account-name" type="text" label="Förnamn: "
+                                            placeholder="Skriv ditt förnamn här..." onChange={handleFirstnameInput} />
+                                    </div>
+                                    <div>
+                                        <TextInput className="text-input-create-account-name" type="text" label="Efternamn: "
+                                            placeholder="Skriv ditt efternamn här..." onChange={handleLastnameInput} />
+                                    </div>
                                 </div>
                             </div>
                         </form>
 
-                        <SaveButton label="Skapa konto" onClick={attemptCreateAccount} /* linkTo="/dashboard" */ />
+                        <div className="create-save-button-container">
+                            <SaveButton label="Skapa konto" onClick={attemptCreateAccount} /* linkTo="/dashboard" */ />
+                        </div>
                     </>
                 }
             </div>

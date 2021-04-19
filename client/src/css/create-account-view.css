@@ -6,7 +6,9 @@
     justify-content: flex-start;
 }
 
+
 /* "Min profil" headline */
+
 .create-header {
     font-size: 48px;
     font-family: 'Roboto', sans-serif;
@@ -21,7 +23,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 70px;
     margin-bottom: 20px;
 }
 
@@ -32,36 +34,47 @@
 }
 
 .create-container {
-    width: 75%;
-    display: inline-flex;
+    width: 100%;
+    display: flex;
     flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
     margin-top: 50px;
     margin-bottom: 80px;
 }
 
-.img {
-    max-width: 250px;
-    max-height: 250px;
-  }
+.create-input-container {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
 
 .create-pic-container {
-    width: 50%;
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    align-self: center;
     justify-content: center;
+    align-items: center;
+}
+
+.create-pic-content {
+    display: flex;
+    width: min-content;
+}
+
+.create-profile-pic {
+    width: 200px;
+    height: 200px;
+    margin-right: 20px;
 }
 
 .pic-button-container {
-    width: 50%;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    width: 350px;
     justify-content: center;
+}
+
+.create-save-button-container {
+    margin-bottom: 70px;
 }
