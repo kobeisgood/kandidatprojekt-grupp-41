@@ -44,7 +44,7 @@ export const Dashboard = (props: Props) => {
             </div>
 
             <div className="start-view-flexbox-container">
-                <h1 className="welcome-text">Välkommen, {props.me ? props.me.firstName + "!": ""}</h1>
+                <h1 className="welcome-text">Välkommen {props.me ? props.me.firstName + "!": ""}</h1>
                 <div className="start-view-button-container">
                     {/* onClick prop passes empty function since it already has a link */}
                     <div className="page-navigation-button-container"><SquareButton label="Min profil" onClick={() => void 0} icon={profileIcon} linkTo="/profile/" className="page-navigation-button" /></div>
