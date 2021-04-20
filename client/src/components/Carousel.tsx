@@ -40,6 +40,8 @@ export const Carousel = (props: Props) => {
         }
     }
 
+    window.addEventListener('resize', changeCarouselStyleOnFewCalls);
+
     useEffect(() => {
         changeCarouselStyleOnFewCalls();
     });
@@ -54,6 +56,10 @@ export const Carousel = (props: Props) => {
         if (!carouselIsScrollable) {
             carousel.style.border = "none";
             setShowCarouselArrows(false);
+        } else {
+            carousel.style.borderLeft = "3px solid darkgrey";
+            carousel.style.borderRight = "3px solid darkgrey";
+            setShowCarouselArrows(true);
         }
     }
 

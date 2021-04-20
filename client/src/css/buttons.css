@@ -115,6 +115,9 @@
 .disabled-page-navigation-button {
     background-color: rgb(200, 200, 200);
     cursor: default;
+    color: gray;
+    box-shadow: none;
+    text-decoration: line-through;
 }
 
 .disabled-page-navigation-button:hover {
@@ -124,7 +127,11 @@
 
 .disabled-page-navigation-button:active {
     background-image: none;
-    box-shadow: rgba(0, 0, 0, 0.25) 1.95px 1.95px 2.6px;
+    box-shadow: none;
+}
+
+.disabled-page-navigation-button img {
+    opacity: 0.5;
 }
 
 
