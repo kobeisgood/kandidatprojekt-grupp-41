@@ -103,9 +103,9 @@ export const AddContactPopup = (props: Props) => {
                 {/* Contact NOT found */}
                 {foundContact === null && !neutralPageState && !contactAddedState &&
                     <>
-                        <p className="popup-error-message">Fel Nummer! </p>
-                        <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed}  hittas inte </p>
-                        <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
+                        <p className="popup-error-message">Kunde ej hitta det angivna numret!</p>
+                        <p className="popup-middle-sized-text">Du skrev in {faultyNumberDisplayed}.</p>
+                        <p className="popup-middle-sized-text bottom-buffer">Vänligen dubbelkolla att detta stämmer och försök sedan igen.</p>
                         <div className="number-input-row">
                             <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
@@ -116,12 +116,18 @@ export const AddContactPopup = (props: Props) => {
                 {/* Faulty Contact found(own number or someone already in list)*/}
                 {foundContact != null && !neutralPageState && !contactAddedState && incorrectNumberState &&
                     <>
-                        <p className="popup-error-message">Fel Nummer! </p>
+                        {ownNumber ?
+                            <>
+                                <p className="popup-error-message">Du har angett ditt egna nummer!</p>
+                                <p className="popup-middle-sized-text">{faultyNumberDisplayed} är ditt egna nummer och kan inte läggas till.</p>
+                            </>
+                            :
+                            <>
+                                <p className="popup-error-message">Kontakt finns redan!</p>
+                                <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} finns redan i din kontaktlista </p>
+                            </>
+                        }
 
-                        {ownNumber ? <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} är ditt egna nummer</p> :
-                            <p className="popup-middle-sized-text">Nummer {faultyNumberDisplayed} finns redan i din kontaktlista </p>}
-
-                        <p className="popup-middle-sized-text bottom-buffer">Kontrollera att du har skrivit rätt </p>
                         <div className="number-input-row">
                             <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
@@ -157,7 +163,7 @@ export const AddContactPopup = (props: Props) => {
                 {/* Neutral */}
                 {neutralPageState &&
                     <>
-                        <p className="popup-middle-sized-text">Skriv in mobilnumret för den du vill lägga till</p>
+                        <p className="popup-middle-sized-text">Fyll i mobilnumret för den person du vill lägga till i din telefonbok.</p>
                         <div className="number-input-row">
                             <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>

@@ -24,7 +24,7 @@
 }
 
 .popup-middle-sized-text {
-    font-size: 36px;
+    font-size: 28px;
 }
 
 .bottom-buffer {
@@ -60,6 +60,11 @@
     height: 500px; /* Probably needs to be changed to make responsive, value set for testing purposes atm */
 }
 
+.content-column.left-buffer p {
+    width: 80%;
+    margin: 0 auto;
+}
+
 .number-input-row {
     display: flex;
     flex-flow: row wrap;
@@ -89,9 +94,9 @@
 }
 
 .popup-error-message {
-    color: var(--color-error);
+    color: var(--color-warning);
     font-weight: bold;
-    font-size: 48px;
+    font-size: 32px;
     margin-top: 20px;
 }
 
