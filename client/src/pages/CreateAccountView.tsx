@@ -65,7 +65,6 @@ export const CreateAccountView = (props: Props) => {
 
         console.log(user);
         
-
         Register(user, passwordInput, loginWithNewAccount);
     }
 

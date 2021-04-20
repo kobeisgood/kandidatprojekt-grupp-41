@@ -58,13 +58,8 @@ export const createUser = async (user: User, psw: string) => {
     try {
         const userExists = await UserModel.exists({ phoneNbr: user.phoneNbr });
 
-        console.log("User exists:");
-        console.log(userExists);
-
         if (!userExists) {
             const savedUser = await newUser.save();
-            console.log("Saved user:");
-            console.log(savedUser);
             return savedUser;
         } else {
             return null;

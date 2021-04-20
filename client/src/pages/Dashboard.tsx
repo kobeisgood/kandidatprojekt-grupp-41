@@ -20,7 +20,8 @@ interface Props {
     me: User | null;
     setMe: Function;
     onCall: Function;
-    profilePic: Function
+    setPeer: Function;
+    profilePic: Function;
 }
 
 export const Dashboard = (props: Props) => {
@@ -55,7 +56,7 @@ export const Dashboard = (props: Props) => {
                     <>
                         <p className="latest-calls-text">Senaste samtalen</p>
                         <div className="latest-calls-carousel-container">
-                            <Carousel callEntries={props.me ? props.me.callEntries : []} onCall={props.onCall} profilePic={props.profilePic} />
+                            <Carousel callEntries={props.me ? props.me.callEntries : []} onCall={props.onCall} setPeer={props.setPeer} profilePic={props.profilePic} />
                         </div>
                     </>
                     :

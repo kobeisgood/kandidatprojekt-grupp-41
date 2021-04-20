@@ -180,25 +180,24 @@ export const App = () => {
                 <CallingPopup abortCall={abortCall} name={peer.name} pic={peer.profilePic} profilePic={profilePic} />
             }
 
-            {
-                loading ?
-                    <div className="fade-loader-container">
-                        <FadeLoader loading={loading} />
-                    </div>
-                    :
-                    <Switch>
-                        <Route path="/" exact render={() => <StartView />} />
-                        <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
-                        <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} profilePic={profilePic} />} />
-                        <Route path="/createaccount" exact render={() => <CreateAccountView setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} profilePic={profilePic} />} />
-                        <Route path="/profile" exact render={() => <ProfileView user={me} profilePic={profilePic} />} />
-                        <Route path="/profile/changepicture" exact component={() => <ChangePictureView user={me} profilePic={profilePic} />} />
-                        <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
-                        <Route path="/profile/changenumber" exact render={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} profilePic={profilePic} />} />
-                        <Route path="/profile/changename" exact render={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} profilePic={profilePic} />} />
-                        <Route path="/phonebook" render={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} profilePic={profilePic} />} />
-                        <Route path="/call" render={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer} />} />
-                    </Switch>
+            {loading ?
+                <div className="fade-loader-container">
+                    <FadeLoader loading={loading} />
+                </div>
+                :
+                <Switch>
+                    <Route path="/" exact render={() => <StartView />} />
+                    <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
+                    <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} setPeer={setPeer} profilePic={profilePic} />} />
+                    <Route path="/createaccount" exact render={() => <CreateAccountView setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} profilePic={profilePic} />} />
+                    <Route path="/profile" exact render={() => <ProfileView user={me} profilePic={profilePic} />} />
+                    <Route path="/profile/changepicture" exact component={() => <ChangePictureView user={me} profilePic={profilePic} />} />
+                    <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />
+                    <Route path="/profile/changenumber" exact render={() => <ChangeNumberView me={me} setMe={setMe} updateNbr={updateNbr} profilePic={profilePic} />} />
+                    <Route path="/profile/changename" exact render={() => <ChangeNameView me={me} setMe={setMe} updateName={updateName} profilePic={profilePic} />} />
+                    <Route path="/phonebook" render={() => <PhoneBookView contactList={me === null ? [] : me.contacts} onCall={callUser} setPeer={setPeer} phoneNumber={me === null ? "" : me.phoneNbr} setContactList={setContactList} profilePic={profilePic} />} />
+                    <Route path="/call" render={() => <CallView localStream={localStream} remoteStream={remoteStream} endCall={() => CallHangUp(myNode, setRemoteStream, setCallAccepted, setPeer, setPeerSignal, setOutgoingCall, setIncomingCall, () => redir("/dashboard"))} peer={myNode} caller={peer} />} />
+                </Switch>
             }
         </div>
     );
