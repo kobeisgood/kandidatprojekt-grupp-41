@@ -10,6 +10,7 @@ import '../css/colors.css';
 import '../css/contact-card.css';
 import crossIcon from '../icons/cross-icon.svg';
 import callIcon from '../icons/call-icon.svg';
+import infoIcon from '../icons/info-icon.svg';
 
 interface Props {
     removeContactState: boolean,
@@ -49,6 +50,9 @@ export const ContactCard = (props: Props) => {
 
     return (
         <div className="contact-card-container on-hover" >
+            <div className="info-icon-container">
+                <img src={infoIcon} alt="Info ikon" className="info-icon"/>
+            </div>
             {!props.removeContactState ? <></> :
                 <button className="delete-contact-button" onClick={openDeletePopup}> <img src={crossIcon} alt="CrossIcon"></img> </button>
             }

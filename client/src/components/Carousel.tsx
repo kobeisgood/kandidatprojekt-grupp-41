@@ -3,7 +3,7 @@
     Authors: Daniel
 */
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { ContactCardBig } from './ContactCardBig';
 import { Contact } from '../Types';
 
@@ -21,6 +21,8 @@ interface Props {
 }
 
 export const Carousel = (props: Props) => {
+    const [showCarouselArrows, setShowCarouselArrows] = useState(true);
+
     const carouselRef = useRef<HTMLDivElement>(null);
 
     const scrollCarousel = (scrollRight: Boolean) => {
@@ -39,9 +41,37 @@ export const Carousel = (props: Props) => {
         }
     }
 
+    window.addEventListener('resize', changeCarouselStyleOnFewCalls);
+
+    useEffect(() => {
+        changeCarouselStyleOnFewCalls();
+    });
+
+    function changeCarouselStyleOnFewCalls() {
+        let carousel = carouselRef.current;
+        if (!carousel) {
+            return;
+        }
+
+        let carouselIsScrollable = carousel.clientWidth < carousel.scrollWidth;
+        if (!carouselIsScrollable) {
+            carousel.style.border = "none";
+            setShowCarouselArrows(false);
+        } else {
+            carousel.style.borderLeft = "3px solid darkgrey";
+            carousel.style.borderRight = "3px solid darkgrey";
+            setShowCarouselArrows(true);
+        }
+    }
+
     return (
         <div className="carousel-container">
-            <div onClick={() => scrollCarousel(false)}><img src={leftCarouselButton} alt="Button to scroll the carousel to the left" className="carousel-scroll-button" /></div>
+            {showCarouselArrows &&
+                <div onClick={() => scrollCarousel(false)}>
+                    <img src={leftCarouselButton} alt="Button to scroll the carousel to the left" className="carousel-scroll-button" />
+                </div>
+            }
+
             <div ref={carouselRef} className="carousel-scroll-container">
                 {props.callEntries &&
                     props.callEntries.map((contact, index) =>
@@ -54,7 +84,11 @@ export const Carousel = (props: Props) => {
                     )
                 }
             </div>
-            <div onClick={() => scrollCarousel(true)}><img src={rightCarouselButton} alt="Button to scroll the carousel to the right" className="carousel-scroll-button" /></div>
+            {showCarouselArrows &&
+                <div onClick={() => scrollCarousel(true)}>
+                    <img src={rightCarouselButton} alt="Button to scroll the carousel to the right" className="carousel-scroll-button" />
+                </div>
+            }
         </div>
     );
 
