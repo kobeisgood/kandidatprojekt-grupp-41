@@ -50,7 +50,7 @@ export const ContactCard = (props: Props) => {
 
     return (
         <div className="contact-card-container on-hover" >
-            <div className="info-icon-container">
+            <div className="info-icon-container" onClick={openContactPopup}>
                 <img src={infoIcon} alt="Info ikon" className="info-icon"/>
             </div>
             {!props.removeContactState ? <></> :
