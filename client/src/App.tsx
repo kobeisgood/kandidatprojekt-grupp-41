@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
 import { default as WebRTC } from 'simple-peer';
 import FadeLoader from "react-spinners/FadeLoader";
 
 import { socket } from './Connection';
 import { User, Peer, Contact } from './Types';
-import { CallRespond, CallUser, CallAbort, CallHangUp, ListenForCalls, UpdateName, UpdateNbr, UpdatePassword } from './Connection';
+import { CallRespond, CallUser, CallAbort, CallHangUp, ListenForCalls, UpdateName, UpdateNbr, UpdatePassword, Reconnect } from './Connection';
 import { OpenLocalStream } from './StreamCamVideo';
 import { CallPopup } from './components/CallPopup';
 import { CallingPopup } from './components/CallingPopup';
@@ -32,6 +32,12 @@ import pic3 from './images/profilePics/3.svg';
 import pic4 from './images/profilePics/4.svg';
 
 
+let loggedIn = false;
+
+export const setLoggedIn = (val: boolean) => {
+    loggedIn = val;
+};
+
 export const App = () => {
     const prevLoginInfo = () => {
         const info = localStorage.getItem("me");
@@ -40,6 +46,24 @@ export const App = () => {
             return JSON.parse(info);
         else
             return null;
+    };
+
+    const protectedPaths = [
+        "/dashboard",
+        "/profile",
+        "/profile/changepicture",
+        "/profile/changepassword",
+        "/profile/changenumber",
+        "/profile/changename",
+        "/phonebook",
+        "/call",
+    ];
+
+    const preventUnauthorizedAccess = () => {
+        if (!loggedIn && protectedPaths.indexOf(window.location.pathname) !== -1)
+            history.push("/");
+        else if (loggedIn)
+            history.push("/dashboard");
     };
 
     const
@@ -53,29 +77,48 @@ export const App = () => {
         [peerSignal, setPeerSignal] = useState({}),
         [myNode, setMyNode] = useState(new WebRTC()),
         history = useHistory(), // For redirecting user
-        [updatedCallEntries, setUpdatedCallEntries] = useState(null);
+        [updatedCallEntries, setUpdatedCallEntries] = useState(null),
+        [loading, setLoading] = useState(false);
+
+    const appRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        // Reconnect if previously logged in
+        let prevInfo = prevLoginInfo();
+        if (prevInfo !== null)
+            Reconnect(
+                prevInfo.phoneNbr,
+                () => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries),
+                (bool: boolean) => {
+                    if (bool) {
+                        setMe(prevInfo);
+                        console.log("Socket reconnected! New ID is:");
+                        console.log(socket.id);
+                    } else
+                        localStorage.clear();
+                });
+
+        preventUnauthorizedAccess(); // Check if URL is allowed
+
+        // Access browser web cam and microphone
         OpenLocalStream()
             .then((stream: MediaStream) => {
                 setLocalStream(stream)
-            }); // Access browser web cam
-
-        window.onbeforeunload = (event: any) => {
-            const e = event || window.event;
-            // Cancel the event
-            e.preventDefault();
-            if (e)
-                e.returnValue = ''; // Legacy method for cross browser support
-
-            return ''; // Legacy method for cross browser support
-        };
-
-        setMe(prevLoginInfo());
+            });
     }, []);
 
+    const prevMe = useRef<User | null>(null);
     useEffect(() => {
+        // After user logged in
+        if (prevMe.current === null && me !== null && (window.location.pathname === "/" || window.location.pathname === "/login")) {
+            loggedIn = true;
+            history.push("/dashboard");
+        }
+
         localStorage.setItem("me", JSON.stringify(me));
+
+        if (me !== prevMe.current)
+            prevMe.current = me;
     }, [me]);
 
     useEffect(() => {
@@ -163,15 +206,8 @@ export const App = () => {
         CallAbort(peer.number);
     };
 
-    /* Shows loading icon when all react components are loaded in */
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        setLoading(false);
-    });
-
     return (
-        <div className="App">
+        <div className="App" ref={appRef}>
             {incomingCall && !callAccepted &&
                 <CallPopup callerName={peer.name} callerPic={peer.profilePic} callRespond={callRespond} profilePic={profilePic} />
             }
@@ -187,9 +223,9 @@ export const App = () => {
                 :
                 <Switch>
                     <Route path="/" exact render={() => <StartView />} />
-                    <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} />} />
+                    <Route path="/login" exact render={() => <LoginView me={me} setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} setLoading={setLoading} />} />
                     <Route path="/dashboard" exact render={() => <Dashboard me={me} setMe={setMe} onCall={callUser} setPeer={setPeer} profilePic={profilePic} />} />
-                    <Route path="/createaccount" exact render={() => <CreateAccountView setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} profilePic={profilePic} />} />
+                    <Route path="/createaccount" exact render={() => <CreateAccountView setMe={setMe} listenForCalls={() => ListenForCalls(setIncomingCall, setPeerSignal, setPeer, setUpdatedCallEntries)} profilePic={profilePic} setLoading={setLoading} />} />
                     <Route path="/profile" exact render={() => <ProfileView user={me} profilePic={profilePic} />} />
                     <Route path="/profile/changepicture" exact component={() => <ChangePictureView user={me} profilePic={profilePic} />} />
                     <Route path="/profile/changepassword" exact render={() => <ChangePasswordView me={me} setMe={setMe} updatePassword={updatePassword} />} />

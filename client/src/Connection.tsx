@@ -1,4 +1,4 @@
-import io from 'socket.io-client';
+import { io } from "socket.io-client";
 import { default as WebRTC } from 'simple-peer';
 import { User, Contact, Peer, PhoneNbr } from './Types';
 
@@ -16,24 +16,45 @@ export const Login = (
     phone: string,
     psw: string,
     setMe: Function,
-    redir: Function,
+    setLoading: Function,
     listenForCalls: Function
 ) => {
     if (socket === undefined) // If socket not already set by register
         if (useHTTPS)
-            socket = io.connect('https://localhost:4000');
+            socket = io('https://localhost:4000');
         else
-            socket = io.connect('http://localhost:4000');
+            socket = io('http://localhost:4000');
 
     socket.emit('login-user', phone, psw); // Send login request to server
+
+    setLoading(true);
+
     socket.once('login-response', (user: User) => { // Begin listening for server response
         if (user !== null) {
             console.log("Logged in successfully!");
             setMe(user);
-            redir(); // Redirect to dashboard and listen for calls
             listenForCalls(); // Register call listeners
+            setLoading(false);
         } else
             console.log("Failed to log in!");
+    });
+};
+
+export const Reconnect = (
+    phoneNbr: PhoneNbr,
+    listenForCalls: Function,
+    callback: Function
+) => {
+    if (socket === undefined) // If socket not already set by register
+        if (useHTTPS)
+            socket = io('https://localhost:4000');
+        else
+            socket = io('http://localhost:4000');
+
+    socket.emit('reconnect-user', phoneNbr);
+    socket.once('reconnect-response', (result: boolean) => {
+        callback(result);
+        listenForCalls(); // Re-register call listeners
     });
 };
 
@@ -59,9 +80,9 @@ export const Register = (
 ) => {
     if (socket === undefined) // If socket not already set by login
         if (useHTTPS)
-            socket = io.connect('https://localhost:4000');
+            socket = io('https://localhost:4000');
         else
-            socket = io.connect('http://localhost:4000');
+            socket = io('http://localhost:4000');
 
     socket.emit('register-user', user, psw);
     socket.on('registration-result', (result: boolean) => {
@@ -188,17 +209,16 @@ export const GetSearchedContact = (
  * @param loggedInUserNumber The number of the logged in user
  * @param setContactList Function that sets the contact list from the db to frontend 
  */
-export const AddFoundContact =
-    (
-        contact: Contact,
-        loggedInUserNumber: string,
-        setContactList: Function
-    ) => {
-        socket.emit('add-searched-contact', contact, loggedInUserNumber);
-        socket.once('contact-added', (realUpdatedContactList: Contact[]) => {
-            setContactList(realUpdatedContactList)
-        })
-    }
+export const AddFoundContact = (
+    contact: Contact,
+    loggedInUserNumber: string,
+    setContactList: Function
+) => {
+    socket.emit('add-searched-contact', contact, loggedInUserNumber);
+    socket.once('contact-added', (realUpdatedContactList: Contact[]) => {
+        setContactList(realUpdatedContactList)
+    })
+}
 
 /**
  * 
@@ -206,17 +226,16 @@ export const AddFoundContact =
  * @param loggedInUserNumber The number of the logged in user
  * @param setContactList Function that sets the contact list from the db to frontend 
  */
-export const RemoveFoundContact =
-    (
-        contact: Contact,
-        loggedInUserNumber: string,
-        setContactList: Function
-    ) => {
-        socket.emit('remove-searched-contact', contact, loggedInUserNumber);
-        socket.once('contact-removed', (realUpdatedContactList: Contact[]) => {
-            setContactList(realUpdatedContactList)
-        })
-    };
+export const RemoveFoundContact = (
+    contact: Contact,
+    loggedInUserNumber: string,
+    setContactList: Function
+) => {
+    socket.emit('remove-searched-contact', contact, loggedInUserNumber);
+    socket.once('contact-removed', (realUpdatedContactList: Contact[]) => {
+        setContactList(realUpdatedContactList)
+    })
+};
 
 export const RequestUserList = (
     update: Function
@@ -245,6 +264,7 @@ export const ListenForCalls = (
     setCallEntries: Function
 ) => {
     socket.on('user-calling', (data: any) => {
+        console.log("Receiving call!");
         setIncomingCall(true);
         setCallerSignal(data.signalData);
         setPeer({ number: data.caller, name: data.callerName, profilePic: data.profilePic });
@@ -359,7 +379,7 @@ export const CallUser = (
     peer.on('signal', signal => { // Everytime we create a peer, it signals, meaning this triggers immediately
         setOutgoingCall(true);
         socket.emit('call-user', { callee: calleeNbr, signalData: signal, caller: me.phoneNbr, callerName: me.firstName + " " + me.lastName, profilePic: me.profilePic });
-        console.log("User with socket ID " + socket.id + " is trying to call someone");
+        console.log("Initiating call to other user...");
     });
 
     peer.on('stream', stream => {

@@ -1,9 +1,9 @@
 import { Socket } from 'socket.io';
 import Peer from 'simple-peer'; // WebRTC wrapper library
-import { CallData, PhoneNbr, User, Contact } from './Types';
+import { CallData, PhoneNbr, User, Contact, UserID } from './Types';
 import { InitServer } from './Init';
 import { addContactToList, removeContactFromList, connectToDb, createUser, getContactFromNbr, numberExists, updateName, updateNbr, updatePassword, authenticate, addCallEntryToList } from './Database';
-import { connectedUsers, loginUser, userIsLoggedIn, getUserId, logoutUser } from './UserManagement';
+import { connectedUsers, loginUser, userIsLoggedIn, getUserId, getUserNbr, logoutUser } from './UserManagement';
 
 /* INITIATION */
 const io = InitServer(); // Init basic server requirements
@@ -13,11 +13,11 @@ console.log("Server up and running...");
 
 /* SERVER RUNNING */
 io.on('connection', (socket: Socket) => { // Begin listening to client connections
-    socket.on('login-user', (phone, psw) => {
+    socket.on('login-user', (phoneNbr, psw) => {
         let userId = socket.id;
 
-        if (!userIsLoggedIn(phone)) { // If user not already connected
-            loginUser(userId, phone, psw).then((user) => {
+        if (!userIsLoggedIn(phoneNbr)) { // If user not already connected
+            loginUser(userId, phoneNbr, psw).then((user) => {
                 if (user !== null) {
                     console.log(user.firstName + " " + user.lastName + " successfully logged in!");
 
@@ -38,11 +38,21 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         }
     });
 
-    socket.on('logout-user', (phone: string) => {
-        console.log("User logging out");
+    socket.on('reconnect-user', (phoneNbr: PhoneNbr) => {
+        if (userIsLoggedIn(phoneNbr)) {
+            connectedUsers.set(phoneNbr, socket.id); // If user is reconnecting, just update the socket id
+            socket.emit('reconnect-response', true);
+            console.log("User reconnected");
+        } else {
+            socket.emit('reconnect-response', false); // Indicates that the user has to log in agin
+        }
+    });
 
-        if (userIsLoggedIn(phone)) {
-            logoutUser(phone);
+    socket.on('logout-user', (phoneNbr: string) => {
+        console.log("User with phone number " + phoneNbr + " logging out.");
+
+        if (userIsLoggedIn(phoneNbr)) {
+            logoutUser(phoneNbr);
             socket.emit('logout-response', true);
         } else {
             socket.emit('logout-response', false);
@@ -93,11 +103,11 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     });
 
-    socket.on('update-password', (user: { phoneNbr: string, oldPassword: string, newPassword: string }) => {
-        authenticate(user.phoneNbr, user.oldPassword)
+    socket.on('update-password', (user: { phoneNbr: string, oldPsw: string, newPsw: string }) => {
+        authenticate(user.phoneNbr, user.oldPsw)
             .then((result) => {
                 if (result !== null) {
-                    updatePassword(user.phoneNbr, user.newPassword)
+                    updatePassword(user.phoneNbr, user.newPsw)
                         .then(() => {
                             console.log("Password update registered!");
                             socket.emit("update-password-result", true);
@@ -115,8 +125,8 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
             });
     });
 
-    socket.on('find-contact-number', (phoneNumber: string) => {
-        numberExists(phoneNumber).then((result) => {
+    socket.on('find-contact-number', (phoneNbr: string) => {
+        numberExists(phoneNbr).then((result) => {
             if (result) {
                 socket.emit('number-found', result)
             } else {
@@ -126,8 +136,8 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
         });
     });
 
-    socket.on('get-searched-contact', (phoneNumber: string) => {
-        getContactFromNbr(phoneNumber).then((contact) => {
+    socket.on('get-searched-contact', (phoneNbr: string) => {
+        getContactFromNbr(phoneNbr).then((contact) => {
             socket.emit('got-contact', contact)
         })
             .catch(() => {
@@ -158,6 +168,8 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     socket.on('call-user', (data: { callee: PhoneNbr, signalData: Peer.SignalData, caller: PhoneNbr, callerName: string, profilePic: string }) => {
         const calleeId = getUserId(data.callee);
         socket.to(calleeId).emit('user-calling', { signalData: data.signalData, caller: data.caller, callerName: data.callerName, profilePic: data.profilePic });
+        
+        console.log("Call to user with ID " + calleeId + " initiated!");
     });
     
     socket.on('accept-call', (data: CallData) => {
@@ -188,5 +200,14 @@ io.on('connection', (socket: Socket) => { // Begin listening to client connectio
     });
     
     socket.on('disconnect', () => {
+        let userNbr = getUserNbr(socket.id); // What number did the user have?
+
+        setTimeout(() => {
+            let userSocketId = connectedUsers.get(userNbr);
+
+            if (!io.sockets.sockets.has(userSocketId)) { // If a new socket connected wasn't established
+                logoutUser(userNbr);
+            } 
+        }, 15000);
     });
 });

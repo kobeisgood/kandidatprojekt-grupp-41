@@ -48,6 +48,11 @@ export const ContactCard = (props: Props) => {
         props.contactPopupVisible();
     };
 
+    const handleCallClick = (event: Event) => {
+        event.stopPropagation();
+        props.onCall();
+    };
+
     return (
         <div className="contact-card-container on-hover" >
             <div className="info-icon-container" onClick={openContactPopup}>
@@ -59,8 +64,8 @@ export const ContactCard = (props: Props) => {
             <div className="contact-card-flexbox" onClick={openContactPopup}>
                 <img className="contact-card-profile-picture" src={props.profilePic(props.contact?.profilePic)} alt="Profilbild" />
                 <p className="contact-name">{props.contact ? props.contact.firstName : ""} <br /> <span>{props.contact ? props.contact.lastName : ""}</span></p>
+                <SquareButton label="Ring" onClick={handleCallClick} icon={callIcon} className="call-button" />
             </div>
-            <SquareButton label="Ring" onClick={props.onCall} icon={callIcon} className="call-button" />
         </div>
     );
 };
