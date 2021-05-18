@@ -13,7 +13,7 @@ export const StartView = () => {
     return (
         <div>
             <h1 className="header">
-                Välkommen till Ring Upp!
+                Välkommen till RingUpp!
             </h1>
             <div className="buttons-container">
                 <label className="description-text">Har du redan ett konto?
