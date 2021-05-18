@@ -1,5 +1,7 @@
 import { Server } from 'socket.io';
 
+const useHTTPS = false; // Only enable this if you know what it means
+
 /**
  * Initializes all basic server requirements. Running this will provide the front-end with an endpoint.
  * 
@@ -11,9 +13,12 @@ export const InitServer = () => {
         express = require('express'),
         https = require('https'),
         http = require('http'),
-        fs = require('fs'),
         cors = require('cors'),
-        useHTTPS = false; // Only enable this if you know what it means
+        fs = require('fs');
+
+    let
+        cert = fs.readFileSync('.cert/certificate.crt'),
+        key = fs.readFileSync('.cert/certificate.key');
 
     const app = express();
     app.use(cors()); // For avoiding CORS errors
@@ -23,9 +28,23 @@ export const InitServer = () => {
 
     let server: any;
     if (useHTTPS)
-        server = https.createServer(app).listen(4000);
+        server = https.createServer({
+            key: key,
+            cert: cert
+        }, app).listen(4000);
     else
         server = http.createServer(app).listen(4000);
 
     return new Server(server, { cors: { origin: '*' } });
+};
+
+export const RedirectServer = () => {
+    if (useHTTPS) {
+        const app2 = require('express')();
+        app2.listen(80);
+
+        app2.get("/", (req, res) => {
+            res.status(301).redirect("https://ringupp.site");
+        })
+    }
 };

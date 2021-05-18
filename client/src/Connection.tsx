@@ -2,8 +2,11 @@ import { io } from "socket.io-client";
 import { default as WebRTC } from 'simple-peer';
 import { User, Contact, Peer, PhoneNbr } from './Types';
 
-const useHTTPS = false; // Only enable this if you know what it means
 export let socket: any; // The socket representing the connection between the client and the server
+const
+    useHTTPS = false,
+    serverUrl = "localhost",
+    serverPort = 4000;
 
 /**
  * Makes an attempt to login. 
@@ -21,9 +24,9 @@ export const Login = (
 ) => {
     if (socket === undefined) // If socket not already set by register
         if (useHTTPS)
-            socket = io('https://localhost:4000');
+            socket = io('https://' + serverUrl + ':' + serverPort);
         else
-            socket = io('http://localhost:4000');
+            socket = io('http://' + serverUrl + ':' + serverPort);
 
     socket.emit('login-user', phone, psw); // Send login request to server
 
@@ -49,9 +52,9 @@ export const Reconnect = (
 ) => {
     if (socket === undefined) // If socket not already set by register
         if (useHTTPS)
-            socket = io('https://localhost:4000');
+            socket = io('https://' + serverUrl + ':' + serverPort);
         else
-            socket = io('http://localhost:4000');
+            socket = io('http://' + serverUrl + ':' + serverPort);
 
     socket.emit('reconnect-user', phoneNbr);
     socket.once('reconnect-response', (result: boolean) => {
@@ -82,9 +85,9 @@ export const Register = (
 ) => {
     if (socket === undefined) // If socket not already set by login
         if (useHTTPS)
-            socket = io('https://localhost:4000');
+            socket = io('https://' + serverUrl + ':' + serverPort);
         else
-            socket = io('http://localhost:4000');
+            socket = io('http://' + serverUrl + ':' + serverPort);
 
     socket.emit('register-user', user, psw);
     socket.on('registration-result', (result: boolean) => {
