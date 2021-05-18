@@ -35,8 +35,10 @@ export const Login = (
             setMe(user);
             listenForCalls(); // Register call listeners
             setLoading(false);
-        } else
+        } else {
             console.log("Failed to log in!");
+            setLoading(false);
+        }
     });
 };
 

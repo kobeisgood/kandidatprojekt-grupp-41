@@ -28,7 +28,7 @@ export const LoginView = (props: Props) => {
 
     const attemptLogin = () => {
         setLoggingIn(true);
-        Login(phoneInp, passwordInp, props.setMe, props.setLoading, props.listenForCalls)
+        Login(phoneInp, passwordInp, props.setMe, props.setLoading, props.listenForCalls);
     };
 
     return (
