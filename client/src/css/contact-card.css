@@ -10,6 +10,7 @@
     width: 200px;
     margin-bottom: 25px;
     position: relative;
+    box-shadow: rgba(0, 0, 0, 0.25) 1.95px 1.95px 2.6px;
 }
 
 .contact-card-container-big {
@@ -17,11 +18,18 @@
     width: 230px;
 }
 
+.info-icon-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 .contact-card-flexbox {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    height: 100%;
 }
 
 .contact-card-profile-picture {
@@ -37,7 +45,8 @@
 
 .contact-name-big {
     font-size: 34px;
-    margin: 20px 0;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 .button-flexbox {
@@ -59,7 +68,7 @@
     right: 0;
     top: 0;
     box-shadow: 1px 1.5px 1px black;
-} 
+}
 
 .delete-contact-button:hover {
     cursor: pointer;
@@ -69,4 +78,9 @@
 .contact-name span,
 .contact-name-big span {
     font-weight: bold;
+}
+
+.on-hover:hover {
+    cursor: pointer;
+    background-image: linear-gradient(rgba(0, 81, 255, 0.1) 0 0);
 }

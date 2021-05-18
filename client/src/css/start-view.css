@@ -32,13 +32,17 @@
     flex-direction: row;
     width: 70%;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 75px;
     flex-wrap: wrap;
 }
 
 .latest-calls-text {
     font-size: 36px;
     margin-top: 60px;
+}
+
+.no-calls {
+    margin-top: 200px;
 }
 
 .latest-calls-carousel-container {

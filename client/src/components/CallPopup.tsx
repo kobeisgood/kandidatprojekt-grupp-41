@@ -7,7 +7,9 @@ import accept from '../icons/accept.svg';
 
 interface Props {
     callerName: string,
-    callRespond: Function
+    callerPic: string,
+    callRespond: Function,
+    profilePic: Function
 }
 
 export const CallPopup = (props: Props) => {
@@ -25,7 +27,7 @@ export const CallPopup = (props: Props) => {
             <div className="call-popup-container">
                 <div className="call-popup-flexbox-container">
                     <h3>Inkommande samtal</h3>
-                    <img className="caller-profile-picture" src="https://pbcdn1.podbean.com/imglogo/ep-logo/pbblog2814877/Edward_Blom2.jpg" alt="Profilbild av personen som ringer" />
+                    <img className="caller-profile-picture" src={props.profilePic(props.callerPic)} alt="Profilbild av personen som ringer" />
                     <div className="incoming-call-buttons-container">
                         <div className="answer-button-container incoming-call-button-container">
                             <SquareButton className="answer-call-button incoming-call-button button" onClick={acceptCall} icon={accept} />

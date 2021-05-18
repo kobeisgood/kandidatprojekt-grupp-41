@@ -7,23 +7,22 @@ import React from 'react';
 import '../css/contact-card.css';
 import callIcon from '../icons/call-icon.svg';
 import { SquareButton } from './SquareButton';
-import hjordis from '../images/hjordis.jpg';
+import { Contact } from '../Types';
 
 interface Props {
     className?: string;
+    contact: Contact | null;
+    onCall: Function
+    profilePic: Function
 }
 
 export const ContactCardBig = (props: Props) => {
     return (
         <div className={`${"contact-card-container-big"} ${props.className}`}>
             <div className="contact-card-flexbox">
-                <img className="contact-card-profile-picture" src={hjordis} alt="Profilbild" />
-                <p className="contact-name-big">Hjördis <br/> <span>Gammelsson</span></p>
-                {/* TODO
-                    - Make into a CallButton
-                    - Add call function on click
-                    */}
-                <SquareButton label="Ring" onClick={() => void 0} icon={callIcon} className="call-button-big"/>
+                <img className="contact-card-profile-picture" src={props.profilePic(props.contact?.profilePic)} alt="Profilbild" />
+                <p className="contact-name-big">{props.contact?.firstName} <br /> <span>{props.contact?.lastName}</span></p>
+                <SquareButton label="Ring" onClick={() => { props.onCall(props.contact?.phoneNbr) }} icon={callIcon} className="call-button-big" />
             </div>
         </div>
     );

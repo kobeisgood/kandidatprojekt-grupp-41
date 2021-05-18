@@ -1,0 +1,45 @@
+.profile-popup-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 30px;
+    width: 80%;
+    position: relative;
+}
+
+.choose-profile-header {
+    font-size: 48px;
+    margin: 40px 0 70px 0;
+}
+
+.profile-popup-flexbox-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel-button-profile {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
+.cancel-button-profile:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.profile-popup-picture-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.profile-picture-popup {
+    width: 200px;
+    height: 200px;
+    margin: 10px 20px;
+    cursor: pointer;
+    border-radius: 50%;
+}
