@@ -109,7 +109,7 @@ export const AddContactPopup = (props: Props) => {
                         <div className="number-input-row">
                             <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
-                        <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
+                        <SquareButton label="Sök efter kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
 
@@ -131,7 +131,7 @@ export const AddContactPopup = (props: Props) => {
                         <div className="number-input-row">
                             <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
-                        <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
+                        <SquareButton label="Sök efter kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
 
@@ -167,7 +167,7 @@ export const AddContactPopup = (props: Props) => {
                         <div className="number-input-row">
                             <TextInput className="text-input-add-contact-number" label="Mobilnummer:" type="text" placeholder="Skriv mobilnummer här..." onChange={handlePhoneNumberInput} maxLength={10} />
                         </div>
-                        <SquareButton label="Sök efter Boom kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
+                        <SquareButton label="Sök efter kontakt" onClick={searchContact} className="save-button handle-contact-button button" />
                     </>
                 }
 
