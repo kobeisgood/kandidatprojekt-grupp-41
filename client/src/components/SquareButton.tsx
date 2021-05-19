@@ -3,7 +3,6 @@
 Authors: André, (Charlie and Hanna)
 */
 
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -21,13 +20,13 @@ export const SquareButton = (props: Props) => {
     return (
         <div>
             {props.linkTo === undefined ?
-                <button className={`${props.className} ${"button-general square-button"}`} onClick={() => props.onClick()}>
+                <button className={`${props.className} ${"button-general square-button"}`} onClick={(event?) => props.onClick(event)}>
                     {iconElem}
                     {labelElem}
                 </button>
                 :
                 <Link style={{textDecoration: "none"}} to={props.linkTo}>
-                    <button className={`${props.className} ${"button-general square-button"}`} onClick={() => props.onClick()}>
+                    <button className={`${props.className} ${"button-general square-button"}`} onClick={(event?) => props.onClick(event)}>
                         {iconElem}
                         {labelElem}
                     </button>

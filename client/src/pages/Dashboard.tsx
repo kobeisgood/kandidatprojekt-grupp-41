@@ -8,6 +8,7 @@ import { SquareButton } from '../components/SquareButton';
 import { Carousel } from '../components/Carousel';
 import { User } from '../Types';
 import { Logout } from '../Connection';
+import { setLoggedIn } from '../App';
 
 import '../css/start-view.css';
 import '../css/buttons.css';
@@ -35,6 +36,7 @@ export const Dashboard = (props: Props) => {
     const clearLoginInfo = () => {
         props.setMe(null);
         localStorage.clear();
+        setLoggedIn(false);
         history.push("/login");
     };
 
@@ -54,7 +56,7 @@ export const Dashboard = (props: Props) => {
                         Remove disabled-page-navigation-button css to enable */}
                     <div className="page-navigation-button-container"><SquareButton label="Knappsats" onClick={() => void 0} icon={keypadIcon} className="page-navigation-button disabled-page-navigation-button" /></div>
                 </div>
-                {props.me !== null && props.me?.callEntries.length > 0 ?
+                {props.me !== null && props.me?.callEntries?.length > 0 ?
                     <>
                         <p className="latest-calls-text">Senaste samtalen</p>
                         <div className="latest-calls-carousel-container">

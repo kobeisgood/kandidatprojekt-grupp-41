@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextInput } from '../components/TextInput';
 import { SaveButton } from '../components/SaveButton';
 import { Login, Register } from '../Connection';
@@ -6,13 +6,13 @@ import { BackButton } from '../components/BackButton';
 import { SquareButton } from '../components/SquareButton';
 import backArrow from '../icons/back-arrow.svg';
 import '../css/create-account-view.css';
-import { useHistory } from 'react-router-dom';
 import { ProfilePickPopup } from '../components/ProfilePickPopup';
 
 interface Props {
     setMe: Function,
     listenForCalls: Function,
-    profilePic: Function
+    profilePic: Function,
+    setLoading: Function
 }
 
 export const CreateAccountView = (props: Props) => {
@@ -68,11 +68,8 @@ export const CreateAccountView = (props: Props) => {
         Register(user, passwordInput, loginWithNewAccount);
     }
 
-    const history = useHistory(); // For redirecting user
-    const redir = () => { history.push("/dashboard"); };
-
     const loginWithNewAccount = () => {
-        Login(phoneNumberInput, passwordInput, props.setMe, redir, props.listenForCalls);
+        Login(phoneNumberInput, passwordInput, props.setMe, props.setLoading, props.listenForCalls);
     };
     // Handles profile picker 
     const openProfilePicker = () => {

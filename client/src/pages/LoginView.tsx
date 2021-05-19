@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { User } from '../Types';
 import { Login } from '../Connection';
-import { useHistory } from "react-router-dom";
 import { SaveButton } from '../components/SaveButton';
 import { TextInput } from '../components/TextInput';
 import { BackButton } from '../components/BackButton';
@@ -11,9 +10,10 @@ import '../css/login-view.css';
 
 
 interface Props {
-    me: User | null;
-    setMe: Function;
-    listenForCalls: Function;
+    me: User | null,
+    setMe: Function,
+    listenForCalls: Function,
+    setLoading: Function
 }
 
 export const LoginView = (props: Props) => {
@@ -26,12 +26,9 @@ export const LoginView = (props: Props) => {
         handlePhoneInp = (event: any) => { setPhoneInp(event.target.value); },
         handlePasswordInp = (event: any) => { setPasswordInp(event.target.value); };
 
-    const history = useHistory(); // For redirecting user
-    const redir = () => { history.push("/dashboard"); };
-
     const attemptLogin = () => {
         setLoggingIn(true);
-        Login(phoneInp, passwordInp, props.setMe, redir, props.listenForCalls)
+        Login(phoneInp, passwordInp, props.setMe, props.setLoading, props.listenForCalls);
     };
 
     return (
