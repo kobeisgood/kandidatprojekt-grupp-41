@@ -110,7 +110,7 @@ export const App = () => {
     const prevMe = useRef<User | null>(null);
     useEffect(() => {
         // After user logged in
-        if (prevMe.current === null && me !== null && (window.location.pathname === "/" || window.location.pathname === "/login")) {
+        if (prevMe.current === null && me !== null && (window.location.pathname === "/" || window.location.pathname === "/login" || window.location.pathname === "/createaccount")) {
             loggedIn = true;
             history.push("/dashboard");
         }
